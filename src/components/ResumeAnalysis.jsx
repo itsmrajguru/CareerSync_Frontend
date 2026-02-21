@@ -1,3 +1,4 @@
+
 import { CheckCircle, AlertCircle, Sparkles } from "lucide-react";
 
 export default function ResumeAnalysis({ analysis }) {

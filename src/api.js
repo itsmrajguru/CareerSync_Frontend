@@ -2,8 +2,9 @@
 
 const API_BASE_RAW = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
 const API_BASE = API_BASE_RAW.replace(/\/$/, "");
-console.debug('[API] Initializing with base:', API_BASE);
+console.debug('[API] Initializing with base URL:', API_BASE);
 
+// Re-auth on token expiration
 async function refreshToken() {
   const refresh = localStorage.getItem("refresh");
   if (!refresh) return false;
@@ -25,6 +26,7 @@ async function refreshToken() {
   return true;
 }
 
+// Intercepts requests to auto-inject JWT token and handle 401s
 async function authFetch(url, options = {}) {
   let token = localStorage.getItem("token");
 
@@ -35,7 +37,7 @@ async function authFetch(url, options = {}) {
 
   let res = await fetch(url, options);
 
-  // Attempt token permutation on 401 response
+  // Auto token rotation
   if (res.status === 401) {
     const refreshed = await refreshToken();
     if (refreshed) {
@@ -56,6 +58,8 @@ async function authFetch(url, options = {}) {
 
   return res.json();
 }
+
+// --- Authentication ---
 
 export async function loginUser(username, password) {
   const res = await fetch(`${API_BASE}/login/`, {

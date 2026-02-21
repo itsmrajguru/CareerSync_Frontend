@@ -23,11 +23,7 @@ export default function SignupPage() {
       const data = await signupUser({ username, email, password });
       console.debug('[Signup] Response:', data);
       if (data && data.message && data.message.includes("successfully")) {
-        // Change logic to show success message instead of auto-redirecting
-        setError(""); // clear error
-        // Re-use `error` state for success message (hacky, or add new state)
-        // Wait, better to alert or set a success state. Let's just alert and redirect for now.
-        // Actually, let's use a standard Javascript alert, then redirect.
+        setError("");
         alert(data.message);
         navigate("/login");
       } else {
