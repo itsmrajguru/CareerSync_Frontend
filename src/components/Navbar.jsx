@@ -37,11 +37,11 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          <Link to="/jobs" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition-colors">
-              <Briefcase size={18} className="text-white" />
+          <Link to="/jobs" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition-colors">
+              <Briefcase size={16} className="text-white" />
             </div>
-            <span className="text-3xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
               CareerSync
             </span>
           </Link>
@@ -54,7 +54,7 @@ export default function Navbar() {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200
+                    className={`px-3 py-1.5 rounded-lg text-[15px] font-medium transition-all duration-200
                       ${active
                         ? "bg-slate-100 text-slate-900"
                         : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
@@ -78,7 +78,7 @@ export default function Navbar() {
                   <div className="flex items-center gap-2 cursor-pointer p-1 rounded-lg hover:bg-slate-50 transition-colors">
                     <img
                       src={`https://ui-avatars.com/api/?name=${user.username || "User"
-                        }&background=4f46e5&color=fff&rounded=true`}
+                        }&background=2563eb&color=fff&rounded=true`}
                       alt="Profile"
                       className="w-8 h-8 rounded-full border border-slate-200"
                     />

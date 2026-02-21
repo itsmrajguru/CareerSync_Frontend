@@ -82,7 +82,7 @@ export default function JobsPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <button className="absolute right-2 top-2 bottom-2 px-6 rounded-lg bg-blue-600 text-white text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors">
+              <button className="absolute right-2 top-2 bottom-2 px-8 rounded-lg bg-blue-600 text-white text-[15px] font-bold shadow-[0_4px_14px_0_rgba(37,99,235,0.39)] hover:bg-blue-700 hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] transition-all">
                 Search
               </button>
             </form>
