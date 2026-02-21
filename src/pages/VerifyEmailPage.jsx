@@ -38,7 +38,7 @@ export default function VerifyEmailPage() {
                 <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm text-center">
                     <div className="mb-8">
                         <span className="text-2xl font-black text-slate-900 tracking-tight">
-                            Career<span className="text-indigo-600">Sync</span>
+                            Career<span className="text-blue-600">Sync</span>
                         </span>
                         <h2 className="text-xl font-bold mt-4 text-slate-800">Email Verification</h2>
                     </div>
@@ -52,7 +52,7 @@ export default function VerifyEmailPage() {
                             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mb-4">✓</div>
                             <p className="text-slate-700 font-medium mb-6">{message}</p>
                             <button
-                                className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-sm"
+                                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm"
                                 onClick={() => navigate("/login")}
                             >
                                 Proceed to Login
@@ -66,7 +66,7 @@ export default function VerifyEmailPage() {
                             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold w-full">
                                 {message}
                             </div>
-                            <Link to="/login" className="text-indigo-600 font-bold hover:text-indigo-700 transition-colors">
+                            <Link to="/login" className="text-blue-600 font-bold hover:text-blue-700 transition-colors">
                                 Back to Login
                             </Link>
                         </div>

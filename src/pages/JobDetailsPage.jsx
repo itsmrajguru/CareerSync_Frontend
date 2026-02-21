@@ -15,7 +15,7 @@ export default function JobDetailsPage() {
                     <h2 className="text-2xl font-bold mb-4">Job details not found</h2>
                     <button
                         onClick={() => navigate("/jobs")}
-                        className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors shadow-sm"
+                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors shadow-sm"
                     >
                         Back to Jobs
                     </button>
@@ -149,7 +149,7 @@ export default function JobDetailsPage() {
                     <div className="flex w-full sm:w-auto gap-3">
                         <button
                             onClick={handleApply}
-                            className="flex-1 sm:flex-none px-8 py-3 bg-indigo-600 rounded-xl text-white font-bold text-sm shadow-sm hover:bg-indigo-700 flex items-center justify-center gap-2 transition-colors"
+                            className="flex-1 sm:flex-none px-8 py-3 bg-blue-600 rounded-xl text-white font-bold text-sm shadow-sm hover:bg-blue-700 flex items-center justify-center gap-2 transition-colors"
                         >
                             Apply at {job.company.display_name} <ExternalLink size={16} />
                         </button>

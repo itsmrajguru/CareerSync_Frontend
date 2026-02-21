@@ -25,7 +25,7 @@ export default function ResumeAnalysis({ analysis }) {
 
                     <div className="text-center md:text-left space-y-2">
                         <h3 className="text-2xl font-bold text-slate-900 flex items-center justify-center md:justify-start gap-2">
-                            Overview <Sparkles size={18} className="text-indigo-500" />
+                            Overview <Sparkles size={18} className="text-blue-500" />
                         </h3>
                         <p className="text-slate-600 max-w-md leading-relaxed font-medium">
                             {score >= 75 ? "Excellent! Your resume is optimized for ATS systems." :

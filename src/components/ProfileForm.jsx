@@ -82,7 +82,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.full_name}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="e.g. Alex Johnson"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                 type="text"
                 value={formData.domain}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                 placeholder="e.g. Frontend Developer"
               />
             </div>
@@ -111,7 +111,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                 type="text"
                 value={formData.gender}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                 placeholder="e.g. Male/Female"
               />
             </div>
@@ -125,7 +125,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.location}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="City, Country"
                 />
               </div>
@@ -140,7 +140,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.birthday}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="DD/MM/YYYY"
                 />
               </div>
@@ -154,7 +154,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
               name="summary"
               value={formData.summary}
               onChange={handleChange}
-              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[80px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[80px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
               rows="3"
               placeholder="Brief professional summary..."
             />
@@ -174,7 +174,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.github}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="github.com/user"
                 />
               </div>
@@ -189,7 +189,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.linkedin}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="linkedin.com/in/user"
                 />
               </div>
@@ -204,7 +204,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                   type="text"
                   value={formData.website}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                   placeholder="your-portfolio.com"
                 />
               </div>
@@ -223,7 +223,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                 name="work"
                 value={formData.work}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                 placeholder="Work history..."
               />
             </div>
@@ -235,7 +235,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
                 placeholder="Degrees..."
               />
             </div>
@@ -249,7 +249,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
               type="text"
               value={formData.skills}
               onChange={handleChange}
-              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
               placeholder="e.g. Python, React"
             />
           </div>
@@ -261,7 +261,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
+                className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
               >
                 {loading ? "Saving..." : <><Save size={16} /> Save Profile</>}
               </button>
@@ -277,7 +277,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
             <button
               type="button"
               onClick={() => onToggleEdit(true)}
-              className="w-full mt-2 py-3.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-indigo-700 text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+              className="w-full mt-2 py-3.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl text-blue-700 text-sm font-bold flex items-center justify-center gap-2 transition-all group"
             >
               <Edit2 size={16} className="group-hover:scale-110 transition-transform" /> Edit Profile
             </button>

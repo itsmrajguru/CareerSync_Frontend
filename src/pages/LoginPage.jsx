@@ -35,7 +35,7 @@ export default function LoginPage() {
         <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
           <div className="text-center mb-8">
             <span className="text-2xl font-black text-slate-900 tracking-tight">
-              Career<span className="text-indigo-600">Sync</span>
+              Career<span className="text-blue-600">Sync</span>
             </span>
             <p className="text-slate-500 mt-2 text-sm font-medium">Welcome back! Please login to continue.</p>
           </div>
@@ -52,7 +52,7 @@ export default function LoginPage() {
               <input
                 type="text"
                 name="username"
-                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -66,7 +66,7 @@ export default function LoginPage() {
               <input
                 type="password"
                 name="password"
-                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -76,7 +76,7 @@ export default function LoginPage() {
             </div>
 
             <div className="flex justify-end -mt-2">
-              <Link to="/forgot-password" className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+              <Link to="/forgot-password" className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -84,7 +84,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="mt-4 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
@@ -92,7 +92,7 @@ export default function LoginPage() {
 
           <div className="text-center mt-8 text-sm text-slate-500 font-medium">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-indigo-600 hover:text-indigo-700 font-bold transition-colors">
+            <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-bold transition-colors">
               Create Account
             </Link>
           </div>

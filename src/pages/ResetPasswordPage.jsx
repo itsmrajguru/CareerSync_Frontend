@@ -47,7 +47,7 @@ export default function ResetPasswordPage() {
                 <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
                     <div className="text-center mb-8">
                         <span className="text-2xl font-black text-slate-900 tracking-tight">
-                            Career<span className="text-indigo-600">Sync</span>
+                            Career<span className="text-blue-600">Sync</span>
                         </span>
                         <h2 className="text-xl font-bold mt-4 text-slate-800">Reset Password</h2>
                         <p className="text-slate-500 mt-2 text-sm font-medium">Enter your new password below</p>
@@ -64,7 +64,7 @@ export default function ResetPasswordPage() {
                             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-4 text-sm font-semibold">
                                 {message}
                             </div>
-                            <Link to="/login" className="inline-block py-3 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-sm">
+                            <Link to="/login" className="inline-block py-3 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm">
                                 Proceed to Login
                             </Link>
                         </div>
@@ -76,7 +76,7 @@ export default function ResetPasswordPage() {
                                 <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-wider">New Password</label>
                                 <input
                                     type="password"
-                                    className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                                    className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                                     placeholder="Enter new password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +89,7 @@ export default function ResetPasswordPage() {
                                 <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-wider">Confirm Password</label>
                                 <input
                                     type="password"
-                                    className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                                    className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                                     placeholder="Confirm new password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -101,7 +101,7 @@ export default function ResetPasswordPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-4 w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                                className="mt-4 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
                             >
                                 {loading ? "Resetting..." : "Reset Password"}
                             </button>

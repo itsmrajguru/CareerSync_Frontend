@@ -77,12 +77,12 @@ export default function JobsPage() {
             <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input
-                className="w-full pl-12 pr-32 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm transition-all text-slate-900"
+                className="w-full pl-12 pr-32 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm shadow-sm transition-all text-slate-900"
                 placeholder="Job title, company, or keyword"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <button className="absolute right-2 top-2 bottom-2 px-6 rounded-lg bg-indigo-600 text-white text-sm font-bold shadow-sm hover:bg-indigo-700 transition-colors">
+              <button className="absolute right-2 top-2 bottom-2 px-6 rounded-lg bg-blue-600 text-white text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors">
                 Search
               </button>
             </form>
@@ -91,7 +91,7 @@ export default function JobsPage() {
               <select
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
-                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium shadow-sm hover:border-slate-300 transition-colors"
+                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium shadow-sm hover:border-slate-300 transition-colors"
               >
                 <option value="">All Locations</option>
                 <option value="Remote">Remote</option>
@@ -103,7 +103,7 @@ export default function JobsPage() {
               <select
                 value={companyFilter}
                 onChange={(e) => setCompanyFilter(e.target.value)}
-                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium shadow-sm hover:border-slate-300 transition-colors"
+                className="px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium shadow-sm hover:border-slate-300 transition-colors"
               >
                 <option value="">All Companies</option>
                 <option value="Google">Google</option>

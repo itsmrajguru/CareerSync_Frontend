@@ -54,7 +54,7 @@ export default function ProfilePage() {
       <div className="max-w-5xl mx-auto px-6 py-12 relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-slate-900 flex items-center justify-center gap-3">
-            <User size={36} className="text-indigo-600" /> Your <span className="text-indigo-600">Profile</span>
+            <User size={36} className="text-blue-600" /> Your <span className="text-blue-600">Profile</span>
           </h1>
           <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
             Manage your career identity. Keep your details updated to match with the best opportunities.
@@ -67,7 +67,7 @@ export default function ProfilePage() {
           <div className="flex justify-center transition-all duration-300 w-full">
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm w-full max-w-2xl">
               <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-100 pb-4">
-                <Sparkles size={20} className="text-indigo-500" />
+                <Sparkles size={20} className="text-blue-500" />
                 {editing ? "Edit Profile" : "Profile Details"}
               </h2>
               <ProfileForm

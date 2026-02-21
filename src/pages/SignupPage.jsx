@@ -43,7 +43,7 @@ export default function SignupPage() {
         <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
           <div className="text-center mb-8">
             <span className="text-2xl font-black text-slate-900 tracking-tight">
-              Career<span className="text-indigo-600">Sync</span>
+              Career<span className="text-blue-600">Sync</span>
             </span>
             <p className="text-slate-500 mt-2 text-sm font-medium">Sign up to find your next opportunity.</p>
           </div>
@@ -60,7 +60,7 @@ export default function SignupPage() {
               <input
                 type="text"
                 name="username"
-                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -74,7 +74,7 @@ export default function SignupPage() {
               <input
                 type="email"
                 name="email"
-                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -88,7 +88,7 @@ export default function SignupPage() {
               <input
                 type="password"
                 name="password"
-                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all font-medium text-sm"
+                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -100,7 +100,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="mt-4 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
             >
               {loading ? "Creating Account..." : "Create Account"}
             </button>
@@ -108,7 +108,7 @@ export default function SignupPage() {
 
           <div className="text-center mt-8 text-sm text-slate-500 font-medium">
             Already have an account?{" "}
-            <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-bold transition-colors">
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold transition-colors">
               Login
             </Link>
           </div>

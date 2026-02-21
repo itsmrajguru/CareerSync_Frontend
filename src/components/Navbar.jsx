@@ -38,10 +38,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <Link to="/jobs" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center shadow-sm group-hover:bg-indigo-700 transition-colors">
+            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition-colors">
               <Briefcase size={18} className="text-white" />
             </div>
-            <span className="text-3xl font-bold tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">
+            <span className="text-3xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
               CareerSync
             </span>
           </Link>
