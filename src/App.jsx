@@ -10,7 +10,6 @@ import VerifyEmailPage from "./pages/VerifyEmailPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
-// ...
 
 import JobDetailsPage from "./pages/JobDetailsPage";
 
@@ -29,13 +28,11 @@ function App() {
         <Route path="/jobs/:id" element={<JobDetailsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/resume" element={<ResumePage />} />
-        {/* Redirect old dashboard link if anyone tries to access it */}
         <Route path="/dashboard" element={<JobsPage />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
 
 export default App;
 
