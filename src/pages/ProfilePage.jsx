@@ -44,7 +44,7 @@ export default function ProfilePage() {
       alert(`Error saving profile: ${err.message}`);
     } finally {
       setLoading(false);
-    } 
+    }
   };
 
   return (
