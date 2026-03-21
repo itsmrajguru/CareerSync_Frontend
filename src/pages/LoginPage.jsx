@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,16 +14,17 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
-      const data = await loginUser(username, password);
-      if (data.access) {
-        localStorage.setItem("token", data.access);
-        localStorage.setItem("refresh", data.refresh);
-        localStorage.setItem("user", JSON.stringify(data.user));
+      const data = await loginUser(email, password);
+      // Backend returns { success, message, accessToken }
+      if (data.success) {
+        // api.js already handles storing data.accessToken as "token"
         navigate("/home");
+      } else {
+        setError(data.message || "Login failed");
       }
     } catch (err) {
       console.error(err);
-      setError(err.message || "Connection error. Please try again.");
+      setError(err.response?.data?.message || err.message || "Connection error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -48,16 +49,16 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-wider">Username</label>
+              <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-wider">Email</label>
               <input
-                type="text"
-                name="username"
+                type="email"
+                name="email"
                 className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
-                autoComplete="username"
-                placeholder="Enter your username"
+                autoComplete="email"
+                placeholder="Enter your email"
               />
             </div>
 

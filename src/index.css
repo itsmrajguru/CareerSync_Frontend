@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  html, body, #root {
+
+  html,
+  body,
+  #root {
     @apply h-full bg-slate-50 text-slate-600 antialiased selection:bg-blue-100 selection:text-blue-900;
   }
 }
