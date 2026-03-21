@@ -134,12 +134,31 @@ export async function deleteProfile(id) {
 // --- Resume ---
 
 export async function uploadResume(file) {
-  const formData = new FormData();
-  formData.append("resume", file);
+  /*pass this file to the formData
+    where formData is the tool used to carry binary file to the backend */
 
-  return api.post('/resumeUpload/resume/upload/', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  });
+      //step 1 :define formData
+      const formData = new formData()
+
+      //step 2: append file in the formData
+      formData.append('resume',file)
+
+      //call resumeController
+      return api.post('/resumeUpload/resume/upload/',formData,{
+        headers:{'Content-Type': 'multipart/form-data'}
+      })
+
 }
+
+//DIFFRENT TYPES OF Content-type
+
+/* 1. Sending normal JSON data like name,age,email,password
+{ 'Content-Type': 'application/json' } */
+
+// 2. Sending a file like pdf,image,video
+// { 'Content-Type': 'multipart/form-data' }
+
+// 3. Sending a simple form like  username=john&password=1234
+// { 'Content-Type': 'application/x-www-form-urlencoded' }
 
 export default api;
