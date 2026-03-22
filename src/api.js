@@ -84,7 +84,7 @@ export async function forgotPassword(email) {
 }
 
 export async function resetPassword(token, password) {
-  return api.post('/auth/reset-password/', { token, password });
+  return api.post('/auth/reset-password/', { token, newPassword: password });
 }
 
 // --- Jobs ---

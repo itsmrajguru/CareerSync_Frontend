@@ -35,7 +35,9 @@ export default function ResetPasswordPage() {
             setPassword("");
             setConfirmPassword("");
         } catch (err) {
-            setError(err.message || "Failed to reset password.");
+            console.error("Reset Password Error:", err.response?.data || err);
+            const serverMessage = err.response?.data?.message;
+            setError(serverMessage || err.message || "Failed to reset password.");
         } finally {
             setLoading(false);
         }
@@ -82,6 +84,7 @@ export default function ResetPasswordPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     minLength="6"
+                                    autoComplete="new-password"
                                 />
                             </div>
 
@@ -95,6 +98,7 @@ export default function ResetPasswordPage() {
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     required
                                     minLength="6"
+                                    autoComplete="new-password"
                                 />
                             </div>
 

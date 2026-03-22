@@ -95,9 +95,9 @@ export default function SignupPage() {
                 required
                 autoComplete="new-password"
                 placeholder="Create a password"
-                minLength={4}
+                minLength={6}
               />
-              <p className="text-[10px] text-slate-400 ml-1">Minimum 4 characters required</p>
+              <p className="text-[10px] text-slate-400 ml-1">Minimum 6 characters required</p>
             </div>
 
             <button
