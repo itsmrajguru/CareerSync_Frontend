@@ -138,7 +138,7 @@ export async function uploadResume(file) {
     where formData is the tool used to carry binary file to the backend */
 
       //step 1 :define formData
-      const formData = new formData()
+      const formData = new FormData()
 
       //step 2: append file in the formData
       formData.append('resume',file)
