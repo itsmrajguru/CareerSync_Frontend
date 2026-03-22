@@ -40,8 +40,9 @@ export default function ProfilePage() {
       setProfile(updatedProfile);
       setEditing(false);
     } catch (err) {
-      console.error(err);
-      alert(`Error saving profile: ${err.message}`);
+      console.error("Profile Save Error:", err.response?.data || err);
+      const serverMessage = err.response?.data?.message;
+      alert(`Error saving profile: ${serverMessage || err.message || "Connection error. Please try again."}`);
     } finally {
       setLoading(false);
     }
