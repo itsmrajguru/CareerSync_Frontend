@@ -37,39 +37,25 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      /* This original request don't understand the error So it tries to
-      access the Request again and again But we put that request is equal
-      to true so that it understands that we have tried once and we can't
-        fix that error so First fix the error and then come and reach to this Api */
-
       try {
         console.log('Token Expired..attempting refresh new Access Token');
-
         const res = await api.post('/auth/token/refresh', {})
-
-        //update the old token with new access token
         const { newAccessToken } = res;
-
-        //store the new token
         localStorage.setItem('token', newAccessToken)
-
-        //inject new bearer Access Token
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
-
         return api(originalRequest)
       } catch (e) {
-        console.log(e);
-        //if suppose server cant generate new access token
+        console.log('Refresh Token Failed:', e);
         localStorage.removeItem('token')
-
-        //and return the user to login
         window.location.href = '/login';
-
-        //and say that the error is not 401 ,and unable to fix it
         return Promise.reject(e);
       }
     }
-    return Promise.reject(error); //error is except 401
+    // Log other errors (like 400) for debugging
+    if (error.response) {
+      console.error(`API Error [${error.response.status}]:`, error.response.data);
+    }
+    return Promise.reject(error);
   })
 
 

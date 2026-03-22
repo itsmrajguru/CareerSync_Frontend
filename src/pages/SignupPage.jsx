@@ -22,16 +22,17 @@ export default function SignupPage() {
     try {
       const data = await signupUser({ username, email, password });
       console.debug('[Signup] Response:', data);
-      if (data && data.message && data.message.includes("successfully")) {
+      if (data && data.success) {
         setError("");
         alert(data.message);
         navigate("/login");
       } else {
-        setError(data.error || "Signup failed");
+        setError(data.message || "Signup failed");
       }
     } catch (err) {
-      console.error("Signup Error:", err);
-      setError(err.message || "Connection error. Please try again.");
+      console.error("Signup Error Detailed:", err.response?.data || err);
+      const serverMessage = err.response?.data?.message;
+      setError(serverMessage || err.message || "Connection error. Please try again.");
     } finally {
       setLoading(false);
     }
