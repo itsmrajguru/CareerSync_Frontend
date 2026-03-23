@@ -12,17 +12,13 @@ dist
 dist-ssr
 *.local
 
-<<<<<<< HEAD
-#protecting .env
-
+# Environment variables
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-=======
->>>>>>> b4fcf50cb8c4ba19695b1bccbb6764094cb7b3bb
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -33,3 +29,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Vite
+.vite
