@@ -33,26 +33,26 @@ export default function VerifyEmailPage() {
     }, [token]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm text-center">
+                <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm text-center">
                     <div className="mb-8">
-                        <span className="text-2xl font-black text-slate-900 tracking-tight">
-                            Career<span className="text-blue-600">Sync</span>
+                        <span className="text-2xl font-black text-neutral-700 tracking-tight">
+                            Career<span className="text-primary-500">Sync</span>
                         </span>
-                        <h2 className="text-xl font-bold mt-4 text-slate-800">Email Verification</h2>
+                        <h2 className="text-xl font-bold mt-4 text-neutral-700">Email Verification</h2>
                     </div>
 
                     {status === "verifying" && (
-                        <p className="text-slate-500 font-medium animate-pulse">Verifying your email, please wait...</p>
+                        <p className="text-neutral-400 font-medium animate-pulse">Verifying your email, please wait...</p>
                     )}
 
                     {status === "success" && (
                         <div className="flex flex-col items-center">
                             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mb-4">✓</div>
-                            <p className="text-slate-700 font-medium mb-6">{message}</p>
+                            <p className="text-neutral-600 font-medium mb-6">{message}</p>
                             <button
-                                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm"
+                                className="w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm"
                                 onClick={() => navigate("/login")}
                             >
                                 Proceed to Login
@@ -66,7 +66,7 @@ export default function VerifyEmailPage() {
                             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold w-full">
                                 {message}
                             </div>
-                            <Link to="/login" className="text-blue-600 font-bold hover:text-blue-700 transition-colors">
+                            <Link to="/login" className="text-primary-500 font-bold hover:text-primary-600 transition-colors">
                                 Back to Login
                             </Link>
                         </div>

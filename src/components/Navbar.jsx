@@ -35,14 +35,14 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200">
+    <nav className="sticky top-0 z-50 bg-white border-b border-neutral-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <Link to="/jobs" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center shadow-sm group-hover:bg-primary-600 transition-colors">
               <Briefcase size={16} className="text-white" />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+            <span className="text-2xl font-bold tracking-tight text-neutral-700 group-hover:text-primary-500 transition-colors">
               CareerSync
             </span>
           </Link>
@@ -57,8 +57,8 @@ export default function Navbar() {
                     to={item.path}
                     className={`px-3 py-1.5 rounded-lg text-[15px] font-medium transition-all duration-200
                       ${active
-                        ? "bg-slate-100 text-slate-900"
-                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                        ? "bg-primary-50 text-primary-600"
+                        : "text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50"
                       }`}
                   >
                     {item.label}
@@ -69,26 +69,26 @@ export default function Navbar() {
 
             <div className="flex items-center gap-3">
               {token && (
-                <button className="hidden md:flex p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors">
+                <button className="hidden md:flex p-2 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-50 transition-colors">
                   <Bell size={20} />
                 </button>
               )}
 
               {token && (
                 <div className="hidden md:block relative group">
-                  <div className="flex items-center gap-2 cursor-pointer p-1 rounded-lg hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center gap-2 cursor-pointer p-1 rounded-lg hover:bg-neutral-50 transition-colors">
+                    {/* Avatar bg: was 2563eb (blue), now da7756 (terracotta) to match brand */}
                     <img
-                      src={`https://ui-avatars.com/api/?name=${user.username || "User"
-                        }&background=2563eb&color=fff&rounded=true`}
+                      src={`https://ui-avatars.com/api/?name=${user.username || "User"}&background=da7756&color=fff&rounded=true`}
                       alt="Profile"
-                      className="w-8 h-8 rounded-full border border-slate-200"
+                      className="w-8 h-8 rounded-full border border-neutral-200"
                     />
-                    <ChevronDown size={14} className="text-slate-400" />
+                    <ChevronDown size={14} className="text-neutral-400" />
                   </div>
 
                   <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0">
-                    <div className="w-48 bg-white border border-slate-200 rounded-xl shadow-lg p-1 flex flex-col">
-                      <button className="w-full flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <div className="w-48 bg-white border border-neutral-200 rounded-xl shadow-lg p-1 flex flex-col">
+                      <button className="w-full flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-500 rounded-lg hover:bg-neutral-50 hover:text-neutral-700 transition-colors">
                         <Settings size={16} /> Settings
                       </button>
                       <button
@@ -103,7 +103,7 @@ export default function Navbar() {
               )}
 
               <button
-                className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+                className="md:hidden p-2 rounded-lg text-neutral-600 hover:bg-neutral-100"
                 onClick={() => setMobileOpen(!mobileOpen)}
               >
                 {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -114,7 +114,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 animate-fade-in-down">
+        <div className="md:hidden bg-white border-b border-neutral-200 animate-fade-in-down">
           <div className="px-4 py-4 space-y-1">
             {navItems.map((item) => (
               <Link
@@ -123,8 +123,8 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block px-4 py-3 rounded-lg font-semibold transition-colors
                   ${location.pathname === item.path
-                    ? "bg-slate-100 text-slate-900"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    ? "bg-primary-50 text-primary-600"
+                    : "text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50"
                   }`}
               >
                 {item.label}

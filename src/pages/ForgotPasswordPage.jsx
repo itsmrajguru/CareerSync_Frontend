@@ -26,15 +26,15 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm">
+                <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
                     <div className="text-center mb-8">
-                        <span className="text-2xl font-black text-slate-900 tracking-tight">
-                            Career<span className="text-blue-600">Sync</span>
+                        <span className="text-2xl font-black text-neutral-700 tracking-tight">
+                            Career<span className="text-primary-500">Sync</span>
                         </span>
-                        <h2 className="text-xl font-bold mt-4 text-slate-800">Forgot Password</h2>
-                        <p className="text-slate-500 mt-2 text-sm font-medium">Enter your email to receive a reset link</p>
+                        <h2 className="text-xl font-bold mt-4 text-neutral-700">Forgot Password</h2>
+                        <p className="text-neutral-400 mt-2 text-sm font-medium">Enter your email to receive a reset link</p>
                     </div>
 
                     {error && (
@@ -51,10 +51,10 @@ export default function ForgotPasswordPage() {
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
-                            <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-wider">Email</label>
+                            <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
                             <input
                                 type="email"
-                                className="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-sm"
+                                className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
                                 placeholder="Enter your email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -65,15 +65,15 @@ export default function ForgotPasswordPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="mt-4 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                            className="mt-4 w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
                         >
                             {loading ? "Sending..." : "Send Reset Link"}
                         </button>
                     </form>
 
-                    <div className="text-center mt-8 text-sm text-slate-500 font-medium">
+                    <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
                         Remember your password?{" "}
-                        <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold transition-colors">
+                        <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
                             Login
                         </Link>
                     </div>

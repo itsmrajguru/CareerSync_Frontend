@@ -14,20 +14,20 @@ export default function ResumeAnalysis({ analysis }) {
 
     return (
         <div className="space-y-6 font-sans">
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
+            <div className="bg-white p-8 rounded-3xl border border-neutral-200 shadow-sm relative overflow-hidden">
                 <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
                     <div className={`relative w-32 h-32 rounded-full border-4 flex items-center justify-center bg-white shadow-sm ${getScoreColor(score)}`}>
                         <span className="text-4xl font-black tracking-tighter">{score}</span>
-                        <span className="absolute -bottom-3 text-[10px] font-bold uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-slate-200 text-slate-500 shadow-sm">
+                        <span className="absolute -bottom-3 text-[10px] font-bold uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-neutral-200 text-neutral-400 shadow-sm">
                             ATS Score
                         </span>
                     </div>
 
                     <div className="text-center md:text-left space-y-2">
-                        <h3 className="text-2xl font-bold text-slate-900 flex items-center justify-center md:justify-start gap-2">
-                            Overview <Sparkles size={18} className="text-blue-500" />
+                        <h3 className="text-2xl font-bold text-neutral-700 flex items-center justify-center md:justify-start gap-2">
+                            Overview <Sparkles size={18} className="text-primary-500" />
                         </h3>
-                        <p className="text-slate-600 max-w-md leading-relaxed font-medium">
+                        <p className="text-neutral-500 max-w-md leading-relaxed font-medium">
                             {score >= 75 ? "Excellent! Your resume is optimized for ATS systems." :
                                 score >= 50 ? "Good foundation, but adding more specific keywords could boost your visibility." :
                                     "Your resume might be missed by automated systems. Try adding the suggested skills below."}
@@ -37,8 +37,8 @@ export default function ResumeAnalysis({ analysis }) {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h4 className="flex items-center gap-2 text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 border-b border-slate-100 pb-3">
+                <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm">
+                    <h4 className="flex items-center gap-2 text-sm font-bold text-neutral-600 uppercase tracking-wider mb-4 border-b border-neutral-200 pb-3">
                         <CheckCircle size={16} className="text-green-500" /> Detected Skills
                     </h4>
                     {skills_found && skills_found.length > 0 ? (
@@ -50,14 +50,14 @@ export default function ResumeAnalysis({ analysis }) {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-8 text-slate-500 text-sm italic border border-dashed border-slate-200 rounded-xl bg-slate-50">
+                        <div className="text-center py-8 text-neutral-400 text-sm italic border border-dashed border-neutral-200 rounded-xl bg-neutral-50">
                             No technical skills detected yet.
                         </div>
                     )}
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <h4 className="flex items-center gap-2 text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 border-b border-slate-100 pb-3">
+                <div className="bg-white p-6 rounded-3xl border border-neutral-200 shadow-sm">
+                    <h4 className="flex items-center gap-2 text-sm font-bold text-neutral-600 uppercase tracking-wider mb-4 border-b border-neutral-200 pb-3">
                         <AlertCircle size={16} className="text-amber-500" /> Recommended Additions
                     </h4>
                     {missing_keywords && missing_keywords.length > 0 ? (
@@ -69,7 +69,7 @@ export default function ResumeAnalysis({ analysis }) {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-8 text-slate-500 text-sm italic border border-dashed border-slate-200 rounded-xl bg-slate-50">
+                        <div className="text-center py-8 text-neutral-400 text-sm italic border border-dashed border-neutral-200 rounded-xl bg-neutral-50">
                             Great coverage! No major keywords missing.
                         </div>
                     )}

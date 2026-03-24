@@ -64,39 +64,43 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
     onSubmit(finalData);
   };
 
+  // Shared input classes
+  const inputBase = `w-full p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 text-sm placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all font-medium`;
+  const inputDisabled = `opacity-60 cursor-default bg-neutral-100 text-neutral-500`;
+
   return (
     <div className="w-full font-sans">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
         <div className="space-y-4">
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-2 mb-2">Basic Info</h3>
+          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Basic Info</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Full Name</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Full Name</label>
               <div className="relative">
-                <UserIcon size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <UserIcon size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="full_name"
                   type="text"
                   value={formData.full_name}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="e.g. Alex Johnson"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Domain / Job Title</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Domain / Job Title</label>
               <input
                 disabled={!editing}
                 name="domain"
                 type="text"
                 value={formData.domain}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`${inputBase} ${!editing ? inputDisabled : ""}`}
                 placeholder="e.g. Frontend Developer"
               />
             </div>
@@ -104,43 +108,43 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Gender</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Gender</label>
               <input
                 disabled={!editing}
                 name="gender"
                 type="text"
                 value={formData.gender}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`${inputBase} ${!editing ? inputDisabled : ""}`}
                 placeholder="e.g. Male/Female"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Location</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Location</label>
               <div className="relative">
-                <MapPin size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <MapPin size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="location"
                   type="text"
                   value={formData.location}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="City, Country"
                 />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Birthday</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Birthday</label>
               <div className="relative">
-                <Calendar size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <Calendar size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="birthday"
                   type="text"
                   value={formData.birthday}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="DD/MM/YYYY"
                 />
               </div>
@@ -148,13 +152,13 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Summary</label>
+            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Summary</label>
             <textarea
               disabled={!editing}
               name="summary"
               value={formData.summary}
               onChange={handleChange}
-              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[80px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+              className={`${inputBase} min-h-[80px] ${!editing ? inputDisabled : ""}`}
               rows="3"
               placeholder="Brief professional summary..."
             />
@@ -162,49 +166,49 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
         </div>
 
         <div className="space-y-4 pt-2">
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-2 mb-2">Social Links</h3>
+          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Social Links</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">GitHub</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">GitHub</label>
               <div className="relative">
-                <Github size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <Github size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="github"
                   type="text"
                   value={formData.github}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="github.com/user"
                 />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">LinkedIn</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">LinkedIn</label>
               <div className="relative">
-                <Linkedin size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <Linkedin size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="linkedin"
                   type="text"
                   value={formData.linkedin}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="linkedin.com/in/user"
                 />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Website</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Website</label>
               <div className="relative">
-                <Globe size={14} className="absolute left-3.5 top-3.5 text-slate-400" />
+                <Globe size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
                 <input
                   disabled={!editing}
                   name="website"
                   type="text"
                   value={formData.website}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
                   placeholder="your-portfolio.com"
                 />
               </div>
@@ -212,63 +216,62 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
           </div>
         </div>
 
-
         <div className="space-y-4 pt-2">
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-2 mb-2">Professional Info</h3>
+          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Professional Info</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Experience</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Experience</label>
               <textarea
                 disabled={!editing}
                 name="work"
                 value={formData.work}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`${inputBase} min-h-[100px] ${!editing ? inputDisabled : ""}`}
                 placeholder="Work history..."
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Education</label>
+              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Education</label>
               <textarea
                 disabled={!editing}
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
-                className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[100px] font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+                className={`${inputBase} min-h-[100px] ${!editing ? inputDisabled : ""}`}
                 placeholder="Degrees..."
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Skills (Comma Separated)</label>
+            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Skills (Comma Separated)</label>
             <input
               disabled={!editing}
               name="skills"
               type="text"
               value={formData.skills}
               onChange={handleChange}
-              className={`w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-medium ${!editing ? "opacity-60 cursor-default bg-slate-100 text-slate-600" : ""}`}
+              className={`${inputBase} ${!editing ? inputDisabled : ""}`}
               placeholder="e.g. Python, React"
             />
           </div>
         </div>
 
-        <div className="mt-4 flex gap-3 pt-4 border-t border-slate-100 z-20">
+        <div className="mt-4 flex gap-3 pt-4 border-t border-neutral-200 z-20">
           {editing ? (
             <>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
+                className="flex-1 py-3 bg-primary-500 hover:bg-primary-600 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
               >
                 {loading ? "Saving..." : <><Save size={16} /> Save Profile</>}
               </button>
               <button
                 type="button"
                 onClick={() => onToggleEdit(false)}
-                className="px-6 py-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                className="px-6 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 rounded-xl text-neutral-500 text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
               >
                 <X size={16} /> Cancel
               </button>
@@ -277,7 +280,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
             <button
               type="button"
               onClick={() => onToggleEdit(true)}
-              className="w-full mt-2 py-3.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl text-blue-700 text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+              className="w-full mt-2 py-3.5 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-xl text-primary-600 text-sm font-bold flex items-center justify-center gap-2 transition-all group"
             >
               <Edit2 size={16} className="group-hover:scale-110 transition-transform" /> Edit Profile
             </button>

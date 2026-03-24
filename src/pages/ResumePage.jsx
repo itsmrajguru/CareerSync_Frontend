@@ -43,15 +43,15 @@ export default function ResumePage() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-600 pb-20 font-sans">
+        <div className="min-h-screen bg-neutral-50 text-neutral-500 pb-20 font-sans">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-6 py-8">
                 <div className="mb-8 text-center">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-slate-900">
-                        ATS Resume <span className="text-blue-600">Checker</span>
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-neutral-700">
+                        ATS Resume <span className="text-primary-500">Checker</span>
                     </h1>
-                    <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-neutral-400 text-base max-w-2xl mx-auto leading-relaxed">
                         Upload your resume to evaluate your ATS score, discover missing skills, and receive actionable insights to boost your job application success rate.
                     </p>
                 </div>
@@ -59,7 +59,7 @@ export default function ResumePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <div className="lg:col-span-1 flex flex-col gap-6">
-                        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 flex flex-col justify-center min-h-[400px]">
+                        <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-8 flex flex-col justify-center min-h-[400px]">
                             <input
                                 type="file"
                                 accept="application/pdf,.pdf"
@@ -72,33 +72,33 @@ export default function ResumePage() {
                                 htmlFor="resume-upload"
                                 className={`cursor-pointer flex flex-col items-center justify-center gap-4 p-8 rounded-2xl border-2 border-dashed transition-all duration-300 group
                                     ${file
-                                        ? "border-blue-400 bg-blue-50/50"
-                                        : "border-slate-200 hover:border-blue-400 hover:bg-slate-50"
+                                        ? "border-primary-400 bg-primary-50/50"
+                                        : "border-neutral-200 hover:border-primary-400 hover:bg-neutral-50"
                                     }`}
                             >
                                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300
                                     ${file
-                                        ? "bg-blue-100"
-                                        : "bg-slate-100 group-hover:scale-105"
+                                        ? "bg-primary-100"
+                                        : "bg-neutral-100 group-hover:scale-105"
                                     }`}>
                                     {file ? (
-                                        <FileText size={28} className="text-blue-600" />
+                                        <FileText size={28} className="text-primary-500" />
                                     ) : (
-                                        <UploadCloud size={28} className="text-slate-500 group-hover:text-blue-600" />
+                                        <UploadCloud size={28} className="text-neutral-400 group-hover:text-primary-500" />
                                     )}
                                 </div>
 
                                 <div className="text-center space-y-1">
-                                    <h3 className="text-base font-bold text-slate-900">
+                                    <h3 className="text-base font-bold text-neutral-700">
                                         {file ? "Resume Selected" : "Upload Resume"}
                                     </h3>
-                                    <p className="text-sm text-slate-500">
+                                    <p className="text-sm text-neutral-400">
                                         {file ? file.name : "Drag & drop or click to browse (PDF)"}
                                     </p>
                                 </div>
 
                                 {file && !analysis && (
-                                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 mt-2">
+                                    <div className="flex items-center gap-2 text-xs font-semibold text-neutral-600 bg-neutral-100 px-3 py-1.5 rounded-full border border-neutral-200 mt-2">
                                         <CheckCircle2 size={14} className="text-green-600" /> Ready to analyze
                                     </div>
                                 )}
@@ -108,7 +108,7 @@ export default function ResumePage() {
                                 <button
                                     onClick={handleUpload}
                                     disabled={uploading}
-                                    className="w-full mt-6 bg-blue-600 text-white py-3.5 rounded-xl text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full mt-6 bg-primary-500 text-white py-3.5 rounded-xl text-sm font-bold shadow-sm hover:bg-primary-600 transition-colors flex items-center justify-center gap-2"
                                 >
                                     {uploading ? (
                                         <>
@@ -130,23 +130,23 @@ export default function ResumePage() {
 
                     <div className="lg:col-span-2 flex flex-col h-full">
                         {!file && !analysis && (
-                            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
-                                <FileText size={48} className="text-slate-200 mb-4" />
-                                <p className="text-slate-500 font-medium text-lg">Upload your resume to see the ATS analysis.</p>
+                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
+                                <FileText size={48} className="text-neutral-200 mb-4" />
+                                <p className="text-neutral-400 font-medium text-lg">Upload your resume to see the ATS analysis.</p>
                             </div>
                         )}
 
                         {file && !analysis && !uploading && (
-                            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
-                                <FileText size={48} className="text-blue-200 mb-4" />
-                                <p className="text-slate-600 font-medium text-lg">Click "Run Smart Analysis" to process your resume.</p>
+                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
+                                <FileText size={48} className="text-primary-200 mb-4" />
+                                <p className="text-neutral-500 font-medium text-lg">Click "Run Smart Analysis" to process your resume.</p>
                             </div>
                         )}
 
                         {file && uploading && (
-                            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px] gap-4">
-                                <Loader2 size={40} className="animate-spin text-blue-500" />
-                                <p className="text-slate-600 font-medium text-lg">Analyzing resume structure and extracting keywords...</p>
+                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px] gap-4">
+                                <Loader2 size={40} className="animate-spin text-primary-500" />
+                                <p className="text-neutral-500 font-medium text-lg">Analyzing resume structure and extracting keywords...</p>
                             </div>
                         )}
 
