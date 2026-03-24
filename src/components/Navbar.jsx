@@ -1,147 +1,259 @@
-
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  LogOut,
-  Bell,
-  Settings,
-  ChevronDown,
-  Briefcase,
-  Menu,
-  X,
+  Briefcase, PenLine, FileText, User, Bell,
+  HelpCircle, Settings, LogOut, Menu, X,
 } from "lucide-react";
 
+const NAV_LINKS = [
+  { label: "Dashboard", path: "/dashboard", icon: <Briefcase size={15} /> },
+  { label: "Internships", path: "/internships", icon: <PenLine size={15} /> },
+  { label: "Resume", path: "/resume", icon: <FileText size={15} /> },
+  { label: "Profile", path: "/profile", icon: <User size={15} /> },
+];
 
+//Navbar 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
+  // ── Session & User Data ────────────────────────────────────────────
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const token = localStorage.getItem("token");
+  const initial = (user.username || "U")[0].toUpperCase();
 
+  // ── Interactivity & Lifecycle ──────────────────────────────────────
+  
+  // Step 1: Close profile dropdown on any outside click
+  useEffect(() => {
+    function handler(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  // Step 2: Ensure mobile menu closes when user changes routes
+  useEffect(() => { 
+    setMobileOpen(false); 
+  }, [location.pathname]);
+
+  /**
+   * handleLogout: Clears user session and redirects to login
+   */
   const handleLogout = () => {
+    // 1. Clear all authentication artifacts
     localStorage.removeItem("token");
     localStorage.removeItem("refresh");
     localStorage.removeItem("user");
+    
+    // 2. Reset UI states
+    setDropdownOpen(false);
     setMobileOpen(false);
+    
+    // 3. Move user back to the entry gate
     navigate("/login");
   };
 
-  const navItems = [
-    { label: "JOBS", path: "/jobs" },
-    { label: "RESUME", path: "/resume" },
-    { label: "PROFILE", path: "/profile" },
-  ];
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-neutral-200">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/jobs" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center shadow-sm group-hover:bg-primary-600 transition-colors">
-              <Briefcase size={16} className="text-white" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight text-neutral-700 group-hover:text-primary-500 transition-colors">
-              CareerSync
+    <>
+      {/* ── Desktop Desktop Bar ───────────────────────────────────────── */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-neutral-100">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+
+          {/* Logo & Brand Identity */}
+          <Link to="/dashboard" className="flex items-center gap-2.5 flex-shrink-0 group">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-9 w-9 rounded-full object-cover transition-transform group-hover:scale-105"
+            />
+            <span className="text-[19px] font-extrabold tracking-tight text-black">
+              Career<span className="text-primary-400">Sync</span>
             </span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            <div className="hidden md:flex items-center gap-2">
-              {navItems.map((item) => {
-                const active = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`px-3 py-1.5 rounded-lg text-[15px] font-medium transition-all duration-200
-                      ${active
-                        ? "bg-primary-50 text-primary-600"
-                        : "text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50"
-                      }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
+          {/* Right-Side Desktop Actions */}
+          <div className="hidden md:flex items-center gap-1">
 
-            <div className="flex items-center gap-3">
-              {token && (
-                <button className="hidden md:flex p-2 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-50 transition-colors">
-                  <Bell size={20} />
-                </button>
-              )}
-
-              {token && (
-                <div className="hidden md:block relative group">
-                  <div className="flex items-center gap-2 cursor-pointer p-1 rounded-lg hover:bg-neutral-50 transition-colors">
-                    {/* Avatar bg: was 2563eb (blue), now da7756 (terracotta) to match brand */}
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${user.username || "User"}&background=da7756&color=fff&rounded=true`}
-                      alt="Profile"
-                      className="w-8 h-8 rounded-full border border-neutral-200"
-                    />
-                    <ChevronDown size={14} className="text-neutral-400" />
-                  </div>
-
-                  <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0">
-                    <div className="w-48 bg-white border border-neutral-200 rounded-xl shadow-lg p-1 flex flex-col">
-                      <button className="w-full flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-500 rounded-lg hover:bg-neutral-50 hover:text-neutral-700 transition-colors">
-                        <Settings size={16} /> Settings
-                      </button>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 hover:text-red-700 transition-colors"
-                      >
-                        <LogOut size={16} /> Logout
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <button
-                className="md:hidden p-2 rounded-lg text-neutral-600 hover:bg-neutral-100"
-                onClick={() => setMobileOpen(!mobileOpen)}
-              >
-                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {mobileOpen && (
-        <div className="md:hidden bg-white border-b border-neutral-200 animate-fade-in-down">
-          <div className="px-4 py-4 space-y-1">
-            {navItems.map((item) => (
+            {/* Navigation Navigation */}
+            {NAV_LINKS.map(({ label, path, icon }) => (
               <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileOpen(false)}
-                className={`block px-4 py-3 rounded-lg font-semibold transition-colors
-                  ${location.pathname === item.path
-                    ? "bg-primary-50 text-primary-600"
-                    : "text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50"
+                key={path}
+                to={path}
+                className={`flex items-center gap-2 px-3.5 py-0.5 rounded-lg text-[13.5px] font-semibold
+                            transition-all duration-150
+                            ${isActive(path)
+                    ? "bg-primary-50 text-primary-500"
+                    : "text-black hover:bg-neutral-50"
                   }`}
               >
-                {item.label}
+                <span className={isActive(path) ? "text-primary-400" : "text-neutral-400"}>
+                  {icon}
+                </span>
+                {label}
               </Link>
             ))}
 
+            <div className="w-px h-6 bg-neutral-100 mx-2" />
+
+            {/* Notification Center */}
             {token && (
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-semibold transition-colors mt-2"
-              >
-                <LogOut size={18} /> Logout
+              <button className="relative w-9 h-9 rounded-lg flex items-center justify-center
+                                 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
+                                 transition-all duration-150">
+                <Bell size={18} />
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500
+                                 border border-white" />
               </button>
             )}
+
+            {/* Support/Help */}
+            <button className="w-9 h-9 rounded-lg flex items-center justify-center
+                               text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
+                               transition-all duration-150">
+              <HelpCircle size={18} />
+            </button>
+
+            <div className="w-px h-6 bg-neutral-100 mx-2" />
+
+            {/* User Profile & Account Dropdown */}
+            {token && (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen((o) => !o)}
+                  className={`w-9 h-9 rounded-full bg-primary-400 flex items-center justify-center
+                              text-white text-sm font-bold transition-all duration-150
+                              hover:bg-primary-500 ring-2 ring-transparent
+                              ${dropdownOpen ? "ring-primary-200" : ""}`}
+                >
+                  {initial}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-neutral-100
+                                  rounded-2xl shadow-lg shadow-neutral-100/80 py-1.5 z-50">
+
+                    {/* Quick Profile Overview */}
+                    <div className="px-4 py-3 border-b border-neutral-100">
+                      <p className="text-sm font-bold text-black leading-tight">
+                        {user.username || "User"}
+                      </p>
+                      <p className="text-xs text-neutral-400 mt-0.5 truncate">
+                        {user.email || ""}
+                      </p>
+                    </div>
+
+                    <div className="py-1">
+                      <Link
+                        to="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-black hover:bg-neutral-50 transition-colors"
+                      >
+                        <User size={15} /> Profile
+                      </Link>
+                      <button
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-black hover:bg-neutral-50 transition-colors"
+                      >
+                        <Settings size={15} /> Settings
+                      </button>
+                    </div>
+
+                    <div className="border-t border-neutral-100 pt-1">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                      >
+                        <LogOut size={15} /> Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Hamburger (Mobile Toggle) */}
+          <button
+            className="md:hidden w-9 h-9 rounded-lg flex items-center justify-center
+                       text-neutral-600 hover:bg-neutral-50 transition-colors"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* ── Mobile Overlay Menu ────────────────────────────────────────── */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 top-16 z-40 bg-white flex flex-col pt-4">
+
+          {/* User Preview */}
+          {token && (
+            <div className="flex items-center gap-3 px-6 py-5 border-b border-neutral-100">
+              <div className="w-10 h-10 rounded-full bg-primary-400 flex items-center justify-center
+                              text-white text-sm font-bold flex-shrink-0">
+                {initial}
+              </div>
+              <div>
+                <p className="text-sm font-bold text-neutral-800">{user.username || "User"}</p>
+                <p className="text-xs text-neutral-400">{user.email || ""}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Sidebar Links */}
+          <nav className="flex flex-col px-4 py-4 gap-1 flex-1">
+            {NAV_LINKS.map(({ label, path, icon }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[15px] font-semibold
+                            transition-colors
+                            ${isActive(path)
+                    ? "bg-primary-50 text-primary-500"
+                    : "text-black hover:bg-neutral-50"
+                  }`}
+              >
+                <span className={isActive(path) ? "text-primary-400" : "text-neutral-400"}>
+                  {icon}
+                </span>
+                {label}
+              </Link>
+            ))}
+
+            <div className="h-px bg-neutral-100 my-3" />
+
+            <button className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-semibold
+                               text-black hover:bg-neutral-50 transition-colors text-left">
+              <span className="text-neutral-400"><Settings size={15} /></span>
+              Settings
+            </button>
+          </nav>
+
+          {/* Account Footnote & Logout */}
+          <div className="px-4 pb-8 flex flex-col gap-3">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-semibold
+                         text-red-500 hover:bg-red-50 transition-colors w-full"
+            >
+              <LogOut size={15} /> Logout
+            </button>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
