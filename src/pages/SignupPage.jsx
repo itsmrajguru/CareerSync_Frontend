@@ -12,26 +12,24 @@ export default function SignupPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.debug('[Signup] Mounted');
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.debug('[Signup] Initiated submit');
     setError("");
     setLoading(true);
+
     try {
       const data = await signupUser({ username, email, password });
-      console.debug('[Signup] Response:', data);
       if (data && data.success) {
         setError("");
-        setSuccessMsg(data.message || 'Account created! Please verify your email.');
+        setSuccessMsg(data.message || 'Account created successfully! Please verify your email.');
         setTimeout(() => navigate("/login"), 3000);
       } else {
-        setError(data.message || "Signup failed");
+        setError(data.message || "Signup failed. Please check your details.");
       }
     } catch (err) {
-      console.error("Signup Error Detailed:", err.response?.data || err);
+      console.error("Signup Flow Error:", err);
       const serverMessage = err.response?.data?.message;
       setError(serverMessage || err.message || "Connection error. Please try again.");
     } finally {
@@ -44,7 +42,12 @@ export default function SignupPage() {
       <div className="w-full max-w-md relative z-10">
         <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
           <div className="text-center mb-8">
-            <span className="text-2xl font-black text-neutral-700 tracking-tight">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+            />
+            <span className="text-2xl font-black text-neutral-800 tracking-tight block">
               Career<span className="text-primary-500">Sync</span>
             </span>
             <p className="text-neutral-400 mt-2 text-sm font-medium">Sign up to find your next opportunity.</p>
@@ -62,6 +65,8 @@ export default function SignupPage() {
             </div>
           )}
 
+{/*through these 3 forms, data will be sent to the axios and 
+finally to databases via backend */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Username</label>
@@ -110,7 +115,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="mt-4 w-full py-3.5 rounded-full bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
             >
               {loading ? "Creating Account..." : "Create Account"}
             </button>

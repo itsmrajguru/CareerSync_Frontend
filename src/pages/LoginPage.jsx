@@ -9,21 +9,24 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+//submit the form and call the login axios function
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
       const data = await loginUser(email, password);
-      // Backend returns { success, message, accessToken }
+
+// If the login is successful, the user will be redirected to the dashboard page
       if (data.success) {
-        // api.js already handles storing data.accessToken as "token"
-        navigate("/home");
+        navigate("/dashboard");
       } else {
-        setError(data.message || "Login failed");
+        // Step 3: Display specific server error messages
+        setError(data.message || "Login failed. Please check your credentials.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Login Error:", err);
       setError(err.response?.data?.message || err.message || "Connection error. Please try again.");
     } finally {
       setLoading(false);
@@ -35,18 +38,25 @@ export default function LoginPage() {
       <div className="w-full max-w-md relative z-10">
         <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
           <div className="text-center mb-8">
-            <span className="text-2xl font-black text-neutral-700 tracking-tight">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+            />
+            <span className="text-2xl font-black text-neutral-800 tracking-tight block">
               Career<span className="text-primary-500">Sync</span>
             </span>
             <p className="text-neutral-400 mt-2 text-sm font-medium">Welcome back! Please login to continue.</p>
           </div>
 
+{/* Displaying the login failed errors */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
               {error}
             </div>
           )}
 
+{/* Through these forma we are submitting the data to the backend */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
@@ -86,7 +96,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="mt-4 w-full py-3.5 rounded-full bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
