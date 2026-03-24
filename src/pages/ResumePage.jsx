@@ -1,163 +1,143 @@
 import { useState } from "react";
-import { UploadCloud, FileText, Loader2, CheckCircle2 } from "lucide-react";
-import Navbar from "../components/Navbar";
+import { Upload, FileText, CheckCircle, ChevronRight, XCircle } from "lucide-react";
+import PageLayout from "../components/PageLayout";
 import ResumeAnalysis from "../components/ResumeAnalysis";
 import { uploadResume } from "../api";
 
+
+//call the lexer analysis for the resume uploaded by the user
 export default function ResumePage() {
     const [file, setFile] = useState(null);
-    const [uploading, setUploading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [analysis, setAnalysis] = useState(null);
     const [error, setError] = useState("");
 
     const handleFileChange = (e) => {
-        const selectedFile = e.target.files?.[0];
-        if (selectedFile) {
-            if (selectedFile.type !== "application/pdf" && !selectedFile.name.toLowerCase().endsWith('.pdf')) {
-                setError("Please upload a valid PDF file.");
-                setFile(null);
-                setAnalysis(null);
-                return;
-            }
-            setFile(selectedFile);
+        if (e.target.files && e.target.files[0]) {
+            setFile(e.target.files[0]);
             setError("");
-            setAnalysis(null);
         }
     };
 
     const handleUpload = async () => {
-        if (!file) return;
-
-        setUploading(true);
+        if (!file) {
+            setError("Please select a valid PDF or DOCX file first.");
+            return;
+        }
+        setLoading(true);
         setError("");
-
         try {
-            const data = await uploadResume(file);
-            setAnalysis(data.analysis);
+            const responseData = await uploadResume(file);
+// Handling both plain response mapping or nested analysis payloads.
+            setAnalysis(responseData.analysis || responseData);
         } catch (err) {
             console.error(err);
-            setError("Failed to parse resume. Please ensure it's a valid PDF.");
+            setError(err.response?.data?.message || err.message || "Something went wrong comparing your resume. Try again.");
         } finally {
-            setUploading(false);
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-neutral-50 text-neutral-500 pb-20 font-sans">
-            <Navbar />
-
-            <main className="max-w-7xl mx-auto px-6 py-8">
-                <div className="mb-8 text-center">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-neutral-700">
-                        ATS Resume <span className="text-primary-500">Checker</span>
+        <PageLayout>
+            <div className="relative z-10 animate-fade-in-up">
+{/* Hero Section */}
+                <div className="mb-16 md:mb-24">
+                    <h1 className="text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-6">
+                        Resume <span className="text-primary-400">Checker.</span>
                     </h1>
-                    <p className="text-neutral-400 text-base max-w-2xl mx-auto leading-relaxed">
-                        Upload your resume to evaluate your ATS score, discover missing skills, and receive actionable insights to boost your job application success rate.
+                    <p className="max-w-2xl">
+                        Upload your resume to see how it performs against current Applicant Tracking Systems (ATS). Get instant feedback on keywords and impact.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                    <div className="lg:col-span-1 flex flex-col gap-6">
-                        <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-8 flex flex-col justify-center min-h-[400px]">
+{/* After analysis , we will show the card displaying the result */}
+                {!analysis ? (
+                    <div className="max-w-3xl animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                        <div className="bg-white border-2 border-dashed border-neutral-200 rounded-3xl p-10 md:p-16 text-center hover:border-primary-300 hover:bg-primary-50/30 transition-all group relative">
+                            
                             <input
                                 type="file"
-                                accept="application/pdf,.pdf"
+                                accept=".pdf,.doc,.docx"
                                 onChange={handleFileChange}
-                                id="resume-upload"
-                                className="hidden"
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                title="Click to upload resume"
                             />
 
-                            <label
-                                htmlFor="resume-upload"
-                                className={`cursor-pointer flex flex-col items-center justify-center gap-4 p-8 rounded-2xl border-2 border-dashed transition-all duration-300 group
-                                    ${file
-                                        ? "border-primary-400 bg-primary-50/50"
-                                        : "border-neutral-200 hover:border-primary-400 hover:bg-neutral-50"
-                                    }`}
-                            >
-                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300
-                                    ${file
-                                        ? "bg-primary-100"
-                                        : "bg-neutral-100 group-hover:scale-105"
-                                    }`}>
-                                    {file ? (
-                                        <FileText size={28} className="text-primary-500" />
-                                    ) : (
-                                        <UploadCloud size={28} className="text-neutral-400 group-hover:text-primary-500" />
-                                    )}
+                            <div className="flex flex-col items-center justify-center space-y-6 pointer-events-none relative z-0">
+                                <div className="w-20 h-20 bg-neutral-50 rounded-full flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-transform shadow-sm">
+                                    {file ? <FileText size={32} className="text-primary-400" /> : <Upload size={32} className="text-neutral-400 group-hover:text-primary-400" />}
                                 </div>
-
-                                <div className="text-center space-y-1">
-                                    <h3 className="text-base font-bold text-neutral-700">
-                                        {file ? "Resume Selected" : "Upload Resume"}
+                                
+                                <div>
+                                    <h3 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">
+                                        {file ? file.name : "Drag & drop your resume"}
                                     </h3>
-                                    <p className="text-sm text-neutral-400">
-                                        {file ? file.name : "Drag & drop or click to browse (PDF)"}
+                                    <p className="text-neutral-500 font-medium">
+                                        {file ? "Ready to analyze" : "Supports PDF, DOC, DOCX (Max 5MB)"}
                                     </p>
                                 </div>
+                            </div>
+                        </div>
 
-                                {file && !analysis && (
-                                    <div className="flex items-center gap-2 text-xs font-semibold text-neutral-600 bg-neutral-100 px-3 py-1.5 rounded-full border border-neutral-200 mt-2">
-                                        <CheckCircle2 size={14} className="text-green-600" /> Ready to analyze
-                                    </div>
+                        {error && (
+                            <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-4">
+                                <XCircle className="text-red-500 shrink-0 mt-0.5" size={20} />
+                                <p className="text-red-700 font-bold text-sm leading-relaxed">{error}</p>
+                            </div>
+                        )}
+
+                        <div className="mt-12">
+                            <button
+                                onClick={handleUpload}
+                                disabled={!file || loading}
+                                className="w-full md:w-auto px-10 py-5 bg-neutral-900 text-white rounded-2xl font-bold text-lg hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-3 active:scale-[0.98]"
+                            >
+                                {loading ? (
+                                    <>
+                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        Analyzing Engine...
+                                    </>
+                                ) : (
+                                    <>
+                                        Analyze Resume <ChevronRight size={20} />
+                                    </>
                                 )}
-                            </label>
+                            </button>
+                        </div>
 
-                            {file && !analysis && (
-                                <button
-                                    onClick={handleUpload}
-                                    disabled={uploading}
-                                    className="w-full mt-6 bg-primary-500 text-white py-3.5 rounded-xl text-sm font-bold shadow-sm hover:bg-primary-600 transition-colors flex items-center justify-center gap-2"
-                                >
-                                    {uploading ? (
-                                        <>
-                                            <Loader2 size={18} className="animate-spin" /> Analyzing...
-                                        </>
-                                    ) : (
-                                        "Run Smart Analysis"
-                                    )}
-                                </button>
-                            )}
-
-                            {error && (
-                                <div className="mt-4 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm font-medium text-center">
-                                    {error}
+                        {/* Feature mini list */}
+                        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 border-t border-neutral-100">
+                            {[
+                                "Extensive Keyword Matching",
+                                "Readability Scoring",
+                                "Format Validation"
+                            ].map((feature, i) => (
+                                <div key={i} className="flex items-center gap-3">
+                                    <CheckCircle size={18} className="text-primary-400" />
+                                    <span className="text-sm font-bold text-neutral-700">{feature}</span>
                                 </div>
-                            )}
+                            ))}
                         </div>
                     </div>
-
-                    <div className="lg:col-span-2 flex flex-col h-full">
-                        {!file && !analysis && (
-                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
-                                <FileText size={48} className="text-neutral-200 mb-4" />
-                                <p className="text-neutral-400 font-medium text-lg">Upload your resume to see the ATS analysis.</p>
-                            </div>
-                        )}
-
-                        {file && !analysis && !uploading && (
-                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px]">
-                                <FileText size={48} className="text-primary-200 mb-4" />
-                                <p className="text-neutral-500 font-medium text-lg">Click "Run Smart Analysis" to process your resume.</p>
-                            </div>
-                        )}
-
-                        {file && uploading && (
-                            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-12 flex flex-col items-center justify-center h-full min-h-[400px] gap-4">
-                                <Loader2 size={40} className="animate-spin text-primary-500" />
-                                <p className="text-neutral-500 font-medium text-lg">Analyzing resume structure and extracting keywords...</p>
-                            </div>
-                        )}
-
-                        {analysis && (
-                            <div className="animate-fade-in-right h-full">
-                                <ResumeAnalysis analysis={analysis} />
-                            </div>
-                        )}
+                ) : (
+                    <div className="max-w-4xl">
+                        <div className="flex justify-between items-center mb-10 pb-6 border-b border-neutral-100">
+                            <h2 className="text-2xl font-bold text-neutral-900">Analysis Results</h2>
+                            <button
+                                onClick={() => {
+                                    setAnalysis(null);
+                                    setFile(null);
+                                }}
+                                className="text-sm font-bold text-neutral-500 hover:text-primary-500 transition-colors"
+                            >
+                                Analyze Another Resume
+                            </button>
+                        </div>
+                        <ResumeAnalysis analysis={analysis} />
                     </div>
-                </div>
-            </main>
-        </div>
+                )}
+            </div>
+        </PageLayout>
     );
 }
