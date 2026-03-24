@@ -1,25 +1,27 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin, Building, Clock, Briefcase, Share2, ExternalLink } from "lucide-react";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 
 export default function JobDetailsPage() {
     const { state } = useLocation();
     const navigate = useNavigate();
     const job = state?.job;
 
+    /* This page opens a window sized popup to show the job
+    description of an indivisual job  */
     if (!job) {
         return (
-            <div className="min-h-screen bg-neutral-50 text-neutral-700 flex items-center justify-center font-sans">
-                <div className="text-center">
+            <PageLayout>
+                <div className="py-20 text-center">
                     <h2 className="text-2xl font-bold mb-4">Job details not found</h2>
                     <button
                         onClick={() => navigate("/jobs")}
-                        className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-bold transition-colors shadow-sm"
+                        className="px-8 py-4 bg-primary-400 hover:bg-primary-500 text-white rounded-2xl font-bold shadow-sm transition-transform active:scale-95"
                     >
                         Back to Jobs
                     </button>
                 </div>
-            </div>
+            </PageLayout>
         );
     }
 
@@ -28,48 +30,53 @@ export default function JobDetailsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-neutral-50 text-neutral-500 pb-24 font-sans">
-            <Navbar />
+        <PageLayout>
 
-            <div className="relative pt-8 pb-12 px-6">
-                <div className="max-w-5xl mx-auto relative z-10">
+{/* This page inicludes the data that we are showing 
+inside the job card */}
+            <div className="relative pt-6 pb-12">
+                <div className="relative z-10 animate-fade-in-down">
+{/*Go Back to Jobs Button */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 text-neutral-400 hover:text-neutral-700 mb-6 transition-colors font-medium text-sm group"
+                        className="inline-flex items-center gap-2 text-neutral-400 hover:text-neutral-900 mb-8 md:mb-12 transition-colors font-bold text-xs uppercase tracking-widest group"
                     >
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Jobs
                     </button>
 
-                    <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-8 md:p-10 relative overflow-hidden">
-                        <div className="flex flex-col md:flex-row gap-6 items-start">
-                            <div className="w-16 h-16 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-center shrink-0">
-                                <span className="text-2xl font-bold text-neutral-600">
-                                    {job.company.display_name.charAt(0)}
-                                </span>
-                            </div>
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+{/* All detaials of the job*/}
+                        <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl bg-neutral-50/50 border border-neutral-100 flex items-center justify-center shrink-0">
+                            <span className="text-[3rem] font-extrabold text-neutral-800 tracking-[-1.5px]">
+                                {job.company.display_name.charAt(0)}
+                            </span>
+                        </div>
 
-                            <div className="flex-1">
-                                <h1 className="text-3xl font-bold text-neutral-700 mb-3 tracking-tight">
-                                    {job.title}
-                                </h1>
+                        <div className="flex-1 mt-2">
+                            <p className="text-xs font-bold text-primary-400 tracking-widest uppercase mb-3">
+                                {job.company.display_name}
+                            </p>
+                            
+                            <h1 className="text-[2.5rem] md:text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-6">
+                                {job.title}
+                            </h1>
 
-                                <div className="flex flex-wrap gap-y-2 gap-x-6 text-neutral-400 text-sm mb-2 font-medium">
-                                    <div className="flex items-center gap-1.5">
-                                        <Building size={16} className="text-neutral-400" />
-                                        {job.company.display_name}
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <MapPin size={16} className="text-neutral-400" />
-                                        {job.location.display_name}
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <Clock size={16} className="text-neutral-400" />
-                                        {new Date(job.created).toLocaleDateString()}
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <Briefcase size={16} className="text-neutral-400" />
-                                        {job.contract_time ? job.contract_time.replace('_', ' ') : 'Full Time'}
-                                    </div>
+                            <div className="flex flex-wrap gap-y-4 gap-x-8">
+                                <div className="flex items-center gap-2">
+                                    <Building size={18} className="text-neutral-300" />
+                                    {job.company.display_name}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <MapPin size={18} className="text-neutral-300" />
+                                    {job.location.display_name}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Clock size={18} className="text-neutral-300" />
+                                    {new Date(job.created).toLocaleDateString()}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Briefcase size={18} className="text-neutral-300" />
+                                    {job.contract_time ? job.contract_time.replace('_', ' ') : 'Full Time'}
                                 </div>
                             </div>
                         </div>
@@ -77,43 +84,45 @@ export default function JobDetailsPage() {
                 </div>
             </div>
 
-            <div className="max-w-5xl mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="relative z-10 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 pt-12 border-t border-neutral-100">
 
-                    <div className="lg:col-span-2 space-y-6">
-                        <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
-                            <h2 className="text-xl font-bold text-neutral-700 mb-6 border-b border-neutral-200 pb-4">
-                                About the Role
-                            </h2>
-                            <div
-                                className="prose prose-neutral prose-sm max-w-none text-neutral-500 leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: job.description }}
-                            />
-                        </div>
+{/* LeftSide: Job Description */}
+                    <div className="md:col-span-2">
+                        <h2 className="text-2xl font-bold text-neutral-900 mb-8 border-b border-neutral-100 pb-5">
+                            About the Role
+                        </h2>
+                        <div
+                            className="prose prose-lg prose-neutral max-w-none prose-p:mb-6 prose-strong:text-neutral-900 prose-strong:font-bold prose-ul:my-6 prose-li:my-2"
+                            dangerouslySetInnerHTML={{ __html: job.description }}
+                        />
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm sticky top-24">
-                            <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-4">
-                                Overview
+{/* Rightside: Sidebar */}
+                    <div className="space-y-8 md:sticky md:top-32">
+                        <div>
+                            <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-widest mb-6">
+                                ROLE OVERVIEW
                             </h3>
 
-                            <div className="space-y-3">
-                                <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
-                                    <p className="text-xs text-neutral-400 mb-1 font-medium">Salary</p>
-                                    <p className="text-neutral-700 font-bold">
-                                        {job.salary_min ? `£${job.salary_min}` : "Competitive"}
+                            <div className="space-y-4">
+                                <div className="flex flex-col gap-1 pb-4 border-b border-neutral-100">
+                                    <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Base Salary</p>
+                                    <p className="text-neutral-900 font-bold text-xl">
+                                        {job.salary_min ? `£${job.salary_min.toLocaleString()}` : "Competitive"}
                                     </p>
                                 </div>
 
-                                <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
-                                    <p className="text-xs text-neutral-400 mb-1 font-medium">Job Type</p>
-                                    <p className="text-neutral-700 font-bold capitalize">
+                                <div className="flex flex-col gap-1 pb-4 border-b border-neutral-100">
+                                    <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Job Type</p>
+                                    <p className="text-neutral-900 font-bold text-xl capitalize">
                                         {job.contract_type || "Permanent"}
                                     </p>
                                 </div>
                             </div>
 
+
+{/* Button to share the job */}
                             <button
                                 onClick={() => {
                                     if (navigator.share) {
@@ -127,33 +136,23 @@ export default function JobDetailsPage() {
                                         alert("Link copied to clipboard!");
                                     }
                                 }}
-                                className="w-full mt-6 py-2.5 border border-neutral-200 rounded-xl text-neutral-600 text-sm font-semibold hover:bg-neutral-50 flex items-center justify-center gap-2 transition-all shadow-sm"
+                                className="w-full mt-8 py-4 border-2 border-neutral-100 rounded-2xl text-neutral-800 text-sm font-bold hover:bg-neutral-50 flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98]"
                             >
-                                <Share2 size={16} /> Share Job
+{/* this button takes you to the source of the job
+from where it is taken */}
+                                <Share2 size={16} /> Share Opportunity
+                            </button>
+                            
+                            <button
+                                onClick={handleApply}
+                                className="w-full mt-4 py-4 bg-primary-400 rounded-2xl text-white font-bold text-base shadow-[0_4px_20px_rgb(2,188,240,0.3)] hover:bg-primary-500 flex items-center justify-center gap-3 transition-transform active:scale-[0.98]"
+                            >
+                                Apply Externally <ExternalLink size={18} />
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* Sticky Apply Bar */}
-            <div className="fixed bottom-0 inset-x-0 bg-white border-t border-neutral-200 p-4 z-50 shadow-lg">
-                <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="hidden sm:block">
-                        <h3 className="text-neutral-700 font-bold">{job.title}</h3>
-                        <p className="text-neutral-400 text-xs font-medium">{job.company.display_name}</p>
-                    </div>
-
-                    <div className="flex w-full sm:w-auto gap-3">
-                        <button
-                            onClick={handleApply}
-                            className="flex-1 sm:flex-none px-8 py-3 bg-primary-500 rounded-xl text-white font-bold text-sm shadow-sm hover:bg-primary-600 flex items-center justify-center gap-2 transition-colors"
-                        >
-                            Apply at {job.company.display_name} <ExternalLink size={16} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </PageLayout>
     );
 }
