@@ -1,4 +1,3 @@
-
 import { Building2, MapPin, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,32 +10,45 @@ export default function JobCard({ job }) {
 
   return (
     <div
-      className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-6 flex flex-col justify-between hover:shadow-md hover:border-neutral-300 transition-all cursor-pointer group"
+      className="bg-neutral-100/60 border hover:border-primary-300 border-neutral-200 rounded-2xl p-6 flex flex-col cursor-pointer group hover:shadow-[0_15px_45px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-[1.03] transform-gpu"
       onClick={handleViewDetails}
     >
-      <div>
-        <h4 className="font-bold text-lg mb-3 text-neutral-700 group-hover:text-primary-500 transition-colors line-clamp-1">{job.title}</h4>
+{/* Company name */}
+      <span className="text-xs font-bold text-neutral-500 tracking-widest uppercase mb-3">
+        {job.company?.display_name || "Company"}
+      </span>
 
-        <div className="text-xs text-neutral-400 flex flex-col gap-2 mb-4 font-medium">
-          <span className="flex items-center gap-2">
-            <Building2 size={15} className="text-neutral-400" /> {job.company?.display_name || "Company"}
-          </span>
-          <span className="flex items-center gap-2">
-            <MapPin size={15} className="text-neutral-400" />{" "}
-            {job.location?.display_name?.split(",")[0]}
-          </span>
-        </div>
+{/* Title — like the feature card h3 */}
+      <h4 className="font-bold text-base leading-snug text-neutral-900 group-hover:text-primary-500 transition-colors line-clamp-2 mb-3">
+        {job.title}
+      </h4>
 
-        <p className="text-sm text-neutral-500 line-clamp-3 leading-relaxed mb-6">
-          {job.description?.replace(/<[^>]*>/g, "")}
-        </p>
+{/* Description — like the feature card paragraph */}
+      <p className="text-sm text-neutral-500 leading-relaxed line-clamp-3 mb-5">
+        {job.description?.replace(/<[^>]*>/g, "")}
+      </p>
+
+{/* Meta tags */}
+      <div className="flex flex-wrap gap-2 mb-5">
+        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-neutral-100 rounded-full px-3 py-1">
+          <MapPin size={12} className="text-neutral-300" />
+          {job.location?.display_name?.split(",")[0] || "Remote"}
+        </span>
+        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-neutral-100 rounded-full px-3 py-1">
+          <Briefcase size={12} className="text-neutral-300" />
+          {job.contract_time ? job.contract_time.replace("_", " ") : "Full Time"}
+        </span>
       </div>
 
-      <button
-        className="mt-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary-50 border border-primary-200 text-primary-600 font-semibold text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors w-full"
-      >
-        View Details <Briefcase size={14} />
-      </button>
+{/* Footer action */}
+      <div className="mt-auto border-t border-neutral-100 pt-4 flex items-center justify-between">
+        <span className="text-sm font-bold text-neutral-900 group-hover:text-primary-500 transition-colors">
+          View Details
+        </span>
+        <span className="text-neutral-300 group-hover:text-primary-400 transform group-hover:translate-x-1 transition-all">
+          &rarr;
+        </span>
+      </div>
     </div>
   );
 }
