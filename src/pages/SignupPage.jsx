@@ -7,6 +7,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,8 +25,8 @@ export default function SignupPage() {
       console.debug('[Signup] Response:', data);
       if (data && data.success) {
         setError("");
-        alert(data.message);
-        navigate("/login");
+        setSuccessMsg(data.message || 'Account created! Please verify your email.');
+        setTimeout(() => navigate("/login"), 3000);
       } else {
         setError(data.message || "Signup failed");
       }
@@ -52,6 +53,12 @@ export default function SignupPage() {
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
               {error}
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
+              {successMsg} Redirecting to login...
             </div>
           )}
 

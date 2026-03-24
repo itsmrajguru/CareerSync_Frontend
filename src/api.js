@@ -39,7 +39,7 @@ api.interceptors.response.use(
       originalRequest._retry = true
       try {
         console.log('Token Expired..attempting refresh new Access Token');
-        const res = await api.post('/auth/token/refresh', {})
+        const res = await api.post('/auth/token/refresh/', {})
         const { newAccessToken } = res;
         localStorage.setItem('token', newAccessToken)
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
