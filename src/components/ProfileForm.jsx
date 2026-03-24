@@ -45,7 +45,6 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Normalize URL schema
     const processUrl = (url) => {
       if (!url) return "";
       if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -64,9 +63,9 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
     onSubmit(finalData);
   };
 
-  // Shared input classes
-  const inputBase = `w-full p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 text-sm placeholder-neutral-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all font-medium`;
-  const inputDisabled = `opacity-60 cursor-default bg-neutral-100 text-neutral-500`;
+
+  const inputBase = `w-full p-4 bg-white border border-neutral-200 text-neutral-900 text-base placeholder-neutral-400 focus:outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-50 transition-all font-bold`;
+  const inputDisabled = `opacity-50 cursor-default bg-neutral-50 text-neutral-500`;
 
   return (
     <div className="w-full font-sans">
@@ -264,14 +263,14 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-3 bg-primary-500 hover:bg-primary-600 rounded-xl text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
+                className="flex-1 py-3 bg-primary-500 hover:bg-primary-600 rounded-xl text-white font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
               >
                 {loading ? "Saving..." : <><Save size={16} /> Save Profile</>}
               </button>
               <button
                 type="button"
                 onClick={() => onToggleEdit(false)}
-                className="px-6 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 rounded-xl text-neutral-500 text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                className="px-6 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
               >
                 <X size={16} /> Cancel
               </button>
@@ -280,7 +279,7 @@ export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loadi
             <button
               type="button"
               onClick={() => onToggleEdit(true)}
-              className="w-full mt-2 py-3.5 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-xl text-primary-600 text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+              className="w-full mt-2 py-3.5 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-full text-primary-600 font-bold flex items-center justify-center gap-2 transition-all group"
             >
               <Edit2 size={16} className="group-hover:scale-110 transition-transform" /> Edit Profile
             </button>
