@@ -48,10 +48,10 @@ export default {
         ],
       },
       fontSize: {
-        'display-xl': ['3rem',     { lineHeight: '1.15', letterSpacing: '-0.09375rem', fontWeight: '800' }],
-        'display-lg': ['1.125rem', { lineHeight: '1.7',                                fontWeight: '400' }],
-        'display-md': ['1.75rem',  { lineHeight: '1',    letterSpacing: '-0.03125rem', fontWeight: '800' }],
-        'display-sm': ['0.75rem',  { lineHeight: '1',    letterSpacing: '0.03125rem',  fontWeight: '600' }],
+        'display-xl': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.09375rem', fontWeight: '800' }],  // 48px heading
+        'display-lg': ['1.125rem', { lineHeight: '1.7', fontWeight: '400' }],  // 18px body
+        'display-md': ['1.75rem', { lineHeight: '1', letterSpacing: '-0.03125rem', fontWeight: '800' }],  // 28px stat
+        'display-sm': ['1.125rem', { lineHeight: '1.25', letterSpacing: '-0.02em', fontWeight: '700' }],  // section title
       },
       borderRadius: {
         'xl': '12px',
