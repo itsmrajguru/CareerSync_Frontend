@@ -29,7 +29,7 @@ function App() {
         <Route path="/jobs/:id" element={<ProtectedRoute><JobDetailsPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/resume" element={<ProtectedRoute><ResumePage /></ProtectedRoute>} />
-        
+
         {/* Catch-all route to prevent 404s for logged-in users trying to reach old paths */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>

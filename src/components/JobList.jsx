@@ -7,7 +7,7 @@ export default function JobList({ jobs, loading }) {
         {[1, 2, 3, 4, 5, 6].map((n) => (
           <div
             key={n}
-            className="h-64 bg-neutral-50/50 rounded-none border border-neutral-100 animate-pulse"
+            className="h-64 bg-neutral-50/50 rounded-none border border-[#b3eefb] animate-pulse"
           />
         ))}
       </div>
@@ -16,7 +16,7 @@ export default function JobList({ jobs, loading }) {
 
   if (!jobs.length) {
     return (
-      <div className="col-span-full w-full text-center text-neutral-400 py-32 font-bold px-4 border border-dashed border-neutral-200 bg-neutral-50/30">
+      <div className="col-span-full w-full text-center text-neutral-400 py-32 font-bold px-4 border border-dashed border-[#b3eefb] bg-neutral-50/30">
         No jobs found matching your criteria.
       </div>
     );

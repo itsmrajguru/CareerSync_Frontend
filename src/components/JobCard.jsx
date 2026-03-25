@@ -10,7 +10,7 @@ export default function JobCard({ job }) {
 
   return (
     <div
-      className="bg-neutral-100/60 border hover:border-primary-300 border-neutral-200 rounded-2xl p-6 flex flex-col cursor-pointer group hover:shadow-[0_15px_45px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-[1.03] transform-gpu"
+      className="bg-white border hover:border-primary-300 border-[#b3eefb] rounded-2xl p-6 flex flex-col cursor-pointer group hover:shadow-[0_15px_45px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-[1.03] transform-gpu"
       onClick={handleViewDetails}
     >
 {/* Company name */}
@@ -30,18 +30,18 @@ export default function JobCard({ job }) {
 
 {/* Meta tags */}
       <div className="flex flex-wrap gap-2 mb-5">
-        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-neutral-100 rounded-full px-3 py-1">
+        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-[#b3eefb] rounded-full px-3 py-1">
           <MapPin size={12} className="text-neutral-300" />
           {job.location?.display_name?.split(",")[0] || "Remote"}
         </span>
-        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-neutral-100 rounded-full px-3 py-1">
+        <span className="flex items-center gap-1.5 text-xs text-neutral-500 bg-white border border-[#b3eefb] rounded-full px-3 py-1">
           <Briefcase size={12} className="text-neutral-300" />
           {job.contract_time ? job.contract_time.replace("_", " ") : "Full Time"}
         </span>
       </div>
 
 {/* Footer action */}
-      <div className="mt-auto border-t border-neutral-100 pt-4 flex items-center justify-between">
+      <div className="mt-auto border-t border-[#b3eefb] pt-4 flex items-center justify-between">
         <span className="text-sm font-bold text-neutral-900 group-hover:text-primary-500 transition-colors">
           View Details
         </span>

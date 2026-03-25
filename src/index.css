@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply text-[1.125rem] leading-[1.7] text-black font-normal;
+    @apply text-[1.125rem] leading-[1.7] text-black font-normal bg-[#f0fbfe];
   }
 }
