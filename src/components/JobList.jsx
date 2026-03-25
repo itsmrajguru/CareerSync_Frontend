@@ -1,6 +1,10 @@
 import JobCard from "./JobCard";
 
 export default function JobList({ jobs, loading }) {
+
+  /* This page is receiving the jobs array 
+  and calling job card component to display the indivisual job */
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -23,6 +27,8 @@ export default function JobList({ jobs, loading }) {
   }
 
   return (
+
+    /* Here we call the job card ,and import the jobs one by one */
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {jobs.map((job, idx) => (
         <JobCard key={job.id || idx} job={job} />

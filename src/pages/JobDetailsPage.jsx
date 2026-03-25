@@ -46,7 +46,7 @@ inside the job card */}
 
                     <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
 {/* All detaials of the job*/}
-                        <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl bg-neutral-50/50 border border-neutral-100 flex items-center justify-center shrink-0">
+                        <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl bg-neutral-50/50 border border-[#b3eefb] flex items-center justify-center shrink-0">
                             <span className="text-[3rem] font-extrabold text-neutral-800 tracking-[-1.5px]">
                                 {job.company.display_name.charAt(0)}
                             </span>
@@ -85,11 +85,11 @@ inside the job card */}
             </div>
 
             <div className="relative z-10 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 pt-12 border-t border-neutral-100">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 pt-12 border-t border-[#b3eefb]">
 
 {/* LeftSide: Job Description */}
                     <div className="md:col-span-2">
-                        <h2 className="text-2xl font-bold text-neutral-900 mb-8 border-b border-neutral-100 pb-5">
+                        <h2 className="text-2xl font-bold text-neutral-900 mb-8 border-b border-[#b3eefb] pb-5">
                             About the Role
                         </h2>
                         <div
@@ -106,14 +106,14 @@ inside the job card */}
                             </h3>
 
                             <div className="space-y-4">
-                                <div className="flex flex-col gap-1 pb-4 border-b border-neutral-100">
+                                <div className="flex flex-col gap-1 pb-4 border-b border-[#b3eefb]">
                                     <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Base Salary</p>
                                     <p className="text-neutral-900 font-bold text-xl">
                                         {job.salary_min ? `£${job.salary_min.toLocaleString()}` : "Competitive"}
                                     </p>
                                 </div>
 
-                                <div className="flex flex-col gap-1 pb-4 border-b border-neutral-100">
+                                <div className="flex flex-col gap-1 pb-4 border-b border-[#b3eefb]">
                                     <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Job Type</p>
                                     <p className="text-neutral-900 font-bold text-xl capitalize">
                                         {job.contract_type || "Permanent"}
@@ -136,7 +136,7 @@ inside the job card */}
                                         alert("Link copied to clipboard!");
                                     }
                                 }}
-                                className="w-full mt-8 py-4 border-2 border-neutral-100 rounded-2xl text-neutral-800 text-sm font-bold hover:bg-neutral-50 flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98]"
+                                className="w-full mt-8 py-4 border-2 border-[#b3eefb] rounded-2xl text-neutral-800 text-sm font-bold hover:bg-neutral-50 flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98]"
                             >
 {/* this button takes you to the source of the job
 from where it is taken */}

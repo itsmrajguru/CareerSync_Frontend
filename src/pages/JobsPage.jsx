@@ -33,15 +33,15 @@ export default function JobsPage() {
 
     try {
 
-// Step 1: Build a composite query string for the search API
+      // Step 1: Build a composite query string for the search API
       let urlQuery = q;
       if (location) urlQuery += ` location:${location}`;
       if (company) urlQuery += ` company:${company} `;
 
-// Step 2: now we will call the adzuna api service for that jobs
+      // Step 2: now we will call the adzuna api service for that jobs
       const data = await getJobs(urlQuery, page, jobsPerPage);
 
-// Step 3: save the jobs with local and total jobs
+      // Step 3: save the jobs with local and total jobs
       setJobs(data.jobs || []);
       setTotalJobs(data.count || 0);
     } catch (err) {
@@ -52,7 +52,7 @@ export default function JobsPage() {
     }
   }
 
-// Fetches the data for the searched query
+  // Fetches the data for the searched query
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
@@ -69,7 +69,7 @@ export default function JobsPage() {
   return (
     <PageLayout>
 
-{/* Hero section */}
+      {/* Hero section */}
       <div className="max-w-3xl mb-16 animate-fade-in-down">
         <p className="text-xs font-bold text-neutral-900 tracking-widest uppercase mb-6">
           JOB BOARD
@@ -78,11 +78,11 @@ export default function JobsPage() {
           Discover roles that <br className="hidden md:block" /> <span className="text-primary-400">match your skills.</span>
         </h1>
 
-{/* submitting the form for job fetch */}
+        {/* submitting the form for job fetch */}
         <form onSubmit={handleSearch} className="relative max-w-2xl mt-8">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400" size={20} />
           <input
-            className="w-full pl-14 pr-32 py-5 rounded-3xl bg-white border-2 border-neutral-100 focus:outline-none focus:border-primary-300 focus:ring-4 focus:ring-primary-50 text-base transition-all shadow-sm text-neutral-900 font-medium placeholder-neutral-400"
+            className="w-full pl-14 pr-32 py-5 rounded-3xl bg-white border-2 border-[#b3eefb] focus:outline-none focus:border-primary-300 focus:ring-4 focus:ring-primary-50 text-base transition-all shadow-sm text-neutral-900 font-medium placeholder-neutral-400"
             placeholder="Job title, company, or keyword"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -93,13 +93,13 @@ export default function JobsPage() {
         </form>
 
 
-{/* job filters through location and company 
+        {/* job filters through location and company 
 Not too productive ,need to change later(Remaindder)*/}
         <div className="flex flex-wrap gap-4 mt-8">
           <select
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
-            className="px-5 py-3 rounded-2xl border border-neutral-200 bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
+            className="px-5 py-3 rounded-2xl border border-[#b3eefb] bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
           >
             <option value="">🗺️ All Locations</option>
             <option value="Remote">Remote</option>
@@ -111,7 +111,7 @@ Not too productive ,need to change later(Remaindder)*/}
           <select
             value={companyFilter}
             onChange={(e) => setCompanyFilter(e.target.value)}
-            className="px-5 py-3 rounded-2xl border border-neutral-200 bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
+            className="px-5 py-3 rounded-2xl border border-[#b3eefb] bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
           >
             <option value="">🏢 All Companies</option>
             <option value="Google">Google</option>
@@ -121,8 +121,8 @@ Not too productive ,need to change later(Remaindder)*/}
         </div>
       </div>
 
-{/*Displaying the fetched jobs*/}
-      <div className="border-t border-neutral-100 pt-16">
+      {/*Displaying the fetched jobs*/}
+      <div className="border-t border-[#b3eefb] pt-16">
         {error ? (
           <div className="p-6 bg-red-50 border border-red-100 rounded-3xl text-red-600 font-bold text-center">
             {error}
@@ -136,7 +136,7 @@ Not too productive ,need to change later(Remaindder)*/}
                 <button
                   onClick={handlePrevPage}
                   disabled={currentPage === 1}
-                  className="px-6 py-3 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
+                  className="px-6 py-3 rounded-2xl border border-[#b3eefb] bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
                 >
                   &larr; Previous
                 </button>
@@ -146,7 +146,7 @@ Not too productive ,need to change later(Remaindder)*/}
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  className="px-6 py-3 rounded-2xl border border-neutral-200 bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
+                  className="px-6 py-3 rounded-2xl border border-[#b3eefb] bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
                 >
                   Next &rarr;
                 </button>

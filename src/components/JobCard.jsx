@@ -8,6 +8,8 @@ export default function JobCard({ job }) {
     navigate(`/jobs/${job.id}`, { state: { job } });
   };
 
+/* This Job card is receiving indivisaul job from the joblist page 
+and displaying each job uniquel with the same styles*/
   return (
     <div
       className="bg-white border hover:border-primary-300 border-[#b3eefb] rounded-2xl p-6 flex flex-col cursor-pointer group hover:shadow-[0_15px_45px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-[1.03] transform-gpu"
