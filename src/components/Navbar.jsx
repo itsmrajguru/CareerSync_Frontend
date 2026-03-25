@@ -7,7 +7,7 @@ import {
 
 const NAV_LINKS = [
   { label: "Dashboard", path: "/dashboard", icon: <Briefcase size={15} /> },
-  { label: "Internships", path: "/internships", icon: <PenLine size={15} /> },
+  { label: "Jobs", path: "/jobs", icon: <PenLine size={15} /> },
   { label: "Resume", path: "/resume", icon: <FileText size={15} /> },
   { label: "Profile", path: "/profile", icon: <User size={15} /> },
 ];
@@ -19,15 +19,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  // ── Session & User Data ────────────────────────────────────────────
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
 
-  // ── Interactivity & Lifecycle ──────────────────────────────────────
-  
-  // Step 1: Close profile dropdown on any outside click
   useEffect(() => {
     function handler(e) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -38,25 +33,29 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Step 2: Ensure mobile menu closes when user changes routes
-  useEffect(() => { 
-    setMobileOpen(false); 
+  /* This is the automated function for the Navbar to 
+  open in the mobile screen */
+
+  useEffect(() => {
+    setMobileOpen(false);
   }, [location.pathname]);
 
-  /**
-   * handleLogout: Clears user session and redirects to login
-   */
+
+/* Here we just  remove the token from the localstorage
+and due to this  within miliseconds, user will be thrown out of the
+website and redirected to the login page... because the system checks
+for the token , for even a single click or redirection to any page 
+functionLity */
+
   const handleLogout = () => {
-    // 1. Clear all authentication artifacts
+
     localStorage.removeItem("token");
     localStorage.removeItem("refresh");
     localStorage.removeItem("user");
-    
-    // 2. Reset UI states
+
     setDropdownOpen(false);
     setMobileOpen(false);
-    
-    // 3. Move user back to the entry gate
+
     navigate("/login");
   };
 
@@ -64,15 +63,14 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Desktop Desktop Bar ───────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 bg-white border-b border-neutral-100">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
 
-          {/* Logo & Brand Identity */}
+          {/* Here we updated the header CareerSync with logo */}
           <Link to="/dashboard" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <img 
-              src="/logo.svg" 
-              alt="Logo" 
+            <img
+              src="/logo.svg"
+              alt="Logo"
               className="h-9 w-9 rounded-full object-cover transition-transform group-hover:scale-105"
             />
             <span className="text-[19px] font-extrabold tracking-tight text-black">
@@ -83,7 +81,8 @@ export default function Navbar() {
           {/* Right-Side Desktop Actions */}
           <div className="hidden md:flex items-center gap-1">
 
-            {/* Navigation Navigation */}
+{/* This is a map functionality run in the NAVLINK Array and 
+displaying each route along with its properties */}
             {NAV_LINKS.map(({ label, path, icon }) => (
               <Link
                 key={path}
@@ -104,7 +103,7 @@ export default function Navbar() {
 
             <div className="w-px h-6 bg-neutral-100 mx-2" />
 
-            {/* Notification Center */}
+{/*Hers is the notification logo  */}
             {token && (
               <button className="relative w-9 h-9 rounded-lg flex items-center justify-center
                                  text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
@@ -115,7 +114,7 @@ export default function Navbar() {
               </button>
             )}
 
-            {/* Support/Help */}
+            {/* Support/Help Logo */}
             <button className="w-9 h-9 rounded-lg flex items-center justify-center
                                text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
                                transition-all duration-150">
@@ -138,7 +137,7 @@ export default function Navbar() {
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-neutral-100
+                  <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-[#b3eefb]
                                   rounded-2xl shadow-lg shadow-neutral-100/80 py-1.5 z-50">
 
                     {/* Quick Profile Overview */}
@@ -194,8 +193,7 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
-
-      {/* ── Mobile Overlay Menu ────────────────────────────────────────── */}
+{/* The functyiionality refers to the navbar opening in the mobile screen */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 top-16 z-40 bg-white flex flex-col pt-4">
 
