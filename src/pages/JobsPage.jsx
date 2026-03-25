@@ -71,12 +71,17 @@ export default function JobsPage() {
 
       {/* Hero section */}
       <div className="max-w-3xl mb-16 animate-fade-in-down">
-        <p className="text-xs font-bold text-neutral-900 tracking-widest uppercase mb-6">
-          JOB BOARD
-        </p>
-        <h1 className="text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-6">
-          Discover roles that <br className="hidden md:block" /> <span className="text-primary-400">match your skills.</span>
-        </h1>
+        <div className="mb-10">
+          <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            Fully Yours
+          </p>
+          <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            Discoveer roles that <br className="hidden md:block" />  <span className="text-primary-400">match your skills.</span>
+          </h1>
+          <p className="text-[1rem] leading-[1.7] text-neutral-500 max-w-[520px]">
+            Explore opportunities tailored to your skills — role matches, salary insights, and culture fit.
+          </p>
+        </div>
 
         {/* submitting the form for job fetch */}
         <form onSubmit={handleSearch} className="relative max-w-2xl mt-8">
