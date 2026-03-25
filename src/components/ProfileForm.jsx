@@ -1,291 +1,296 @@
+import {
+  Github, Linkedin, Globe, MapPin, Calendar,
+  User as UserIcon, Briefcase, GraduationCap,
+  Search, Save, X, Edit2, Trash2, Plus
+} from "lucide-react";
 
-import { useState, useEffect } from "react";
-import { Edit2, Save, X, Github, Linkedin, Globe, MapPin, Calendar, User as UserIcon } from "lucide-react";
+/* we are calling this field function on every input form,
+if the inputform is a normal input ,otherwise textarea for fields 
+like skills, experience 
 
-export default function ProfileForm({ initialData, onSubmit, onToggleEdit, loading, editing }) {
-  // Prevent uncontrolled input warnings
-  const [formData, setFormData] = useState({
-    full_name: "",
-    domain: "",
-    gender: "",
-    location: "",
-    birthday: "",
-    website: "",
-    github: "",
-    linkedin: "",
-    summary: "",
-    work: "",
-    education: "",
-    skills: ""
-  });
-
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        full_name: initialData.full_name || "",
-        domain: initialData.domain || "",
-        gender: initialData.gender || "",
-        location: initialData.location || "",
-        birthday: initialData.birthday || "",
-        website: initialData.website || "",
-        github: initialData.github || "",
-        linkedin: initialData.linkedin || "",
-        summary: initialData.summary || "",
-        work: initialData.work || "",
-        education: initialData.education || "",
-        skills: initialData.skills || ""
-      });
-    }
-  }, [initialData]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const processUrl = (url) => {
-      if (!url) return "";
-      if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        return `https://${url}`;
-      }
-      return url;
-    };
-
-    const finalData = {
-      ...formData,
-      website: processUrl(formData.website),
-      github: processUrl(formData.github),
-      linkedin: processUrl(formData.linkedin),
-    };
-
-    onSubmit(finalData);
-  };
-
-
-  const inputBase = `w-full p-4 bg-white border border-neutral-200 text-neutral-900 text-base placeholder-neutral-400 focus:outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-50 transition-all font-bold`;
-  const inputDisabled = `opacity-50 cursor-default bg-neutral-50 text-neutral-500`;
+it totally depends upon the type of cell we want*/
+function Field({ label, name, value, onChange, editing, placeholder, icon: Icon, textarea }) {
+  // css for base
+  const base = "w-full bg-neutral-50 border border-[#b3eefb] rounded-xl px-3 py-2 text-[13px] text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300 transition-all font-medium";
+  // css for disabled input
+  const disabled = "opacity-60 cursor-default bg-neutral-100";
 
   return (
-    <div className="w-full font-sans">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <div className="flex flex-col gap-1">
+      <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{label}</label>
+      <div className="relative">
+        {Icon && <Icon size={12} className="absolute left-3 top-[10px] text-neutral-400" />}
+        {/*If Textarea ->display textarea , otherwise input */}
+        {textarea ? (
+          <textarea
+            name={name}
+            value={value}
+            onChange={onChange}
+            disabled={!editing}
+            placeholder={placeholder}
+            rows={3}
+            className={`${base} resize-none ${Icon ? "pl-8" : ""} ${!editing ? disabled : ""}`}
+          />
+        ) : (
+          <input
+            name={name}
+            value={value}
+            onChange={onChange}
+            disabled={!editing}
+            placeholder={placeholder}
+            className={`${base} ${Icon ? "pl-8" : ""} ${!editing ? disabled : ""}`}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
 
-        <div className="space-y-4">
-          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Basic Info</h3>
+// We are wrapping the Field function in the cell box item
+function Cell({ children, className = "", style = {} }) {
+  return (
+    <div
+      className={`bg-white border border-[#b3eefb] rounded-2xl p-5 ${className}`}
+      style={style}
+    >
+      {children}
+    </div>
+  );
+}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Full Name</label>
-              <div className="relative">
-                <UserIcon size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="full_name"
-                  type="text"
-                  value={formData.full_name}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="e.g. Alex Johnson"
-                />
-              </div>
-            </div>
+// This is just the cell title component
+function CellLabel({ children }) {
+  return (
+    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">
+      {children}
+    </p>
+  );
+}
 
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Domain / Job Title</label>
-              <input
-                disabled={!editing}
-                name="domain"
-                type="text"
-                value={formData.domain}
-                onChange={handleChange}
-                className={`${inputBase} ${!editing ? inputDisabled : ""}`}
-                placeholder="e.g. Frontend Developer"
-              />
-            </div>
+/* This profile form is madeup of 3 things
+1)Input Field
+2)cell ( a specific box )
+3)celltitle */
+export default function ProfileForm({
+  formData, editing, loading, profile, completion, skills,
+  initials, onChange, onSave, onCancel, onDelete, onEdit,
+  onNavigate,
+}) {
+  return (
+    <div
+      className="grid gap-3"
+      style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
+    >
+
+      {/*(1st cell) : which displays profle completeness
+      as well as intils, username, domain,title */}
+      <Cell
+        className="flex flex-col items-center justify-center text-center"
+        style={{
+          gridColumn: "1",
+          gridRow: "1 / 3",
+          background: "#e6f9fe",
+          borderColor: "#b3eefb",
+          minHeight: 260,
+        }}>
+        {/* Added intials */}
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center text-xl font-extrabold text-white mb-4"
+          style={{ background: "#02bcf0" }}>
+          {initials}
+        </div>
+        <p className="text-base font-extrabold text-neutral-900 leading-tight">
+          {formData.full_name || "Your Name"}
+        </p>
+        <p className="text-xs font-semibold mt-1" style={{ color: "#0179a0" }}>
+          {formData.domain || "Job Title"}
+        </p>
+        <p className="text-xs mt-0.5 opacity-70" style={{ color: "#0179a0" }}>
+          {formData.location || "Location"}
+        </p>
+
+        <div className="w-full mt-5">
+
+          {/* Diaplays the profile complete % */}
+          <div className="flex justify-between mb-1">
+            <span className="text-[10px] font-bold" style={{ color: "#0179a0" }}>
+              Profile complete
+            </span>
+            <span className="text-[10px] font-extrabold text-neutral-800">
+              {completion}%
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Gender</label>
-              <input
-                disabled={!editing}
-                name="gender"
-                type="text"
-                value={formData.gender}
-                onChange={handleChange}
-                className={`${inputBase} ${!editing ? inputDisabled : ""}`}
-                placeholder="e.g. Male/Female"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Location</label>
-              <div className="relative">
-                <MapPin size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="location"
-                  type="text"
-                  value={formData.location}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="City, Country"
-                />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Birthday</label>
-              <div className="relative">
-                <Calendar size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="birthday"
-                  type="text"
-                  value={formData.birthday}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Summary</label>
-            <textarea
-              disabled={!editing}
-              name="summary"
-              value={formData.summary}
-              onChange={handleChange}
-              className={`${inputBase} min-h-[80px] ${!editing ? inputDisabled : ""}`}
-              rows="3"
-              placeholder="Brief professional summary..."
+          {/* the automated line increase functionality */}
+          <div className="h-1 rounded-full" style={{ background: "#b3eefb" }}>
+            <div
+              className="h-1 rounded-full transition-all"
+              style={{ width: `${completion}%`, background: "#02bcf0" }}
             />
           </div>
         </div>
+      </Cell>
 
-        <div className="space-y-4 pt-2">
-          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Social Links</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">GitHub</label>
-              <div className="relative">
-                <Github size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="github"
-                  type="text"
-                  value={formData.github}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="github.com/user"
-                />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">LinkedIn</label>
-              <div className="relative">
-                <Linkedin size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="linkedin"
-                  type="text"
-                  value={formData.linkedin}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="linkedin.com/in/user"
-                />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Website</label>
-              <div className="relative">
-                <Globe size={14} className="absolute left-3.5 top-3.5 text-neutral-400" />
-                <input
-                  disabled={!editing}
-                  name="website"
-                  type="text"
-                  value={formData.website}
-                  onChange={handleChange}
-                  className={`${inputBase} pl-10 pr-3 py-3 ${!editing ? inputDisabled : ""}`}
-                  placeholder="your-portfolio.com"
-                />
-              </div>
-            </div>
-          </div>
+      {/* (2nd cell) : About me Section*/}
+      <Cell style={{ gridColumn: "2 / 4", gridRow: "1" }}>
+        <CellLabel>About me</CellLabel>
+        {editing ? (
+          <Field
+            name="summary"
+            value={formData.summary}
+            onChange={onChange}
+            editing={editing}
+            placeholder="Brief professional summary..."
+            textarea
+          />
+        ) : (
+          <p className="text-[13px] text-neutral-500 leading-relaxed">
+            {profile?.summary || "No summary added yet."}
+          </p>
+        )}
+      </Cell>
+
+      {/* (3rd cell): basic Info section */}
+      <Cell style={{ gridColumn: "2 / 4", gridRow: "2" }}>
+        <CellLabel>Basic info</CellLabel>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Full name" name="full_name" value={formData.full_name}
+            onChange={onChange} editing={editing} placeholder="Alex Johnson" icon={UserIcon} />
+          <Field label="Job title" name="domain" value={formData.domain}
+            onChange={onChange} editing={editing} placeholder="Frontend Developer" />
+          <Field label="Location" name="location" value={formData.location}
+            onChange={onChange} editing={editing} placeholder="Pune, India" icon={MapPin} />
+          <Field label="Birthday" name="birthday" value={formData.birthday}
+            onChange={onChange} editing={editing} placeholder="DD/MM/YYYY" icon={Calendar} />
         </div>
+      </Cell>
 
-        <div className="space-y-4 pt-2">
-          <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-200 pb-2 mb-2">Professional Info</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Experience</label>
-              <textarea
-                disabled={!editing}
-                name="work"
-                value={formData.work}
-                onChange={handleChange}
-                className={`${inputBase} min-h-[100px] ${!editing ? inputDisabled : ""}`}
-                placeholder="Work history..."
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Education</label>
-              <textarea
-                disabled={!editing}
-                name="education"
-                value={formData.education}
-                onChange={handleChange}
-                className={`${inputBase} min-h-[100px] ${!editing ? inputDisabled : ""}`}
-                placeholder="Degrees..."
-              />
-            </div>
+      {/*(4th cell) : Skills section*/}
+      <Cell style={{ gridColumn: "1 / 3", gridRow: "3" }}>
+        <CellLabel>Skills</CellLabel>
+        {editing ? (
+          <Field
+            name="skills"
+            value={formData.skills}
+            onChange={onChange}
+            editing={editing}
+            placeholder="React, Python, Node.js, SQL..."
+            icon={Plus}
+          />
+        ) : (
+          <div className="flex flex-wrap gap-1.5 mt-1">
+            {skills.length > 0 ? skills.map((s, i) => (
+              <span
+                key={i}
+                className="text-[11px] font-semibold px-3 py-1 rounded-full"
+                style={{ background: "#e6f9fe", color: "#0079a0" }}
+              >
+                {s}
+              </span>
+            )) : (
+              <p className="text-[12px] text-neutral-400">No skills added yet.</p>
+            )}
           </div>
+        )}
+      </Cell>
 
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider ml-1">Skills (Comma Separated)</label>
-            <input
-              disabled={!editing}
-              name="skills"
-              type="text"
-              value={formData.skills}
-              onChange={handleChange}
-              className={`${inputBase} ${!editing ? inputDisabled : ""}`}
-              placeholder="e.g. Python, React"
-            />
-          </div>
+      {/* (5th cell): Gender section */}
+      <Cell style={{ gridColumn: "3", gridRow: "3" }}>
+        <CellLabel>Gender</CellLabel>
+        <Field name="gender" value={formData.gender}
+          onChange={onChange} editing={editing} placeholder="Male / Female / Other" />
+      </Cell>
+
+      {/* (6th section) :Experience section */}
+      <Cell style={{ gridColumn: "1", gridRow: "4" }}>
+        <div className="flex items-center gap-2 mb-3">
+          <Briefcase size={13} className="text-primary-400" />
+          <CellLabel>Experience</CellLabel>
         </div>
+        {editing ? (
+          <Field name="work" value={formData.work}
+            onChange={onChange} editing={editing}
+            placeholder="Work history..." textarea />
+        ) : (
+          <p className="text-[12px] text-neutral-500 leading-relaxed whitespace-pre-line">
+            {profile?.work || "No experience added yet."}
+          </p>
+        )}
+      </Cell>
 
-        <div className="mt-4 flex gap-3 pt-4 border-t border-neutral-200 z-20">
+      {/* (7th section) :Education Section*/}
+      <Cell style={{ gridColumn: "2", gridRow: "4" }}>
+        <div className="flex items-center gap-2 mb-3">
+          <GraduationCap size={13} className="text-primary-400" />
+          <CellLabel>Education</CellLabel>
+        </div>
+        {editing ? (
+          <Field name="education" value={formData.education}
+            onChange={onChange} editing={editing}
+            placeholder="Degrees, courses..." textarea />
+        ) : (
+          <p className="text-[12px] text-neutral-500 leading-relaxed">
+            {profile?.education || "No education added yet."}
+          </p>
+        )}
+      </Cell>
+
+      {/* (8th section) : Social Links section*/}
+      <Cell style={{ gridColumn: "3", gridRow: "4" }}>
+        <CellLabel>Social links</CellLabel>
+        <div className="flex flex-col gap-2">
+          <Field label="GitHub" name="github" value={formData.github}
+            onChange={onChange} editing={editing}
+            placeholder="github.com/..." icon={Github} />
+          <Field label="LinkedIn" name="linkedin" value={formData.linkedin}
+            onChange={onChange} editing={editing}
+            placeholder="linkedin.com/..." icon={Linkedin} />
+          <Field label="Website" name="website" value={formData.website}
+            onChange={onChange} editing={editing}
+            placeholder="yoursite.com" icon={Globe} />
+        </div>
+      </Cell>
+
+      {/* (9th section) : Footer section*/}
+      <Cell
+        style={{ gridColumn: "1 / 4", gridRow: "5" }}
+        className="flex items-center justify-between"
+      >
+        <button
+          onClick={onNavigate}
+          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 text-white text-sm font-bold rounded-xl hover:bg-black transition-colors"
+        >
+          <Search size={14} /> Find matching jobs
+        </button>
+
+        <div className="flex gap-2">
           {editing ? (
             <>
               <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 py-3 bg-primary-500 hover:bg-primary-600 rounded-xl text-white font-bold disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm transition-all"
+                onClick={onCancel}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-600 text-sm font-bold hover:bg-neutral-50 transition-colors"
               >
-                {loading ? "Saving..." : <><Save size={16} /> Save Profile</>}
+                <X size={14} /> Cancel
               </button>
               <button
-                type="button"
-                onClick={() => onToggleEdit(false)}
-                className="px-6 py-3 bg-white border border-neutral-200 hover:bg-neutral-50 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                onClick={onSave}
+                disabled={loading}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors disabled:opacity-60"
               >
-                <X size={16} /> Cancel
+                <Save size={14} /> {loading ? "Saving..." : "Save changes"}
               </button>
             </>
           ) : (
             <button
-              type="button"
-              onClick={() => onToggleEdit(true)}
-              className="w-full mt-2 py-3.5 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-full text-primary-600 font-bold flex items-center justify-center gap-2 transition-all group"
+              onClick={onEdit}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors"
             >
-              <Edit2 size={16} className="group-hover:scale-110 transition-transform" /> Edit Profile
+              <Edit2 size={14} /> Edit profile
             </button>
           )}
         </div>
-      </form>
+      </Cell>
+
     </div>
   );
 }
