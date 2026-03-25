@@ -38,7 +38,14 @@ export default function VerifyEmailPage() {
         <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
                 <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm text-center">
+
+                    {/* Hero section with careeersync logo and verify Email header*/}
                     <div className="mb-8">
+                        <img
+                            src="/logo.svg"
+                            alt="Logo"
+                            className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+                        />
                         <span className="text-2xl font-black text-neutral-700 tracking-tight">
                             Career<span className="text-primary-500">Sync</span>
                         </span>
