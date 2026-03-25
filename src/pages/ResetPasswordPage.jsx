@@ -14,12 +14,11 @@ export default function ResetPasswordPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        //step 1: Fetching the token from the params
         if (!token) {
             setError("Invalid or missing reset token.");
             return;
         }
-
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
             return;
@@ -30,6 +29,7 @@ export default function ResetPasswordPage() {
         setMessage("");
 
         try {
+            //Returning the response given by the backend
             const res = await resetPassword(token, password);
             setMessage(res.message || "Password reset successfully. You can now log in.");
             setPassword("");
@@ -44,10 +44,18 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
+                <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+
+                    {/* Hero section with careeersync logo and reset header*/}
+
                     <div className="text-center mb-8">
+                        <img
+                            src="/logo.svg"
+                            alt="Logo"
+                            className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+                        />
                         <span className="text-2xl font-black text-neutral-700 tracking-tight">
                             Career<span className="text-primary-500">Sync</span>
                         </span>
@@ -55,6 +63,7 @@ export default function ResetPasswordPage() {
                         <p className="text-neutral-400 mt-2 text-sm font-medium">Enter your new password below</p>
                     </div>
 
+                    {/* Displaying the login failed errors */}
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
                             {error}
@@ -75,6 +84,8 @@ export default function ResetPasswordPage() {
                     {!message && (
                         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                             <div className="flex flex-col gap-2">
+                                {/*thorugh this form, we will take the password and confim password
+from the user and set to login page*/}
                                 <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">New Password</label>
                                 <input
                                     type="password"
@@ -101,7 +112,8 @@ export default function ResetPasswordPage() {
                                     autoComplete="new-password"
                                 />
                             </div>
-
+                            {/*The submit button will submit the form,
+with the help of inbuilt Onsubmit Function called in the form */}
                             <button
                                 type="submit"
                                 disabled={loading}

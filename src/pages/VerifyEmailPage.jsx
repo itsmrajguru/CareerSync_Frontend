@@ -11,16 +11,18 @@ export default function VerifyEmailPage() {
     const [message, setMessage] = useState("");
     const effectRan = useRef(false);
 
+    /* We are calling this useEffect , due to the dependency of token */
     useEffect(() => {
         if (effectRan.current) return;
         effectRan.current = true;
-
+        //step 1: Fetching the token from the params
         if (!token) {
             setStatus("error");
             setMessage("Invalid or missing verification token.");
             return;
         }
-
+        /* And passing the token to the controller inn the backend to check
+        whether this token exists in the database or not*/
         verifyEmail(token)
             .then((res) => {
                 setStatus("success");
@@ -33,16 +35,20 @@ export default function VerifyEmailPage() {
     }, [token]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm text-center">
+                <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm text-center">
                     <div className="mb-8">
                         <span className="text-2xl font-black text-neutral-700 tracking-tight">
                             Career<span className="text-primary-500">Sync</span>
                         </span>
                         <h2 className="text-xl font-bold mt-4 text-neutral-700">Email Verification</h2>
                     </div>
+                    {/*these are 3 diffrent conditions ,where depending on the status messages,
+we display the message to the user... */}
 
+                    {/* Dummy conddition, as we often dont get response earlier, so till now
+we are showing this message , as there is no any status message as verifying exists*/}
                     {status === "verifying" && (
                         <p className="text-neutral-400 font-medium animate-pulse">Verifying your email, please wait...</p>
                     )}

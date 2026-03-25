@@ -11,9 +11,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-  }, []);
-
+  /* This function calls the SignUpPage axios*/
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -38,13 +36,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
       <div className="w-full max-w-md relative z-10">
-        <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
+        <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+
+          {/* Hero section with careeersync logo and Signup header*/}
           <div className="text-center mb-8">
-            <img 
-              src="/logo.svg" 
-              alt="Logo" 
+            <img
+              src="/logo.svg"
+              alt="Logo"
               className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
             />
             <span className="text-2xl font-black text-neutral-800 tracking-tight block">
@@ -53,19 +53,21 @@ export default function SignupPage() {
             <p className="text-neutral-400 mt-2 text-sm font-medium">Sign up to find your next opportunity.</p>
           </div>
 
+          {/* Displaying the login failed errors */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
               {error}
             </div>
           )}
-
+          {/*thorugh this form, we will take the email and password
+from the user and take him to dashboard page if login successful */}
           {successMsg && (
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
               {successMsg} Redirecting to login...
             </div>
           )}
 
-{/*through these 3 forms, data will be sent to the axios and 
+          {/*through these 3 inputs, data will be sent to the axios and 
 finally to databases via backend */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
@@ -111,7 +113,8 @@ finally to databases via backend */}
               />
               <p className="text-[10px] text-neutral-400 ml-1">Minimum 6 characters required</p>
             </div>
-
+            {/*The submit button will submit the form,
+with the help of inbuilt Onsubmit Function called in the form */}
             <button
               type="submit"
               disabled={loading}
@@ -120,7 +123,7 @@ finally to databases via backend */}
               {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
-
+          {/*Option for the user to jump LoginPage page */}
           <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
             Already have an account?{" "}
             <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">

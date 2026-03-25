@@ -8,6 +8,8 @@ export default function ForgotPasswordPage() {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
+    /* This function call the forgotPassword axios,and just returns
+    the response coming from the server,whether it may be error or success */
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -26,29 +28,36 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
             <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
+                <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+                    {/* Hero section with careeersync logo and Forgot Password */}
                     <div className="text-center mb-8">
-                        <span className="text-2xl font-black text-neutral-700 tracking-tight">
+                        <img
+                            src="/logo.svg"
+                            alt="Logo"
+                            className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+                        />
+                        <span className="text-2xl font-black text-neutral-800 tracking-tight block">
                             Career<span className="text-primary-500">Sync</span>
                         </span>
-                        <h2 className="text-xl font-bold mt-4 text-neutral-700">Forgot Password</h2>
+                        <h2 className="text-xl font-bold mt-4 text-neutral-700">Forgot Password ?</h2>
                         <p className="text-neutral-400 mt-2 text-sm font-medium">Enter your email to receive a reset link</p>
                     </div>
-
+                    {/*Remainder :We need to add toaster from shadsn-ui,
+to display the actual error as a popup */}
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
                             {error}
                         </div>
                     )}
-
                     {message && (
                         <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
                             {message}
                         </div>
                     )}
-
+                    {/*thorugh this form, we will take the email,
+from the user and if email valid, take him to reset-password page */}
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
                             <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
@@ -61,7 +70,8 @@ export default function ForgotPasswordPage() {
                                 required
                             />
                         </div>
-
+                        {/*The submit button will submit the form,
+with the help of inbuilt Onsubmit Function called in the form */}
                         <button
                             type="submit"
                             disabled={loading}
@@ -70,7 +80,8 @@ export default function ForgotPasswordPage() {
                             {loading ? "Sending..." : "Send Reset Link"}
                         </button>
                     </form>
-
+                    {/*If the user remembers the password,
+then it can return to the login page, from here */}
                     <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
                         Remember your password?{" "}
                         <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">

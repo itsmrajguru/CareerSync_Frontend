@@ -9,7 +9,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-//submit the form and call the login axios function
+  /* This function call the loginPage axios,and just returns
+   the response coming from the server,whether it may be error or success */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -18,11 +19,11 @@ export default function LoginPage() {
     try {
       const data = await loginUser(email, password);
 
-// If the login is successful, the user will be redirected to the dashboard page
+      // If the login is successful, the user will be redirected to the dashboard page
       if (data.success) {
         navigate("/dashboard");
       } else {
-        // Step 3: Display specific server error messages
+      // Display specific server error messages
         setError(data.message || "Login failed. Please check your credentials.");
       }
     } catch (err) {
@@ -34,13 +35,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
       <div className="w-full max-w-md relative z-10">
-        <div className="bg-white p-10 rounded-3xl border border-neutral-200 shadow-sm">
+        <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+
+          {/* Hero section with careeersync logo and login header */}
           <div className="text-center mb-8">
-            <img 
-              src="/logo.svg" 
-              alt="Logo" 
+            <img
+              src="/logo.svg"
+              alt="Logo"
               className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
             />
             <span className="text-2xl font-black text-neutral-800 tracking-tight block">
@@ -49,14 +52,15 @@ export default function LoginPage() {
             <p className="text-neutral-400 mt-2 text-sm font-medium">Welcome back! Please login to continue.</p>
           </div>
 
-{/* Displaying the login failed errors */}
+          {/* Displaying the login failed errors */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
               {error}
             </div>
           )}
 
-{/* Through these forma we are submitting the data to the backend */}
+          {/*thorugh this form, we will take the email and password
+from the user and take him to dashboard page if login successful */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
@@ -87,12 +91,14 @@ export default function LoginPage() {
               />
             </div>
 
+            {/*Option for the user to change the password */}
             <div className="flex justify-end -mt-2">
               <Link to="/forgot-password" className="text-xs font-bold text-primary-500 hover:text-primary-600 transition-colors">
                 Forgot password?
               </Link>
             </div>
-
+            {/*The submit button will submit the form,
+with the help of inbuilt Onsubmit Function called in the form */}
             <button
               type="submit"
               disabled={loading}
@@ -101,7 +107,7 @@ export default function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-
+          {/*Option for the user to jump signup page */}
           <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
             Don't have an account?{" "}
             <Link to="/signup" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
