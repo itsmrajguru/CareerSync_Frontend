@@ -59,7 +59,7 @@ api.interceptors.response.use(
   })
 
 
-// --- Authentication ---
+//Authentication routes
 
 export async function loginUser(email, password) {
   const data = await api.post('/auth/login/', { email, password });
@@ -74,51 +74,43 @@ export async function loginUser(email, password) {
 export async function signupUser({ username, email, password }) {
   return api.post('/auth/signup/', { username, email, password });
 }
-
 export async function verifyEmail(token) {
   return api.post(`/auth/verify/${token}/`);
 }
-
 export async function forgotPassword(email) {
   return api.post('/auth/forgot-password/', { email });
 }
-
 export async function resetPassword(token, password) {
   return api.post('/auth/reset-password/', { token, newPassword: password });
 }
 
-// --- Jobs ---
 
+//Calls the Adzuna Api Service to fetch jobs
 export async function getJobs(query, page = 1, limit = 10) {
   return api.get('/jobs/jobs/', {
     params: { q: query, page, limit }
   });
 }
 
-// --- Profiles ---
-
+// These functions calls the profile Routes
 export async function getProfileList() {
   return api.get('/userProfile/profile/');
 }
-
 export async function getProfile(id) {
   return api.get(`/userProfile/profile/${id}/`);
 }
-
 export async function createProfile(data) {
   return api.post('/userProfile/profile/', data);
 }
-
 export async function updateProfile(id, data) {
   return api.put(`/userProfile/profile/${id}/`, data);
 }
-
 export async function deleteProfile(id) {
   return api.delete(`/userProfile/profile/${id}/`);
 }
 
-// --- Resume ---
 
+// Resume function calls backend routes
 export async function uploadResume(file) {
   /*pass this file to the formData
     where formData is the tool used to carry binary file to the backend */
