@@ -1,10 +1,9 @@
 import { Navigate } from "react-router-dom";
 
-/*
-  ProtectedRoute — wraps any route that requires the user to be logged in.
-  If no token is found in localStorage, redirects to /login.
-  Usage: <Route path="/jobs" element={<ProtectedRoute><JobsPage /></ProtectedRoute>} />
-*/
+/* This function checks for the token everytime, while the user
+tries to jump to the protected pages and if token not found,
+user is redirected to the login page */
+
 export default function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
