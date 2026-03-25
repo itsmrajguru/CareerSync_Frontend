@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Briefcase, PenLine, FileText, User, Bell,
   HelpCircle, Settings, LogOut, Menu, X,
+  Home, Bookmark, ClipboardList, Edit2,
 } from "lucide-react";
 
 const NAV_LINKS = [
@@ -23,15 +24,8 @@ export default function Navbar() {
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
 
-  useEffect(() => {
-    function handler(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+
+
 
   /* This is the automated function for the Navbar to 
   open in the mobile screen */
@@ -125,9 +119,13 @@ displaying each route along with its properties */}
 
             {/* User Profile & Account Dropdown */}
             {token && (
-              <div className="relative" ref={dropdownRef}>
+              <div
+                className="relative"
+                ref={dropdownRef}
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setDropdownOpen(false)}
+              >
                 <button
-                  onClick={() => setDropdownOpen((o) => !o)}
                   className={`w-9 h-9 rounded-full bg-primary-400 flex items-center justify-center
                               text-white text-sm font-bold transition-all duration-150
                               hover:bg-primary-500 ring-2 ring-transparent
@@ -137,10 +135,10 @@ displaying each route along with its properties */}
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-[#b3eefb]
+                  <div className="absolute right-0 top-full w-56 bg-white border border-[#b3eefb]
                                   rounded-2xl shadow-lg shadow-neutral-100/80 py-1.5 z-50">
 
-                    {/* Quick Profile Overview */}
+                    {/* User name + email */}
                     <div className="px-4 py-3 border-b border-neutral-100">
                       <p className="text-sm font-bold text-black leading-tight">
                         {user.username || "User"}
@@ -152,14 +150,39 @@ displaying each route along with its properties */}
 
                     <div className="py-1">
                       <Link
+                        to="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-black hover:bg-neutral-50 transition-colors"
+                      >
+                        <Home size={15} /> Home
+                      </Link>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-black hover:bg-neutral-50 transition-colors"
+                      >
+                        <ClipboardList size={15} /> My Applications
+                      </Link>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
+                                   text-black hover:bg-neutral-50 transition-colors"
+                      >
+                        <Bookmark size={15} /> My Bookmarks
+                      </Link>
+                      <Link
                         to="/profile"
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
                                    text-black hover:bg-neutral-50 transition-colors"
                       >
-                        <User size={15} /> Profile
+                        <Edit2 size={15} /> Edit Profile
                       </Link>
                       <button
+                        onClick={() => setDropdownOpen(false)}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
                                    text-black hover:bg-neutral-50 transition-colors"
                       >
