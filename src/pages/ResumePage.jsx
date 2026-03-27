@@ -72,7 +72,7 @@ export default function ResumePage() {
                     <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
                         Resume <span className="text-primary-400">Checker.</span>
                     </h1>
-                    <p className="text-[1rem] leading-[1.7] text-black max-w-[520px]">
+                    <p className="text-[1rem] leading-[1.7] text-neutral-500 max-w-[520px]">
                         Upload your PDF resume and get instant ATS feedback — keyword match, skill gaps, and readability score.
                     </p>
                 </div>

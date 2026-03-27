@@ -150,14 +150,17 @@ export default function ProfilePage() {
       <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
         
         {/*profile header*/}
-        <div className="mb-8 flex items-end justify-between">
+        <div className="mb-10 flex items-end justify-between">
           <div>
-            <p className="text-xs font-bold text-neutral-400 uppercase">
+            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
               One Source of Truth
             </p>
-            <h1 className="text-4xl font-extrabold text-neutral-900">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
               Your <span className="text-primary-400">Profile.</span>
             </h1>
+            <p className="text-[1rem] leading-[1.7] text-neutral-500 max-w-[560px] mt-3">
+              Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
+            </p>
           </div>
 
 

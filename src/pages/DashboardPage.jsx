@@ -923,7 +923,7 @@ export default function DashboardPage() {
             <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
               Your career, in<br /><span className="text-primary-400">real-time.</span>
             </h1>
-            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
               CareerPulse shows live market demand vs. your skills — so you always know exactly what to learn and apply for next.
             </p>
           </div>
