@@ -9,7 +9,7 @@ import {
 const NAV_LINKS = [
   { label: "Dashboard", path: "/dashboard", icon: <Briefcase size={15} /> },
   { label: "Jobs", path: "/jobs", icon: <PenLine size={15} /> },
-  { label: "Resume", path: "/resume", icon: <FileText size={15} /> },
+  { label: "Resume Tools", path: "/resume", icon: <FileText size={15} /> },
   { label: "Profile", path: "/profile", icon: <User size={15} /> },
 ];
 
@@ -19,30 +19,32 @@ export default function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef(null);
+  
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
 
-
-
-
   /* This is the automated function for the Navbar to 
   open in the mobile screen */
-
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // added scroll effect for the sticky transparent navbar
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-/* Here we just  remove the token from the localstorage
-and due to this  within miliseconds, user will be thrown out of the
-website and redirected to the login page... because the system checks
-for the token , for even a single click or redirection to any page 
-functionLity */
-
+  /* Here we just  remove the token from the localstorage
+  and due to this  within miliseconds, user will be thrown out of the
+  website and redirected to the login page... because the system checks
+  for the token , for even a single click or redirection to any page 
+  functionLity */
   const handleLogout = () => {
-
     localStorage.removeItem("token");
     localStorage.removeItem("refresh");
     localStorage.removeItem("user");
@@ -50,231 +52,188 @@ functionLity */
     setDropdownOpen(false);
     setMobileOpen(false);
 
-    navigate("/login");
+    navigate("/");
   };
 
   const isActive = (path) => location.pathname === path;
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white border-b border-neutral-100">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 100,
+        background: scrolled ? "rgba(255,255,255,0.95)" : "#fff",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: "1px solid #f3f4f6",
+        transition: "all 0.3s",
+        boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
+      }}>
+        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Here we updated the header CareerSync with logo */}
-          <Link to="/dashboard" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <img
-              src="/logo.svg"
-              alt="Logo"
-              className="h-9 w-9 rounded-full object-cover transition-transform group-hover:scale-105"
-            />
-            <span className="text-[19px] font-extrabold tracking-tight text-black">
-              Career<span className="text-primary-400">Sync</span>
+          <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+            <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
+            <span style={{ fontSize: 20, fontWeight: 900, color: "#111827", letterSpacing: -0.5 }}>
+              Career<span style={{ color: "#02bcf0" }}>Sync</span>
             </span>
           </Link>
 
           {/* Right-Side Desktop Actions */}
-          <div className="hidden md:flex items-center gap-1">
-
-{/* This is a map functionality run in the NAVLINK Array and 
-displaying each route along with its properties */}
-            {NAV_LINKS.map(({ label, path, icon }) => (
+          <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            {/* This is a map functionality run in the NAVLINK Array and 
+            displaying each route along with its properties */}
+            {NAV_LINKS.map(({ label, path }) => (
               <Link
                 key={path}
                 to={path}
-                className={`flex items-center gap-2 px-3.5 py-0.5 rounded-lg text-[13.5px] font-semibold
-                            transition-all duration-150
-                            ${isActive(path)
-                    ? "bg-primary-50 text-primary-500"
-                    : "text-black hover:bg-neutral-50"
-                  }`}
+                className="nav-link"
+                style={isActive(path) ? { color: "#02bcf0", borderColor: "#02bcf0" } : {}}
               >
-                <span className={isActive(path) ? "text-primary-400" : "text-neutral-400"}>
-                  {icon}
-                </span>
                 {label}
               </Link>
             ))}
+          </div>
 
-            <div className="w-px h-6 bg-neutral-100 mx-2" />
-
-{/*Hers is the notification logo  */}
+          <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/*Hers is the notification logo  */}
             {token && (
-              <button className="relative w-9 h-9 rounded-lg flex items-center justify-center
-                                 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
-                                 transition-all duration-150">
+              <button style={{
+                background: "transparent", border: "none", color: "#9ca3af",
+                position: "relative", width: 36, height: 36, borderRadius: 10,
+                display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
+              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
                 <Bell size={18} />
-                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500
-                                 border border-white" />
+                <span style={{ position: "absolute", top: 6, right: 6, width: 8, height: 8, borderRadius: "50%", background: "#ef4444", border: "2px solid #fff" }} />
               </button>
             )}
 
             {/* Support/Help Logo */}
-            <button className="w-9 h-9 rounded-lg flex items-center justify-center
-                               text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50
-                               transition-all duration-150">
+            <button style={{
+                background: "transparent", border: "none", color: "#9ca3af",
+                width: 36, height: 36, borderRadius: 10,
+                display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
+              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
               <HelpCircle size={18} />
             </button>
 
-            <div className="w-px h-6 bg-neutral-100 mx-2" />
+            <div style={{ width: 1, height: 24, background: "#e5e7eb", margin: "0 6px" }} />
 
             {/* User Profile & Account Dropdown */}
-            {token && (
-              <div
-                className="relative"
-                ref={dropdownRef}
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
-                <button
-                  className={`w-9 h-9 rounded-full bg-primary-400 flex items-center justify-center
-                              text-white text-sm font-bold transition-all duration-150
-                              hover:bg-primary-500 ring-2 ring-transparent
-                              ${dropdownOpen ? "ring-primary-200" : ""}`}
-                >
+            {token ? (
+              <div className="relative" ref={dropdownRef} onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
+                <button style={{
+                  width: 38, height: 38, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #02bcf0, #014d65)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontWeight: 800, color: "#fff", fontSize: 15, cursor: "pointer", border: "none",
+                  boxShadow: dropdownOpen ? "0 0 0 3px rgba(2,188,240,0.2)" : "none",
+                  transition: "all 0.2s"
+                }}>
                   {initial}
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 top-full w-56 bg-white border border-[#b3eefb]
-                                  rounded-2xl shadow-lg shadow-neutral-100/80 py-1.5 z-50">
-
+                  <div style={{
+                    position: "absolute", right: 0, top: "100%", width: 240,
+                    background: "#fff", border: "1px solid #b3eefb", borderRadius: 16,
+                    boxShadow: "0 10px 40px rgba(0,0,0,0.08)", zIndex: 50, overflow: "hidden",
+                    paddingBottom: 6
+                  }}>
                     {/* User name + email */}
-                    <div className="px-4 py-3 border-b border-neutral-100">
-                      <p className="text-sm font-bold text-black leading-tight">
-                        {user.username || "User"}
-                      </p>
-                      <p className="text-xs text-neutral-400 mt-0.5 truncate">
-                        {user.email || ""}
-                      </p>
+                    <div style={{ padding: "16px", borderBottom: "1px solid #f3f4f6", background: "#f8fbfe" }}>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: "#111827", margin: 0 }}>{user.username || "User"}</p>
+                      <p style={{ fontSize: 12, color: "#6b7280", margin: "2px 0 0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user.email || ""}</p>
                     </div>
 
-                    <div className="py-1">
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-black hover:bg-neutral-50 transition-colors"
-                      >
-                        <Home size={15} /> Home
-                      </Link>
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-black hover:bg-neutral-50 transition-colors"
-                      >
-                        <ClipboardList size={15} /> My Applications
-                      </Link>
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-black hover:bg-neutral-50 transition-colors"
-                      >
-                        <Bookmark size={15} /> My Bookmarks
-                      </Link>
-                      <Link
-                        to="/profile"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-black hover:bg-neutral-50 transition-colors"
-                      >
-                        <Edit2 size={15} /> Edit Profile
-                      </Link>
-                      <button
-                        onClick={() => setDropdownOpen(false)}
-                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-black hover:bg-neutral-50 transition-colors"
-                      >
-                        <Settings size={15} /> Settings
-                      </button>
+                    <div style={{ padding: "8px 0" }}>
+                      {[
+                        { to: "/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+                        { to: "/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
+                        { to: "/jobs", icon: <Bookmark size={16} />, label: "Saved Jobs" },
+                      ].map((item, i) => (
+                        <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
+                          display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
+                          fontSize: 13, fontWeight: 600, color: "#374151", textDecoration: "none"
+                        }} onMouseEnter={e => { e.currentTarget.style.background = "#f9fafb"; e.currentTarget.style.color = "#02bcf0"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#374151"; }}>
+                          {item.icon} {item.label}
+                        </Link>
+                      ))}
                     </div>
 
-                    <div className="border-t border-neutral-100 pt-1">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium
-                                   text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors"
-                      >
-                        <LogOut size={15} /> Logout
+                    {/* Account Footnote & Logout */}
+                    <div style={{ borderTop: "1px solid #f3f4f6", padding: "8px 0 0" }}>
+                      <button onClick={handleLogout} style={{
+                        display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", width: "100%",
+                        fontSize: 13, fontWeight: 700, color: "#ef4444", background: "transparent", border: "none", cursor: "pointer", textAlign: "left"
+                      }} onMouseEnter={e => e.currentTarget.style.background = "#fef2f2"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                        <LogOut size={16} /> Logout
                       </button>
                     </div>
                   </div>
                 )}
+              </div>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                {/* buttons for authentication pages */}
+                <button className="btn-outline" onClick={() => navigate("/login")}>Login</button>
+                <button className="btn-primary" onClick={() => navigate("/signup")}>Sign Up Free</button>
               </div>
             )}
           </div>
 
           {/* Hamburger (Mobile Toggle) */}
           <button
-            className="md:hidden w-9 h-9 rounded-lg flex items-center justify-center
-                       text-neutral-600 hover:bg-neutral-50 transition-colors"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label="Toggle menu"
+            className="mobile-menu-btn"
+            style={{ display: "none", background: "none", border: "none", cursor: "pointer", alignItems: "center" }}
+            onClick={() => setMobileOpen(o => !o)}
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileOpen ? <X size={24} color="#111827" /> : <Menu size={24} color="#111827" />}
           </button>
         </div>
-      </nav>
-{/* The functyiionality refers to the navbar opening in the mobile screen */}
-      {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 bg-white flex flex-col pt-4">
 
-          {/* User Preview */}
-          {token && (
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-neutral-100">
-              <div className="w-10 h-10 rounded-full bg-primary-400 flex items-center justify-center
-                              text-white text-sm font-bold flex-shrink-0">
-                {initial}
+        {/* The functyiionality refers to the navbar opening in the mobile screen */}
+        {mobileOpen && (
+          <div style={{
+            position: "fixed", inset: "64px 0 0 0", background: "#fff",
+            zIndex: 99, padding: "24px", display: "flex", flexDirection: "column", gap: 4,
+            borderTop: "1px solid #f3f4f6", overflowY: "auto"
+          }}>
+            {/* User Preview */}
+            {token && (
+              <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 16, borderBottom: "1px solid #f3f4f6", marginBottom: 16 }}>
+                <div style={{ width: 42, height: 42, borderRadius: "50%", background: "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#fff", fontSize: 16 }}>{initial}</div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827" }}>{user.username || "User"}</div>
+                  <div style={{ fontSize: 13, color: "#6b7280" }}>{user.email || ""}</div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-bold text-neutral-800">{user.username || "User"}</p>
-                <p className="text-xs text-neutral-400">{user.email || ""}</p>
-              </div>
-            </div>
-          )}
+            )}
 
-          {/* Sidebar Links */}
-          <nav className="flex flex-col px-4 py-4 gap-1 flex-1">
-            {NAV_LINKS.map(({ label, path, icon }) => (
-              <Link
-                key={path}
-                to={path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[15px] font-semibold
-                            transition-colors
-                            ${isActive(path)
-                    ? "bg-primary-50 text-primary-500"
-                    : "text-black hover:bg-neutral-50"
-                  }`}
-              >
-                <span className={isActive(path) ? "text-primary-400" : "text-neutral-400"}>
-                  {icon}
-                </span>
-                {label}
-              </Link>
+            {/* Sidebar Links */}
+            {NAV_LINKS.map(({ label, path }) => (
+              <Link key={path} to={path} onClick={() => setMobileOpen(false)} style={{
+                padding: "14px 12px", fontSize: 16, fontWeight: 600, color: isActive(path) ? "#02bcf0" : "#374151",
+                background: isActive(path) ? "#e6f9fe" : "transparent", borderRadius: 10, textDecoration: "none"
+              }}>{label}</Link>
             ))}
 
-            <div className="h-px bg-neutral-100 my-3" />
-
-            <button className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-semibold
-                               text-black hover:bg-neutral-50 transition-colors text-left">
-              <span className="text-neutral-400"><Settings size={15} /></span>
-              Settings
-            </button>
-          </nav>
-
-          {/* Account Footnote & Logout */}
-          <div className="px-4 pb-8 flex flex-col gap-3">
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-semibold
-                         text-red-500 hover:bg-red-50 transition-colors w-full"
-            >
-              <LogOut size={15} /> Logout
-            </button>
+            <div style={{ marginTop: "auto", paddingTop: 24 }}>
+              {token ? (
+                <button onClick={handleLogout} style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%",
+                  padding: "14px", borderRadius: 12, background: "#fef2f2", color: "#ef4444", border: "none", fontSize: 15, fontWeight: 700, cursor: "pointer"
+                }}>
+                  <LogOut size={18} /> Logout
+                </button>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <button className="btn-outline" style={{ padding: "14px", width: "100%" }} onClick={() => navigate("/login")}>Login</button>
+                  <button className="btn-primary" style={{ padding: "14px", width: "100%" }} onClick={() => navigate("/signup")}>Sign Up Free</button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </nav>
     </>
   );
 }
