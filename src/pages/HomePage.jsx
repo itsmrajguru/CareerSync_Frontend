@@ -78,7 +78,7 @@ export default function HomePage() {
   return (
     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#fff", minHeight: "100vh", overflowX: "hidden" }}>
 
-      {/* SECTION 1:  */}
+      {/* SECTION 1:*/}
       {/*created a
 seperate navbar for the home page */}
       <nav style={{
