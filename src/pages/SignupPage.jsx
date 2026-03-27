@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signupUser } from "../api";
+import Footer from "../components/Footer";
 
 export default function SignupPage() {
   const [username, setUsername] = useState("");
@@ -36,9 +37,11 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
-      <div className="w-full max-w-md relative z-10">
-        <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+    <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+      <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
+        <div className="w-full max-w-md relative z-10">
+        {/* adding feature-card class to match with home page dynamic ui */}
+        <div className="feature-card p-10 w-full">
 
           {/* Hero section with careeersync logo and Signup header*/}
           <div className="text-center mb-8">
@@ -115,10 +118,11 @@ finally to databases via backend */}
             </div>
             {/*The submit button will submit the form,
 with the help of inbuilt Onsubmit Function called in the form */}
+            {/* changing this to btn-primary to have consistent animations */}
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-full bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="btn-primary mt-4 w-full py-3.5 text-base"
             >
               {loading ? "Creating Account..." : "Create Account"}
             </button>
@@ -133,5 +137,7 @@ with the help of inbuilt Onsubmit Function called in the form */}
         </div>
       </div>
     </div>
-  );
+    <Footer />
+  </div>
+);
 }

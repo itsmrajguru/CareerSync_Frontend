@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Save, X, Edit2, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import ProfileForm from "../components/ProfileForm";
 import { getProfileList, createProfile, updateProfile, deleteProfile } from "../api";
 
@@ -143,10 +144,10 @@ export default function ProfilePage() {
   const initials = getInitials(formData.full_name);
 
   return (
-    <div className="min-h-screen bg-[#f0fbfe] font-sans">
+    <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
       <Navbar />
 
-      <main className="max-w-[900px] mx-auto px-7 pt-10 pb-24">
+      <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
         
         {/*profile header*/}
         <div className="mb-8 flex items-end justify-between">
@@ -168,7 +169,9 @@ export default function ProfilePage() {
               <>
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#b3eefb] bg-white text-neutral-600 text-sm font-bold hover:bg-neutral-50 transition-colors"
+                  /* Now applying the new HomePage UI classes for matching aesthetics */
+                  className="btn-outline"
+                  style={{ padding: "8px 16px" }}
                 >
                   <X size={14}/> Cancel
                 </button>
@@ -176,7 +179,9 @@ export default function ProfilePage() {
                 <button
                   onClick={handleSave}
                   disabled={loading}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors disabled:opacity-60"
+                  /* Now applying the new HomePage UI classes */
+                  className="btn-primary"
+                  style={{ padding: "8px 16px" }}
                 >
                   <Save size={14}/> {loading ? "Saving..." : "Save"}
                 </button>
@@ -194,7 +199,9 @@ export default function ProfilePage() {
 
                 <button
                   onClick={() => setEditing(true)}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors"
+                  /* Now applying the new HomePage UI classes */
+                  className="btn-primary"
+                  style={{ padding: "8px 16px" }}
                 >
                   <Edit2 size={14}/> Edit
                 </button>
@@ -224,6 +231,7 @@ export default function ProfilePage() {
         />
 
       </main>
+      <Footer />
     </div>
   );
 }

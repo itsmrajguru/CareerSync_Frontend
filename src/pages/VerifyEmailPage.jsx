@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { verifyEmail } from "../api";
+import Footer from "../components/Footer";
 
 export default function VerifyEmailPage() {
     const [searchParams] = useSearchParams();
@@ -35,9 +36,10 @@ export default function VerifyEmailPage() {
     }, [token]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
-            <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm text-center">
+        <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+            <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
+                <div className="w-full max-w-md relative z-10">
+                <div className="feature-card p-10 w-full text-center">
 
                     {/* Hero section with careeersync logo and verify Email header*/}
                     <div className="mb-8">
@@ -65,7 +67,7 @@ we are showing this message , as there is no any status message as verifying exi
                             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mb-4">✓</div>
                             <p className="text-neutral-600 font-medium mb-6">{message}</p>
                             <button
-                                className="w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm"
+                                className="btn-primary w-full py-3.5 text-base"
                                 onClick={() => navigate("/login")}
                             >
                                 Proceed to Login
@@ -87,5 +89,7 @@ we are showing this message , as there is no any status message as verifying exi
                 </div>
             </div>
         </div>
-    );
+        <Footer />
+    </div>
+);
 }

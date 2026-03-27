@@ -50,7 +50,7 @@ function Field({ label, name, value, onChange, editing, placeholder, icon: Icon,
 function Cell({ children, className = "", style = {} }) {
   return (
     <div
-      className={`bg-white border border-[#b3eefb] rounded-2xl p-5 ${className}`}
+      className={`feature-card p-5 ${className}`}
       style={style}
     >
       {children}
@@ -258,7 +258,7 @@ export default function ProfileForm({
       >
         <button
           onClick={onNavigate}
-          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 text-white text-sm font-bold rounded-xl hover:bg-black transition-colors"
+          className="btn-dark px-5 py-2.5 text-sm"
         >
           <Search size={14} /> Find matching jobs
         </button>
@@ -268,14 +268,14 @@ export default function ProfileForm({
             <>
               <button
                 onClick={onCancel}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-600 text-sm font-bold hover:bg-neutral-50 transition-colors"
+                className="btn-outline px-4 py-2.5 text-sm"
               >
                 <X size={14} /> Cancel
               </button>
               <button
                 onClick={onSave}
                 disabled={loading}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors disabled:opacity-60"
+                className="btn-primary px-4 py-2.5 text-sm"
               >
                 <Save size={14} /> {loading ? "Saving..." : "Save changes"}
               </button>
@@ -283,7 +283,7 @@ export default function ProfileForm({
           ) : (
             <button
               onClick={onEdit}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary-400 text-white text-sm font-bold hover:bg-primary-500 transition-colors"
+              className="btn-primary px-4 py-2.5 text-sm"
             >
               <Edit2 size={14} /> Edit profile
             </button>

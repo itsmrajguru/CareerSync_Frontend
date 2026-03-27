@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
+import Footer from "../components/Footer";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -35,9 +36,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
-      <div className="w-full max-w-md relative z-10">
-        <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+    <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+      <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
+        <div className="w-full max-w-md relative z-10">
+        {/* adding feature-card for consistent layout matched with home page */}
+        <div className="feature-card p-10 w-full">
 
           {/* Hero section with careeersync logo and login header */}
           <div className="text-center mb-8">
@@ -99,10 +102,11 @@ from the user and take him to dashboard page if login successful */}
             </div>
             {/*The submit button will submit the form,
 with the help of inbuilt Onsubmit Function called in the form */}
+            {/* updating the button to use the new btn-primary class */}
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 w-full py-3.5 rounded-full bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+              className="btn-primary mt-4 w-full py-3.5 text-base"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
@@ -117,5 +121,7 @@ with the help of inbuilt Onsubmit Function called in the form */}
         </div>
       </div>
     </div>
-  );
+    <Footer />
+  </div>
+);
 }

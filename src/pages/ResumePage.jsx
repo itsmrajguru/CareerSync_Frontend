@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import ResumeCard from "../components/ResumeCard";
 import ResumeAnalysis from "../components/ResumeAnalysis";
 import { uploadResume } from "../api";
+import Footer from "../components/Footer";
 
 export default function ResumePage() {
     const [file, setFile] = useState(null);
@@ -58,10 +59,10 @@ export default function ResumePage() {
     const reset = () => { setAnalysis(null); setFile(null); setError(""); };
 
     return (
-        <div className="min-h-screen bg-[#f0fbfe] font-sans">
+        <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
             <Navbar />
 
-            <main className="max-w-[900px] mx-auto px-7 pt-10 pb-24">
+            <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
                 {/* Resume Page Header */}
                 <div className="mb-10">
@@ -99,6 +100,7 @@ export default function ResumePage() {
                 )}
 
             </main>
+            <Footer />
         </div>
     );
 }

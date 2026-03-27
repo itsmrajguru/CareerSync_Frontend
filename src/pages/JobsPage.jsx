@@ -92,7 +92,7 @@ export default function JobsPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button className="absolute right-2.5 top-2.5 bottom-2.5 px-10 rounded-full bg-primary-400 text-white text-base font-bold shadow-[0_4px_14px_0_rgba(2,188,240,0.3)] hover:bg-primary-500 transition-transform active:scale-95">
+          <button className="btn-primary absolute right-2.5 top-2.5 bottom-2.5 px-10">
             Search
           </button>
         </form>
@@ -141,7 +141,7 @@ Not too productive ,need to change later(Remaindder)*/}
                 <button
                   onClick={handlePrevPage}
                   disabled={currentPage === 1}
-                  className="px-6 py-3 rounded-2xl border border-[#b3eefb] bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
+                  className="btn-outline px-6 py-3 text-sm disabled:opacity-30 disabled:hover:scale-100"
                 >
                   &larr; Previous
                 </button>
@@ -151,7 +151,7 @@ Not too productive ,need to change later(Remaindder)*/}
                 <button
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  className="px-6 py-3 rounded-2xl border border-[#b3eefb] bg-white hover:bg-neutral-50 disabled:opacity-30 text-sm font-bold text-neutral-800 shadow-sm transition-colors"
+                  className="btn-outline px-6 py-3 text-sm disabled:opacity-30 disabled:hover:scale-100"
                 >
                   Next &rarr;
                 </button>

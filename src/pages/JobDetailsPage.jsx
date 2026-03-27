@@ -16,7 +16,7 @@ export default function JobDetailsPage() {
                     <h2 className="text-2xl font-bold mb-4">Job details not found</h2>
                     <button
                         onClick={() => navigate("/jobs")}
-                        className="px-8 py-4 bg-primary-400 hover:bg-primary-500 text-white rounded-2xl font-bold shadow-sm transition-transform active:scale-95"
+                        className="btn-primary px-8 py-4"
                     >
                         Back to Jobs
                     </button>
@@ -136,7 +136,7 @@ inside the job card */}
                                         alert("Link copied to clipboard!");
                                     }
                                 }}
-                                className="w-full mt-8 py-4 border-2 border-[#b3eefb] rounded-2xl text-neutral-800 text-sm font-bold hover:bg-neutral-50 flex items-center justify-center gap-2.5 transition-all shadow-sm active:scale-[0.98]"
+                                className="btn-outline w-full mt-8 py-4 flex items-center justify-center gap-2.5 text-sm"
                             >
 {/* this button takes you to the source of the job
 from where it is taken */}
@@ -145,7 +145,7 @@ from where it is taken */}
                             
                             <button
                                 onClick={handleApply}
-                                className="w-full mt-4 py-4 bg-primary-400 rounded-2xl text-white font-bold text-base shadow-[0_4px_20px_rgb(2,188,240,0.3)] hover:bg-primary-500 flex items-center justify-center gap-3 transition-transform active:scale-[0.98]"
+                                className="btn-primary w-full mt-4 py-4 flex items-center justify-center gap-3 text-base"
                             >
                                 Apply Externally <ExternalLink size={18} />
                             </button>

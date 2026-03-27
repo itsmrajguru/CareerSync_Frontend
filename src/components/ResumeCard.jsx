@@ -105,7 +105,7 @@ export default function ResumeCard({
                 <button
                     onClick={onUpload}
                     disabled={!file || loading}
-                    className="w-full py-3.5 bg-neutral-900 text-white rounded-xl font-bold text-sm hover:bg-black disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+                    className="btn-primary w-full py-3.5 text-sm"
                 >
                     {loading ? (
                         <>
@@ -134,7 +134,7 @@ export default function ResumeCard({
                     Tips to beat ATS
                 </p>
                 {TIPS.map(({ icon: Icon, title, desc }) => (
-                    <div key={title} className="bg-white border border-[#b3eefb] rounded-2xl p-4 flex items-start gap-3">
+                    <div key={title} className="feature-card p-4 flex items-start gap-3">
                         <div className="w-8 h-8 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
                             <Icon size={15} className="text-primary-500" />
                         </div>

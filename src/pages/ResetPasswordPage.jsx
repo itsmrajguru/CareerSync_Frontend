@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { resetPassword } from "../api";
+import Footer from "../components/Footer";
 
 export default function ResetPasswordPage() {
     const [searchParams] = useSearchParams();
@@ -44,9 +45,10 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#f0fbfe] px-4 font-sans">
-            <div className="w-full max-w-md relative z-10">
-                <div className="bg-white p-10 rounded-3xl border border-[#b3eefb] shadow-sm">
+        <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+            <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
+                <div className="w-full max-w-md relative z-10">
+                <div className="feature-card p-10 w-full">
 
                     {/* Hero section with careeersync logo and reset header*/}
 
@@ -75,7 +77,7 @@ export default function ResetPasswordPage() {
                             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-4 text-sm font-semibold">
                                 {message}
                             </div>
-                            <Link to="/login" className="inline-block py-3 px-6 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm">
+                            <Link to="/login" className="btn-primary inline-block py-3 px-6">
                                 Proceed to Login
                             </Link>
                         </div>
@@ -117,7 +119,7 @@ with the help of inbuilt Onsubmit Function called in the form */}
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-4 w-full py-3.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2"
+                                className="btn-primary mt-4 w-full py-3.5 flex items-center justify-center gap-2 text-base"
                             >
                                 {loading ? "Resetting..." : "Reset Password"}
                             </button>
@@ -126,5 +128,7 @@ with the help of inbuilt Onsubmit Function called in the form */}
                 </div>
             </div>
         </div>
-    );
+        <Footer />
+    </div>
+);
 }
