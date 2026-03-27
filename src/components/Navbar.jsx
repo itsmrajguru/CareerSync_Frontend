@@ -61,8 +61,9 @@ export default function Navbar() {
     <>
       <nav style={{
         position: "sticky", top: 0, zIndex: 100,
-        background: scrolled ? "rgba(255,255,255,0.95)" : "#fff",
+        background: scrolled ? "rgba(255,255,255,0.75)" : "#fff",
         backdropFilter: scrolled ? "blur(12px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: "1px solid #f3f4f6",
         transition: "all 0.3s",
         boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
