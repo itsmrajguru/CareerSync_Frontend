@@ -16,6 +16,19 @@ CareerSync Frontend is a fast, responsive single-page application that provides 
 
 ---
 
+## 🧰 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI framework |
+| Vite 7 | Build tool & dev server |
+| React Router DOM v7 | Client-side routing |
+| TailwindCSS 3 | Utility-first styling |
+| Axios | HTTP client with interceptors |
+| Lucide React | Icon library |
+
+---
+
 ## ✨ Features
 
 - 🔐 **Two-Step OTP Login** — Enter credentials → receive 6-digit OTP on email → securely logged in
@@ -73,25 +86,6 @@ CareerSync-Frontend/
 ├── tailwind.config.js             # TailwindCSS customisation
 └── vite.config.js                 # Vite config
 ```
-
----
-
-## 🔀 Application Routes
-
-| Route | Page | Protected |
-|-------|------|-----------|
-| `/` | Home | ❌ |
-| `/login` | Login (OTP) | ❌ |
-| `/signup` | Sign Up | ❌ |
-| `/forgot-password` | Forgot Password | ❌ |
-| `/reset-password` | Reset Password | ❌ |
-| `/verify` | Email Verification | ❌ |
-| `/dashboard` | Dashboard | ✅ |
-| `/jobs` | Job Search | ✅ |
-| `/jobs/:id` | Job Detail | ✅ |
-| `/profile` | User Profile | ✅ |
-| `/resume` | Resume Analyser | ✅ |
-| `*` | → Redirect to `/dashboard` | — |
 
 ---
 
@@ -157,18 +151,6 @@ The project is configured for one-click Netlify deployment via `netlify.toml`.
 
 ---
 
-## 🧰 Tech Stack
-
-| Technology | Purpose |
-|------------|---------|
-| React 19 | UI framework |
-| Vite 7 | Build tool & dev server |
-| React Router DOM v7 | Client-side routing |
-| TailwindCSS 3 | Utility-first styling |
-| Axios | HTTP client with interceptors |
-| Lucide React | Icon library |
-
----
 
 ## 🤝 Related
 
