@@ -1,14 +1,8 @@
 <div align="center">
-
 # 💼 CareerSync — Frontend
 
 **A modern career sync platform to search jobs, manage profiles, and analyse resumes.**  
 Built with React · Vite · TailwindCSS · Axios
-
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7?logo=netlify&logoColor=white)](https://careersyncplatform.netlify.app)
 
 **[🌐 Live Demo →](https://careersyncplatform.netlify.app)**
 
@@ -19,6 +13,19 @@ Built with React · Vite · TailwindCSS · Axios
 ## 📖 About
 
 CareerSync Frontend is a fast, responsive single-page application that provides a complete career management experience — from job discovery to resume analysis to profile management. It connects to the [CareerSync Backend](https://github.com/itsmrajguru/CareerSync_Backend) REST API.
+
+---
+
+## 🧰 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI framework |
+| Vite 7 | Build tool & dev server |
+| React Router DOM v7 | Client-side routing |
+| TailwindCSS 3 | Utility-first styling |
+| Axios | HTTP client with interceptors |
+| Lucide React | Icon library |
 
 ---
 
@@ -82,62 +89,6 @@ CareerSync-Frontend/
 
 ---
 
-## 🔀 Application Routes
-
-| Route | Page | Protected |
-|-------|------|-----------|
-| `/` | Home | ❌ |
-| `/login` | Login (OTP) | ❌ |
-| `/signup` | Sign Up | ❌ |
-| `/forgot-password` | Forgot Password | ❌ |
-| `/reset-password` | Reset Password | ❌ |
-| `/verify` | Email Verification | ❌ |
-| `/dashboard` | Dashboard | ✅ |
-| `/jobs` | Job Search | ✅ |
-| `/jobs/:id` | Job Detail | ✅ |
-| `/profile` | User Profile | ✅ |
-| `/resume` | Resume Analyser | ✅ |
-| `*` | → Redirect to `/dashboard` | — |
-
----
-
-## 🔐 Login Flow
-
-```
-User enters email + password → clicks Continue
-        │
-        ▼
-POST /api/auth/login
-  → Backend validates credentials
-  → Sends 6-digit OTP to email
-        │
-        ▼
-User enters OTP from email
-        │
-        ▼
-POST /api/auth/verify-otp
-  → JWT access token stored in localStorage
-  → Refresh token stored in httpOnly cookie
-  → User redirected to /dashboard
-```
-
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-VITE_API_BASE_URL=http://localhost:8000/api
-```
-
-For production (`.env.production`):
-
-```env
-VITE_API_BASE_URL=https://your-backend-url.com/api
-```
-
----
 
 ## 🚀 Getting Started
 
@@ -200,43 +151,16 @@ The project is configured for one-click Netlify deployment via `netlify.toml`.
 
 ---
 
-## 🧰 Tech Stack
-
-| Technology | Purpose |
-|------------|---------|
-| React 19 | UI framework |
-| Vite 7 | Build tool & dev server |
-| React Router DOM v7 | Client-side routing |
-| TailwindCSS 3 | Utility-first styling |
-| Axios | HTTP client with interceptors |
-| Lucide React | Icon library |
-
----
-
-## 🏗️ Architecture Notes
-
-### `api.js` — Axios Instance
-
-All API calls go through a single `axios` instance in `api.js`:
-
-- **Request interceptor** — Automatically injects `Authorization: Bearer <token>` from `localStorage` on every request.
-- **Response interceptor** — On a `401 Unauthorized`, silently calls `POST /auth/token/refresh/` using the `httpOnly` cookie, updates the stored token, and retries the original request — all without the user noticing.
-
-### Protected Routes
-
-`ProtectedRoute` wraps all authenticated pages. If no token is found in `localStorage`, the user is immediately redirected to `/login`.
-
----
 
 ## 🤝 Related
 
 - **Backend API:** [CareerSync Backend](https://github.com/itsmrajguru/CareerSync_Backend)
-- **Live App:** [careersyncplatform.netlify.app](https://careersyncplatform.netlify.app)
+- **Live App:** [careersyncplatform.netlify.app]()
 
 ---
 
 <div align="center">
 
-Made with ❤️ by **Mangesh Rajguru**
+Made with ❤️ by **Mangesh S Rajguru**
 
 </div>
