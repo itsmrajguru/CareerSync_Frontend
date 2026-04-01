@@ -10,8 +10,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /* This function call the loginPage axios,and just returns
-   the response coming from the server,whether it may be error or success */
+  /* validates credentials — if valid, backend issues JWT tokens directly */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -20,11 +19,9 @@ export default function LoginPage() {
     try {
       const data = await loginUser(email, password);
 
-      // If the login is successful, the user will be redirected to the dashboard page
       if (data.success) {
         navigate("/dashboard");
       } else {
-      // Display specific server error messages
         setError(data.message || "Login failed. Please check your credentials.");
       }
     } catch (err) {
@@ -52,7 +49,9 @@ export default function LoginPage() {
             <span className="text-2xl font-black text-neutral-800 tracking-tight block">
               Career<span className="text-primary-500">Sync</span>
             </span>
-            <p className="text-neutral-400 mt-2 text-sm font-medium">Welcome back! Please login to continue.</p>
+            <p className="text-neutral-400 mt-2 text-sm font-medium">
+              Welcome back! Please login to continue.
+            </p>
           </div>
 
           {/* Displaying the login failed errors */}
@@ -62,8 +61,8 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/*thorugh this form, we will take the email and password
-from the user and take him to dashboard page if login successful */}
+          {/*through this form, we will take the email and password
+from the user and log them in directly */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
@@ -111,6 +110,7 @@ with the help of inbuilt Onsubmit Function called in the form */}
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
+
           {/*Option for the user to jump signup page */}
           <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
             Don't have an account?{" "}
