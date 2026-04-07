@@ -668,7 +668,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, ChevronRight, RefreshCw, Sparkles, ArrowUpRight } from "lucide-react";
-import { getJobs } from "../../api";
+import { getJobs } from "../../services/externalJobsService";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import JobCard from "../../components/JobCard";

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signupUser } from "../api";
+import { signupUser } from "../services/authService";
 import Footer from "../components/Footer";
 
 export default function SignupPage() {

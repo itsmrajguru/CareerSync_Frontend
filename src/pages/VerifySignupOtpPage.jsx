@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { verifySignupOtp } from "../api";
+import { verifySignupOtp } from "../services/authService";
 import Footer from "../components/Footer";
 
 export default function VerifySignupOtpPage() {

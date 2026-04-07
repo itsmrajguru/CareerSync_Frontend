@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import JobList from "../../components/JobList";
-import { getJobs } from "../../api";
+import { getJobs } from "../../services/externalJobsService";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);

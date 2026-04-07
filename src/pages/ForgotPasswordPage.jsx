@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { forgotPassword } from "../api";
+import { forgotPassword } from "../services/authService";
 import Footer from "../components/Footer";
 
 export default function ForgotPasswordPage() {

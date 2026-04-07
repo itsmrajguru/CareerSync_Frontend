@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import ResumeCard from "../../components/ResumeCard";
 import ResumeAnalysis from "../../components/ResumeAnalysis";
-import { uploadResume } from "../../api";
+import { uploadResume } from "../../services/studentProfileService";
 import Footer from "../../components/Footer";
 
 export default function ResumePage() {

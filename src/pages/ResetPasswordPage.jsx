@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { resetPassword } from "../api";
+import { resetPassword } from "../services/authService";
 import Footer from "../components/Footer";
 
 export default function ResetPasswordPage() {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ProfileForm from "../../components/ProfileForm";
-import { getProfileList, createProfile, updateProfile, deleteProfile } from "../../api";
+import { getProfileList, createProfile, updateProfile, deleteProfile } from "../../services/studentProfileService";
 
 const emptyProfile = {
   full_name: "", domain: "", gender: "", location: "",
