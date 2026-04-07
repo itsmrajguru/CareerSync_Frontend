@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Save, X, Edit2, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ProfileForm from "../components/ProfileForm";
-import { getProfileList, createProfile, updateProfile, deleteProfile } from "../api";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import ProfileForm from "../../components/ProfileForm";
+import { getProfileList, createProfile, updateProfile, deleteProfile } from "../../api";
 
 const emptyProfile = {
   full_name: "", domain: "", gender: "", location: "",
@@ -229,7 +229,7 @@ export default function ProfilePage() {
 
           /* This is the personalized job search  */
           onNavigate={() =>
-            navigate(`/jobs?q=${encodeURIComponent(formData.domain || formData.skills || "")}`)
+            navigate(`/student/jobs?q=${encodeURIComponent(formData.domain || formData.skills || "")}`)
           }
         />
 

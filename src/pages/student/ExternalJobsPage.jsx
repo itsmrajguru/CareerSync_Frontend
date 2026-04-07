@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
-import PageLayout from "../components/PageLayout";
-import JobList from "../components/JobList";
-import { getJobs } from "../api";
+import PageLayout from "../../components/PageLayout";
+import JobList from "../../components/JobList";
+import { getJobs } from "../../api";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
@@ -57,7 +57,7 @@ export default function JobsPage() {
     e.preventDefault();
     setCurrentPage(1);
     fetchJobs(query, 1, locationFilter, companyFilter);
-    navigate(`/jobs?q=${encodeURIComponent(query)}`);
+    navigate(`/student/jobs?q=${encodeURIComponent(query)}`);
   };
 
   const currentJobs = jobs;

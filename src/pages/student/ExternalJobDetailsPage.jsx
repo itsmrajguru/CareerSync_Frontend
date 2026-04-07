@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin, Building, Clock, Briefcase, Share2, ExternalLink } from "lucide-react";
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../../components/PageLayout";
 
 export default function JobDetailsPage() {
     const { state } = useLocation();

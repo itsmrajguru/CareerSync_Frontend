@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
-import ResumeCard from "../components/ResumeCard";
-import ResumeAnalysis from "../components/ResumeAnalysis";
-import { uploadResume } from "../api";
-import Footer from "../components/Footer";
+import Navbar from "../../components/Navbar";
+import ResumeCard from "../../components/ResumeCard";
+import ResumeAnalysis from "../../components/ResumeAnalysis";
+import { uploadResume } from "../../api";
+import Footer from "../../components/Footer";
 
 export default function ResumePage() {
     const [file, setFile] = useState(null);
