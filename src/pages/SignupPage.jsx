@@ -7,18 +7,20 @@ export default function SignupPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student"); //default role set to student
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /* This function calls the SignUpPage axios*/
+  /* This function calls the SignUpPage axios and now passes the role */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const data = await signupUser({ username, email, password });
+      const data = await signupUser({ username, email, password, role }); //change 1:added role
+      
       if (data && data.success) {
         setError("");
         /* redirect to the OTP verification page, passing email via navigation state
@@ -41,19 +43,19 @@ export default function SignupPage() {
       <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
         <div className="w-full max-w-md relative z-10">
           {/* adding feature-card class to match with home page dynamic ui */}
-          <div className="feature-card p-10 w-full">
+          <div className="feature-card p-10 w-full animate-fade-in">
 
             {/* Hero section with careeersync logo and Signup header*/}
             <div className="text-center mb-8">
               <img
                 src="/logo.svg"
                 alt="Logo"
-                className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+                className="h-16 w-16 mx-auto mb-4 floating"
               />
               <span className="text-2xl font-black text-neutral-800 tracking-tight block">
-                Career<span className="text-primary-500">Sync</span>
+                Join Career<span className="text-primary-500">Sync</span>
               </span>
-              <p className="text-neutral-400 mt-2 text-sm font-medium">Sign up to find your next opportunity.</p>
+              <p className="text-neutral-400 mt-2 text-sm font-medium">Create your account to get started.</p>
             </div>
 
             {/* Displaying the login failed errors */}
@@ -63,9 +65,38 @@ export default function SignupPage() {
               </div>
             )}
 
-            {/*through these 3 inputs, data will be sent to the axios and 
-finally to databases via backend */}
+            {/*through these inputs, data will be sent to the axios and 
+            finally to databases via backend */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              
+              {/* Role Selector (Student vs Employer) */}
+              <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setRole("student")}
+                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${
+                      role === "student"
+                        ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
+                        : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                    }`}
+                  >
+                    Job Seeker
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole("company")}
+                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${
+                      role === "company"
+                        ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
+                        : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                    }`}
+                  >
+                    Company
+                  </button>
+                </div>
+              </div>
+
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Username</label>
                 <input
@@ -109,18 +140,16 @@ finally to databases via backend */}
                 />
                 <p className="text-[10px] text-neutral-400 ml-1">Minimum 6 characters required</p>
               </div>
-              {/*The submit button will submit the form,
-with the help of inbuilt Onsubmit Function called in the form */}
-              {/* changing this to btn-primary to have consistent animations */}
+
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary mt-4 w-full py-3.5 text-base"
+                className="btn-primary mt-4 w-full py-4 text-base"
               >
                 {loading ? "Creating Account..." : "Create Account"}
               </button>
             </form>
-            {/*Option for the user to jump LoginPage page */}
+
             <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
               Already have an account?{" "}
               <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
