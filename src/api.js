@@ -1,146 +1,73 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+
+/*
+  This file only creates and configures the shared axios instance.
+  All API functions live in their dedicated service files:
+
+    services/authService.js          → login, signup, OTP, password reset
+    services/studentProfileService.js → student profile + resume upload
+    services/companyProfileService.js → company profile CRUD
+    services/jobsService.js           → internal platform jobs (create, mine, update, delete)
+    services/externalJobsService.js   → Adzuna external job search
+    services/applicationService.js   → apply, get applications, update status
+*/
 
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true
 })
 
-//req Interceptor :auto-inject access token 
+// Request Interceptor: auto-inject access token from localStorage
 api.interceptors.request.use((config) => {
-  /* As we are injecting the token in the config authHeader,
-  we need to access it from localStorage  */
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
-  return config //now config is updated with injected token
+  return config
 })
 
-//res Interceptor :handle 401 and refresh acces token if expired 
+// Response Interceptor: handle 401 and auto-refresh access token if expired
 api.interceptors.response.use(
-  //if token not exppired , directly return the response
+  // Success: unwrap the response data so callers receive the payload directly
   (response) => {
     return response.data
   },
 
-  //if error occours,go to this functionality
+  // Error: attempt a silent token refresh on 401, then retry original request
   async (error) => {
-    /*here originaRequest is like we tried to call api/getJobs and failed
-    whereas error.config is that request api/getjobs
-    so we strored that failed request in the originalRequest so that
-    when we will get a new token , we will retry the same request
-    and the user wont feel any server crash */
-
+    /*
+      originalRequest is the failed call (e.g. GET /jobs).
+      We store it so that after getting a new token we can replay it
+      seamlessly — the user never sees the failure.
+    */
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       try {
-        console.log('Token Expired..attempting refresh new Access Token');
-        const res = await api.post('/auth/token/refresh/', {})
+        console.log('Token expired — attempting silent refresh...');
+        const res = await api.post('/auth/token/refresh', {})
         const { newAccessToken } = res;
         localStorage.setItem('token', newAccessToken)
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
         return api(originalRequest)
       } catch (e) {
-        console.log('Refresh Token Failed:', e);
+        console.log('Refresh token failed — redirecting to login');
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
         window.location.href = '/login';
         return Promise.reject(e);
       }
     }
-    // Log other errors (like 400) for debugging
+
+    // Log all other API errors for debugging
     if (error.response) {
       console.error(`API Error [${error.response.status}]:`, error.response.data);
     }
     return Promise.reject(error);
-  })
-
-
-//Authentication routes
-
-// Login — validates credentials and stores token on success directly
-export async function loginUser(email, password) {
-  const data = await api.post('/auth/login/', { email, password });
-  if (data.accessToken) {
-    localStorage.setItem("token", data.accessToken);
-    if (data.user) { localStorage.setItem("user", JSON.stringify(data.user)); }
   }
-  return data;
-}
-
-// Signup — sends OTP to email, returns requiresOtp: true
-export async function signupUser({ username, email, password }) {
-  return api.post('/auth/signup/', { username, email, password });
-}
-
-// Verify Signup OTP — marks user as verified on success
-export async function verifySignupOtp(email, otp) {
-  return api.post('/auth/verify-signup-otp/', { email, otp });
-}
-
-export async function forgotPassword(email) {
-  return api.post('/auth/forgot-password/', { email });
-}
-export async function resetPassword(token, password) {
-  return api.post('/auth/reset-password/', { token, newPassword: password });
-}
-
-
-//Calls the Adzuna Api Service to fetch jobs
-export async function getJobs(query, page = 1, limit = 10) {
-  return api.get('/jobs/jobs/', {
-    params: { q: query, page, limit }
-  });
-}
-
-// These functions calls the profile Routes
-export async function getProfileList() {
-  return api.get('/userProfile/profile/');
-}
-export async function getProfile(id) {
-  return api.get(`/userProfile/profile/${id}/`);
-}
-export async function createProfile(data) {
-  return api.post('/userProfile/profile/', data);
-}
-export async function updateProfile(id, data) {
-  return api.put(`/userProfile/profile/${id}/`, data);
-}
-export async function deleteProfile(id) {
-  return api.delete(`/userProfile/profile/${id}/`);
-}
-
-
-// Resume function calls backend routes
-export async function uploadResume(file) {
-  /*pass this file to the formData
-    where formData is the tool used to carry binary file to the backend */
-
-      //step 1 :define formData
-      const formData = new FormData()
-
-      //step 2: append file in the formData
-      formData.append('resume',file)
-
-      //call resumeController
-      return api.post('/resumeUpload/resume/upload/',formData,{
-        headers:{'Content-Type': 'multipart/form-data'}
-      })
-
-}
-
-//DIFFRENT TYPES OF Content-type
-
-/* 1. Sending normal JSON data like name,age,email,password
-{ 'Content-Type': 'application/json' } */
-
-// 2. Sending a file like pdf,image,video
-// { 'Content-Type': 'multipart/form-data' }
-
-// 3. Sending a simple form like  username=john&password=1234
-// { 'Content-Type': 'application/x-www-form-urlencoded' }
+)
 
 export default api;
