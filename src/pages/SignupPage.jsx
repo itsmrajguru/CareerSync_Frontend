@@ -69,7 +69,7 @@ export default function SignupPage() {
             finally to databases via backend */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               
-              {/* Role Selector (Student vs Employer) */}
+              {/* Role Selector (Student vs Company) */}
               <div className="flex flex-col gap-2">
                 <div className="grid grid-cols-2 gap-3">
                   <button

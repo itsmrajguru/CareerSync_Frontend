@@ -6,12 +6,7 @@ import {
   Home, Bookmark, ClipboardList, Edit2,
 } from "lucide-react";
 
-const NAV_LINKS = [
-  { label: "Dashboard", path: "/dashboard", icon: <Briefcase size={15} /> },
-  { label: "Jobs", path: "/jobs", icon: <PenLine size={15} /> },
-  { label: "Resume Tools", path: "/resume", icon: <FileText size={15} /> },
-  { label: "Profile", path: "/profile", icon: <User size={15} /> },
-];
+// Removed static NAV_LINKS using dynamic one inside component
 
 //Navbar 
 export default function Navbar() {
@@ -25,6 +20,17 @@ export default function Navbar() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
+  const isCompany = user?.role === 'company';
+
+  const NAV_LINKS = isCompany ? [
+    { label: "Dashboard", path: "/company/dashboard", icon: <Briefcase size={15} /> },
+    { label: "My Jobs", path: "/company/jobs", icon: <PenLine size={15} /> }
+  ] : [
+    { label: "Dashboard", path: "/student/dashboard", icon: <Briefcase size={15} /> },
+    { label: "Discover Jobs", path: "/student/jobs", icon: <PenLine size={15} /> },
+    { label: "Resume Tools", path: "/student/resume", icon: <FileText size={15} /> },
+    { label: "Profile", path: "/student/profile", icon: <User size={15} /> },
+  ];
 
   /* This is the automated function for the Navbar to 
   open in the mobile screen */
@@ -71,7 +77,7 @@ export default function Navbar() {
         <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Here we updated the header CareerSync with logo */}
-          <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+          <Link to={isCompany ? "/company/dashboard" : "/student/dashboard"} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
             <span style={{ fontSize: 20, fontWeight: 900, color: "#111827", letterSpacing: -0.5 }}>
               Career<span style={{ color: "#02bcf0" }}>Sync</span>
@@ -147,9 +153,9 @@ export default function Navbar() {
 
                     <div style={{ padding: "8px 0" }}>
                       {[
-                        { to: "/dashboard", icon: <Home size={16} />, label: "Dashboard" },
-                        { to: "/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
-                        { to: "/jobs", icon: <Bookmark size={16} />, label: "Saved Jobs" },
+                        { to: isCompany ? "/company/dashboard" : "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+                        { to: isCompany ? "/company/profile" : "/student/profile", icon: <Edit2 size={16} />, label: isCompany ? "Company Profile" : "Edit Profile" },
+                        { to: isCompany ? "/company/jobs" : "/student/jobs", icon: <Bookmark size={16} />, label: isCompany ? "Manage Jobs" : "Saved Jobs" },
                       ].map((item, i) => (
                         <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
                           display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",

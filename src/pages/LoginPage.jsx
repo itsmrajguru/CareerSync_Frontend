@@ -24,7 +24,7 @@ export default function LoginPage() {
         if (data.user?.role === "company") {
           navigate("/company/dashboard");
         } else {
-          navigate("/dashboard");
+          navigate("/student/dashboard");
         }
       } else {
         setError(data.message || "Login failed. Please check your credentials.");

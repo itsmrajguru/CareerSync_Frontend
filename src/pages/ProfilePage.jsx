@@ -139,7 +139,7 @@ export default function ProfilePage() {
   
   /*The percentage of formData added */
   const completion = calcCompletion(editing ? formData : profile);
-  
+
   /* Creating 2 character logo */
   const initials = getInitials(formData.full_name);
 
@@ -148,7 +148,7 @@ export default function ProfilePage() {
       <Navbar />
 
       <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
-        
+
         {/*profile header*/}
         <div className="mb-10 flex items-end justify-between">
           <div>
@@ -167,7 +167,7 @@ export default function ProfilePage() {
           <div className="flex gap-2">
             {/* This is the conditional toggle btween cancel+save and
             delete +edit */}
-            
+
             {editing ? (
               <>
                 <button

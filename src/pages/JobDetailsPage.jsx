@@ -15,7 +15,7 @@ export default function JobDetailsPage() {
                 <div className="py-20 text-center">
                     <h2 className="text-2xl font-bold mb-4">Job details not found</h2>
                     <button
-                        onClick={() => navigate("/jobs")}
+                        onClick={() => navigate("/student/jobs")}
                         className="btn-primary px-8 py-4"
                     >
                         Back to Jobs

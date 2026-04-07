@@ -895,7 +895,7 @@ export default function DashboardPage() {
     finally { setLoading(false); }
   }
 
-  const handleSkillSearch = useCallback((skill) => navigate(`/jobs?q=${encodeURIComponent(skill)}`), [navigate]);
+  const handleSkillSearch = useCallback((skill) => navigate(`/student/jobs?q=${encodeURIComponent(skill)}`), [navigate]);
 
   const totalSkills = Object.values(SKILL_UNIVERSE).flat();
   const matchPct = Math.round(totalSkills.filter(s => (userSkills || "").toLowerCase().includes(s.toLowerCase())).length / totalSkills.length * 100);
@@ -932,8 +932,8 @@ export default function DashboardPage() {
           <div className="d-stats grid grid-cols-3 gap-4 mb-10">
             {[
               { label: "Market Match", value: userSkills ? `${matchPct}%` : "—", sub: userSkills ? "Skills vs. live demand" : "Add skills to see", accent: "#02bcf0" },
-              { label: "Resume Score", value: "—", sub: "Upload to analyze", accent: "#f59e0b", link: "/resume" },
-              { label: "Profile", value: userSkills ? "Active" : "Incomplete", sub: userSkills ? "Skills detected" : "Tap to complete", accent: userSkills ? "#22c55e" : "#f59e0b", link: "/profile" },
+              { label: "Resume Score", value: "—", sub: "Upload to analyze", accent: "#f59e0b", link: "/student/resume" },
+              { label: "Profile", value: userSkills ? "Active" : "Incomplete", sub: userSkills ? "Skills detected" : "Tap to complete", accent: userSkills ? "#22c55e" : "#f59e0b", link: "/student/profile" },
             ].map(({ label, value, sub, accent, link }) => (
               <div key={label} onClick={link ? () => navigate(link) : undefined}
                 style={{ borderTop: `3px solid ${accent}` }}
@@ -956,7 +956,7 @@ export default function DashboardPage() {
                     <p style={{ fontSize: "11px", color: "#67b8d1", margin: 0, fontWeight: 500 }}>CareerPulse will highlight your exact gaps vs. live market demand</p>
                   </div>
                 </div>
-                <button onClick={() => navigate("/profile")}
+                <button onClick={() => navigate("/student/profile")}
                   className="flex items-center gap-1.5 px-4 py-2 bg-primary-400 text-white text-xs font-bold rounded-xl hover:bg-primary-500 transition-colors">
                   Add Skills <ChevronRight size={12} />
                 </button>
@@ -988,7 +988,7 @@ export default function DashboardPage() {
                 {loading ? [1,2,3,4].map(n => <div key={n} className="h-56 bg-neutral-50/50 rounded-2xl border border-neutral-100 animate-pulse" />)
                   : (<>{jobs.map((job, idx) => <JobCard key={job.id || idx} job={job} />)}
                     <div className="flex items-center justify-center">
-                      <button onClick={() => navigate(`/jobs?q=${encodeURIComponent(query)}`)}
+                      <button onClick={() => navigate(`/student/jobs?q=${encodeURIComponent(query)}`)}
                         className="inline-flex items-center gap-2 px-8 py-2.5 bg-neutral-900 text-white font-bold text-sm rounded-full hover:bg-black transition-all active:scale-95">
                         View all jobs →
                       </button>

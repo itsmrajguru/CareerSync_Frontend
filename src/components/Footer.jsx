@@ -15,7 +15,7 @@ export default function Footer() {
 
           {[
             { title: "Job Seekers", links: ["Browse Jobs", "Upload Resume", "Career Advice", "Salary Guide"] },
-            { title: "Employers", links: ["Post a Job", "Search Candidates", "Pricing", "Enterprise"] },
+            { title: "Companies", links: ["Post a Job", "Search Candidates", "Pricing", "Enterprise"] },
             { title: "Company", links: ["About Us", "Blog", "Careers", "Contact"] },
           ].map(col => (
             <div key={col.title}>
