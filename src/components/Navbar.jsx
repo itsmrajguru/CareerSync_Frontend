@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Briefcase, PenLine, FileText, User, Bell,
   HelpCircle, Settings, LogOut, Menu, X,
-  Home, Bookmark, ClipboardList, Edit2,
+  Home, Bookmark, ClipboardList, Edit2, ChevronDown, Plus,
 } from "lucide-react";
 
 // Removed static NAV_LINKS using dynamic one inside component
@@ -15,6 +15,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // this state tracks which nav item is currently showing its hover submenu
+  const [hoveredNav, setHoveredNav] = useState(null);
   const dropdownRef = useRef(null);
   
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -22,14 +24,24 @@ export default function Navbar() {
   const initial = (user.username || "U")[0].toUpperCase();
   const isCompany = user?.role === 'company';
 
+  // company nav includes "Jobs" with a submenu that opens on hover
   const NAV_LINKS = isCompany ? [
-    { label: "Dashboard", path: "/company/dashboard", icon: <Briefcase size={15} /> },
-    { label: "My Jobs", path: "/company/jobs", icon: <PenLine size={15} /> }
+    { label: "Dashboard", path: "/company/dashboard" },
+    {
+      label: "My Jobs",
+      id: "jobs",
+      // submenu items shown in the dropdown card when hovering "My Jobs"
+      submenu: [
+        { label: "My Jobs",    path: "/company/jobs",        icon: <Briefcase size={14} /> },
+        { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} />      },
+      ],
+    },
+    { label: "My Profile", path: "/company/profile" },
   ] : [
-    { label: "Dashboard", path: "/student/dashboard", icon: <Briefcase size={15} /> },
-    { label: "Discover Jobs", path: "/student/jobs", icon: <PenLine size={15} /> },
-    { label: "Resume Tools", path: "/student/resume", icon: <FileText size={15} /> },
-    { label: "Profile", path: "/student/profile", icon: <User size={15} /> },
+    { label: "Dashboard",    path: "/student/dashboard" },
+    { label: "Discover Jobs", path: "/student/jobs"      },
+    { label: "Resume Tools",  path: "/student/resume"    },
+    { label: "My Profile",    path: "/student/profile"   },
   ];
 
   /* This is the automated function for the Navbar to 
@@ -86,18 +98,99 @@ export default function Navbar() {
 
           {/* Right-Side Desktop Actions */}
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            {/* This is a map functionality run in the NAVLINK Array and 
-            displaying each route along with its properties */}
-            {NAV_LINKS.map(({ label, path }) => (
-              <Link
-                key={path}
-                to={path}
-                className="nav-link"
-                style={isActive(path) ? { color: "#02bcf0", borderColor: "#02bcf0" } : {}}
-              >
-                {label}
-              </Link>
-            ))}
+            {/* This is a map functionality run in the NAVLINK Array and
+            displaying each route along with its properties.
+            Items with a submenu get a hover dropdown card instead of a plain link */}
+            {NAV_LINKS.map((item) =>
+              item.submenu ? (
+                // nav item with hover dropdown — wraps in relative div to anchor the card
+                <div
+                  key={item.id}
+                  style={{ position: "relative" }}
+                  onMouseEnter={() => setHoveredNav(item.id)}
+                  onMouseLeave={() => setHoveredNav(null)}
+                >
+                  {/* the nav label itself looks like a nav-link but is a button */}
+                  <button
+                    className="nav-link"
+                    style={{
+                      background: "none", border: "none", cursor: "pointer",
+                      display: "flex", alignItems: "center", gap: 4,
+                      color: (hoveredNav === item.id || item.submenu.some(s => isActive(s.path)))
+                        ? "#02bcf0" : undefined,
+                      borderColor: item.submenu.some(s => isActive(s.path)) ? "#02bcf0" : undefined,
+                    }}
+                  >
+                    {item.label}
+                    {/* chevron rotates 180° when dropdown is open */}
+                    <ChevronDown
+                      size={12}
+                      style={{
+                        transition: "transform 0.2s",
+                        transform: hoveredNav === item.id ? "rotate(180deg)" : "rotate(0deg)",
+                        opacity: 0.6,
+                      }}
+                    />
+                  </button>
+
+                  {/* dropdown card — exact same design as the avatar dropdown:
+                      border: 1px solid #b3eefb, borderRadius: 16,
+                      boxShadow: 0 10px 40px rgba(0,0,0,0.08),
+                      same row hover: background #f9fafb, color #02bcf0 */}
+                  {hoveredNav === item.id && (
+                    <div style={{ position: "absolute", left: 0, top: "100%", paddingTop: 8, zIndex: 50 }}>
+                      <div style={{
+                        background: "#fff",
+                        border: "1px solid #b3eefb",
+                        borderRadius: 16,
+                        boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
+                        overflow: "hidden",
+                        minWidth: 200,
+                        paddingBottom: 6,
+                      }}>
+                        {/* Dropdown section label */}
+                        <div style={{ padding: "12px 16px 8px", borderBottom: "1px solid #f3f4f6", background: "#f8fbfe" }}>
+                          <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", margin: 0, textTransform: "uppercase", letterSpacing: "0.6px" }}>
+                            Job Management
+                          </p>
+                        </div>
+                        {/* Submenu links */}
+                        <div style={{ padding: "8px 0" }}>
+                          {item.submenu.map(sub => (
+                            <Link
+                              key={sub.label}
+                              to={sub.path}
+                              onClick={() => setHoveredNav(null)}
+                              style={{
+                                display: "flex", alignItems: "center", gap: 10,
+                                padding: "8px 16px", fontSize: 13, fontWeight: 600,
+                                color: isActive(sub.path) ? "#02bcf0" : "#374151",
+                                background: isActive(sub.path) ? "#f0fbfe" : "transparent",
+                                textDecoration: "none",
+                              }}
+                              onMouseEnter={e => { e.currentTarget.style.background = "#f9fafb"; e.currentTarget.style.color = "#02bcf0"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = isActive(sub.path) ? "#f0fbfe" : "transparent"; e.currentTarget.style.color = isActive(sub.path) ? "#02bcf0" : "#374151"; }}
+                            >
+                              {sub.icon} {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // regular flat nav link — unchanged behavior
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="nav-link"
+                  style={isActive(item.path) ? { color: "#02bcf0", borderColor: "#02bcf0" } : {}}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
 
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -156,6 +249,7 @@ export default function Navbar() {
                         { to: isCompany ? "/company/dashboard" : "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
                         { to: isCompany ? "/company/profile" : "/student/profile", icon: <Edit2 size={16} />, label: isCompany ? "Company Profile" : "Edit Profile" },
                         { to: isCompany ? "/company/jobs" : "/student/jobs", icon: <Bookmark size={16} />, label: isCompany ? "Manage Jobs" : "Saved Jobs" },
+                        { to: isCompany ? "/company/settings" : "/student/resume", icon: <Settings size={16} />, label: isCompany ? "Settings" : "My Resume" },
                       ].map((item, i) => (
                         <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
                           display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
