@@ -44,11 +44,13 @@ api.interceptors.response.use(
     */
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/auth/token/refresh') {
       originalRequest._retry = true
       try {
         console.log('Token expired — attempting silent refresh...');
-        const res = await api.post('/auth/token/refresh', {})
+        // use raw axios to skip this interceptor loop
+        const response = await axios.post(API_URL + '/auth/token/refresh', {}, { withCredentials: true });
+        const res = response.data;
         const { newAccessToken } = res;
         localStorage.setItem('token', newAccessToken)
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`

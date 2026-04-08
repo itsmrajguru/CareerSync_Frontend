@@ -28,6 +28,9 @@ export async function forgotPassword(email) {
 export async function resetPassword(token, password) {
   return api.post('/auth/reset-password', { token, newPassword: password });
 }
+export async function changePassword(currentPassword, newPassword) {
+  return api.post('/auth/change-password', { currentPassword, newPassword });
+}
 export async function logoutUser() {
   return api.post('/auth/logout');
 }
