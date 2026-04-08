@@ -3,6 +3,9 @@ import api from "../api";
 export async function getJobs() {
   return api.get('/jobs');
 }
+export async function getJobById(id) {
+  return api.get(`/jobs/${id}`);
+}
 export async function createJob(data) {
   return api.post('/jobs', data);
 }

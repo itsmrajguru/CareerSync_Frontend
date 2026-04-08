@@ -1,6 +1,5 @@
 import api from "../api";
 
-/* these functions are used to call the backend server application controllers */
 export async function applyToJob(jobId, data) {
   return api.post(`/applications/${jobId}`, data);
 }
@@ -9,4 +8,12 @@ export async function getApplications() {
 }
 export async function updateApplicationStatus(id, status) {
   return api.patch(`/applications/${id}/status`, { status });
+}
+/* getCompanyStats — single call for the company dashboard:
+   returns recentApplications (last 10) + pipeline counts (applied, shortlisted, rejected, hired) */
+export async function getCompanyStats() {
+  return api.get('/applications/company-stats');
+}
+export async function getApplicationDetails(id) {
+  return api.get(`/applications/${id}/detail`);
 }
