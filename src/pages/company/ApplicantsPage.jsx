@@ -11,21 +11,21 @@ import {
 
 // status display config — colors + labels
 const STATUS_CFG = {
-  applied:     { label: "Applied",     bg: "#e6f9fd", color: "#0179a0", border: "#b3eefb" },
+  applied: { label: "Applied", bg: "#e6f9fd", color: "#0179a0", border: "#b3eefb" },
   shortlisted: { label: "Shortlisted", bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
-  rejected:    { label: "Rejected",    bg: "#fef2f2", color: "#b91c1c", border: "#fca5a5" },
-  hired:       { label: "Hired",       bg: "#f0fdf4", color: "#166534", border: "#86efac" },
+  rejected: { label: "Rejected", bg: "#fef2f2", color: "#b91c1c", border: "#fca5a5" },
+  hired: { label: "Hired", bg: "#f0fdf4", color: "#166534", border: "#86efac" },
 };
 
 export default function ApplicantsPage() {
   const { jobId } = useParams();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   const [applicants, setApplicants] = useState([]);
-  const [jobTitle,   setJobTitle]   = useState("");
-  const [loading,    setLoading]    = useState(true);
-  const [search,     setSearch]     = useState("");
-  const [filter,     setFilter]     = useState("all");
+  const [jobTitle, setJobTitle] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
 
   const fetchData = async () => {
     setLoading(true);
@@ -62,7 +62,7 @@ export default function ApplicantsPage() {
   const filtered = applicants.filter(app => {
     const matchSearch =
       (app.student?.username || "").toLowerCase().includes(search.toLowerCase()) ||
-      (app.student?.email    || "").toLowerCase().includes(search.toLowerCase());
+      (app.student?.email || "").toLowerCase().includes(search.toLowerCase());
     const matchFilter = filter === "all" || app.status === filter;
     return matchSearch && matchFilter;
   });
@@ -94,9 +94,9 @@ export default function ApplicantsPage() {
   };
 
   const statCards = [
-    { label: "Applied",     value: counts.applied     || 0, accent: "#02bcf0" },
+    { label: "Applied", value: counts.applied || 0, accent: "#02bcf0" },
     { label: "Shortlisted", value: counts.shortlisted || 0, accent: "#f59e0b" },
-    { label: "Hired",       value: counts.hired       || 0, accent: "#22c55e" },
+    { label: "Hired", value: counts.hired || 0, accent: "#22c55e" },
   ];
 
   return (
@@ -183,7 +183,7 @@ export default function ApplicantsPage() {
           {/*Applicant cards */}
           {loading ? (
             <div className="flex flex-col gap-4">
-              {[1,2,3].map(n => <div key={n} className="h-32 bg-neutral-50/50 rounded-[14px] border border-neutral-100 animate-pulse" />)}
+              {[1, 2, 3].map(n => <div key={n} className="h-32 bg-neutral-50/50 rounded-[14px] border border-neutral-100 animate-pulse" />)}
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-[14px] border border-neutral-200">
@@ -247,7 +247,7 @@ export default function ApplicantsPage() {
                             <option value="hired">Hired ✓</option>
                           </select>
                         </div>
-                        
+
                         <button onClick={() => navigate(`/company/applications/${app._id}`)}
                           className="flex items-center gap-1.5 text-[12px] font-bold text-primary-500 bg-primary-50 px-4 py-2.5 rounded-xl hover:bg-primary-100 transition-colors whitespace-nowrap">
                           View Details

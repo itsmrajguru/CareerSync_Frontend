@@ -20,7 +20,7 @@ export default function SignupPage() {
 
     try {
       const data = await signupUser({ username, email, password, role }); //change 1:added role
-      
+
       if (data && data.success) {
         setError("");
         /* redirect to the OTP verification page, passing email via navigation state
@@ -68,29 +68,27 @@ export default function SignupPage() {
             {/*through these inputs, data will be sent to the axios and 
             finally to databases via backend */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              
+
               {/* Role Selector (Student vs Company) */}
               <div className="flex flex-col gap-2">
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRole("student")}
-                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${
-                      role === "student"
+                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${role === "student"
                         ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
                         : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
-                    }`}
+                      }`}
                   >
                     Job Seeker
                   </button>
                   <button
                     type="button"
                     onClick={() => setRole("company")}
-                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${
-                      role === "company"
+                    className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${role === "company"
                         ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
                         : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
-                    }`}
+                      }`}
                   >
                     Company
                   </button>

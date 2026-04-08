@@ -33,7 +33,7 @@ Then divide (filled/total*100)
 This formula shows real time  profile completeness in %*/
 const calcCompletion = (p) => {
   if (!p) return 0;
-  const fields = ["full_name","domain","location","summary","work","education","skills","github"];
+  const fields = ["full_name", "domain", "location", "summary", "work", "education", "skills", "github"];
   const filled = fields.filter(f => p[f]?.trim()).length;
   return Math.round((filled / fields.length) * 100);
 };
@@ -136,7 +136,7 @@ export default function ProfilePage() {
 
   /*the skills are saved as comman seperated in a array  */
   const skills = formData.skills?.split(",").map(s => s.trim()).filter(Boolean) || [];
-  
+
   /*The percentage of formData added */
   const completion = calcCompletion(editing ? formData : profile);
 
@@ -176,7 +176,7 @@ export default function ProfilePage() {
                   className="btn-outline"
                   style={{ padding: "8px 16px" }}
                 >
-                  <X size={14}/> Cancel
+                  <X size={14} /> Cancel
                 </button>
 
                 <button
@@ -186,7 +186,7 @@ export default function ProfilePage() {
                   className="btn-primary"
                   style={{ padding: "8px 16px" }}
                 >
-                  <Save size={14}/> {loading ? "Saving..." : "Save"}
+                  <Save size={14} /> {loading ? "Saving..." : "Save"}
                 </button>
               </>
             ) : (
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                     onClick={handleDelete}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-red-100 bg-red-50 text-red-500 text-sm font-bold hover:bg-red-100 transition-colors"
                   >
-                    <Trash2 size={14}/> Delete
+                    <Trash2 size={14} /> Delete
                   </button>
                 )}
 
@@ -206,7 +206,7 @@ export default function ProfilePage() {
                   className="btn-primary"
                   style={{ padding: "8px 16px" }}
                 >
-                  <Edit2 size={14}/> Edit
+                  <Edit2 size={14} /> Edit
                 </button>
               </>
             )}

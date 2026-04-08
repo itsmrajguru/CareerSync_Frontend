@@ -18,7 +18,7 @@ export default function Navbar() {
   // this state tracks which nav item is currently showing its hover submenu
   const [hoveredNav, setHoveredNav] = useState(null);
   const dropdownRef = useRef(null);
-  
+
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
@@ -32,16 +32,16 @@ export default function Navbar() {
       id: "jobs",
       // submenu items shown in the dropdown card when hovering "My Jobs"
       submenu: [
-        { label: "My Jobs",    path: "/company/jobs",        icon: <Briefcase size={14} /> },
-        { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} />      },
+        { label: "My Jobs", path: "/company/jobs", icon: <Briefcase size={14} /> },
+        { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} /> },
       ],
     },
     { label: "My Profile", path: "/company/profile" },
   ] : [
-    { label: "Dashboard",    path: "/student/dashboard" },
-    { label: "Discover Jobs", path: "/student/jobs"      },
-    { label: "Resume Tools",  path: "/student/resume"    },
-    { label: "My Profile",    path: "/student/profile"   },
+    { label: "Dashboard", path: "/student/dashboard" },
+    { label: "Discover Jobs", path: "/student/jobs" },
+    { label: "Resume Tools", path: "/student/resume" },
+    { label: "My Profile", path: "/student/profile" },
   ];
 
   /* This is the automated function for the Navbar to 
@@ -208,10 +208,10 @@ export default function Navbar() {
 
             {/* Support/Help Logo */}
             <button style={{
-                background: "transparent", border: "none", color: "#9ca3af",
-                width: 36, height: 36, borderRadius: 10,
-                display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
-              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
+              background: "transparent", border: "none", color: "#9ca3af",
+              width: 36, height: 36, borderRadius: 10,
+              display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
+            }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
               <HelpCircle size={18} />
             </button>
 

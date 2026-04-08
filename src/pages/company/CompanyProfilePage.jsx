@@ -13,9 +13,9 @@ function calcCompleteness(p) {
 export default function CompanyProfilePage() {
   const [profile, setProfile] = useState({ name: "", website: "", location: "", about: "", industry: "" });
   const [loading, setLoading] = useState(true);
-  const [saving,  setSaving]  = useState(false);
+  const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error,   setError]   = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,10 +25,10 @@ export default function CompanyProfilePage() {
         const res = await getCompanyProfile();
         if (res.success && res.company) {
           setProfile({
-            name:     res.company.name     || "",
-            website:  res.company.website  || "",
+            name: res.company.name || "",
+            website: res.company.website || "",
             location: res.company.location || "",
-            about:    res.company.about    || "",
+            about: res.company.about || "",
             industry: res.company.industry || "",
           });
         }
@@ -41,7 +41,7 @@ export default function CompanyProfilePage() {
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
     if (success) setSuccess(false);
-    if (error)   setError("");
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {

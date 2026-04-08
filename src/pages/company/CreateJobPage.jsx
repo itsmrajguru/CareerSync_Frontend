@@ -15,7 +15,7 @@ export default function CreateJobPage() {
     salaryMin: "", salaryMax: "", deadline: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -30,12 +30,12 @@ export default function CreateJobPage() {
       //convert comma-separated skills string into a clean array
       const skillsArray = formData.skills.split(",").map(s => s.trim()).filter(Boolean);
       const payload = {
-        title:        formData.title,
-        description:  formData.description,
+        title: formData.title,
+        description: formData.description,
         requirements: formData.requirements,
-        jobType:      formData.jobType,
-        location:     formData.location,
-        skills:       skillsArray,
+        jobType: formData.jobType,
+        location: formData.location,
+        skills: skillsArray,
         salary: {
           min: Number(formData.salaryMin) || 0,
           max: Number(formData.salaryMax) || 0,

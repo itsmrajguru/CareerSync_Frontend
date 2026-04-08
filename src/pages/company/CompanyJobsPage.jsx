@@ -11,23 +11,23 @@ import {
 
 // status pill config
 const STATUS_CFG = {
-  open:   { label: "Active",  bg: "#f0fdf4", color: "#16a34a" },
-  closed: { label: "Closed",  bg: "#fef2f2", color: "#dc2626" },
+  open: { label: "Active", bg: "#f0fdf4", color: "#16a34a" },
+  closed: { label: "Closed", bg: "#fef2f2", color: "#dc2626" },
 };
 
 // job type pill colors
 const TYPE_CFG = {
-  "full-time":  { bg: "#e6f9fd", color: "#0179a0" },
-  "part-time":  { bg: "#ede9fe", color: "#6d28d9" },
+  "full-time": { bg: "#e6f9fd", color: "#0179a0" },
+  "part-time": { bg: "#ede9fe", color: "#6d28d9" },
   "internship": { bg: "#fef3c7", color: "#92400e" },
-  "contract":   { bg: "#fce7f3", color: "#9d174d" },
-  "freelance":  { bg: "#f0fdf4", color: "#166534" },
+  "contract": { bg: "#fce7f3", color: "#9d174d" },
+  "freelance": { bg: "#f0fdf4", color: "#166534" },
 };
 
 export default function CompanyJobsPage() {
-  const [jobs,    setJobs]    = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [query,   setQuery]   = useState("");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => { fetchJobs(); }, []);
@@ -71,12 +71,12 @@ export default function CompanyJobsPage() {
   // derived stat values
   const activeJobs = jobs.filter(j => j.status === "open").length;
   const closedJobs = jobs.filter(j => j.status !== "open").length;
-  const totalApps  = jobs.reduce((s, j) => s + (j.applicationsCount || 0), 0);
+  const totalApps = jobs.reduce((s, j) => s + (j.applicationsCount || 0), 0);
 
   const statCards = [
-    { label: "Active Jobs",       value: loading ? "—" : activeJobs, accent: "#02bcf0" },
-    { label: "Closed Postings",   value: loading ? "—" : closedJobs, accent: "#8b5cf6" },
-    { label: "Total Applications",value: loading ? "—" : totalApps,  accent: "#22c55e" },
+    { label: "Active Jobs", value: loading ? "—" : activeJobs, accent: "#02bcf0" },
+    { label: "Closed Postings", value: loading ? "—" : closedJobs, accent: "#8b5cf6" },
+    { label: "Total Applications", value: loading ? "—" : totalApps, accent: "#22c55e" },
   ];
 
   return (
@@ -143,7 +143,7 @@ export default function CompanyJobsPage() {
           {/* Job List */}
           {loading ? (
             <div className="flex flex-col gap-4">
-              {[1,2,3].map(n => <div key={n} className="h-28 bg-neutral-50/50 rounded-[14px] border border-neutral-100 animate-pulse" />)}
+              {[1, 2, 3].map(n => <div key={n} className="h-28 bg-neutral-50/50 rounded-[14px] border border-neutral-100 animate-pulse" />)}
             </div>
           ) : filtered.length === 0 ? (
             /* empty state */
@@ -161,8 +161,8 @@ export default function CompanyJobsPage() {
           ) : (
             <div className="flex flex-col gap-4">
               {filtered.map(job => {
-                const sc  = STATUS_CFG[job.status] || STATUS_CFG.closed;
-                const tc  = TYPE_CFG[job.jobType]  || TYPE_CFG["full-time"];
+                const sc = STATUS_CFG[job.status] || STATUS_CFG.closed;
+                const tc = TYPE_CFG[job.jobType] || TYPE_CFG["full-time"];
                 return (
                   <div key={job._id}
                     className="bg-white border border-neutral-200 rounded-[14px] p-5 hover:shadow-md hover:border-primary-100 transition-all">

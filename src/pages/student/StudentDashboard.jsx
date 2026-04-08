@@ -675,12 +675,12 @@ import JobCard from "../../components/JobCard";
 
 // ── SKILL UNIVERSE ─────────────────────────────────────────────────────────
 const SKILL_UNIVERSE = {
-  Frontend:  ["React","Vue","TypeScript","Next.js","Tailwind","GraphQL","WebGL","Svelte"],
-  Backend:   ["Node.js","Python","Django","FastAPI","Go","Rust","Java","Spring"],
-  Data:      ["SQL","Pandas","PyTorch","TensorFlow","Spark","dbt","Airflow","Kafka"],
-  Cloud:     ["AWS","Azure","GCP","Docker","Kubernetes","Terraform","CI/CD","Linux"],
-  Design:    ["Figma","UX Research","Prototyping","CSS","Motion","A/B Testing","Design Systems","Accessibility"],
-  Soft:      ["Leadership","Communication","Agile","Product Thinking","System Design","Mentorship","Cross-functional","Ownership"],
+  Frontend: ["React", "Vue", "TypeScript", "Next.js", "Tailwind", "GraphQL", "WebGL", "Svelte"],
+  Backend: ["Node.js", "Python", "Django", "FastAPI", "Go", "Rust", "Java", "Spring"],
+  Data: ["SQL", "Pandas", "PyTorch", "TensorFlow", "Spark", "dbt", "Airflow", "Kafka"],
+  Cloud: ["AWS", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "CI/CD", "Linux"],
+  Design: ["Figma", "UX Research", "Prototyping", "CSS", "Motion", "A/B Testing", "Design Systems", "Accessibility"],
+  Soft: ["Leadership", "Communication", "Agile", "Product Thinking", "System Design", "Mentorship", "Cross-functional", "Ownership"],
 };
 
 function seedRandom(str) {
@@ -884,7 +884,7 @@ export default function DashboardPage() {
     try {
       const cached = localStorage.getItem("userProfile");
       if (cached) { const p = JSON.parse(cached); setUserSkills(p.skills || ""); setUserDomain(p.domain || ""); }
-    } catch {}
+    } catch { }
     fetchJobs("");
   }, []);
 
@@ -985,7 +985,7 @@ export default function DashboardPage() {
               <div className="p-5 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-medium">{error}</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {loading ? [1,2,3,4].map(n => <div key={n} className="h-56 bg-neutral-50/50 rounded-2xl border border-neutral-100 animate-pulse" />)
+                {loading ? [1, 2, 3, 4].map(n => <div key={n} className="h-56 bg-neutral-50/50 rounded-2xl border border-neutral-100 animate-pulse" />)
                   : (<>{jobs.map((job, idx) => <JobCard key={job.id || idx} job={job} />)}
                     <div className="flex items-center justify-center">
                       <button onClick={() => navigate(`/student/jobs?q=${encodeURIComponent(query)}`)}

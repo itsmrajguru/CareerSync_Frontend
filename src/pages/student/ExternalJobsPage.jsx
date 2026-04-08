@@ -131,7 +131,7 @@ Not too productive ,need to change later(Remaindder)*/}
         {error ? (
           <div className="p-6 bg-red-50 border border-red-100 rounded-3xl text-red-600 font-bold text-center">
             {error}
-            
+
           </div>
         ) : (
           <>

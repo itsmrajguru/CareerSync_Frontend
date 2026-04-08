@@ -12,10 +12,10 @@ import Footer from "../../components/Footer";
 
 // This shows the Pipeline status 
 const PIPELINE = [
-  { key: "applied",     label: "Applied",     color: "#02bcf0", bg: "#e6f9fd" },
+  { key: "applied", label: "Applied", color: "#02bcf0", bg: "#e6f9fd" },
   { key: "shortlisted", label: "Shortlisted", color: "#f59e0b", bg: "#fffbeb" },
-  { key: "hired",       label: "Hired",       color: "#22c55e", bg: "#f0fdf4" },
-  { key: "rejected",    label: "Rejected",    color: "#ef4444", bg: "#fef2f2" },
+  { key: "hired", label: "Hired", color: "#22c55e", bg: "#f0fdf4" },
+  { key: "rejected", label: "Rejected", color: "#ef4444", bg: "#fef2f2" },
 ];
 
 function calcCompleteness(c) {
@@ -28,11 +28,11 @@ export default function CompanyDashboard() {
   const navigate = useNavigate();
 
   // API data states — follows same pattern as StudentDashboard
-  const [jobs,             setJobs]             = useState([]);
-  const [company,          setCompany]          = useState(null);
-  const [pipelineStats,    setPipelineStats]    = useState({ applied: 0, shortlisted: 0, rejected: 0, hired: 0 });
+  const [jobs, setJobs] = useState([]);
+  const [company, setCompany] = useState(null);
+  const [pipelineStats, setPipelineStats] = useState({ applied: 0, shortlisted: 0, rejected: 0, hired: 0 });
   const [recentApplicants, setRecentApplicants] = useState([]);
-  const [loading,          setLoading]          = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -46,8 +46,8 @@ export default function CompanyDashboard() {
           getCompanyProfile(),
           getCompanyStats().catch(() => ({ success: false })),
         ]);
-        if (jobsRes.success)  setJobs(jobsRes.jobs || []);
-        if (compRes.success)  setCompany(compRes.company);
+        if (jobsRes.success) setJobs(jobsRes.jobs || []);
+        if (compRes.success) setCompany(compRes.company);
         if (statsRes.success) {
           setPipelineStats(statsRes.stats || { applied: 0, shortlisted: 0, rejected: 0, hired: 0 });
           setRecentApplicants(statsRes.recentApplications || []);
@@ -62,11 +62,11 @@ export default function CompanyDashboard() {
   }, []);
 
   // derived values computed from real API data
-  const activeJobs   = jobs.filter(j => j.status === "open").length;
-  const closedJobs   = jobs.filter(j => j.status === "closed").length;
-  const totalApps    = Object.values(pipelineStats).reduce((a, b) => a + b, 0);
+  const activeJobs = jobs.filter(j => j.status === "open").length;
+  const closedJobs = jobs.filter(j => j.status === "closed").length;
+  const totalApps = Object.values(pipelineStats).reduce((a, b) => a + b, 0);
   const completeness = calcCompleteness(company);
-  const bestJob      = [...jobs].sort((a, b) => (b.applicationsCount || 0) - (a.applicationsCount || 0))[0];
+  const bestJob = [...jobs].sort((a, b) => (b.applicationsCount || 0) - (a.applicationsCount || 0))[0];
 
   // 3 stat cards — mirrors student dashboard 3-col stat row
   const statCards = [
@@ -190,7 +190,7 @@ export default function CompanyDashboard() {
                 </p>
                 {PIPELINE.map(({ key, label, color }) => {
                   const count = pipelineStats[key] || 0;
-                  const pct   = totalApps > 0 ? Math.round(count / totalApps * 100) : 0;
+                  const pct = totalApps > 0 ? Math.round(count / totalApps * 100) : 0;
                   return (
                     <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
                       <span style={{ fontSize: "12.5px", color: "#64748b", width: "90px", flexShrink: 0, fontWeight: 600 }}>
@@ -355,7 +355,7 @@ export default function CompanyDashboard() {
                 {/* applicant cards grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {recentApplicants.slice(0, 6).map((app) => {
-                    const cfg      = PIPELINE.find(p => p.key === app.status) || PIPELINE[0];
+                    const cfg = PIPELINE.find(p => p.key === app.status) || PIPELINE[0];
                     const initials = (app.student?.username || "A").slice(0, 2).toUpperCase();
                     return (
                       <div

@@ -199,9 +199,9 @@ seperate navbar for the home page */}
               <div className="search-divider" style={{ width: 1, background: "#f3f4f6", margin: "8px 0" }} />
               <div style={{ flex: 1.2, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <div style={{ fontSize: 10, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Experience</div>
-                <select 
-                  className="search-input" 
-                  value={experience} 
+                <select
+                  className="search-input"
+                  value={experience}
                   onChange={e => setExperience(e.target.value)}
                   style={{ border: 'none', outline: 'none', fontWeight: 600, fontSize: 14, background: 'transparent' }}
                 >
@@ -273,68 +273,68 @@ seperate navbar for the home page */}
       <section id="companies" style={{ padding: "100px 24px", background: "#f8fafc" }}>
         <div style={{ maxWidth: 1140, margin: "0 auto" }}>
           <div style={{ display: "flex", flexDirection: "column", lgDirection: "row", alignItems: "center", gap: 64 }}>
-             <div className="flex-1 fade-up" style={{ textAlign: 'left' }}>
-                <div style={{ display: "inline-flex", background: "#0c1a2e", borderRadius: 20, padding: "5px 14px", marginBottom: 16 }}>
-                   <span style={{ fontSize: 12, fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: 1 }}>Recruitment Portal</span>
-                </div>
-                <h2 style={{ fontSize: "clamp(28px,4vw,42px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1.5, marginBottom: 20, lineHeight: 1.1 }}>
-                  Hire the <span className="text-primary-500">best talent</span><br /> faster than ever.
-                </h2>
-                <p style={{ fontSize: 18, color: "#64748b", maxWidth: 540, lineHeight: 1.7, marginBottom: 32 }}>
-                  Stop sorting through thousands of irrelevant resumes. CareerSync connects you with the right candidates using intelligent matching and verified profiles.
-                </p>
-                
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginBottom: 40 }}>
-                   <div style={{ display: 'flex', gap: 12 }}>
-                      <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
-                      <div>
-                         <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Unlimited Postings</p>
-                         <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Post as many roles as you need.</p>
-                      </div>
-                   </div>
-                   <div style={{ display: 'flex', gap: 12 }}>
-                      <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
-                      <div>
-                         <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Talent Analytics</p>
-                         <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Track your recruitment funnel.</p>
-                      </div>
-                   </div>
-                   <div style={{ display: 'flex', gap: 12 }}>
-                      <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
-                      <div>
-                         <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Verified Profiles</p>
-                         <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Say goodbye to ghost candidates.</p>
-                      </div>
-                   </div>
-                   <div style={{ display: 'flex', gap: 12 }}>
-                      <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
-                      <div>
-                         <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Easy Management</p>
-                         <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Centralized applicant dashboard.</p>
-                      </div>
-                   </div>
-                </div>
+            <div className="flex-1 fade-up" style={{ textAlign: 'left' }}>
+              <div style={{ display: "inline-flex", background: "#0c1a2e", borderRadius: 20, padding: "5px 14px", marginBottom: 16 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: 1 }}>Recruitment Portal</span>
+              </div>
+              <h2 style={{ fontSize: "clamp(28px,4vw,42px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1.5, marginBottom: 20, lineHeight: 1.1 }}>
+                Hire the <span className="text-primary-500">best talent</span><br /> faster than ever.
+              </h2>
+              <p style={{ fontSize: 18, color: "#64748b", maxWidth: 540, lineHeight: 1.7, marginBottom: 32 }}>
+                Stop sorting through thousands of irrelevant resumes. CareerSync connects you with the right candidates using intelligent matching and verified profiles.
+              </p>
 
-                <div style={{ display: 'flex', gap: 16 }}>
-                   <button className="btn-dark" style={{ padding: '16px 32px' }} onClick={() => navigate('/signup')}>
-                      Start Hiring Now
-                   </button>
-                   <button className="btn-outline" style={{ border: 'none', color: '#0c1a2e', textDecoration: 'underline' }}>
-                      Learn More &rarr;
-                   </button>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginBottom: 40 }}>
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Unlimited Postings</p>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Post as many roles as you need.</p>
+                  </div>
                 </div>
-             </div>
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Talent Analytics</p>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Track your recruitment funnel.</p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Verified Profiles</p>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Say goodbye to ghost candidates.</p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Easy Management</p>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Centralized applicant dashboard.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: 16 }}>
+                <button className="btn-dark" style={{ padding: '16px 32px' }} onClick={() => navigate('/signup')}>
+                  Start Hiring Now
+                </button>
+                <button className="btn-outline" style={{ border: 'none', color: '#0c1a2e', textDecoration: 'underline' }}>
+                  Learn More &rarr;
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* SECTION 5: CTA */}
       <section style={{ background: "linear-gradient(135deg, #e6f9fe 0%, #f0fbfe 100%)", padding: "100px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto",marginTop:"-170px" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", marginTop: "-170px" }}>
           <div>
-          <h2 className="fade-up" style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1, marginBottom: 16 }}>
-            Ready to find your next role?🚀
-          </h2>
+            <h2 className="fade-up" style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1, marginBottom: 16 }}>
+              Ready to find your next role?🚀
+            </h2>
           </div>
           <p className="fade-up" style={{ fontSize: 17, color: "#64748b", lineHeight: 1.7, marginBottom: 36, animationDelay: '0.1s' }}>
             Join over 3 lakh professionals who found their next opportunity on CareerSync. It's free, it's fast, and it actually works.

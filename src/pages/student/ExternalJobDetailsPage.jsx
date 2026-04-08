@@ -32,11 +32,11 @@ export default function JobDetailsPage() {
     return (
         <PageLayout>
 
-{/* This page inicludes the data that we are showing 
+            {/* This page inicludes the data that we are showing 
 inside the job card */}
             <div className="relative pt-6 pb-12">
                 <div className="relative z-10 animate-fade-in-down">
-{/*Go Back to Jobs Button */}
+                    {/*Go Back to Jobs Button */}
                     <button
                         onClick={() => navigate(-1)}
                         className="inline-flex items-center gap-2 text-neutral-400 hover:text-neutral-900 mb-8 md:mb-12 transition-colors font-bold text-xs uppercase tracking-widest group"
@@ -45,7 +45,7 @@ inside the job card */}
                     </button>
 
                     <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
-{/* All detaials of the job*/}
+                        {/* All detaials of the job*/}
                         <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl bg-neutral-50/50 border border-[#b3eefb] flex items-center justify-center shrink-0">
                             <span className="text-[3rem] font-extrabold text-neutral-800 tracking-[-1.5px]">
                                 {job.company.display_name.charAt(0)}
@@ -56,7 +56,7 @@ inside the job card */}
                             <p className="text-xs font-bold text-primary-400 tracking-widest uppercase mb-3">
                                 {job.company.display_name}
                             </p>
-                            
+
                             <h1 className="text-[2.5rem] md:text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-6">
                                 {job.title}
                             </h1>
@@ -87,7 +87,7 @@ inside the job card */}
             <div className="relative z-10 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 pt-12 border-t border-[#b3eefb]">
 
-{/* LeftSide: Job Description */}
+                    {/* LeftSide: Job Description */}
                     <div className="md:col-span-2">
                         <h2 className="text-2xl font-bold text-neutral-900 mb-8 border-b border-[#b3eefb] pb-5">
                             About the Role
@@ -98,7 +98,7 @@ inside the job card */}
                         />
                     </div>
 
-{/* Rightside: Sidebar */}
+                    {/* Rightside: Sidebar */}
                     <div className="space-y-8 md:sticky md:top-32">
                         <div>
                             <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-widest mb-6">
@@ -122,7 +122,7 @@ inside the job card */}
                             </div>
 
 
-{/* Button to share the job */}
+                            {/* Button to share the job */}
                             <button
                                 onClick={() => {
                                     if (navigator.share) {
@@ -138,11 +138,11 @@ inside the job card */}
                                 }}
                                 className="btn-outline w-full mt-8 py-4 flex items-center justify-center gap-2.5 text-sm"
                             >
-{/* this button takes you to the source of the job
+                                {/* this button takes you to the source of the job
 from where it is taken */}
                                 <Share2 size={16} /> Share Opportunity
                             </button>
-                            
+
                             <button
                                 onClick={handleApply}
                                 className="btn-primary w-full mt-4 py-4 flex items-center justify-center gap-3 text-base"
