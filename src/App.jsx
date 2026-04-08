@@ -17,9 +17,12 @@ import ExternalJobDetailsPage from "./pages/student/ExternalJobDetailsPage";
 // Company pages
 import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CreateJobPage from "./pages/company/CreateJobPage";
+import EditJobPage from "./pages/company/EditJobPage";
 import CompanyJobsPage from "./pages/company/CompanyJobsPage";
 import ApplicantsPage from "./pages/company/ApplicantsPage";
 import CompanyProfilePage from "./pages/company/CompanyProfilePage";
+import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
+import SettingsPage from "./pages/company/SettingsPage";
 
 function App() {
   return (
@@ -44,8 +47,11 @@ function App() {
         <Route path="/company/dashboard" element={<ProtectedRoute role="company"><CompanyDashboard /></ProtectedRoute>} />
         <Route path="/company/jobs" element={<ProtectedRoute role="company"><CompanyJobsPage /></ProtectedRoute>} />
         <Route path="/company/jobs/create" element={<ProtectedRoute role="company"><CreateJobPage /></ProtectedRoute>} />
+        <Route path="/company/jobs/:jobId/edit" element={<ProtectedRoute role="company"><EditJobPage /></ProtectedRoute>} />
         <Route path="/company/jobs/:jobId/applicants" element={<ProtectedRoute role="company"><ApplicantsPage /></ProtectedRoute>} />
+        <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
+        <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
 
         {/* Catch-all route to prevent 404s for logged-in users trying to reach old paths */}
         <Route path="*" element={<Navigate to="/student/dashboard" replace />} />
