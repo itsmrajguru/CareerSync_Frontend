@@ -1,9 +1,8 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar";
+import PageLayout from "../../components/PageLayout";
 import ResumeCard from "../../components/ResumeCard";
 import ResumeAnalysis from "../../components/ResumeAnalysis";
 import { uploadResume } from "../../services/studentProfileService";
-import Footer from "../../components/Footer";
 
 export default function ResumePage() {
     const [file, setFile] = useState(null);
@@ -59,26 +58,48 @@ export default function ResumePage() {
     const reset = () => { setAnalysis(null); setFile(null); setError(""); };
 
     return (
-        <div className="min-h-screen bg-app-bg font-sans flex flex-col">
-            <Navbar />
-
-            <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
-
-                {/* Resume Page Header */}
-                <div className="mb-10">
-                    <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
-                        ATS Friendly
-                    </p>
-                    <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
-                        Resume <span style={{ color: "#ef4444" }}>Checker.</span>
-                    </h1>
-                    <p className="text-[1rem] leading-[1.7] text-black max-w-[520px]">
-                        Upload your PDF resume and get instant ATS feedback — keyword match, skill gaps, and readability score.
-                    </p>
-                </div>
-
-                {/* Here resumeCard and resume Analysis are toggled, in the basis of analysis 
-        of analysis present then obviosuly displat analysis page , otherwise Resume Card Page */}
+        <PageLayout>
+                {/*Hero section*/}
+                <section className="d-hero mb-8">
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "60px" }}>
+ 
+                        {/* Left Column: Text & Actions */}
+                        <div style={{ flex: 1 }}>
+                            <div className="mb-17">
+                                <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                                    ATS Friendly
+                                </p>
+                                <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                                    Resume <span style={{ color: "#ef4444" }}>Checker.</span>
+                                </h1>
+                                <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                                    Upload your PDF resume and get instant ATS feedback — keyword match, skill gaps, and readability score.
+                                </p>
+                            </div>
+ 
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                                <span className="flex items-center gap-1">✔ ATS Optimization</span>
+                                <span style={{ opacity: 0.3 }}>·</span>
+                                <span className="flex items-center gap-1">✔ Skill Gap Analysis</span>
+                                <span style={{ opacity: 0.3 }}>·</span>
+                                <span className="flex items-center gap-1">✔ PDF Support</span>
+                            </div>
+                        </div>
+ 
+                        {/* Right Column: High-Fidelity Image */}
+                        <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "320px" }}>
+                            <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+                                <img
+                                    src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?w=800&q=80&auto=format&fit=crop"
+                                    alt="Resume Analysis"
+                                    style={{ width: "100%", height: "220px", objectFit: "cover", display: "block opacity-90" }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+ 
+                {/* Here resumeCard and resume Analysis are toggled... */}
                 {!analysis ? (
                     <ResumeCard
                         file={file}
@@ -98,10 +119,7 @@ export default function ResumePage() {
                         onReset={reset}
                     />
                 )}
-
-            </main>
-            <Footer />
-        </div>
+        </PageLayout>
     );
 }
 

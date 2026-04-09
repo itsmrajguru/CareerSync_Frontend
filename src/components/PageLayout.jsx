@@ -8,7 +8,7 @@ export default function PageLayout({ children }) {
   return (
     <div className="min-h-screen bg-app-bg font-sans selection:bg-primary-100 selection:text-black pb-0 text-black flex flex-col">
       <Navbar />
-      <main className="max-w-[900px] mx-auto px-7 pt-10 flex-1 w-full">
+      <main className="max-w-[960px] mx-auto px-7 pt-4 flex-1 w-full">
         {children}
       </main>
       <Footer />

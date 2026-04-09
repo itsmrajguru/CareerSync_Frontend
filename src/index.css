@@ -21,17 +21,17 @@
   --shadow-card: 0 1px 3px rgba(13, 17, 23, 0.06), 0 1px 2px rgba(13, 17, 23, 0.04);
   --shadow-dropdown: 0 10px 25px rgba(13, 17, 23, 0.08), 0 4px 10px rgba(13, 17, 23, 0.04);
 
-  /* ── Primary palette (from tailwind.config.js) ── */
-  --color-primary-50: #e6f9fe;
-  --color-primary-100: #b3eefb;
-  --color-primary-200: #67ddf8;
-  --color-primary-300: #1ecef4;
-  --color-primary-400: #02bcf0;
-  --color-primary-500: #029ac5;
-  --color-primary-600: #0179a0;
-  --color-primary-700: #01688a;
-  --color-primary-800: #014d65;
-  --color-primary-900: #003347;
+  /* ── Primary palette (Midnight Navy - Replaces Powder Blue) ── */
+  --color-primary-50: #f1f5f9;
+  --color-primary-100: #e2e8f0;
+  --color-primary-200: #cbd5e1;
+  --color-primary-300: #94a3b8;
+  --color-primary-400: #64748b;
+  --color-primary-500: #475569;
+  --color-primary-600: #1e293b;
+  --color-primary-700: #0c1a2e;
+  --color-primary-800: #060d17;
+  --color-primary-900: #03070d;
 
   /* ── Neutral palette (from tailwind.config.js) ── */
   --color-neutral-50: #f9fafb;
@@ -106,9 +106,9 @@
   .cs-badge {
     display: inline-flex;
     align-items: center;
-    background: rgba(2, 188, 240, 0.12);
-    color: #0d1117;
-    border: 1px solid #0d1117;
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+    border: 1px solid var(--color-primary-100);
     border-radius: 9999px;
     padding: 3px 12px;
     font-size: 12px;
@@ -133,8 +133,8 @@
   }
 
   .cs-input:focus {
-    border-color: rgba(2, 188, 240, 0.5);
-    box-shadow: 0 0 0 3px rgba(2, 188, 240, 0.1);
+    border-color: var(--color-primary-400);
+    box-shadow: 0 0 0 3px var(--color-primary-50);
   }
 
   .nav-link {
@@ -149,12 +149,12 @@
   }
 
   .nav-link:hover {
-    color: #02bcf0;
-    border-color: #02bcf0;
+    color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
   }
 
   .btn-primary {
-    background: #02bcf0;
+    background: var(--color-primary-600);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -169,13 +169,13 @@
     justify-content: center;
     gap: 8px;
   }
-
+ 
   .btn-primary:hover:not(:disabled) {
-    background: #029ac5;
+    background: var(--color-primary-800);
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(2, 188, 240, 0.3);
+    box-shadow: 0 8px 24px rgba(12, 26, 46, 0.4);
   }
-
+ 
   .btn-primary:active:not(:disabled) {
     transform: translateY(0);
   }
@@ -187,8 +187,8 @@
 
   .btn-outline {
     background: transparent;
-    color: #02bcf0;
-    border: 1.5px solid #02bcf0;
+    color: var(--color-primary-600);
+    border: 1.5px solid var(--color-primary-300);
     border-radius: 10px;
     padding: 10px 22px;
     font-size: 14px;
@@ -201,9 +201,10 @@
     justify-content: center;
     gap: 8px;
   }
-
+ 
   .btn-outline:hover:not(:disabled) {
-    background: #e6f9fe;
+    background: var(--color-primary-50);
+    border-color: var(--color-primary-600);
   }
 
   .btn-outline:disabled {
@@ -267,6 +268,28 @@
 
 .fade-up {
   animation: fadeUp 0.6s ease forwards;
+}
+
+/* ── Standard Premium Hero ──
+.d-hero {
+  animation: fadeUp 0.6s 0.1s ease both;
+  Animation removed for a static page load experience
+} */
+
+.slide-in {
+  animation: slideIn 0.8s 0.2s ease both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes float {

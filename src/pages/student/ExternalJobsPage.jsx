@@ -68,34 +68,62 @@ export default function JobsPage() {
 
   return (
     <PageLayout>
-
-      {/* Hero section */}
-      <div className="max-w-3xl mb-16 animate-fade-in-down">
-        <div className="mb-10">
-          <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
-            Fully Yours
-          </p>
-          <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
-            Discover roles that <br className="hidden md:block" />  <span style={{ color: "#ef4444" }}>match your skills.</span>
-          </h1>
-          <p className="text-[1.1rem] leading-[1.7] text-black max-w-[540px] font-medium opacity-80">
-            Explore opportunities tailored to your skills — role matches, salary insights, and culture fit.
-          </p>
-        </div>
-
-        {/* submitting the form for job fetch */}
-        <form onSubmit={handleSearch} className="relative max-w-2xl mt-8">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-black" size={20} />
-          <input
-            className="cs-input !pl-14 !py-5 !rounded-3xl !border-2 !border-[#ef4444]/20 text-base"
-            placeholder="Job title, company, or keyword"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button className="btn-primary absolute right-2.5 top-2.5 bottom-2.5 px-10">
-            Search
-          </button>
-        </form>
+ 
+       {/* Hero section */}
+       <section className="d-hero mb-8">
+         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "60px" }}>
+ 
+           {/* Left Column: Text & Actions */}
+           <div style={{ flex: 1 }}>
+             <div className="mb-7">
+               <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                 Fully Yours
+               </p>
+               <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                 Discover roles that <br />  <span style={{ color: "#ef4444" }}>match your skills.</span>
+               </h1>
+               <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                 Explore opportunities tailored to your skills — role matches, salary insights, and culture fit.
+               </p>
+             </div>
+ 
+             {/* Search Bar - Compact matching layout */}
+             <div className="mb-8">
+               <form onSubmit={handleSearch} className="relative max-w-2xl">
+                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-black/40" size={16} />
+                 <input
+                   className="cs-input !pl-11 !py-3.5 !rounded-2xl !border-[#ef4444]/10 text-sm shadow-sm"
+                   placeholder="Job title, company, or keyword"
+                   value={query}
+                   onChange={(e) => setQuery(e.target.value)}
+                 />
+                 <button className="btn-primary absolute right-1.5 top-1.5 bottom-1.5 px-6 !py-0 !rounded-xl !text-xs">
+                   Search
+                 </button>
+               </form>
+             </div>
+ 
+             <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+               <span className="flex items-center gap-1">✔ High Match Roles</span>
+               <span style={{ opacity: 0.3 }}>·</span>
+               <span className="flex items-center gap-1">✔ Salary Transparency</span>
+               <span style={{ opacity: 0.3 }}>·</span>
+               <span className="flex items-center gap-1">✔ Culture Insights</span>
+             </div>
+           </div>
+ 
+           {/* Right Column: High-Fidelity Image */}
+           <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
+             <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+               <img
+                 src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&q=80&auto=format&fit=crop"
+                 alt="Jobs Portal"
+                 style={{ width: "100%", height: "260px", objectFit: "cover", display: "block opacity-90" }}
+               />
+             </div>
+           </div>
+         </div>
+       </section>
 
 
         {/* job filters through location and company 
@@ -125,7 +153,6 @@ Not too productive ,need to change later(Remaindder)*/}
           </select>
         </div>
 
-      </div>
 
       {/*Displaying the fetched jobs*/}
       <div className="border-t border-[#ef4444]/10 pt-16">

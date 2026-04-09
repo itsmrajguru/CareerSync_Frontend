@@ -147,21 +147,21 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-app-bg font-sans flex flex-col">
       <Navbar />
 
-      <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
-
-        {/*profile header*/}
-        <div className="mb-10 flex items-end justify-between">
-          <div>
-            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
-              One Source of Truth
-            </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
-              About <span style={{ color: "#ef4444" }}>me.</span>
-            </h1>
-            <p className="text-[1rem] leading-[1.7] text-black max-w-[560px] mt-3">
-              Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
-            </p>
-          </div>
+      <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
+ 
+         {/*profile header - Compact standardized style*/}
+         <div className="mb-8 flex items-end justify-between">
+           <div>
+             <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+               One Source of Truth
+             </p>
+             <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+               About <span style={{ color: "#ef4444" }}>me.</span>
+             </h1>
+             <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+               Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
+             </p>
+           </div>
 
 
           <div className="flex gap-2">
