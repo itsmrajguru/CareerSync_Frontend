@@ -96,24 +96,24 @@ export default function EditJobPage() {
         .d-content { animation: fadeUp .5s .15s ease both; }
       `}</style>
 
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/* Hero section */}
           <div className="d-hero mb-10">
             <button onClick={() => navigate("/company/jobs")}
-              className="flex items-center gap-2 text-[12px] font-bold text-neutral-400 hover:text-primary-400 transition-colors mb-6">
+              className="flex items-center gap-2 text-[12px] font-bold text-black hover:text-black transition-colors mb-6">
               <ArrowLeft size={14} /> Back to jobs
             </button>
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Edit Posting
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
               Update your<br />
-              <span className="text-primary-400">job posting.</span>
+              <span className="text-black">job posting.</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               Changes are published immediately and visible to all candidates browsing this role.
             </p>
           </div>
@@ -141,10 +141,10 @@ export default function EditJobPage() {
             <form onSubmit={handleSubmit} className="d-content flex flex-col gap-4">
 
               {/*Status Toggle*/}
-              <div className="bg-white border border-neutral-200 rounded-[14px] p-5 flex items-center justify-between">
+              <div className="cs-card flex items-center justify-between">
                 <div>
-                  <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-1">Posting Status</p>
-                  <p className="text-sm font-medium text-neutral-600">
+                  <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-1">Posting Status</p>
+                  <p className="text-sm font-medium text-black">
                     {formData.status === "open" ? "Actively accepting applications" : "This posting is closed to new applicants"}
                   </p>
                 </div>
@@ -157,24 +157,24 @@ export default function EditJobPage() {
 
               {/*Job Details Section */}
               <div className="bg-white border border-neutral-200 rounded-[14px] p-6">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-5">Job Details</p>
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-5">Job Details</p>
                 <div className="flex flex-col gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Job Title *</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Job Title *</label>
                     <input required type="text" name="title" value={formData.title} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="e.g. Lead Software Engineer" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Job Description *</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Job Description *</label>
                     <textarea required rows={7} name="description" value={formData.description} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
                       placeholder="Describe the role, responsibilities, team environment..." />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Requirements</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Requirements</label>
                     <textarea rows={4} name="requirements" value={formData.requirements} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
                       placeholder="Qualifications, years of experience, must-have skills..." />
                   </div>
                 </div>
@@ -182,54 +182,54 @@ export default function EditJobPage() {
 
               {/* Details Section*/}
               <div className="bg-white border border-neutral-200 rounded-[14px] p-6">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-5">Position Details</p>
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-5">Position Details</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                      <MapPin size={11} className="text-primary-400" /> Location *
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                      <MapPin size={11} className="text-black" /> Location *
                     </label>
                     <input required type="text" name="location" value={formData.location} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="Mumbai, India or Remote" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Employment Type</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Employment Type</label>
                     <select name="jobType" value={formData.jobType} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all cursor-pointer">
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all cursor-pointer">
                       {JOB_TYPES.map(t => <option key={t} value={t} className="capitalize">{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
                     </select>
                   </div>
                   <div className="flex flex-col gap-1.5 sm:col-span-2">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                      <Code size={11} className="text-primary-400" /> Required Skills
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                      <Code size={11} className="text-black" /> Required Skills
                     </label>
                     <input type="text" name="skills" value={formData.skills} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="React, Node.js, PostgreSQL..." />
-                    <p className="text-[11px] text-neutral-400 font-medium ml-1">Comma-separated list</p>
+                    <p className="text-[11px] text-black font-medium ml-1">Comma-separated list</p>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                      <DollarSign size={11} className="text-primary-400" /> Min Salary (INR / yr)
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                      <DollarSign size={11} className="text-black" /> Min Salary (INR / yr)
                     </label>
                     <input type="number" name="salaryMin" value={formData.salaryMin} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="e.g. 600000" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Max Salary (INR / yr)</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Max Salary (INR / yr)</label>
                     <input type="number" name="salaryMax" value={formData.salaryMax} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="e.g. 1200000" />
                   </div>
                   <div className="flex flex-col gap-1.5 sm:col-span-2">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                      <Calendar size={11} className="text-primary-400" /> Application Deadline
-                      <span className="text-neutral-300 font-medium normal-case tracking-normal">(optional)</span>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                      <Calendar size={11} className="text-black" /> Application Deadline
+                      <span className="text-black font-medium normal-case tracking-normal">(optional)</span>
                     </label>
                     <input type="date" name="deadline" value={formData.deadline} onChange={handleChange}
                       min={new Date().toISOString().split("T")[0]}
-                      className="w-full sm:w-64 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all cursor-pointer" />
+                      className="w-full sm:w-64 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all cursor-pointer" />
                   </div>
                 </div>
               </div>
@@ -242,7 +242,7 @@ export default function EditJobPage() {
                   {saving ? "Saving..." : success ? "Saved!" : "Save Changes"}
                 </button>
                 <button type="button" onClick={() => navigate("/company/jobs")}
-                  className="px-6 py-3 bg-neutral-50 border border-neutral-200 text-neutral-600 font-bold text-sm rounded-xl hover:bg-neutral-100 transition-colors">
+                  className="px-6 py-3 bg-neutral-50 border border-neutral-200 text-black font-bold text-sm rounded-xl hover:bg-neutral-100 transition-colors">
                   Cancel
                 </button>
               </div>
@@ -256,3 +256,7 @@ export default function EditJobPage() {
     </>
   );
 }
+
+
+
+

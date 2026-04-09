@@ -44,11 +44,11 @@ export default function VerifySignupOtpPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+    <div className="min-h-screen flex flex-col bg-app-bg font-sans">
       <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
         <div className="w-full max-w-md relative z-10">
-          {/* adding feature-card for consistent layout matched with home page */}
-          <div className="feature-card p-10 w-full">
+          {/* adding cs-card for consistent layout matched with home page */}
+          <div className="cs-card p-10 w-full">
 
             {/* Hero section with careersync logo and OTP header */}
             <div className="text-center mb-8">
@@ -57,11 +57,11 @@ export default function VerifySignupOtpPage() {
                 alt="Logo"
                 className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
               />
-              <span className="text-2xl font-black text-neutral-800 tracking-tight block">
-                Career<span className="text-primary-500">Sync</span>
+              <span className="text-2xl font-black text-black tracking-tight block">
+                Career<span className="text-black">Sync</span>
               </span>
-              <p className="text-neutral-400 mt-2 text-sm font-medium">
-                We sent a 6-digit code to <span className="font-bold text-neutral-600">{email}</span>
+              <p className="text-black mt-2 text-sm font-medium">
+                We sent a 6-digit code to <span className="font-bold text-black">{email}</span>
               </p>
             </div>
 
@@ -76,19 +76,19 @@ export default function VerifySignupOtpPage() {
 and after verification they will be redirected to the login page */}
             <form onSubmit={handleOtpSubmit} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Enter OTP</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Enter OTP</label>
                 <input
                   type="text"
                   inputMode="numeric"
                   maxLength={6}
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm text-center tracking-[0.5em] text-xl"
+                  className="cs-input text-center tracking-[0.5em] text-xl"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                   required
                   placeholder="000000"
                   autoFocus
                 />
-                <p className="text-xs text-neutral-400 text-center mt-1">Check your email inbox. Code expires in 10 minutes.</p>
+                <p className="text-xs text-black text-center mt-1">Check your email inbox. Code expires in 10 minutes.</p>
               </div>
 
               {/*The submit button will submit the form,
@@ -106,16 +106,16 @@ with the help of inbuilt Onsubmit Function called in the form */}
               <button
                 type="button"
                 onClick={() => navigate("/signup")}
-                className="text-xs font-bold text-neutral-400 hover:text-primary-500 transition-colors text-center"
+                className="text-xs font-bold text-black hover:text-black transition-colors text-center"
               >
                 ← Back to Sign Up
               </button>
             </form>
 
             {/*Option for the user to jump LoginPage page */}
-            <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
+            <div className="text-center mt-8 text-sm text-black font-medium">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
+              <Link to="/login" className="text-black hover:text-black font-bold transition-colors">
                 Login
               </Link>
             </div>
@@ -126,3 +126,8 @@ with the help of inbuilt Onsubmit Function called in the form */}
     </div>
   );
 }
+
+
+
+
+

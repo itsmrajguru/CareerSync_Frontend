@@ -39,7 +39,7 @@ inside the job card */}
                     {/*Go Back to Jobs Button */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="inline-flex items-center gap-2 text-neutral-400 hover:text-neutral-900 mb-8 md:mb-12 transition-colors font-bold text-xs uppercase tracking-widest group"
+                        className="inline-flex items-center gap-2 text-black hover:text-black mb-8 md:mb-12 transition-colors font-bold text-xs uppercase tracking-widest group"
                     >
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Jobs
                     </button>
@@ -47,35 +47,35 @@ inside the job card */}
                     <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
                         {/* All detaials of the job*/}
                         <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl bg-neutral-50/50 border border-[#b3eefb] flex items-center justify-center shrink-0">
-                            <span className="text-[3rem] font-extrabold text-neutral-800 tracking-[-1.5px]">
+                            <span className="text-[3rem] font-extrabold text-black tracking-[-1.5px]">
                                 {job.company.display_name.charAt(0)}
                             </span>
                         </div>
 
                         <div className="flex-1 mt-2">
-                            <p className="text-xs font-bold text-primary-400 tracking-widest uppercase mb-3">
+                            <p className="text-xs font-bold text-black tracking-widest uppercase mb-3">
                                 {job.company.display_name}
                             </p>
 
-                            <h1 className="text-[2.5rem] md:text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-6">
+                            <h1 className="text-[2.5rem] md:text-[3rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-6">
                                 {job.title}
                             </h1>
 
                             <div className="flex flex-wrap gap-y-4 gap-x-8">
                                 <div className="flex items-center gap-2">
-                                    <Building size={18} className="text-neutral-300" />
+                                    <Building size={18} className="text-black" />
                                     {job.company.display_name}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <MapPin size={18} className="text-neutral-300" />
+                                    <MapPin size={18} className="text-black" />
                                     {job.location.display_name}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Clock size={18} className="text-neutral-300" />
+                                    <Clock size={18} className="text-black" />
                                     {new Date(job.created).toLocaleDateString()}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Briefcase size={18} className="text-neutral-300" />
+                                    <Briefcase size={18} className="text-black" />
                                     {job.contract_time ? job.contract_time.replace('_', ' ') : 'Full Time'}
                                 </div>
                             </div>
@@ -89,11 +89,11 @@ inside the job card */}
 
                     {/* LeftSide: Job Description */}
                     <div className="md:col-span-2">
-                        <h2 className="text-2xl font-bold text-neutral-900 mb-8 border-b border-[#b3eefb] pb-5">
+                        <h2 className="text-2xl font-bold text-black mb-8 border-b border-[#b3eefb] pb-5">
                             About the Role
                         </h2>
                         <div
-                            className="prose prose-lg prose-neutral max-w-none prose-p:mb-6 prose-strong:text-neutral-900 prose-strong:font-bold prose-ul:my-6 prose-li:my-2"
+                            className="prose prose-lg prose-neutral max-w-none prose-p:mb-6 prose-strong:text-black prose-strong:font-bold prose-ul:my-6 prose-li:my-2"
                             dangerouslySetInnerHTML={{ __html: job.description }}
                         />
                     </div>
@@ -101,21 +101,21 @@ inside the job card */}
                     {/* Rightside: Sidebar */}
                     <div className="space-y-8 md:sticky md:top-32">
                         <div>
-                            <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-widest mb-6">
+                            <h3 className="text-xs font-bold text-black uppercase tracking-widest mb-6">
                                 ROLE OVERVIEW
                             </h3>
 
                             <div className="space-y-4">
                                 <div className="flex flex-col gap-1 pb-4 border-b border-[#b3eefb]">
-                                    <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Base Salary</p>
-                                    <p className="text-neutral-900 font-bold text-xl">
+                                    <p className="text-[12px] text-black font-semibold uppercase tracking-[0.5px]">Base Salary</p>
+                                    <p className="text-black font-bold text-xl">
                                         {job.salary_min ? `£${job.salary_min.toLocaleString()}` : "Competitive"}
                                     </p>
                                 </div>
 
                                 <div className="flex flex-col gap-1 pb-4 border-b border-[#b3eefb]">
-                                    <p className="text-[12px] text-neutral-400 font-semibold uppercase tracking-[0.5px]">Job Type</p>
-                                    <p className="text-neutral-900 font-bold text-xl capitalize">
+                                    <p className="text-[12px] text-black font-semibold uppercase tracking-[0.5px]">Job Type</p>
+                                    <p className="text-black font-bold text-xl capitalize">
                                         {job.contract_type || "Permanent"}
                                     </p>
                                 </div>
@@ -156,3 +156,5 @@ from where it is taken */}
         </PageLayout>
     );
 }
+
+

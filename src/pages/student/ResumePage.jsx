@@ -59,20 +59,20 @@ export default function ResumePage() {
     const reset = () => { setAnalysis(null); setFile(null); setError(""); };
 
     return (
-        <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+        <div className="min-h-screen bg-app-bg font-sans flex flex-col">
             <Navbar />
 
             <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
                 {/* Resume Page Header */}
                 <div className="mb-10">
-                    <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+                    <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
                         ATS Friendly
                     </p>
-                    <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
-                        Resume <span className="text-primary-400">Checker.</span>
+                    <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
+                        Resume <span style={{ color: "#ef4444" }}>Checker.</span>
                     </h1>
-                    <p className="text-[1rem] leading-[1.7] text-neutral-500 max-w-[520px]">
+                    <p className="text-[1rem] leading-[1.7] text-black max-w-[520px]">
                         Upload your PDF resume and get instant ATS feedback — keyword match, skill gaps, and readability score.
                     </p>
                 </div>
@@ -104,3 +104,5 @@ export default function ResumePage() {
         </div>
     );
 }
+
+

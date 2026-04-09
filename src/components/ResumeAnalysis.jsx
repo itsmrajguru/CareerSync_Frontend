@@ -53,12 +53,12 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
 
             {/*Resume Analysis Header*/}
             <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
+                <p className="text-xs font-bold text-black uppercase tracking-widest">
                     Analysis results — {fileName}
                 </p>
                 <button
                     onClick={onReset}
-                    className="flex items-center gap-1.5 text-[12px] font-bold text-neutral-500 hover:text-primary-500 transition-colors"
+                    className="flex items-center gap-1.5 text-[12px] font-bold text-black hover:text-black transition-colors"
                 >
                     <RefreshCw size={13} /> Analyze another
                 </button>
@@ -83,7 +83,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                         </span>
                     </div>
                     {/* displaying the scoreLabel */}
-                    <p className="text-[11px] font-bold text-neutral-500">{scoreLabel(score)}</p>
+                    <p className="text-[11px] font-bold text-black">{scoreLabel(score)}</p>
                 </div>
 
                 {/*displyas the extracted skills from resume:
@@ -91,23 +91,23 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                 in the backedn, we are just calling and displaying it here.... */}
 
                 <div className="bg-white border border-[#b3eefb] rounded-2xl p-6 flex flex-col justify-center">
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">Skills detected</p>
-                    <p className="text-[2rem] font-extrabold text-neutral-900 tracking-tight leading-none mb-1">
+                    <p className="text-[10px] font-bold text-black uppercase tracking-widest mb-2">Skills detected</p>
+                    <p className="text-[2rem] font-extrabold text-black tracking-tight leading-none mb-1">
                         {skills.length}
                     </p>
-                    <p className="text-[11px] text-neutral-400">keywords matched</p>
+                    <p className="text-[11px] text-black">keywords matched</p>
                 </div>
 
                 {/* Dispalying the  number of missing keywords */}
                 <div className="bg-white border border-[#b3eefb] rounded-2xl p-6 flex flex-col justify-center">
-                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2">Gaps found</p>
+                    <p className="text-[10px] font-bold text-black uppercase tracking-widest mb-2">Gaps found</p>
                     <p
                         className="text-[2rem] font-extrabold tracking-tight leading-none mb-1"
                         style={{ color: missing.length > 0 ? "#f59e0b" : "#22c55e" }}
                     >
                         {missing.length}
                     </p>
-                    <p className="text-[11px] text-neutral-400">missing keywords</p>
+                    <p className="text-[11px] text-black">missing keywords</p>
                 </div>
             </div>
 
@@ -117,16 +117,16 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                 className="bg-white border border-[#b3eefb] rounded-2xl p-5 flex items-start gap-4"
                 style={{ borderLeft: `3px solid ${ss.ring}` }}
             >
-                <Sparkles size={18} className="text-primary-400 shrink-0 mt-0.5" />
+                <Sparkles size={18} className="text-black shrink-0 mt-0.5" />
                 <div>
-                    <p className="text-[13px] font-bold text-neutral-900 mb-1">
+                    <p className="text-[13px] font-bold text-black mb-1">
                         {score >= 75
                             ? "Your resume is highly optimized for ATS."
                             : score >= 50
                                 ? "Good foundation — a few improvements will boost your visibility."
                                 : "Your resume needs work — add the missing keywords below."}
                     </p>
-                    <p className="text-[12px] text-neutral-400 leading-relaxed">
+                    <p className="text-[12px] text-black leading-relaxed">
                         {score >= 75
                             ? "You have strong keyword coverage. Focus on tailoring this to each specific job posting."
                             : score >= 50
@@ -143,7 +143,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                 <div className="bg-white border border-[#b3eefb] rounded-2xl p-6">
                     <div className="flex items-center gap-2 mb-4">
                         <CheckCircle size={14} className="text-green-500" />
-                        <p className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest">
+                        <p className="text-[11px] font-bold text-black uppercase tracking-widest">
                             Detected skills ({skills.length})
                         </p>
                     </div>
@@ -159,7 +159,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                             ))}
                         </div>
                     ) : (
-                        <p className="text-[12px] text-neutral-400 text-center py-6">No skills detected.</p>
+                        <p className="text-[12px] text-black text-center py-6">No skills detected.</p>
                     )}
                 </div>
 
@@ -167,7 +167,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                 <div className="bg-white border border-[#b3eefb] rounded-2xl p-6">
                     <div className="flex items-center gap-2 mb-4">
                         <AlertCircle size={14} className="text-amber-500" />
-                        <p className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest">
+                        <p className="text-[11px] font-bold text-black uppercase tracking-widest">
                             Recommended additions ({missing.length})
                         </p>
                     </div>
@@ -182,7 +182,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
                             ))}
                         </div>
                     ) : (
-                        <p className="text-[12px] text-neutral-400 text-center py-6">
+                        <p className="text-[12px] text-black text-center py-6">
                             Great coverage — no major keywords missing!
                         </p>
                     )}
@@ -193,8 +193,8 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
                 {TIPS.map(({ icon: Icon, title }) => (
                     <div key={title} className="bg-white border border-[#b3eefb] rounded-xl p-3 flex items-center gap-2">
-                        <Icon size={13} className="text-primary-400 shrink-0" />
-                        <p className="text-[11px] font-semibold text-neutral-600">{title}</p>
+                        <Icon size={13} className="text-black shrink-0" />
+                        <p className="text-[11px] font-semibold text-black">{title}</p>
                     </div>
                 ))}
             </div>
@@ -202,3 +202,5 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
         </div>
     );
 }
+
+

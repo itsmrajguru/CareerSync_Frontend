@@ -12,10 +12,10 @@ import Footer from "../../components/Footer";
 
 // This shows the Pipeline status 
 const PIPELINE = [
-  { key: "applied", label: "Applied", color: "#02bcf0", bg: "#e6f9fd" },
-  { key: "shortlisted", label: "Shortlisted", color: "#f59e0b", bg: "#fffbeb" },
-  { key: "hired", label: "Hired", color: "#22c55e", bg: "#f0fdf4" },
-  { key: "rejected", label: "Rejected", color: "#ef4444", bg: "#fef2f2" },
+  { key: "applied", label: "Applied", color: "#0d1117", bg: "#e6f9fd" },
+  { key: "shortlisted", label: "Shortlisted", color: "#0d1117", bg: "#fffbeb" },
+  { key: "hired", label: "Hired", color: "#0d1117", bg: "#f0fdf4" },
+  { key: "rejected", label: "Rejected", color: "#0d1117", bg: "#fef2f2" },
 ];
 
 function calcCompleteness(c) {
@@ -103,22 +103,22 @@ export default function CompanyDashboard() {
         .d-apps  { animation: fadeUp .5s .3s ease both; }
       `}</style>
 
-      {/*same outer wrapper + bg as student dashboard — bg-[#f0fbfe] font-sans */}
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      {/*same outer wrapper + bg as student dashboard — bg-app-bg font-sans */}
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
 
         <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/* Hero Section*/}
           <div className="d-hero mb-10">
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Welcome back, {company?.name || user.username || "there"}
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
               Your hiring, in<br />
-              <span className="text-primary-400">real-time.</span>
+              <span className="text-black">real-time.</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               HiringPulse shows live pipeline status vs. your postings — so you always know
               who to shortlist and which roles to fill next.
             </p>
@@ -131,16 +131,16 @@ export default function CompanyDashboard() {
                 key={label}
                 onClick={link ? () => navigate(link) : undefined}
                 style={{ borderTop: `3px solid ${accent}` }}
-                className={`bg-white border border-neutral-200 rounded-[14px] p-5 ${link ? "cursor-pointer hover:shadow-md transition-shadow" : ""}`}
+                className={`cs-card ${link ? "cursor-pointer hover:shadow-md transition-shadow" : ""}`}
               >
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-2">
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-2">
                   {label}
                 </p>
                 <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1"
                   style={{ color: accent }}>
                   {value}
                 </p>
-                <p className="text-[12px] text-neutral-400 font-medium">{sub}</p>
+                <p className="text-[12px] text-black font-medium">{sub}</p>
               </div>
             ))}
           </div>
@@ -156,14 +156,14 @@ export default function CompanyDashboard() {
                 <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "3px" }}>
                   {/* live green dot — same animation as CareerPulse indicator */}
                   <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e", animation: "livePulse 2s ease-in-out infinite" }} />
-                  <span style={{ fontSize: "10px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  <span style={{ fontSize: "10px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                     Hiring Pulse — Live Pipeline Intelligence
                   </span>
                 </div>
-                <h2 style={{ fontSize: "19px", fontWeight: 800, color: "#111827", letterSpacing: "-0.5px", margin: "0 0 4px" }}>
+                <h2 style={{ fontSize: "19px", fontWeight: 800, color: "#0d1117", letterSpacing: "-0.5px", margin: "0 0 4px" }}>
                   Your Hiring Pipeline
                 </h2>
-                <p style={{ fontSize: "12px", color: "#9ca3af", marginBottom: "14px", fontWeight: 500 }}>
+                <p style={{ fontSize: "12px", color: "#0d1117", marginBottom: "14px", fontWeight: 500 }}>
                   Live applicant status across all your job postings
                 </p>
               </div>
@@ -171,7 +171,7 @@ export default function CompanyDashboard() {
               {completeness < 100 && (
                 <button
                   onClick={() => navigate("/company/profile")}
-                  style={{ marginTop: "4px", background: "transparent", border: "1px solid #e5e7eb", borderRadius: "9px", padding: "6px 11px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", fontWeight: 700, color: "#6b7280", transition: "all 0.15s" }}
+                  style={{ marginTop: "4px", background: "transparent", border: "1px solid #e5e7eb", borderRadius: "9px", padding: "6px 11px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", fontWeight: 700, color: "#0d1117", transition: "all 0.15s" }}
                   onMouseEnter={e => e.currentTarget.style.background = "#f9fafb"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}
                 >
@@ -185,7 +185,7 @@ export default function CompanyDashboard() {
 
               {/* Left: pipeline funnel + active job chips */}
               <div style={{ padding: "18px 22px" }}>
-                <p style={{ fontSize: "11px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "14px" }}>
+                <p style={{ fontSize: "11px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "14px" }}>
                   Application Funnel
                 </p>
                 {PIPELINE.map(({ key, label, color }) => {
@@ -193,13 +193,13 @@ export default function CompanyDashboard() {
                   const pct = totalApps > 0 ? Math.round(count / totalApps * 100) : 0;
                   return (
                     <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                      <span style={{ fontSize: "12.5px", color: "#64748b", width: "90px", flexShrink: 0, fontWeight: 600 }}>
+                      <span style={{ fontSize: "12.5px", color: "#0d1117", width: "90px", flexShrink: 0, fontWeight: 600 }}>
                         {label}
                       </span>
                       <div style={{ flex: 1, background: "#f1f5f9", borderRadius: "3px", height: "7px", overflow: "hidden" }}>
                         <div style={{ width: `${loading ? 0 : pct}%`, height: "100%", borderRadius: "3px", background: color, transition: "width 0.8s ease" }} />
                       </div>
-                      <span style={{ fontSize: "12px", fontWeight: 800, color: "#0f172a", minWidth: "28px", textAlign: "right" }}>
+                      <span style={{ fontSize: "12px", fontWeight: 800, color: "#0d1117", minWidth: "28px", textAlign: "right" }}>
                         {loading ? "—" : count}
                       </span>
                     </div>
@@ -209,7 +209,7 @@ export default function CompanyDashboard() {
                 {/* active job chips — click to view applicants */}
                 {jobs.length > 0 && (
                   <div style={{ marginTop: "14px" }}>
-                    <p style={{ fontSize: "11px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "10px" }}>
+                    <p style={{ fontSize: "11px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "10px" }}>
                       Active Postings
                     </p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
@@ -217,7 +217,7 @@ export default function CompanyDashboard() {
                         <button
                           key={job._id}
                           onClick={() => navigate(`/company/jobs/${job._id}/applicants`)}
-                          style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px solid #b3eefb", background: "#e6f9fd", color: "#0179a0", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", transition: "all 0.12s" }}
+                          style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px solid #b3eefb", background: "#e6f9fd", color: "#0d1117", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", transition: "all 0.12s" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#c7f3fd"}
                           onMouseLeave={e => e.currentTarget.style.background = "#e6f9fd"}
                         >
@@ -229,7 +229,7 @@ export default function CompanyDashboard() {
                       ))}
                       <button
                         onClick={() => navigate("/company/jobs/create")}
-                        style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px dashed #b3eefb", background: "transparent", color: "#0179a0", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
+                        style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px dashed #b3eefb", background: "transparent", color: "#0d1117", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
                       >
                         <Plus size={10} /> Post Job
                       </button>
@@ -240,7 +240,7 @@ export default function CompanyDashboard() {
 
               {/* Right sidebar — mirrors CareerPulse's "Readiness Radar" side panel */}
               <div style={{ borderLeft: "1px solid #f3f4f6", padding: "18px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fafafa" }}>
-                <span style={{ fontSize: "9px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                <span style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   Hiring Score
                 </span>
 
@@ -249,24 +249,24 @@ export default function CompanyDashboard() {
                   <div style={{ fontSize: "48px", fontWeight: 800, letterSpacing: "-2px", lineHeight: 1, color: pipelineStats.hired > 0 ? "#22c55e" : "#02bcf0" }}>
                     {loading ? "—" : pipelineStats.hired}
                   </div>
-                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "2px" }}>
+                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "2px" }}>
                     hired this cycle
                   </div>
                 </div>
 
                 {/* profile strength bar */}
                 <div style={{ width: "100%", borderTop: "1px solid #f3f4f6", paddingTop: "10px" }}>
-                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "7px" }}>
+                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "7px" }}>
                     Profile Strength
                   </div>
                   <div style={{ height: "5px", background: "#e5e7eb", borderRadius: "3px", marginBottom: "5px" }}>
                     <div style={{ width: `${completeness}%`, height: "100%", background: completeness === 100 ? "#22c55e" : "#02bcf0", borderRadius: "3px", transition: "width 0.8s" }} />
                   </div>
-                  <div style={{ fontSize: "11px", color: "#374151", fontWeight: 700 }}>{completeness}% complete</div>
+                  <div style={{ fontSize: "11px", color: "#0d1117", fontWeight: 700 }}>{completeness}% complete</div>
                   {completeness < 100 && (
                     <button
                       onClick={() => navigate("/company/profile")}
-                      style={{ marginTop: "4px", background: "none", border: "none", cursor: "pointer", fontSize: "11px", color: "#02bcf0", fontWeight: 700, padding: 0 }}
+                      style={{ marginTop: "4px", background: "none", border: "none", cursor: "pointer", fontSize: "11px", color: "#0d1117", fontWeight: 700, padding: 0 }}
                     >
                       Complete →
                     </button>
@@ -276,14 +276,14 @@ export default function CompanyDashboard() {
                 {/* top performing job — mirrors "Learn Next" section */}
                 {bestJob && (
                   <div style={{ width: "100%", borderTop: "1px solid #f3f4f6", paddingTop: "10px" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "7px" }}>
+                    <div style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "7px" }}>
                       Top Job
                     </div>
                     <button
                       onClick={() => navigate(`/company/jobs/${bestJob._id}/applicants`)}
                       style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", background: "transparent", border: "none", padding: "3.5px 0", cursor: "pointer" }}
                     >
-                      <span style={{ fontSize: "11px", fontWeight: 700, color: "#374151", textAlign: "left", lineHeight: 1.35 }}>
+                      <span style={{ fontSize: "11px", fontWeight: 700, color: "#0d1117", textAlign: "left", lineHeight: 1.35 }}>
                         {bestJob.title.length > 20 ? bestJob.title.slice(0, 20) + "…" : bestJob.title}
                       </span>
                       <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
@@ -291,7 +291,7 @@ export default function CompanyDashboard() {
                         <ChevronRight size={10} color="#02bcf0" />
                       </div>
                     </button>
-                    <div style={{ fontSize: "10px", color: "#9ca3af" }}>
+                    <div style={{ fontSize: "10px", color: "#0d1117" }}>
                       {bestJob.applicationsCount || 0} applicants
                     </div>
                   </div>
@@ -300,7 +300,7 @@ export default function CompanyDashboard() {
                 {/* quick action to post job */}
                 <button
                   onClick={() => navigate("/company/jobs/create")}
-                  style={{ width: "100%", marginTop: "4px", background: "#02bcf0", color: "#fff", border: "none", borderRadius: "9px", padding: "8px 0", fontSize: "11px", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "5px", transition: "background 0.15s" }}
+                  style={{ width: "100%", marginTop: "4px", background: "#02bcf0", color: "#0d1117", border: "none", borderRadius: "9px", padding: "8px 0", fontSize: "11px", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "5px", transition: "background 0.15s" }}
                   onMouseEnter={e => e.currentTarget.style.background = "#0199c6"}
                   onMouseLeave={e => e.currentTarget.style.background = "#02bcf0"}
                 >
@@ -314,10 +314,10 @@ export default function CompanyDashboard() {
           <div className="d-apps border-t border-neutral-100 pt-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-8">
               <div>
-                <h2 className="text-xl font-bold text-neutral-900 tracking-tight mb-1">
+                <h2 className="text-xl font-bold text-black tracking-tight mb-1">
                   Recent Applicants
                 </h2>
-                <p className="text-neutral-400 text-sm font-medium">
+                <p className="text-black text-sm font-medium">
                   Latest candidates across all your postings
                 </p>
               </div>
@@ -340,9 +340,9 @@ export default function CompanyDashboard() {
             ) : recentApplicants.length === 0 ? (
               /* empty state with CTA */
               <div className="text-center py-16 bg-white rounded-2xl border border-neutral-100">
-                <Users size={32} className="text-neutral-300 mx-auto mb-3" />
-                <p className="font-bold text-neutral-500 mb-2">No applicants yet</p>
-                <p className="text-sm text-neutral-400 mb-5">Post a job to start receiving applications</p>
+                <Users size={32} className="text-black mx-auto mb-3" />
+                <p className="font-bold text-black mb-2">No applicants yet</p>
+                <p className="text-sm text-black mb-5">Post a job to start receiving applications</p>
                 <button
                   onClick={() => navigate("/company/jobs/create")}
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 text-white font-bold text-sm rounded-full hover:bg-black transition-all"
@@ -361,7 +361,7 @@ export default function CompanyDashboard() {
                       <div
                         key={app._id}
                         onClick={() => navigate(`/company/jobs/${app.job?._id}/applicants`)}
-                        className="bg-white border border-neutral-200 rounded-[14px] p-5 cursor-pointer hover:shadow-md hover:border-primary-200 transition-all group"
+                        className="cs-card cursor-pointer hover:shadow-md hover:border-primary-200 transition-all group"
                       >
                         {/* Applicant header */}
                         <div className="flex items-center gap-3 mb-3">
@@ -369,10 +369,10 @@ export default function CompanyDashboard() {
                             {initials}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-neutral-900 truncate">
+                            <p className="text-sm font-bold text-black truncate">
                               {app.student?.username || "Unknown"}
                             </p>
-                            <p className="text-[11px] text-neutral-400 font-medium truncate">
+                            <p className="text-[11px] text-black font-medium truncate">
                               {app.job?.title || "Job"}
                             </p>
                           </div>
@@ -382,10 +382,10 @@ export default function CompanyDashboard() {
                         </div>
                         {/* Bottom row */}
                         <div className="flex items-center justify-between pt-3 border-t border-neutral-100">
-                          <span className="text-[11px] text-neutral-400 font-medium">
+                          <span className="text-[11px] text-black font-medium">
                             {new Date(app.appliedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                           </span>
-                          <span className="text-[11px] font-bold text-primary-400 group-hover:translate-x-0.5 transition-transform">
+                          <span className="text-[11px] font-bold text-black group-hover:translate-x-0.5 transition-transform">
                             Review →
                           </span>
                         </div>
@@ -413,3 +413,8 @@ export default function CompanyDashboard() {
     </>
   );
 }
+
+
+
+
+

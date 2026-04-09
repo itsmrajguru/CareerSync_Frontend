@@ -11,17 +11,17 @@ import {
 
 // status pill config
 const STATUS_CFG = {
-  open: { label: "Active", bg: "#f0fdf4", color: "#16a34a" },
-  closed: { label: "Closed", bg: "#fef2f2", color: "#dc2626" },
+  open: { label: "Active", bg: "#f0fdf4", color: "#0d1117" },
+  closed: { label: "Closed", bg: "#fef2f2", color: "#0d1117" },
 };
 
 // job type pill colors
 const TYPE_CFG = {
-  "full-time": { bg: "#e6f9fd", color: "#0179a0" },
-  "part-time": { bg: "#ede9fe", color: "#6d28d9" },
-  "internship": { bg: "#fef3c7", color: "#92400e" },
-  "contract": { bg: "#fce7f3", color: "#9d174d" },
-  "freelance": { bg: "#f0fdf4", color: "#166534" },
+  "full-time": { bg: "#e6f9fd", color: "#0d1117" },
+  "part-time": { bg: "#ede9fe", color: "#0d1117" },
+  "internship": { bg: "#fef3c7", color: "#0d1117" },
+  "contract": { bg: "#fce7f3", color: "#0d1117" },
+  "freelance": { bg: "#f0fdf4", color: "#0d1117" },
 };
 
 export default function CompanyJobsPage() {
@@ -88,20 +88,20 @@ export default function CompanyJobsPage() {
         .d-content { animation: fadeUp .5s .2s ease both; }
       `}</style>
 
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/*Hero Section*/}
           <div className="d-hero mb-10">
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Job Management
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
               Your postings,<br />
-              <span className="text-primary-400">all in one place.</span>
+              <span className="text-black">all in one place.</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               Manage your active and closed job listings. Edit details, review applicants, or post something new.
             </p>
           </div>
@@ -110,8 +110,8 @@ export default function CompanyJobsPage() {
           <div className="d-stats grid grid-cols-3 gap-4 mb-10">
             {statCards.map(({ label, value, accent }) => (
               <div key={label} style={{ borderTop: `3px solid ${accent}` }}
-                className="bg-white border border-neutral-200 rounded-[14px] p-5">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-2">{label}</p>
+                className="cs-card">
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-2">{label}</p>
                 <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none" style={{ color: accent }}>{value}</p>
               </div>
             ))}
@@ -120,13 +120,13 @@ export default function CompanyJobsPage() {
           {/*Search post */}
           <div className="d-content flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-xl font-bold text-neutral-900 tracking-tight mb-1">All Job Listings</h2>
-              <p className="text-neutral-400 text-sm font-medium">{filtered.length} posting{filtered.length !== 1 ? "s" : ""} found</p>
+              <h2 className="text-xl font-bold text-black tracking-tight mb-1">All Job Listings</h2>
+              <p className="text-black text-sm font-medium">{filtered.length} posting{filtered.length !== 1 ? "s" : ""} found</p>
             </div>
             <div className="flex items-center gap-3">
               {/* Search bar — same style as student dashboard */}
               <form onSubmit={e => e.preventDefault()} className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" size={14} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-black" size={14} />
                 <input
                   value={query} onChange={e => setQuery(e.target.value)}
                   placeholder="Search jobs..."
@@ -148,9 +148,9 @@ export default function CompanyJobsPage() {
           ) : filtered.length === 0 ? (
             /* empty state */
             <div className="text-center py-20 bg-white rounded-[14px] border border-neutral-200">
-              <Briefcase size={36} className="text-neutral-300 mx-auto mb-4" />
-              <p className="font-bold text-neutral-500 mb-2">{query ? "No matching jobs" : "No jobs posted yet"}</p>
-              <p className="text-sm text-neutral-400 mb-6">{query ? "Try a different search term" : "Create your first job posting to start hiring"}</p>
+              <Briefcase size={36} className="text-black mx-auto mb-4" />
+              <p className="font-bold text-black mb-2">{query ? "No matching jobs" : "No jobs posted yet"}</p>
+              <p className="text-sm text-black mb-6">{query ? "Try a different search term" : "Create your first job posting to start hiring"}</p>
               {!query && (
                 <button onClick={() => navigate("/company/jobs/create")}
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 text-white font-bold text-sm rounded-full hover:bg-black transition-all">
@@ -165,7 +165,7 @@ export default function CompanyJobsPage() {
                 const tc = TYPE_CFG[job.jobType] || TYPE_CFG["full-time"];
                 return (
                   <div key={job._id}
-                    className="bg-white border border-neutral-200 rounded-[14px] p-5 hover:shadow-md hover:border-primary-100 transition-all">
+                    className="cs-card hover:shadow-md hover:border-primary-100 transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 
                       {/* Left: info */}
@@ -177,7 +177,7 @@ export default function CompanyJobsPage() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <h3 className="text-[15px] font-bold text-neutral-900">{job.title}</h3>
+                            <h3 className="text-[15px] font-bold text-black">{job.title}</h3>
                             {/* Status pill */}
                             <span style={{ background: sc.bg, color: sc.color }}
                               className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
@@ -190,14 +190,14 @@ export default function CompanyJobsPage() {
                             </span>
                           </div>
                           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                            <span className="text-[12px] text-neutral-400 font-medium flex items-center gap-1">
+                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
                               <MapPin size={11} /> {job.location}
                             </span>
-                            <span className="text-[12px] text-neutral-400 font-medium flex items-center gap-1">
+                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
                               <Users size={11} /> {job.applicationsCount || 0} applicants
                             </span>
                             {job.deadline && (
-                              <span className="text-[12px] text-neutral-400 font-medium flex items-center gap-1">
+                              <span className="text-[12px] text-black font-medium flex items-center gap-1">
                                 <Calendar size={11} /> Closes {new Date(job.deadline).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                               </span>
                             )}
@@ -208,15 +208,15 @@ export default function CompanyJobsPage() {
                       {/* Right: actions */}
                       <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
                         <button onClick={() => navigate(`/company/jobs/${job._id}/applicants`)}
-                          className="flex items-center gap-1 text-[12px] font-bold text-neutral-600 bg-neutral-50 border border-neutral-200 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
+                          className="flex items-center gap-1 text-[12px] font-bold text-black bg-neutral-50 border border-neutral-200 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
                           <Users size={12} /> Applicants <ChevronRight size={12} />
                         </button>
                         <button onClick={() => navigate(`/company/jobs/${job._id}/edit`)}
-                          className="flex items-center gap-1 text-[12px] font-bold text-primary-500 bg-primary-50 border border-primary-100 px-3 py-2 rounded-lg hover:bg-primary-100 transition-all">
+                          className="flex items-center gap-1 text-[12px] font-bold text-black bg-primary-50 border border-primary-100 px-3 py-2 rounded-lg hover:bg-primary-100 transition-all">
                           <Pencil size={12} /> Edit
                         </button>
                         <button onClick={() => handleToggleStatus(job)}
-                          className="flex items-center gap-1 text-[12px] font-bold text-neutral-500 bg-neutral-50 border border-neutral-200 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
+                          className="flex items-center gap-1 text-[12px] font-bold text-black bg-neutral-50 border border-neutral-200 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-all whitespace-nowrap">
                           {job.status === "open" ? <><XCircle size={12} /> Close</> : <><CheckCircle2 size={12} /> Reopen</>}
                         </button>
                         <button onClick={() => handleDelete(job._id)}
@@ -245,3 +245,8 @@ export default function CompanyJobsPage() {
     </>
   );
 }
+
+
+
+
+

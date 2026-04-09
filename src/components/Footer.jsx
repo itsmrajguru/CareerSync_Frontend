@@ -6,7 +6,7 @@ export default function Footer() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
               <img src="/logo.svg" alt="Logo" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-              <span style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>Career<span style={{ color: "#02bcf0" }}>Sync</span></span>
+              <span style={{ fontSize: 18, fontWeight: 900, color: "#0d1117", letterSpacing: -0.5 }}>Career<span style={{ color: "#0d1117" }}>Sync</span></span>
             </div>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.7, maxWidth: 260 }}>
               Connecting India's talent with the right opportunities. Verified jobs, smart matching, real results.
@@ -47,3 +47,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+

@@ -39,11 +39,11 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+    <div className="min-h-screen flex flex-col bg-app-bg font-sans">
       <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
         <div className="w-full max-w-md relative z-10">
-          {/* adding feature-card class to match with home page dynamic ui */}
-          <div className="feature-card p-10 w-full animate-fade-in">
+          {/* adding cs-card class to match with home page dynamic ui */}
+          <div className="cs-card p-10 w-full animate-fade-in">
 
             {/* Hero section with careeersync logo and Signup header*/}
             <div className="text-center mb-8">
@@ -52,10 +52,10 @@ export default function SignupPage() {
                 alt="Logo"
                 className="h-16 w-16 mx-auto mb-4 floating"
               />
-              <span className="text-2xl font-black text-neutral-800 tracking-tight block">
-                Join Career<span className="text-primary-500">Sync</span>
+              <span className="text-2xl font-black text-black tracking-tight block">
+                Join Career<span className="text-black">Sync</span>
               </span>
-              <p className="text-neutral-400 mt-2 text-sm font-medium">Create your account to get started.</p>
+              <p className="text-black mt-2 text-sm font-medium">Create your account to get started.</p>
             </div>
 
             {/* Displaying the login failed errors */}
@@ -76,8 +76,8 @@ export default function SignupPage() {
                     type="button"
                     onClick={() => setRole("student")}
                     className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${role === "student"
-                        ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
-                        : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                        ? "bg-primary-50 border-primary-500 text-black shadow-sm"
+                        : "bg-white border-neutral-100 text-black hover:border-neutral-200"
                       }`}
                   >
                     Job Seeker
@@ -86,8 +86,8 @@ export default function SignupPage() {
                     type="button"
                     onClick={() => setRole("company")}
                     className={`py-3 rounded-xl border-2 text-sm font-bold transition-all ${role === "company"
-                        ? "bg-primary-50 border-primary-500 text-primary-600 shadow-sm"
-                        : "bg-white border-neutral-100 text-neutral-400 hover:border-neutral-200"
+                        ? "bg-primary-50 border-primary-500 text-black shadow-sm"
+                        : "bg-white border-neutral-100 text-black hover:border-neutral-200"
                       }`}
                   >
                     Company
@@ -96,11 +96,11 @@ export default function SignupPage() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Username</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Username</label>
                 <input
                   type="text"
                   name="username"
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                  className="cs-input"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
@@ -110,11 +110,11 @@ export default function SignupPage() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Email</label>
                 <input
                   type="email"
                   name="email"
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                  className="cs-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -124,11 +124,11 @@ export default function SignupPage() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Password</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Password</label>
                 <input
                   type="password"
                   name="password"
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                  className="cs-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -136,7 +136,7 @@ export default function SignupPage() {
                   placeholder="Create a password"
                   minLength={6}
                 />
-                <p className="text-[10px] text-neutral-400 ml-1">Minimum 6 characters required</p>
+                <p className="text-[10px] text-black ml-1">Minimum 6 characters required</p>
               </div>
 
               <button
@@ -148,9 +148,9 @@ export default function SignupPage() {
               </button>
             </form>
 
-            <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
+            <div className="text-center mt-8 text-sm text-black font-medium">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
+              <Link to="/login" className="text-black hover:text-black font-bold transition-colors">
                 Login
               </Link>
             </div>
@@ -161,3 +161,8 @@ export default function SignupPage() {
     </div>
   );
 }
+
+
+
+
+

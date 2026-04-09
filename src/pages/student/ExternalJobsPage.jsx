@@ -72,22 +72,22 @@ export default function JobsPage() {
       {/* Hero section */}
       <div className="max-w-3xl mb-16 animate-fade-in-down">
         <div className="mb-10">
-          <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+          <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
             Fully Yours
           </p>
-          <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
-            Discover roles that <br className="hidden md:block" />  <span className="text-primary-400">match your skills.</span>
+          <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
+            Discover roles that <br className="hidden md:block" />  <span style={{ color: "#ef4444" }}>match your skills.</span>
           </h1>
-          <p className="text-[1rem] leading-[1.7] text-neutral-500 max-w-[520px]">
+          <p className="text-[1.1rem] leading-[1.7] text-black max-w-[540px] font-medium opacity-80">
             Explore opportunities tailored to your skills — role matches, salary insights, and culture fit.
           </p>
         </div>
 
         {/* submitting the form for job fetch */}
         <form onSubmit={handleSearch} className="relative max-w-2xl mt-8">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400" size={20} />
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-black" size={20} />
           <input
-            className="w-full pl-14 pr-32 py-5 rounded-3xl bg-white border-2 border-[#b3eefb] focus:outline-none focus:border-primary-300 focus:ring-4 focus:ring-primary-50 text-base transition-all shadow-sm text-neutral-900 font-medium placeholder-neutral-400"
+            className="cs-input !pl-14 !py-5 !rounded-3xl !border-2 !border-[#ef4444]/20 text-base"
             placeholder="Job title, company, or keyword"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -104,7 +104,7 @@ Not too productive ,need to change later(Remaindder)*/}
           <select
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
-            className="px-5 py-3 rounded-2xl border border-[#b3eefb] bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
+            className="cs-input !w-auto !px-5 !py-3 !rounded-2xl !border-[#b3eefb] font-bold"
           >
             <option value="">🗺️ All Locations</option>
             <option value="Remote">Remote</option>
@@ -116,7 +116,7 @@ Not too productive ,need to change later(Remaindder)*/}
           <select
             value={companyFilter}
             onChange={(e) => setCompanyFilter(e.target.value)}
-            className="px-5 py-3 rounded-2xl border border-[#b3eefb] bg-white text-neutral-600 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-50 hover:border-neutral-300 transition-colors shadow-sm cursor-pointer"
+            className="cs-input !w-auto !px-5 !py-3 !rounded-2xl !border-[#b3eefb] font-bold"
           >
             <option value="">🏢 All Companies</option>
             <option value="Google">Google</option>
@@ -124,10 +124,11 @@ Not too productive ,need to change later(Remaindder)*/}
             <option value="Amazon">Amazon</option>
           </select>
         </div>
+
       </div>
 
       {/*Displaying the fetched jobs*/}
-      <div className="border-t border-[#b3eefb] pt-16">
+      <div className="border-t border-[#ef4444]/10 pt-16">
         {error ? (
           <div className="p-6 bg-red-50 border border-red-100 rounded-3xl text-red-600 font-bold text-center">
             {error}
@@ -146,7 +147,7 @@ Not too productive ,need to change later(Remaindder)*/}
                 >
                   &larr; Previous
                 </button>
-                <span className="font-bold text-neutral-400 text-sm">
+                <span className="font-bold text-black text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
@@ -164,3 +165,5 @@ Not too productive ,need to change later(Remaindder)*/}
     </PageLayout>
   );
 }
+
+

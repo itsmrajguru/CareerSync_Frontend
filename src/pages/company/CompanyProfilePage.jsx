@@ -71,20 +71,20 @@ export default function CompanyProfilePage() {
         .d-content { animation: fadeUp .5s .15s ease both; }
       `}</style>
 
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/*Hero section */}
           <div className="d-hero mb-10">
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Organization Settings
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
               Build your<br />
-              <span className="text-primary-400">employer brand.</span>
+              <span className="text-black">employer brand.</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               This profile is shown to candidates on your job postings. A complete profile gets
               significantly more qualified applicants.
             </p>
@@ -113,17 +113,17 @@ export default function CompanyProfilePage() {
             <form onSubmit={handleSubmit} className="d-content">
 
               {/*Profile Card */}
-              <div className="bg-white border border-neutral-200 rounded-[14px] p-5 mb-4 flex items-center gap-5">
+              <div className="cs-card mb-4 flex items-center gap-5">
                 {/* Initial avatar */}
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black text-white flex-shrink-0"
                   style={{ background: "linear-gradient(135deg, #02bcf0, #014d65)" }}>
                   {profile.name ? profile.name[0].toUpperCase() : <Building2 size={28} />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-neutral-900 text-[15px] truncate">
+                  <p className="font-bold text-black text-[15px] truncate">
                     {profile.name || "Your company name"}
                   </p>
-                  <p className="text-[12px] text-neutral-400 font-medium mb-2">
+                  <p className="text-[12px] text-black font-medium mb-2">
                     {profile.industry || "Industry not set"}{profile.location ? ` · ${profile.location}` : ""}
                   </p>
                   {/* Completeness bar */}
@@ -132,12 +132,12 @@ export default function CompanyProfilePage() {
                       <div style={{ width: `${completeness}%`, background: completeness === 100 ? "#22c55e" : "#02bcf0" }}
                         className="h-full rounded-full transition-all duration-700" />
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-400">{completeness}% complete</span>
+                    <span className="text-[11px] font-bold text-black">{completeness}% complete</span>
                   </div>
                 </div>
                 {profile.website && (
                   <a href={profile.website} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-1 text-[12px] font-bold text-primary-400 hover:underline flex-shrink-0">
+                    className="flex items-center gap-1 text-[12px] font-bold text-black hover:underline flex-shrink-0">
                     <Globe size={12} /> Website
                   </a>
                 )}
@@ -145,46 +145,46 @@ export default function CompanyProfilePage() {
 
               {/*Form Fields*/}
               <div className="bg-white border border-neutral-200 rounded-[14px] p-6 mb-4">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-6">
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-6">
                   Company Identity
                 </p>
                 <div className="flex flex-col gap-5">
 
                   {/* Company name */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">
                       Company Registered Name
                     </label>
                     <input required type="text" name="name" value={profile.name} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="e.g. Acme Corporation" />
                   </div>
 
                   {/* Website + Location row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                        <Globe size={11} className="text-primary-400" /> Website
+                      <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                        <Globe size={11} className="text-black" /> Website
                       </label>
                       <input type="url" name="website" value={profile.website} onChange={handleChange}
-                        className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                        className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                         placeholder="https://acme.com" />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] flex items-center gap-1.5">
-                        <MapPin size={11} className="text-primary-400" /> HQ Location
+                      <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px] flex items-center gap-1.5">
+                        <MapPin size={11} className="text-black" /> HQ Location
                       </label>
                       <input type="text" name="location" value={profile.location} onChange={handleChange}
-                        className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                        className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                         placeholder="Mumbai, India" />
                     </div>
                   </div>
 
                   {/* Industry */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Industry Sector</label>
+                    <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Industry Sector</label>
                     <input type="text" name="industry" value={profile.industry} onChange={handleChange}
-                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
+                      className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all"
                       placeholder="e.g. Information Technology & Services" />
                   </div>
                 </div>
@@ -192,11 +192,11 @@ export default function CompanyProfilePage() {
 
               {/* About section */}
               <div className="bg-white border border-neutral-200 rounded-[14px] p-6 mb-6">
-                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-4">About Organization</p>
+                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-4">About Organization</p>
                 <textarea rows={6} name="about" value={profile.about} onChange={handleChange}
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
+                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all resize-none"
                   placeholder="Tell candidates about your mission, culture, values, and what makes your company a great place to work..." />
-                <p className="text-[11px] text-neutral-400 mt-2 font-medium">
+                <p className="text-[11px] text-black mt-2 font-medium">
                   {profile.about.length}/1000 characters
                 </p>
               </div>
@@ -209,7 +209,7 @@ export default function CompanyProfilePage() {
                   {saving ? "Saving..." : success ? "Saved!" : "Save Changes"}
                 </button>
                 <button type="button" onClick={() => navigate("/company/dashboard")}
-                  className="px-6 py-3 bg-neutral-50 border border-neutral-200 text-neutral-600 font-bold text-sm rounded-xl hover:bg-neutral-100 transition-colors">
+                  className="px-6 py-3 bg-neutral-50 border border-neutral-200 text-black font-bold text-sm rounded-xl hover:bg-neutral-100 transition-colors">
                   Cancel
                 </button>
               </div>
@@ -223,3 +223,7 @@ export default function CompanyProfilePage() {
     </>
   );
 }
+
+
+
+

@@ -54,23 +54,23 @@ export default function SettingsPage() {
         .toggle-checkbox:checked + .toggle-label { background-color: #02bcf0; }
       `}</style>
 
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[800px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/* Hero Section*/}
           <div className="d-hero mb-10">
             <button onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-[12px] font-bold text-neutral-400 hover:text-primary-400 transition-colors mb-6">
+              className="flex items-center gap-2 text-[12px] font-bold text-black hover:text-black transition-colors mb-6">
               <ArrowLeft size={14} /> Back
             </button>
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Account Security & Prefs
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
-              Organization <span className="text-primary-400">Settings</span>
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
+              Organization <span className="text-black">Settings</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               Manage your password, notification preferences, and account security.
             </p>
           </div>
@@ -80,10 +80,10 @@ export default function SettingsPage() {
             {/*Password Change*/}
             <div className="bg-white border border-neutral-200 rounded-[14px] p-6">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-lg bg-primary-50 text-primary-500 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-primary-50 text-black flex items-center justify-center">
                   <Key size={16} />
                 </div>
-                <h2 className="text-[15px] font-bold text-neutral-900">Change Password</h2>
+                <h2 className="text-[15px] font-bold text-black">Change Password</h2>
               </div>
 
               {passSuccess && (
@@ -99,17 +99,17 @@ export default function SettingsPage() {
 
               <form onSubmit={handlePassSubmit} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Current Password</label>
+                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Current Password</label>
                   <input required type="password" value={passData.current} onChange={e => setPassData({ ...passData, current: e.target.value })}
                     className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">New Password</label>
+                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">New Password</label>
                   <input required type="password" value={passData.newPass} onChange={e => setPassData({ ...passData, newPass: e.target.value })}
                     className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px]">Confirm New</label>
+                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Confirm New</label>
                   <input required type="password" value={passData.confirm} onChange={e => setPassData({ ...passData, confirm: e.target.value })}
                     className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
                 </div>
@@ -128,7 +128,7 @@ export default function SettingsPage() {
                 <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
                   <Bell size={16} />
                 </div>
-                <h2 className="text-[15px] font-bold text-neutral-900">Email Notifications</h2>
+                <h2 className="text-[15px] font-bold text-black">Email Notifications</h2>
               </div>
               
               <div className="flex flex-col gap-4">
@@ -139,8 +139,8 @@ export default function SettingsPage() {
                 ].map(item => (
                   <div key={item.id} className="flex items-center justify-between py-2 border-b border-neutral-100 last:border-0">
                     <div>
-                      <p className="text-sm font-bold text-neutral-900">{item.label}</p>
-                      <p className="text-[12px] text-neutral-400 font-medium">{item.desc}</p>
+                      <p className="text-sm font-bold text-black">{item.label}</p>
+                      <p className="text-[12px] text-black font-medium">{item.desc}</p>
                     </div>
                     {/* Toggle switch */}
                     <div className="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
@@ -163,7 +163,7 @@ export default function SettingsPage() {
                 <Shield size={16} className="text-red-500" />
                 <h2 className="text-[15px] font-bold text-red-600">Danger Zone</h2>
               </div>
-              <p className="text-[13px] text-neutral-500 font-medium mb-4">
+              <p className="text-[13px] text-black font-medium mb-4">
                 Deleting your account will permanently wipe your company profile, all jobs, and applicant history. This action cannot be reversed.
               </p>
               <button onClick={() => window.confirm("Are you absolutely sure you want to delete your account? All data will be lost.")}
@@ -179,3 +179,6 @@ export default function SettingsPage() {
     </>
   );
 }
+
+
+

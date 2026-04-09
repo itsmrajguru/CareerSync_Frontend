@@ -38,11 +38,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+    <div className="min-h-screen flex flex-col bg-app-bg font-sans">
       <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
         <div className="w-full max-w-md relative z-10">
-          {/* adding feature-card for consistent layout matched with home page */}
-          <div className="feature-card p-10 w-full">
+          {/* adding cs-card for consistent layout matched with home page */}
+          <div className="cs-card p-10 w-full">
 
             {/* Hero section with careeersync logo and login header */}
             <div className="text-center mb-8">
@@ -51,10 +51,10 @@ export default function LoginPage() {
                 alt="Logo"
                 className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
               />
-              <span className="text-2xl font-black text-neutral-800 tracking-tight block">
-                Career<span className="text-primary-500">Sync</span>
+              <span className="text-2xl font-black text-black tracking-tight block">
+                Career<span className="text-black">Sync</span>
               </span>
-              <p className="text-neutral-400 mt-2 text-sm font-medium">
+              <p className="text-black mt-2 text-sm font-medium">
                 Welcome back! Please login to continue.
               </p>
             </div>
@@ -70,11 +70,11 @@ export default function LoginPage() {
 from the user and log them in directly */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Email</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Email</label>
                 <input
                   type="email"
                   name="email"
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                  className="cs-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -84,11 +84,11 @@ from the user and log them in directly */}
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Password</label>
+                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Password</label>
                 <input
                   type="password"
                   name="password"
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                  className="cs-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -100,7 +100,7 @@ from the user and log them in directly */}
 
               {/*Option for the user to change the password */}
               <div className="flex justify-end -mt-2">
-                <Link to="/forgot-password" className="text-xs font-bold text-primary-500 hover:text-primary-600 transition-colors">
+                <Link to="/forgot-password" className="text-xs font-bold text-black hover:text-black transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -117,9 +117,9 @@ with the help of inbuilt Onsubmit Function called in the form */}
             </form>
 
             {/*Option for the user to jump signup page */}
-            <div className="text-center mt-8 text-sm text-neutral-400 font-medium">
+            <div className="text-center mt-8 text-sm text-black font-medium">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
+              <Link to="/signup" className="text-black hover:text-black font-bold transition-colors">
                 Create Account
               </Link>
             </div>
@@ -130,3 +130,8 @@ with the help of inbuilt Onsubmit Function called in the form */}
     </div>
   );
 }
+
+
+
+
+

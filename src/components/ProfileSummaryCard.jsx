@@ -20,21 +20,21 @@ export default function ProfileSummaryCard({ userName }) {
     <div className="flex flex-col gap-3 h-full">
 
       {/* Avatar + name + progress */}
-      <div className="bg-white border border-neutral-100 rounded-2xl p-5 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full bg-primary-50 flex items-center justify-center text-base font-bold text-primary-600 shrink-0">
+      <div className="cs-card !p-5 flex items-center gap-4">
+        <div className="w-12 h-12 rounded-full bg-primary-50 flex items-center justify-center text-base font-bold text-black shrink-0">
           {initials}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[14px] font-bold text-neutral-900">{userName}</p>
-          <p className="text-[12px] text-neutral-400">Pune, India</p>
+          <p className="text-[14px] font-bold text-black">{userName}</p>
+          <p className="text-[12px] text-black">Pune, India</p>
           <div className="h-1 bg-neutral-100 rounded-full mt-2 w-32">
             <div className="h-1 bg-primary-400 rounded-full" style={{ width: "60%" }} />
           </div>
-          <p className="text-[10px] text-neutral-400 mt-1">Profile 60% complete</p>
+          <p className="text-[10px] text-black mt-1">Profile 60% complete</p>
         </div>
         <button
           onClick={() => navigate("/profile")}
-          className="text-[11px] font-semibold text-primary-500 hover:text-primary-600 shrink-0 transition-colors"
+          className="text-[11px] font-semibold text-black hover:text-black shrink-0 transition-colors"
         >
           Edit →
         </button>
@@ -45,12 +45,12 @@ export default function ProfileSummaryCard({ userName }) {
         {STATS.map((s) => (
           <div
             key={s.label}
-            className="bg-white border border-neutral-100 rounded-xl p-4"
+            className="cs-inner-box"
           >
-            <p className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">
+            <p className="text-[10px] font-semibold text-black uppercase tracking-wider mb-1">
               {s.label}
             </p>
-            <p className="text-[22px] font-extrabold text-neutral-900 tracking-tight">
+            <p className="text-[22px] font-extrabold text-black tracking-tight">
               {s.value}
             </p>
           </div>
@@ -59,3 +59,4 @@ export default function ProfileSummaryCard({ userName }) {
     </div>
   );
 }
+

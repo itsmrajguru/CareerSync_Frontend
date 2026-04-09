@@ -11,10 +11,10 @@ import {
 
 // status display config — colors + labels
 const STATUS_CFG = {
-  applied: { label: "Applied", bg: "#e6f9fd", color: "#0179a0", border: "#b3eefb" },
-  shortlisted: { label: "Shortlisted", bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
-  rejected: { label: "Rejected", bg: "#fef2f2", color: "#b91c1c", border: "#fca5a5" },
-  hired: { label: "Hired", bg: "#f0fdf4", color: "#166534", border: "#86efac" },
+  applied: { label: "Applied", bg: "#e6f9fd", color: "#0d1117", border: "#b3eefb" },
+  shortlisted: { label: "Shortlisted", bg: "#fffbeb", color: "#0d1117", border: "#fde68a" },
+  rejected: { label: "Rejected", bg: "#fef2f2", color: "#0d1117", border: "#fca5a5" },
+  hired: { label: "Hired", bg: "#f0fdf4", color: "#0d1117", border: "#86efac" },
 };
 
 export default function ApplicantsPage() {
@@ -108,7 +108,7 @@ export default function ApplicantsPage() {
         .d-content { animation: fadeUp .5s .2s ease both; }
       `}</style>
 
-      <div className="min-h-screen bg-[#f0fbfe] font-sans flex flex-col">
+      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
@@ -116,18 +116,18 @@ export default function ApplicantsPage() {
           <div className="d-hero mb-10">
             {/* Back button */}
             <button onClick={() => navigate("/company/jobs")}
-              className="flex items-center gap-2 text-[12px] font-bold text-neutral-400 hover:text-primary-400 transition-colors mb-6">
+              className="flex items-center gap-2 text-[12px] font-bold text-black hover:text-black transition-colors mb-6">
               <ArrowLeft size={14} /> Back to jobs
             </button>
 
-            <p className="text-xs font-bold tracking-[1px] text-neutral-400 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
               Applicant Review
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-neutral-900 mb-3">
+            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
               Candidates for<br />
-              <span className="text-primary-400">{jobTitle || "this posting."}</span>
+              <span className="text-black">{jobTitle || "this posting."}</span>
             </h1>
-            <p className="text-base text-neutral-500 max-w-[480px] leading-relaxed font-medium">
+            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
               Review, shortlist, and make your hiring decisions. Status changes are applied instantly.
             </p>
           </div>
@@ -137,12 +137,12 @@ export default function ApplicantsPage() {
             <div className="d-stats grid grid-cols-3 gap-4 mb-10">
               {statCards.map(({ label, value, accent }) => (
                 <div key={label} style={{ borderTop: `3px solid ${accent}` }}
-                  className="bg-white border border-neutral-200 rounded-[14px] p-5 cursor-pointer hover:shadow-md transition-shadow"
+                  className="cs-card cursor-pointer hover:shadow-md transition-shadow"
                   onClick={() => setFilter(label.toLowerCase() === filter ? "all" : label.toLowerCase())}
                 >
-                  <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.6px] mb-2">{label}</p>
+                  <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-2">{label}</p>
                   <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1" style={{ color: accent }}>{value}</p>
-                  <p className="text-[12px] text-neutral-400 font-medium">
+                  <p className="text-[12px] text-black font-medium">
                     {filter === label.toLowerCase() ? "Filtering →" : "Click to filter"}
                   </p>
                 </div>
@@ -153,27 +153,27 @@ export default function ApplicantsPage() {
           {/* Search bar + filter*/}
           <div className="d-content flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-xl font-bold text-neutral-900 tracking-tight mb-1">All Candidates</h2>
-              <p className="text-neutral-400 text-sm font-medium">{filtered.length} candidate{filtered.length !== 1 ? "s" : ""}</p>
+              <h2 className="text-xl font-bold text-black tracking-tight mb-1">All Candidates</h2>
+              <p className="text-black text-sm font-medium">{filtered.length} candidate{filtered.length !== 1 ? "s" : ""}</p>
             </div>
             <div className="flex items-center gap-3">
               <form onSubmit={e => e.preventDefault()} className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" size={14} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-black" size={14} />
                 <input
                   value={search} onChange={e => setSearch(e.target.value)}
                   placeholder="Search candidates..."
-                  className="pl-10 pr-4 py-2.5 rounded-xl bg-white border border-neutral-200 focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 text-sm font-medium transition-all shadow-sm w-52"
+                  className="cs-input !pl-10 w-52"
                 />
               </form>
               {filter !== "all" && (
                 <button onClick={() => setFilter("all")}
-                  className="text-[12px] font-bold text-primary-400 bg-primary-50 border border-primary-100 px-3 py-2.5 rounded-xl hover:bg-primary-100 transition-all">
+                  className="text-[12px] font-bold text-black bg-primary-50 border border-primary-100 px-3 py-2.5 rounded-xl hover:bg-primary-100 transition-all">
                   Clear filter ×
                 </button>
               )}
               {filtered.length > 0 && (
                 <button onClick={handleExportCSV}
-                  className="flex items-center gap-1.5 text-[12px] font-bold text-neutral-600 bg-white border border-neutral-200 px-3 py-2.5 rounded-xl hover:bg-neutral-50 transition-all">
+                  className="flex items-center gap-1.5 text-[12px] font-bold text-black bg-white border border-neutral-200 px-3 py-2.5 rounded-xl hover:bg-neutral-50 transition-all">
                   <Download size={14} /> Export CSV
                 </button>
               )}
@@ -187,11 +187,11 @@ export default function ApplicantsPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-[14px] border border-neutral-200">
-              <Users size={36} className="text-neutral-300 mx-auto mb-4" />
-              <p className="font-bold text-neutral-500 mb-2">
+              <Users size={36} className="text-black mx-auto mb-4" />
+              <p className="font-bold text-black mb-2">
                 {search || filter !== "all" ? "No matching candidates" : "No applicants yet"}
               </p>
-              <p className="text-sm text-neutral-400 mb-6">
+              <p className="text-sm text-black mb-6">
                 {search || filter !== "all" ? "Try adjusting your filter or search term" : "Share your job link to attract candidates"}
               </p>
             </div>
@@ -202,7 +202,7 @@ export default function ApplicantsPage() {
                 const initials = (app.student?.username || "A").slice(0, 2).toUpperCase();
                 return (
                   <div key={app._id}
-                    className="bg-white border border-neutral-200 rounded-[14px] p-5 hover:shadow-md hover:border-primary-100 transition-all">
+                    className="cs-card hover:shadow-md hover:border-primary-100 transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
 
                       {/* Left: candidate info */}
@@ -214,18 +214,18 @@ export default function ApplicantsPage() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <h3 className="text-[15px] font-bold text-neutral-900">{app.student?.username || "Unknown"}</h3>
+                            <h3 className="text-[15px] font-bold text-black">{app.student?.username || "Unknown"}</h3>
                             {/* Status badge */}
-                            <span style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}` }}
-                              className="text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            <span style={{ border: `1px solid ${sc.border}` }}
+                              className="cs-badge !rounded-full !px-2 !py-0.5 !text-[10px]">
                               {sc.label}
                             </span>
                           </div>
                           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                            <span className="text-[12px] text-neutral-400 font-medium flex items-center gap-1">
+                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
                               <Mail size={11} /> {app.student?.email || "—"}
                             </span>
-                            <span className="text-[12px] text-neutral-400 font-medium flex items-center gap-1">
+                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
                               <Calendar size={11} /> {new Date(app.appliedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                             </span>
                           </div>
@@ -239,7 +239,7 @@ export default function ApplicantsPage() {
                           <select
                             value={app.status}
                             onChange={e => handleStatusChange(app._id, e.target.value)}
-                            className="p-2.5 pr-8 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-300 cursor-pointer"
+                            className="cs-input !p-2.5 !pr-8 font-bold"
                           >
                             <option value="applied">Under Review</option>
                             <option value="shortlisted">Shortlisted</option>
@@ -249,7 +249,7 @@ export default function ApplicantsPage() {
                         </div>
 
                         <button onClick={() => navigate(`/company/applications/${app._id}`)}
-                          className="flex items-center gap-1.5 text-[12px] font-bold text-primary-500 bg-primary-50 px-4 py-2.5 rounded-xl hover:bg-primary-100 transition-colors whitespace-nowrap">
+                          className="flex items-center gap-1.5 text-[12px] font-bold text-black bg-primary-50 px-4 py-2.5 rounded-xl hover:bg-primary-100 transition-colors whitespace-nowrap">
                           View Details
                         </button>
                       </div>
@@ -274,3 +274,8 @@ export default function ApplicantsPage() {
     </>
   );
 }
+
+
+
+
+

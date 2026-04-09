@@ -15,28 +15,28 @@ const FEATURES = [
     icon: <Zap size={20} />,
     title: "Smart Job Matching",
     desc: "AI-powered matching surfaces roles that fit your skills, experience, and location — no endless scrolling.",
-    color: "#02bcf0",
+    color: "#0d1117",
     bg: "#e6f9fe",
   },
   {
     icon: <FileText size={20} />,
     title: "Resume Analyser",
     desc: "Upload once, get an instant score, skill gap report, and tailored suggestions to reach the top of the pile.",
-    color: "#10b981",
+    color: "#0d1117",
     bg: "#d1fae5",
   },
   {
     icon: <BarChart2 size={20} />,
     title: "Application Tracker",
     desc: "Every application, interview, and follow-up — tracked in one clean dashboard so nothing slips through.",
-    color: "#7c3aed",
+    color: "#0d1117",
     bg: "#ede9fe",
   },
   {
     icon: <Shield size={20} />,
     title: "Verified Listings Only",
     desc: "Every job is verified before it goes live. No ghost jobs, no bait-and-switch, no wasted applications.",
-    color: "#f59e0b",
+    color: "#0d1117",
     bg: "#fef3c7",
   },
 ];
@@ -76,7 +76,7 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "#fff", minHeight: "100vh", overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: "var(--color-app-bg)", minHeight: "100vh", overflowX: "hidden" }}>
 
       {/* SECTION 1:*/}
       {/*created a
@@ -94,8 +94,8 @@ seperate navbar for the home page */}
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => navigate("/")}>
             <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
-            <span style={{ fontSize: 20, fontWeight: 900, color: "#111827", letterSpacing: -0.5 }}>
-              Career<span style={{ color: "#02bcf0" }}>Sync</span>
+            <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: -1 }}>
+              <span style={{ color: "#0d1117" }}>Career</span><span style={{ color: "#ef4444" }}>Sync</span>
             </span>
           </div>
 
@@ -135,7 +135,7 @@ seperate navbar for the home page */}
             borderTop: "1px solid #f3f4f6",
           }}>
             {["For Job Seekers", "For Companies", "Blog", "About"].map(l => (
-              <div key={l} style={{ padding: "14px 8px", fontSize: 16, fontWeight: 600, color: "#374151", borderBottom: "1px solid #f9fafb", cursor: "pointer" }}>{l}</div>
+              <div key={l} style={{ padding: "14px 8px", fontSize: 16, fontWeight: 600, color: "#0d1117", borderBottom: "1px solid #f9fafb", cursor: "pointer" }}>{l}</div>
             ))}
             <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 10 }}>
               <button className="btn-outline" style={{ width: "100%", padding: 14 }} onClick={() => navigate("/login")}>Login</button>
@@ -148,7 +148,7 @@ seperate navbar for the home page */}
 
       {/* SECTION 2: Hero Section */}
       <section style={{
-        background: "linear-gradient(160deg, #e6f9fe 0%, #f0fbfe 45%, #ffffff 100%)",
+        background: "linear-gradient(160deg, #e6f9fe 0%, var(--color-app-bg) 45%, #ffffff 100%)",
         padding: "80px 24px 40px",
         position: "relative", overflow: "hidden",
       }}>
@@ -161,79 +161,78 @@ seperate navbar for the home page */}
             <div style={{ position: "relative" }}>
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} className="pulse-dot" />
             </div>
-            <span style={{ fontSize: 12, fontWeight: 700, color: "#029ac5", letterSpacing: 0.5 }}>12,400+ verified jobs live right now</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: "#0d1117", letterSpacing: 0.5 }}>12,400+ verified jobs live right now</span>
           </div>
 
-          <h1 className="fade-up" style={{ fontSize: "clamp(36px,6vw,62px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -2, lineHeight: 1.06, marginBottom: 20, animationDelay: '0.1s' }}>
+          <h1 className="fade-up" style={{ fontSize: "clamp(36px,6vw,62px)", fontWeight: 900, color: "#0d1117", letterSpacing: -2, lineHeight: 1.06, marginBottom: 20, animationDelay: '0.1s' }}>
             Find work that<br />
-            <span style={{ color: "#02bcf0", position: "relative" }}>
+            <span style={{ color: "#ef4444", position: "relative" }}>
               actually fits you.
               <svg style={{ position: "absolute", bottom: -6, left: 0, width: "100%", height: 8, overflow: "visible" }} viewBox="0 0 300 8" preserveAspectRatio="none">
-                <path d="M0 6 Q75 0 150 5 Q225 10 300 4" stroke="#b3eefb" strokeWidth="3" fill="none" strokeLinecap="round" />
+                <path d="M0 6 Q75 0 150 5 Q225 10 300 4" stroke="rgba(239,68,68,0.2)" strokeWidth="3" fill="none" strokeLinecap="round" />
               </svg>
             </span>
           </h1>
 
-          <p className="fade-up" style={{ fontSize: 18, color: "#64748b", maxWidth: 520, margin: "0 auto 44px", lineHeight: 1.7, fontWeight: 400, animationDelay: '0.2s' }}>
+          <p className="fade-up" style={{ fontSize: 18, color: "#0d1117", maxWidth: 520, margin: "0 auto 44px", lineHeight: 1.7, fontWeight: 400, animationDelay: '0.2s' }}>
             Browse thousands of verified jobs and internships. Upload your resume, track your applications, and land your next role — all in one place.
           </p>
 
           <form className="fade-up" onSubmit={handleSearch} style={{
-            background: "#fff", border: "1px solid rgba(2,188,240,0.25)",
-            borderRadius: 18, padding: 8, display: "flex", alignItems: "stretch",
             maxWidth: 720, margin: "0 auto 24px", animationDelay: '0.3s',
-            boxShadow: "0 8px 40px rgba(2,188,240,0.14), 0 2px 8px rgba(0,0,0,0.04)",
           }}>
-            <div className="search-bar-inner" style={{ display: "flex", flex: 1, alignItems: "stretch" }}>
-              <div style={{ flex: 2.5, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Skills / Role</div>
-                <input
-                  className="search-input"
-                  placeholder="e.g. Data Scientist, React Developer..."
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                  style={{ border: 'none', outline: 'none', fontWeight: 600, fontSize: 14 }}
-                />
-              </div>
+            <div className="cs-card !p-2 flex items-stretch">
+              <div className="search-bar-inner" style={{ display: "flex", flex: 1, alignItems: "stretch" }}>
+                <div style={{ flex: 2.5, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <div style={{ fontSize: 10, fontWeight: 800, color: "#0d1117", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Skills / Role</div>
+                  <input
+                    className="cs-input !border-none !p-0"
+                    placeholder="e.g. Data Scientist, React Developer..."
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    style={{ fontWeight: 600, fontSize: 14 }}
+                  />
+                </div>
 
-              <div className="search-divider" style={{ width: 1, background: "#f3f4f6", margin: "8px 0" }} />
-              <div style={{ flex: 1.2, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Experience</div>
-                <select
-                  className="search-input"
-                  value={experience}
-                  onChange={e => setExperience(e.target.value)}
-                  style={{ border: 'none', outline: 'none', fontWeight: 600, fontSize: 14, background: 'transparent' }}
-                >
-                  <option value="">Any level</option>
-                  <option>Fresher (0–1 yr)</option>
-                  <option>Junior (1–3 yrs)</option>
-                  <option>Mid (3–6 yrs)</option>
-                  <option>Senior (6+ yrs)</option>
-                </select>
-              </div>
+                <div className="search-divider" style={{ width: 1, background: "#f3f4f6", margin: "8px 0" }} />
+                <div style={{ flex: 1.2, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <div style={{ fontSize: 10, fontWeight: 800, color: "#0d1117", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Experience</div>
+                  <select
+                    className="cs-input !border-none !p-0 !bg-transparent"
+                    value={experience}
+                    onChange={e => setExperience(e.target.value)}
+                    style={{ fontWeight: 600, fontSize: 14 }}
+                  >
+                    <option value="">Any level</option>
+                    <option>Fresher (0–1 yr)</option>
+                    <option>Junior (1–3 yrs)</option>
+                    <option>Mid (3–6 yrs)</option>
+                    <option>Senior (6+ yrs)</option>
+                  </select>
+                </div>
 
-              <div className="search-divider" style={{ width: 1, background: "#f3f4f6", margin: "8px 0" }} />
-              <div style={{ flex: 1.5, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Location</div>
-                <input
-                  className="search-input"
-                  placeholder="City or Remote"
-                  value={location}
-                  onChange={e => setLocation(e.target.value)}
-                  style={{ border: 'none', outline: 'none', fontWeight: 600, fontSize: 14 }}
-                />
+                <div className="search-divider" style={{ width: 1, background: "#f3f4f6", margin: "8px 0" }} />
+                <div style={{ flex: 1.5, padding: "10px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <div style={{ fontSize: 10, fontWeight: 800, color: "#0d1117", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 3 }}>Location</div>
+                  <input
+                    className="cs-input !border-none !p-0"
+                    placeholder="City or Remote"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    style={{ fontWeight: 600, fontSize: 14 }}
+                  />
+                </div>
               </div>
+              <button type="submit" className="btn-primary" style={{ borderRadius: 12, padding: "12px 28px", fontSize: 15, display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                <Search size={16} /> Search
+              </button>
             </div>
-            <button type="submit" className="btn-primary" style={{ borderRadius: 12, padding: "12px 28px", fontSize: 15, display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-              <Search size={16} /> Search
-            </button>
           </form>
 
           <div className="fade-up" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 24, flexWrap: "wrap", animationDelay: '0.4s' }}>
             {["Free for job seekers", "Resume analysis included", "No spam, ever"].map(t => (
-              <span key={t} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#94a3b8", fontWeight: 500 }}>
-                <CheckCircle size={14} style={{ color: "#02bcf0" }} /> {t}
+              <span key={t} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#0d1117", fontWeight: 500 }}>
+                <CheckCircle size={14} style={{ color: "#0d1117" }} /> {t}
               </span>
             ))}
           </div>
@@ -241,28 +240,28 @@ seperate navbar for the home page */}
       </section>
 
       {/* SECTION 3: Features - Job Seekers */}
-      <section id="jobseekers" style={{ padding: "80px 24px", background: "#fff" }}>
+      <section id="jobseekers" style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 1140, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }} className="fade-up">
             <div style={{ display: "inline-flex", background: "#e6f9fe", borderRadius: 20, padding: "5px 14px", marginBottom: 16 }}>
-              <span style={{ fontSize: 12, fontWeight: 700, color: "#029ac5", textTransform: "uppercase", letterSpacing: 1 }}>Job Seeker Suite</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: 1 }}>Job Seeker Suite</span>
             </div>
-            <h2 style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1, marginBottom: 14 }}>
+            <h2 style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0d1117", letterSpacing: -1, marginBottom: 14 }}>
               Built for serious job seekers
             </h2>
-            <p style={{ fontSize: 16, color: "#64748b", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
+            <p style={{ fontSize: 16, color: "#0d1117", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
               Every tool you need to go from browsing to hired — in one focused platform.
             </p>
           </div>
 
           <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
             {FEATURES.map((f, i) => (
-              <div key={i} className="feature-card fade-up" style={{ animationDelay: `${0.1 * i}s` }}>
+              <div key={i} className="cs-card fade-up" style={{ animationDelay: `${0.1 * i}s` }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, background: f.bg, display: "flex", alignItems: "center", justifyContent: "center", color: f.color, marginBottom: 18 }}>
                   {f.icon}
                 </div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0c1a2e", marginBottom: 10, lineHeight: 1.3 }}>{f.title}</h3>
-                <p style={{ fontSize: 13.5, color: "#64748b", lineHeight: 1.7 }}>{f.desc}</p>
+                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0d1117", marginBottom: 10, lineHeight: 1.3 }}>{f.title}</h3>
+                <p style={{ fontSize: 13.5, color: "#0d1117", lineHeight: 1.7 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -275,42 +274,42 @@ seperate navbar for the home page */}
           <div style={{ display: "flex", flexDirection: "column", lgDirection: "row", alignItems: "center", gap: 64 }}>
             <div className="flex-1 fade-up" style={{ textAlign: 'left' }}>
               <div style={{ display: "inline-flex", background: "#0c1a2e", borderRadius: 20, padding: "5px 14px", marginBottom: 16 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: 1 }}>Recruitment Portal</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: 1 }}>Recruitment Portal</span>
               </div>
-              <h2 style={{ fontSize: "clamp(28px,4vw,42px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1.5, marginBottom: 20, lineHeight: 1.1 }}>
-                Hire the <span className="text-primary-500">best talent</span><br /> faster than ever.
+              <h2 style={{ fontSize: "clamp(28px,4vw,42px)", fontWeight: 900, color: "#0d1117", letterSpacing: -1.5, marginBottom: 20, lineHeight: 1.1 }}>
+                Hire the <span className="text-black">best talent</span><br /> faster than ever.
               </h2>
-              <p style={{ fontSize: 18, color: "#64748b", maxWidth: 540, lineHeight: 1.7, marginBottom: 32 }}>
+              <p style={{ fontSize: 18, color: "#0d1117", maxWidth: 540, lineHeight: 1.7, marginBottom: 32 }}>
                 Stop sorting through thousands of irrelevant resumes. CareerSync connects you with the right candidates using intelligent matching and verified profiles.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginBottom: 40 }}>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div style={{ color: "#0d1117" }}><CheckCircle size={20} /></div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Unlimited Postings</p>
-                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Post as many roles as you need.</p>
+                    <p style={{ margin: 0, fontWeight: 800, color: "#0d1117", fontSize: 14 }}>Unlimited Postings</p>
+                    <p style={{ margin: 0, color: "#0d1117", fontSize: 12 }}>Post as many roles as you need.</p>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div style={{ color: "#0d1117" }}><CheckCircle size={20} /></div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Talent Analytics</p>
-                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Track your recruitment funnel.</p>
+                    <p style={{ margin: 0, fontWeight: 800, color: "#0d1117", fontSize: 14 }}>Talent Analytics</p>
+                    <p style={{ margin: 0, color: "#0d1117", fontSize: 12 }}>Track your recruitment funnel.</p>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div style={{ color: "#0d1117" }}><CheckCircle size={20} /></div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Verified Profiles</p>
-                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Say goodbye to ghost candidates.</p>
+                    <p style={{ margin: 0, fontWeight: 800, color: "#0d1117", fontSize: 14 }}>Verified Profiles</p>
+                    <p style={{ margin: 0, color: "#0d1117", fontSize: 12 }}>Say goodbye to ghost candidates.</p>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ color: '#02bcf0' }}><CheckCircle size={20} /></div>
+                  <div style={{ color: "#0d1117" }}><CheckCircle size={20} /></div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 800, color: '#0c1a2e', fontSize: 14 }}>Easy Management</p>
-                    <p style={{ margin: 0, color: '#64748b', fontSize: 12 }}>Centralized applicant dashboard.</p>
+                    <p style={{ margin: 0, fontWeight: 800, color: "#0d1117", fontSize: 14 }}>Easy Management</p>
+                    <p style={{ margin: 0, color: "#0d1117", fontSize: 12 }}>Centralized applicant dashboard.</p>
                   </div>
                 </div>
               </div>
@@ -319,7 +318,7 @@ seperate navbar for the home page */}
                 <button className="btn-dark" style={{ padding: '16px 32px' }} onClick={() => navigate('/signup')}>
                   Start Hiring Now
                 </button>
-                <button className="btn-outline" style={{ border: 'none', color: '#0c1a2e', textDecoration: 'underline' }}>
+                <button className="btn-outline" style={{ border: 'none', color: "#0d1117", textDecoration: 'underline' }}>
                   Learn More &rarr;
                 </button>
               </div>
@@ -329,14 +328,14 @@ seperate navbar for the home page */}
       </section>
 
       {/* SECTION 5: CTA */}
-      <section style={{ background: "linear-gradient(135deg, #e6f9fe 0%, #f0fbfe 100%)", padding: "100px 24px", textAlign: "center" }}>
+      <section style={{ background: "linear-gradient(135deg, #e6f9fe 0%, var(--color-app-bg) 100%)", padding: "100px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", marginTop: "-170px" }}>
           <div>
-            <h2 className="fade-up" style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0c1a2e", letterSpacing: -1, marginBottom: 16 }}>
+            <h2 className="fade-up" style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0d1117", letterSpacing: -1, marginBottom: 16 }}>
               Ready to find your next role?🚀
             </h2>
           </div>
-          <p className="fade-up" style={{ fontSize: 17, color: "#64748b", lineHeight: 1.7, marginBottom: 36, animationDelay: '0.1s' }}>
+          <p className="fade-up" style={{ fontSize: 17, color: "#0d1117", lineHeight: 1.7, marginBottom: 36, animationDelay: '0.1s' }}>
             Join over 3 lakh professionals who found their next opportunity on CareerSync. It's free, it's fast, and it actually works.
           </p>
           <div className="fade-up" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", animationDelay: '0.2s' }}>
@@ -347,7 +346,7 @@ seperate navbar for the home page */}
               Login to Your Account
             </button>
           </div>
-          <p className="fade-up" style={{ fontSize: 13, color: "#94a3b8", marginTop: 18, animationDelay: '0.3s' }}>No credit card required · Takes 2 minutes · Free forever for job seekers</p>
+          <p className="fade-up" style={{ fontSize: 13, color: "#0d1117", marginTop: 18, animationDelay: '0.3s' }}>No credit card required · Takes 2 minutes · Free forever for job seekers</p>
         </div>
       </section>
 
@@ -355,3 +354,5 @@ seperate navbar for the home page */}
     </div>
   );
 }
+
+

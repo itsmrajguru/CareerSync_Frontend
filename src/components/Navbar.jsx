@@ -91,8 +91,8 @@ export default function Navbar() {
           {/* Here we updated the header CareerSync with logo */}
           <Link to={isCompany ? "/company/dashboard" : "/student/dashboard"} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
-            <span style={{ fontSize: 20, fontWeight: 900, color: "#111827", letterSpacing: -0.5 }}>
-              Career<span style={{ color: "#02bcf0" }}>Sync</span>
+            <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: -1 }}>
+              <span style={{ color: "#0d1117"}}>Career</span><span style={{ color: "#ef4444" }}>Sync</span>
             </span>
           </Link>
 
@@ -150,7 +150,7 @@ export default function Navbar() {
                       }}>
                         {/* Dropdown section label */}
                         <div style={{ padding: "12px 16px 8px", borderBottom: "1px solid #f3f4f6", background: "#f8fbfe" }}>
-                          <p style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", margin: 0, textTransform: "uppercase", letterSpacing: "0.6px" }}>
+                          <p style={{ fontSize: 11, fontWeight: 700, color: "#0d1117", margin: 0, textTransform: "uppercase", letterSpacing: "0.6px" }}>
                             Job Management
                           </p>
                         </div>
@@ -165,11 +165,11 @@ export default function Navbar() {
                                 display: "flex", alignItems: "center", gap: 10,
                                 padding: "8px 16px", fontSize: 13, fontWeight: 600,
                                 color: isActive(sub.path) ? "#02bcf0" : "#374151",
-                                background: isActive(sub.path) ? "#f0fbfe" : "transparent",
+                                background: isActive(sub.path) ? "var(--color-app-bg)" : "transparent",
                                 textDecoration: "none",
                               }}
                               onMouseEnter={e => { e.currentTarget.style.background = "#f9fafb"; e.currentTarget.style.color = "#02bcf0"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = isActive(sub.path) ? "#f0fbfe" : "transparent"; e.currentTarget.style.color = isActive(sub.path) ? "#02bcf0" : "#374151"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = isActive(sub.path) ? "var(--color-app-bg)" : "transparent"; e.currentTarget.style.color = isActive(sub.path) ? "#02bcf0" : "#374151"; }}
                             >
                               {sub.icon} {sub.label}
                             </Link>
@@ -185,9 +185,14 @@ export default function Navbar() {
                   key={item.path}
                   to={item.path}
                   className="nav-link"
-                  style={isActive(item.path) ? { color: "#02bcf0", borderColor: "#02bcf0" } : {}}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    color: isActive(item.path) ? "#0d1117" : "#64748b",
+                    fontWeight: isActive(item.path) ? 700 : 500,
+                    textDecoration: "none", fontSize: 14
+                  }}
                 >
-                  {item.label}
+                  {item.icon} {item.label}
                 </Link>
               )
             )}
@@ -197,7 +202,7 @@ export default function Navbar() {
             {/*Hers is the notification logo  */}
             {token && (
               <button style={{
-                background: "transparent", border: "none", color: "#9ca3af",
+                background: "transparent", border: "none", color: "#0d1117",
                 position: "relative", width: 36, height: 36, borderRadius: 10,
                 display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
               }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
@@ -208,7 +213,7 @@ export default function Navbar() {
 
             {/* Support/Help Logo */}
             <button style={{
-              background: "transparent", border: "none", color: "#9ca3af",
+              background: "transparent", border: "none", color: "#0d1117",
               width: 36, height: 36, borderRadius: 10,
               display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
             }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
@@ -224,7 +229,7 @@ export default function Navbar() {
                   width: 38, height: 38, borderRadius: "50%",
                   background: "linear-gradient(135deg, #02bcf0, #014d65)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontWeight: 800, color: "#fff", fontSize: 15, cursor: "pointer", border: "none",
+                  fontWeight: 800, color: "#0d1117", fontSize: 15, cursor: "pointer", border: "none",
                   boxShadow: dropdownOpen ? "0 0 0 3px rgba(2,188,240,0.2)" : "none",
                   transition: "all 0.2s"
                 }}>
@@ -240,8 +245,8 @@ export default function Navbar() {
                   }}>
                     {/* User name + email */}
                     <div style={{ padding: "16px", borderBottom: "1px solid #f3f4f6", background: "#f8fbfe" }}>
-                      <p style={{ fontSize: 14, fontWeight: 800, color: "#111827", margin: 0 }}>{user.username || "User"}</p>
-                      <p style={{ fontSize: 12, color: "#6b7280", margin: "2px 0 0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user.email || ""}</p>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: "#0d1117", margin: 0 }}>{user.username || "User"}</p>
+                      <p style={{ fontSize: 12, color: "#0d1117", margin: "2px 0 0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user.email || ""}</p>
                     </div>
 
                     <div style={{ padding: "8px 0" }}>
@@ -253,7 +258,7 @@ export default function Navbar() {
                       ].map((item, i) => (
                         <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
                           display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
-                          fontSize: 13, fontWeight: 600, color: "#374151", textDecoration: "none"
+                          fontSize: 13, fontWeight: 600, color: "#0d1117", textDecoration: "none"
                         }} onMouseEnter={e => { e.currentTarget.style.background = "#f9fafb"; e.currentTarget.style.color = "#02bcf0"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#374151"; }}>
                           {item.icon} {item.label}
                         </Link>
@@ -264,7 +269,7 @@ export default function Navbar() {
                     <div style={{ borderTop: "1px solid #f3f4f6", padding: "8px 0 0" }}>
                       <button onClick={handleLogout} style={{
                         display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", width: "100%",
-                        fontSize: 13, fontWeight: 700, color: "#ef4444", background: "transparent", border: "none", cursor: "pointer", textAlign: "left"
+                        fontSize: 13, fontWeight: 700, color: "#0d1117", background: "transparent", border: "none", cursor: "pointer", textAlign: "left"
                       }} onMouseEnter={e => e.currentTarget.style.background = "#fef2f2"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                         <LogOut size={16} /> Logout
                       </button>
@@ -301,10 +306,10 @@ export default function Navbar() {
             {/* User Preview */}
             {token && (
               <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 16, borderBottom: "1px solid #f3f4f6", marginBottom: 16 }}>
-                <div style={{ width: 42, height: 42, borderRadius: "50%", background: "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#fff", fontSize: 16 }}>{initial}</div>
+                <div style={{ width: 42, height: 42, borderRadius: "50%", background: "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#0d1117", fontSize: 16 }}>{initial}</div>
                 <div>
-                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827" }}>{user.username || "User"}</div>
-                  <div style={{ fontSize: 13, color: "#6b7280" }}>{user.email || ""}</div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#0d1117" }}>{user.username || "User"}</div>
+                  <div style={{ fontSize: 13, color: "#0d1117" }}>{user.email || ""}</div>
                 </div>
               </div>
             )}
@@ -321,7 +326,7 @@ export default function Navbar() {
               {token ? (
                 <button onClick={handleLogout} style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8, width: "100%",
-                  padding: "14px", borderRadius: 12, background: "#fef2f2", color: "#ef4444", border: "none", fontSize: 15, fontWeight: 700, cursor: "pointer"
+                  padding: "14px", borderRadius: 12, background: "#fef2f2", color: "#0d1117", border: "none", fontSize: 15, fontWeight: 700, cursor: "pointer"
                 }}>
                   <LogOut size={18} /> Logout
                 </button>
@@ -338,3 +343,5 @@ export default function Navbar() {
     </>
   );
 }
+
+

@@ -72,15 +72,15 @@ export default function ResumeCard({
                         <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${file ? "bg-primary-100" : "bg-neutral-100"
                             }`}>
                             {file
-                                ? <FileText size={28} className="text-primary-500" />
-                                : <Upload size={28} className="text-neutral-400" />
+                                ? <FileText size={28} className="text-black" />
+                                : <Upload size={28} className="text-black" />
                             }
                         </div>
                         <div>
-                            <p className="text-[15px] font-extrabold text-neutral-900 mb-1">
+                            <p className="text-[15px] font-extrabold text-black mb-1">
                                 {file ? file.name : "Drag & drop your resume"}
                             </p>
-                            <p className="text-[12px] text-neutral-400 font-medium">
+                            <p className="text-[12px] text-black font-medium">
                                 {file ? "PDF ready to analyze" : "PDF only · Max 5MB"}
                             </p>
                         </div>
@@ -121,8 +121,8 @@ export default function ResumeCard({
                 <div className="grid grid-cols-3 gap-2 pt-2">
                     {["Keyword Match", "Skill Gaps", "ATS Score"].map((f) => (
                         <div key={f} className="flex items-center gap-1.5 bg-white border border-[#b3eefb] rounded-xl px-3 py-2">
-                            <CheckCircle size={11} className="text-primary-400 shrink-0" />
-                            <span className="text-[10px] font-bold text-neutral-600">{f}</span>
+                            <CheckCircle size={11} className="text-black shrink-0" />
+                            <span className="text-[10px] font-bold text-black">{f}</span>
                         </div>
                     ))}
                 </div>
@@ -130,17 +130,17 @@ export default function ResumeCard({
 
             {/* displaying the tips card in the right side */}
             <div className="flex flex-col gap-3">
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1">
+                <p className="text-xs font-bold text-black uppercase tracking-widest mb-1">
                     Tips to beat ATS
                 </p>
                 {TIPS.map(({ icon: Icon, title, desc }) => (
-                    <div key={title} className="feature-card p-4 flex items-start gap-3">
+                    <div key={title} className="cs-card p-4 flex items-start gap-3">
                         <div className="w-8 h-8 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
-                            <Icon size={15} className="text-primary-500" />
+                            <Icon size={15} className="text-black" />
                         </div>
                         <div>
-                            <p className="text-[13px] font-bold text-neutral-900 mb-0.5">{title}</p>
-                            <p className="text-[11px] text-neutral-400 leading-relaxed">{desc}</p>
+                            <p className="text-[13px] font-bold text-black mb-0.5">{title}</p>
+                            <p className="text-[11px] text-black leading-relaxed">{desc}</p>
                         </div>
                     </div>
                 ))}
@@ -149,3 +149,5 @@ export default function ResumeCard({
         </div>
     );
 }
+
+

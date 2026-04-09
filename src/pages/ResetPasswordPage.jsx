@@ -45,10 +45,10 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-[#f0fbfe] font-sans">
+        <div className="min-h-screen flex flex-col bg-app-bg font-sans">
             <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
                 <div className="w-full max-w-md relative z-10">
-                <div className="feature-card p-10 w-full">
+                <div className="cs-card p-10 w-full">
 
                     {/* Hero section with careeersync logo and reset header*/}
 
@@ -58,11 +58,11 @@ export default function ResetPasswordPage() {
                             alt="Logo"
                             className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
                         />
-                        <span className="text-2xl font-black text-neutral-700 tracking-tight">
-                            Career<span className="text-primary-500">Sync</span>
+                        <span className="text-2xl font-black text-black tracking-tight">
+                            Career<span className="text-black">Sync</span>
                         </span>
-                        <h2 className="text-xl font-bold mt-4 text-neutral-700">Reset Password</h2>
-                        <p className="text-neutral-400 mt-2 text-sm font-medium">Enter your new password below</p>
+                        <h2 className="text-xl font-bold mt-4 text-black">Reset Password</h2>
+                        <p className="text-black mt-2 text-sm font-medium">Enter your new password below</p>
                     </div>
 
                     {/* Displaying the login failed errors */}
@@ -88,10 +88,10 @@ export default function ResetPasswordPage() {
                             <div className="flex flex-col gap-2">
                                 {/*thorugh this form, we will take the password and confim password
 from the user and set to login page*/}
-                                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">New Password</label>
+                                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">New Password</label>
                                 <input
                                     type="password"
-                                    className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                                    className="cs-input"
                                     placeholder="Enter new password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -102,10 +102,10 @@ from the user and set to login page*/}
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                <label className="text-xs font-bold text-neutral-400 ml-1 uppercase tracking-wider">Confirm Password</label>
+                                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Confirm Password</label>
                                 <input
                                     type="password"
-                                    className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
+                                    className="cs-input"
                                     placeholder="Confirm new password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -132,3 +132,8 @@ with the help of inbuilt Onsubmit Function called in the form */}
     </div>
 );
 }
+
+
+
+
+

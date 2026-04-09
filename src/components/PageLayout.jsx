@@ -6,7 +6,7 @@ annd strictly follows the Following the Page size and other properties */
 
 export default function PageLayout({ children }) {
   return (
-    <div className="min-h-screen bg-[#f0fbfe] font-sans selection:bg-primary-100 selection:text-primary-900 pb-0 text-neutral-800 flex flex-col">
+    <div className="min-h-screen bg-app-bg font-sans selection:bg-primary-100 selection:text-black pb-0 text-black flex flex-col">
       <Navbar />
       <main className="max-w-[900px] mx-auto px-7 pt-10 flex-1 w-full">
         {children}
@@ -15,3 +15,4 @@ export default function PageLayout({ children }) {
     </div>
   );
 }
+

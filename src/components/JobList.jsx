@@ -20,7 +20,7 @@ export default function JobList({ jobs, loading }) {
 
   if (!jobs.length) {
     return (
-      <div className="col-span-full w-full text-center text-neutral-400 py-32 font-bold px-4 border border-dashed border-[#b3eefb] bg-neutral-50/30">
+      <div className="col-span-full w-full text-center text-black py-32 font-bold px-4 border border-dashed border-[#b3eefb] bg-neutral-50/30">
         No jobs found matching your criteria.
       </div>
     );
@@ -36,3 +36,4 @@ export default function JobList({ jobs, loading }) {
     </div>
   );
 }
+

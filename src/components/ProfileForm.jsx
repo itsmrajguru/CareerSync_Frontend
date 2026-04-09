@@ -11,15 +11,15 @@ like skills, experience
 it totally depends upon the type of cell we want*/
 function Field({ label, name, value, onChange, editing, placeholder, icon: Icon, textarea }) {
   // css for base
-  const base = "w-full bg-neutral-50 border border-[#b3eefb] rounded-xl px-3 py-2 text-[13px] text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300 transition-all font-medium";
+  const base = "w-full bg-neutral-50 border border-[#d0d0ff] rounded-xl px-3 py-2 text-[13px] text-black placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[rgba(73,75,214,0.12)] focus:border-[#494bd6] transition-all font-medium";
   // css for disabled input
   const disabled = "opacity-60 cursor-default bg-neutral-100";
 
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">{label}</label>
+      <label className="text-[10px] font-bold text-black uppercase tracking-widest">{label}</label>
       <div className="relative">
-        {Icon && <Icon size={12} className="absolute left-3 top-[10px] text-neutral-400" />}
+        {Icon && <Icon size={12} className="absolute left-3 top-[10px] text-black" />}
         {/*If Textarea ->display textarea , otherwise input */}
         {textarea ? (
           <textarea
@@ -50,7 +50,7 @@ function Field({ label, name, value, onChange, editing, placeholder, icon: Icon,
 function Cell({ children, className = "", style = {} }) {
   return (
     <div
-      className={`feature-card p-5 ${className}`}
+      className={`cs-card p-5 ${className}`}
       style={style}
     >
       {children}
@@ -61,7 +61,7 @@ function Cell({ children, className = "", style = {} }) {
 // This is just the cell title component
 function CellLabel({ children }) {
   return (
-    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">
+    <p className="text-[10px] font-bold text-black uppercase tracking-widest mb-3">
       {children}
     </p>
   );
@@ -90,7 +90,7 @@ export default function ProfileForm({
           gridColumn: "1",
           gridRow: "1 / 3",
           background: "#e6f9fe",
-          borderColor: "#b3eefb",
+          bordercolor: "#0d1117",
           minHeight: 260,
         }}>
         {/* Added intials */}
@@ -99,13 +99,13 @@ export default function ProfileForm({
           style={{ background: "#02bcf0" }}>
           {initials}
         </div>
-        <p className="text-base font-extrabold text-neutral-900 leading-tight">
+        <p className="text-base font-extrabold text-black leading-tight">
           {formData.full_name || "Your Name"}
         </p>
-        <p className="text-xs font-semibold mt-1" style={{ color: "#0179a0" }}>
+        <p className="text-xs font-semibold mt-1" style={{ color: "#0d1117" }}>
           {formData.domain || "Job Title"}
         </p>
-        <p className="text-xs mt-0.5 opacity-70" style={{ color: "#0179a0" }}>
+        <p className="text-xs mt-0.5 opacity-70" style={{ color: "#0d1117" }}>
           {formData.location || "Location"}
         </p>
 
@@ -113,10 +113,10 @@ export default function ProfileForm({
 
           {/* Diaplays the profile complete % */}
           <div className="flex justify-between mb-1">
-            <span className="text-[10px] font-bold" style={{ color: "#0179a0" }}>
+            <span className="text-[10px] font-bold" style={{ color: "#0d1117" }}>
               Profile complete
             </span>
-            <span className="text-[10px] font-extrabold text-neutral-800">
+            <span className="text-[10px] font-extrabold text-black">
               {completion}%
             </span>
           </div>
@@ -144,7 +144,7 @@ export default function ProfileForm({
             textarea
           />
         ) : (
-          <p className="text-[13px] text-neutral-500 leading-relaxed">
+          <p className="text-[13px] text-black leading-relaxed">
             {profile?.summary || "No summary added yet."}
           </p>
         )}
@@ -182,13 +182,12 @@ export default function ProfileForm({
             {skills.length > 0 ? skills.map((s, i) => (
               <span
                 key={i}
-                className="text-[11px] font-semibold px-3 py-1 rounded-full"
-                style={{ background: "#e6f9fe", color: "#0079a0" }}
+                className="cs-badge !rounded-full !px-3 !py-1 !text-[11px]"
               >
                 {s}
               </span>
             )) : (
-              <p className="text-[12px] text-neutral-400">No skills added yet.</p>
+              <p className="text-[12px] text-black">No skills added yet.</p>
             )}
           </div>
         )}
@@ -204,7 +203,7 @@ export default function ProfileForm({
       {/* (6th section) :Experience section */}
       <Cell style={{ gridColumn: "1", gridRow: "4" }}>
         <div className="flex items-center gap-2 mb-3">
-          <Briefcase size={13} className="text-primary-400" />
+          <Briefcase size={13} className="text-black" />
           <CellLabel>Experience</CellLabel>
         </div>
         {editing ? (
@@ -212,7 +211,7 @@ export default function ProfileForm({
             onChange={onChange} editing={editing}
             placeholder="Work history..." textarea />
         ) : (
-          <p className="text-[12px] text-neutral-500 leading-relaxed whitespace-pre-line">
+          <p className="text-[12px] text-black leading-relaxed whitespace-pre-line">
             {profile?.work || "No experience added yet."}
           </p>
         )}
@@ -221,7 +220,7 @@ export default function ProfileForm({
       {/* (7th section) :Education Section*/}
       <Cell style={{ gridColumn: "2", gridRow: "4" }}>
         <div className="flex items-center gap-2 mb-3">
-          <GraduationCap size={13} className="text-primary-400" />
+          <GraduationCap size={13} className="text-black" />
           <CellLabel>Education</CellLabel>
         </div>
         {editing ? (
@@ -229,7 +228,7 @@ export default function ProfileForm({
             onChange={onChange} editing={editing}
             placeholder="Degrees, courses..." textarea />
         ) : (
-          <p className="text-[12px] text-neutral-500 leading-relaxed">
+          <p className="text-[12px] text-black leading-relaxed">
             {profile?.education || "No education added yet."}
           </p>
         )}
@@ -294,3 +293,6 @@ export default function ProfileForm({
     </div>
   );
 }
+
+
+

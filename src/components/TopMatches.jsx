@@ -16,8 +16,8 @@ export default function TopMatches() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white border border-neutral-100 rounded-2xl p-6">
-      <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-4">
+    <div className="cs-card">
+      <p className="text-xs font-semibold text-black uppercase tracking-widest mb-4">
         Top matches for you
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -26,17 +26,17 @@ export default function TopMatches() {
           return (
             <div
               key={job.title}
-              className="bg-neutral-50 rounded-xl p-4 cursor-pointer hover:bg-neutral-100 transition-colors"
+              className="cs-inner-box cursor-pointer"
               onClick={() => navigate("/jobs")}
             >
-              <p className="text-[13px] font-bold text-neutral-900 mb-0.5">
+              <p className="text-[13px] font-bold text-black mb-0.5">
                 {job.title}
               </p>
-              <p className="text-[11px] text-neutral-400 mb-3">
+              <p className="text-[11px] text-black mb-3">
                 {job.company} · {job.location}
               </p>
               <span
-                className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+                className="cs-badge !rounded-full !px-2 !py-0.5 !text-[11px] !border-none"
                 style={{ background: c.bg, color: c.text }}
               >
                 {job.match}% match
