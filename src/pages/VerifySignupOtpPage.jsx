@@ -44,85 +44,97 @@ export default function VerifySignupOtpPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-app-bg font-sans">
-      <div className="flex-1 flex items-center justify-center px-4 w-full py-12">
-        <div className="w-full max-w-md relative z-10">
-          {/* adding cs-card for consistent layout matched with home page */}
-          <div className="cs-card p-10 w-full">
+    <div className="h-screen w-screen flex bg-white font-sans overflow-hidden">
 
-            {/* Hero section with careersync logo and OTP header */}
-            <div className="text-center mb-8">
-              <img
-                src="/logo.svg"
-                alt="Logo"
-                className="h-16 w-16 rounded-full mx-auto mb-4 object-cover"
+      {/* we created a 40-60 panel view and added the left side showup view here */}
+      <div className="hidden lg:flex lg:flex-[0.6] bg-[#0c1a2e] relative flex-col items-center pt-[12vh] p-8 overflow-hidden shadow-[inset_-20px_0_40px_rgba(0,0,0,0.1)]">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[120px]" />
+        <div className="relative z-10 w-full max-w-[440px] text-center">
+          <img
+            src="/logo.svg"
+            alt="CareerSync Logo"
+            className="w-32 h-32 mx-auto mb-6 shadow-2xl rounded-[32px] border border-white/10 p-2"
+            style={{ filter: "drop-shadow(0 0 50px rgba(239, 68, 68, 0.3))" }}
+          />
+          <h2 className="text-[52px] font-black text-white leading-[0.9] tracking-[-3px] mb-3">
+            Final <span className="text-[#ef4444]">step.</span>
+          </h2>
+          <p className="text-[17px] text-[#94a3b8] font-medium leading-relaxed mb-4 mx-auto max-w-[380px]">
+            We prioritize account integrity above all. This final verification step ensures that your professional profile remains protected.
+          </p>
+        </div>
+
+        {/* Back to Home Button */}
+        <Link to="/" className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-2xl text-[10px] font-bold text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all uppercase tracking-[2px] whitespace-nowrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mb-0.5"><path d="m15 18-6-6 6-6" /></svg>
+          Back to Home
+        </Link>
+      </div>
+
+      {/* and this right side content actuually showws the form here */}
+      <div className="flex-1 lg:flex-[0.4] flex flex-col items-center justify-center px-8 lg:px-12 relative z-10 bg-white min-h-0">
+        <div className="w-full max-w-[320px] py-4 flex flex-col gap-8">
+
+          {/* Hero section */}
+          <div className="text-left">
+            <h1 className="text-[30px] font-black text-[#0f172a] tracking-[-1.5px] leading-tight mb-2">
+              Verify Email.
+            </h1>
+            <p className="text-[#64748b] text-[12px] font-medium leading-tight">
+              A 6-digit code has been sent to <span className="font-black text-[#0f172a] underline decoration-[#ef4444]">{email}</span>.
+            </p>
+          </div>
+
+
+          {/* Displaying state messages 
+i.e. those error message , which shoudl be shown on incorrect email,
+incorrect password, email not verified... etc*/}
+          {error && (
+            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-[12px] font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+              {error}
+            </div>
+          )}
+
+          {/* this form takes the input data from the user
+ and sends to the backend through axios */}
+          <form onSubmit={handleOtpSubmit} className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+              <label className="text-[9px] font-extrabold text-[#475569] uppercase tracking-[1.5px] ml-0.5 text-center">Verification Code</label>
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                className="w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-4 text-center tracking-[0.5em] text-3xl font-black text-[#0f172a] focus:ring-8 focus:ring-primary-50 transition-all outline-none"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                required
+                placeholder="000000"
+                autoFocus
               />
-              <span className="text-2xl font-black text-black tracking-tight block">
-                Career<span className="text-black">Sync</span>
-              </span>
-              <p className="text-black mt-2 text-sm font-medium">
-                We sent a 6-digit code to <span className="font-bold text-black">{email}</span>
-              </p>
+              <p className="text-[9px] text-[#94a3b8] text-center font-bold uppercase tracking-wider mt-2">Expires in 10 minutes</p>
             </div>
 
-            {/* Displaying the OTP verification errors */}
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm font-semibold text-center">
-                {error}
-              </div>
-            )}
-
-            {/*through this form, the user will enter the OTP received on their email
-and after verification they will be redirected to the login page */}
-            <form onSubmit={handleOtpSubmit} className="flex flex-col gap-5">
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-black ml-1 uppercase tracking-wider">Enter OTP</label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={6}
-                  className="cs-input text-center tracking-[0.5em] text-xl"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                  required
-                  placeholder="000000"
-                  autoFocus
-                />
-                <p className="text-xs text-black text-center mt-1">Check your email inbox. Code expires in 10 minutes.</p>
-              </div>
-
-              {/*The submit button will submit the form,
-with the help of inbuilt Onsubmit Function called in the form */}
-              {/* updating the button to use the new btn-primary class */}
+            <div className="flex flex-col gap-3">
               <button
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="btn-primary w-full py-3.5 text-base"
+                className="btn-primary w-full py-4 text-[14px] font-bold shadow-md shadow-primary-200/50"
               >
-                {loading ? "Verifying..." : "Verify & Complete Signup"}
+                {loading ? "Verifying..." : "Confirm Verification"}
               </button>
 
-              {/*Option for the user to go back to signup page */}
               <button
                 type="button"
                 onClick={() => navigate("/signup")}
-                className="text-xs font-bold text-black hover:text-black transition-colors text-center"
+                className="text-[11px] font-black text-[#64748b] hover:text-[#0f172a] transition-colors text-center uppercase tracking-widest"
               >
-                ← Back to Sign Up
+                ← Use different email
               </button>
-            </form>
-
-            {/*Option for the user to jump LoginPage page */}
-            <div className="text-center mt-8 text-sm text-black font-medium">
-              Already have an account?{" "}
-              <Link to="/login" className="text-black hover:text-black font-bold transition-colors">
-                Login
-              </Link>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
