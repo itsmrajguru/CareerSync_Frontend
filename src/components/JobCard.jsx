@@ -5,7 +5,7 @@ export default function JobCard({ job }) {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate(`/jobs/${job.id}`, { state: { job } });
+    navigate(`/student/jobs/${job.id}`, { state: { job } });
   };
 
   return (
