@@ -215,7 +215,8 @@ export default function JobsPage() {
     setLoading(true); setError("");
     try {
       const response = await getJobs(f);
-      setJobs(response.data.jobs || []);
+      /* logic: accessing response.jobs directly due to api interceptor */
+      setJobs(response.jobs || []);
     } catch {
       setError("Unable to process the job forge. Try again later.");
     } finally {
