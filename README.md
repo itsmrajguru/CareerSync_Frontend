@@ -155,7 +155,7 @@ The project is configured for one-click Netlify deployment via `netlify.toml`.
 ## 🤝 Related
 
 - **Backend API:** [CareerSync Backend](https://github.com/itsmrajguru/CareerSync_Backend)
-- **Live App:** [careersyncplatform.netlify.app]()
+- **Live App:** [https://careersyncc.netlify.app/]()
 
 ---
 
