@@ -31,6 +31,9 @@ export async function resetPassword(token, password) {
 export async function changePassword(currentPassword, newPassword) {
   return api.post('/auth/change-password', { currentPassword, newPassword });
 }
+export async function deleteAccount() {
+  return api.delete('/auth/delete-me');
+}
 export async function logoutUser() {
   return api.post('/auth/logout');
 }
