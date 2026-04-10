@@ -11,10 +11,10 @@ import {
 
 // status display config — colors + labels
 const STATUS_CFG = {
-  applied: { label: "Applied", bg: "#e6f9fd", color: "#0d1117", border: "#b3eefb" },
-  shortlisted: { label: "Shortlisted", bg: "#fffbeb", color: "#0d1117", border: "#fde68a" },
-  rejected: { label: "Rejected", bg: "#fef2f2", color: "#0d1117", border: "#fca5a5" },
-  hired: { label: "Hired", bg: "#f0fdf4", color: "#0d1117", border: "#86efac" },
+  applied: { label: "Applied", bg: "#f8fafc", color: "#475569", border: "#f1f5f9" },
+  shortlisted: { label: "Shortlisted", bg: "var(--color-primary-50)", color: "var(--color-primary-700)", border: "var(--color-primary-100)" },
+  rejected: { label: "Rejected", bg: "#fef2f2", color: "#991b1b", border: "#fee2e2" },
+  hired: { label: "Hired", bg: "#f0fdf4", color: "#166534", border: "#dcfce7" },
 };
 
 export default function ApplicantsPage() {
@@ -100,49 +100,68 @@ export default function ApplicantsPage() {
   ];
 
   return (
-    <>
-      <style>{`
-        @keyframes fadeUp { from { opacity:0; transform:translateY(14px);} to { opacity:1; transform:translateY(0);} }
-        .d-hero    { animation: fadeUp .5s ease both; }
-        .d-stats   { animation: fadeUp .5s .1s ease both; }
-        .d-content { animation: fadeUp .5s .2s ease both; }
-      `}</style>
-
       <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
-        <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
-
-          {/* ── HERO ── */}
-          <div className="d-hero mb-10">
-            {/* Back button */}
-            <button onClick={() => navigate("/company/jobs")}
-              className="flex items-center gap-2 text-[12px] font-bold text-black hover:text-black transition-colors mb-6">
-              <ArrowLeft size={14} /> Back to jobs
-            </button>
-
-            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
-              Applicant Review
-            </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
-              Candidates for<br />
-              <span className="text-black">{jobTitle || "this posting."}</span>
-            </h1>
-            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
-              Review, shortlist, and make your hiring decisions. Status changes are applied instantly.
-            </p>
-          </div>
-
+        <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
+ 
+           {/*added the herosection with matches the
+            existing styles effectively*/}
+           <section className="d-hero mb-8">
+             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+ 
+               {/* Left Column: Text & Actions */}
+               <div style={{ flex: 1 }}>
+                 <button onClick={() => navigate("/company/jobs")}
+                   className="flex items-center gap-2 text-[12px] font-bold text-[#64748b] hover:text-[#ef4444] transition-colors mb-6 group">
+                   <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Back to jobs
+                 </button>
+ 
+                 <div className="mb-7">
+                   <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                     Applicant Review
+                   </p>
+                   <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                     Candidates for<br />
+                     <span style={{ color: "#ef4444" }}>{jobTitle || "this posting."}</span>
+                   </h1>
+                   <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                     Review top talent, shortlist potential hires, and move candidates through your pipeline.
+                   </p>
+                 </div>
+ 
+                 <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                   <span className="flex items-center gap-1">✔ Resume Analysis</span>
+                   <span style={{ opacity: 0.3 }}>·</span>
+                   <span className="flex items-center gap-1">✔ Status Tracking</span>
+                   <span style={{ opacity: 0.3 }}>·</span>
+                   <span className="flex items-center gap-1">✔ Team Selection</span>
+                 </div>
+               </div>
+ 
+               {/* Right Column: High-Fidelity Image */}
+               <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
+                 <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+                   <img
+                     src="https://images.unsplash.com/photo-1565688534245-05d6b5be184a?w=800&q=80&auto=format&fit=crop"
+                     alt="Talent Review"
+                     style={{ width: "100%", height: "280px", objectFit: "cover", display: "block" }}
+                   />
+                 </div>
+               </div>
+             </div>
+           </section>
+ 
           {/*stat cards*/}
           {!loading && applicants.length > 0 && (
-            <div className="d-stats grid grid-cols-3 gap-4 mb-10">
+            <div className="d-stats grid grid-cols-3 gap-4 mb-8">
               {statCards.map(({ label, value, accent }) => (
                 <div key={label} style={{ borderTop: `3px solid ${accent}` }}
-                  className="cs-card cursor-pointer hover:shadow-md transition-shadow"
+                  className="cs-card cursor-pointer group hover:scale-[1.01] transition-all"
                   onClick={() => setFilter(label.toLowerCase() === filter ? "all" : label.toLowerCase())}
                 >
-                  <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-2">{label}</p>
-                  <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1" style={{ color: accent }}>{value}</p>
-                  <p className="text-[12px] text-black font-medium">
+                  <p className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.6px] mb-2">{label}</p>
+                  <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1 text-[#0f172a]">{value}</p>
+                  <p className="text-[12px] text-[#64748b] font-medium">
                     {filter === label.toLowerCase() ? "Filtering →" : "Click to filter"}
                   </p>
                 </div>
@@ -153,8 +172,8 @@ export default function ApplicantsPage() {
           {/* Search bar + filter*/}
           <div className="d-content flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-xl font-bold text-black tracking-tight mb-1">All Candidates</h2>
-              <p className="text-black text-sm font-medium">{filtered.length} candidate{filtered.length !== 1 ? "s" : ""}</p>
+              <h2 className="text-xl font-extrabold text-[#0f172a] tracking-tight mb-1">All Candidates</h2>
+              <p className="text-[#64748b] text-[13px] font-medium">{filtered.length} candidate{filtered.length !== 1 ? "s" : ""}</p>
             </div>
             <div className="flex items-center gap-3">
               <form onSubmit={e => e.preventDefault()} className="relative">
@@ -202,57 +221,56 @@ export default function ApplicantsPage() {
                 const initials = (app.student?.username || "A").slice(0, 2).toUpperCase();
                 return (
                   <div key={app._id}
-                    className="cs-card hover:shadow-md hover:border-primary-100 transition-all">
+                    className="cs-card hover:scale-[1.005] transition-all group">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-
-                      {/* Left: candidate info */}
-                      <div className="flex items-center gap-4">
-                        {/* Initials avatar */}
-                        <div style={{ background: sc.bg, color: sc.color }}
-                          className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-black flex-shrink-0">
-                          {initials}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <h3 className="text-[15px] font-bold text-black">{app.student?.username || "Unknown"}</h3>
-                            {/* Status badge */}
-                            <span style={{ border: `1px solid ${sc.border}` }}
-                              className="cs-badge !rounded-full !px-2 !py-0.5 !text-[10px]">
-                              {sc.label}
-                            </span>
-                          </div>
-                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
-                              <Mail size={11} /> {app.student?.email || "—"}
-                            </span>
-                            <span className="text-[12px] text-black font-medium flex items-center gap-1">
-                              <Calendar size={11} /> {new Date(app.appliedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* View Details + Resume Actions */}
-                      <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
-                        {/* Status select — compact */}
-                        <div className="flex flex-col gap-1 hidden sm:flex">
-                          <select
-                            value={app.status}
-                            onChange={e => handleStatusChange(app._id, e.target.value)}
-                            className="cs-input !p-2.5 !pr-8 font-bold"
-                          >
-                            <option value="applied">Under Review</option>
-                            <option value="shortlisted">Shortlisted</option>
-                            <option value="rejected">Not Moving</option>
-                            <option value="hired">Hired ✓</option>
-                          </select>
-                        </div>
-
-                        <button onClick={() => navigate(`/company/applications/${app._id}`)}
-                          className="flex items-center gap-1.5 text-[12px] font-bold text-black bg-primary-50 px-4 py-2.5 rounded-xl hover:bg-primary-100 transition-colors whitespace-nowrap">
-                          View Details
-                        </button>
-                      </div>
+ 
+                       {/* Left: candidate info */}
+                       <div className="flex items-center gap-4">
+                         {/* Initials avatar */}
+                         <div style={{ background: sc.bg, color: sc.color }}
+                           className="w-12 h-12 rounded-2xl flex items-center justify-center text-[12px] font-black flex-shrink-0 border border-black/5 shadow-sm">
+                           {initials}
+                         </div>
+                         <div>
+                           <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                             <h3 className="text-[17px] font-extrabold text-[#0f172a] tracking-tight">{app.student?.username || "Unknown"}</h3>
+                             {/* Status badge */}
+                             <span style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}` }}
+                               className="text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                               {sc.label}
+                             </span>
+                           </div>
+                           <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+                             <span className="text-[13px] text-[#64748b] font-medium flex items-center gap-1.5">
+                               <Mail size={13} className="text-[#94a3b8]" /> {app.student?.email || "—"}
+                             </span>
+                             <span className="text-[13px] text-[#64748b] font-medium flex items-center gap-1.5">
+                               <Calendar size={13} className="text-[#94a3b8]" /> {new Date(app.appliedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                             </span>
+                           </div>
+                         </div>
+                       </div>
+ 
+                       {/* View Details + Resume Actions */}
+                       <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
+                         <div className="flex flex-col gap-1 hidden sm:flex">
+                           <select
+                             value={app.status}
+                             onChange={e => handleStatusChange(app._id, e.target.value)}
+                             className="text-sm font-bold bg-[#f8fafc] border border-[#f1f5f9] rounded-xl px-4 py-2.5 outline-none focus:ring-4 focus:ring-primary-50 transition-all cursor-pointer"
+                           >
+                             <option value="applied">Under Review</option>
+                             <option value="shortlisted">Shortlisted</option>
+                             <option value="rejected">Not Moving</option>
+                             <option value="hired">Hired ✓</option>
+                           </select>
+                         </div>
+ 
+                         <button onClick={() => navigate(`/company/applications/${app._id}`)}
+                           className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-[#0f172a] px-5 py-2.5 rounded-xl hover:bg-black transition-all shadow-sm">
+                           View Details
+                         </button>
+                       </div>
                     </div>
                   </div>
                 );
@@ -271,8 +289,7 @@ export default function ApplicantsPage() {
         </main>
         <Footer />
       </div>
-    </>
-  );
+    );
 }
 
 

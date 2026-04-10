@@ -93,99 +93,120 @@ export default function CompanyDashboard() {
 
   return (
     <>
-      {/* keyframe animations — matches the same animation style as StudentDashboard.jsx */}
-      <style>{`
-        @keyframes fadeUp    { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)} 50%{box-shadow:0 0 0 7px rgba(34,197,94,.06)} }
-        .d-hero  { animation: fadeUp .5s ease both; }
-        .d-stats { animation: fadeUp .5s .1s ease both; }
-        .d-pulse { animation: fadeUp .5s .2s ease both; }
-        .d-apps  { animation: fadeUp .5s .3s ease both; }
-      `}</style>
-
-      {/*same outer wrapper + bg as student dashboard — bg-app-bg font-sans */}
       <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
 
-        <main className="max-w-[900px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
+        <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
 
-          {/* Hero Section*/}
-          <div className="d-hero mb-10">
-            <p className="text-xs font-bold tracking-[1px] text-black uppercase mb-3">
-              Welcome back, {company?.name || user.username || "there"}
-            </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.15] tracking-[-1.5px] text-black mb-3">
-              Your hiring, in<br />
-              <span className="text-black">real-time.</span>
-            </h1>
-            <p className="text-base text-black max-w-[480px] leading-relaxed font-medium">
-              HiringPulse shows live pipeline status vs. your postings — so you always know
-              who to shortlist and which roles to fill next.
-            </p>
-          </div>
+          {/*added the herosection with matches the
+            existing styles effectively*/}
+          <section className="d-hero mb-8">
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
 
-          {/* Stat Cards — same 3-col pattern as student dashboard */}
-          <div className="d-stats grid grid-cols-3 gap-4 mb-10">
+              {/* Left Column: Text & Actions */}
+              <div style={{ flex: 1 }}>
+                <div className="mb-7">
+                  <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                    Welcome back, {company?.name || user.username || "there"}
+                  </p>
+                  <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                    Your hiring, in<br />
+                    <span style={{ color: "#ef4444" }}>real-time.</span>
+                  </h1>
+                  <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                    HiringPulse shows live pipeline status vs. your postings — so you always know who to shortlist and which roles to fill next.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-4 mb-4">
+                  <button onClick={() => navigate("/company/jobs/create")} className="btn-primary !px-10 !py-3.5 shadow-xl shadow-primary-400/20">
+                    <Plus size={16} /> Post New Job
+                  </button>
+                  <button onClick={() => navigate("/company/applicants")} className="btn-outline !px-10 !py-3.5">
+                    <Users size={16} /> View Applicants
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                  <span className="flex items-center gap-1">✔ Smart Shortlisting</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Pipeline Analytics</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Seamless Hiring</span>
+                </div>
+              </div>
+
+              {/* Right Column: High-Fidelity Image */}
+              <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "380px" }}>
+                <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+                  <img
+                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80&auto=format&fit=crop"
+                    alt="Recruiter Dashboard"
+                    style={{ width: "100%", height: "280px", objectFit: "cover", display: "block" }}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* stats cards */}
+          <div className="d-stats grid grid-cols-3 gap-4 mb-8">
             {statCards.map(({ label, value, sub, accent, link }) => (
               <div
                 key={label}
                 onClick={link ? () => navigate(link) : undefined}
                 style={{ borderTop: `3px solid ${accent}` }}
-                className={`cs-card ${link ? "cursor-pointer hover:shadow-md transition-shadow" : ""}`}
+                className={`cs-card group hover:scale-[1.01] transition-all ${link ? "cursor-pointer" : ""}`}
               >
-                <p className="text-[11px] font-bold text-black uppercase tracking-[0.6px] mb-2">
+                <p className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.6px] mb-2">
                   {label}
                 </p>
-                <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1"
-                  style={{ color: accent }}>
+                <p className="text-[26px] font-extrabold tracking-[-0.5px] leading-none mb-1 text-[#0f172a]">
                   {value}
                 </p>
-                <p className="text-[12px] text-black font-medium">{sub}</p>
+                <p className="text-[12px] text-[#64748b] font-medium">{sub}</p>
               </div>
             ))}
           </div>
 
-          {/*Hiring Pulse Panel */}
+          {/* Hiring Pulse Panel */}
           <div
             className="d-pulse"
-            style={{ background: "white", border: "1px solid #e5e7eb", borderRadius: "20px", overflow: "hidden", marginBottom: "48px" }}
+            style={{ background: "white", border: "1px solid #f1f5f9", borderRadius: "24px", overflow: "hidden", marginBottom: "48px", boxShadow: "var(--shadow-card)" }}
           >
-            {/* Panel header — same layout as CareerPulse header */}
-            <div style={{ padding: "18px 22px 0", borderBottom: "1px solid #f3f4f6", display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+            {/* Panel Header */}
+            <div style={{ padding: "24px 28px 0", borderBottom: "1px solid #f8fafc", display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "3px" }}>
-                  {/* live green dot — same animation as CareerPulse indicator */}
-                  <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e", animation: "livePulse 2s ease-in-out infinite" }} />
-                  <span style={{ fontSize: "10px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#ef4444", animation: "livePulse 2s ease-in-out infinite" }} />
+                  <span style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                     Hiring Pulse — Live Pipeline Intelligence
                   </span>
                 </div>
-                <h2 style={{ fontSize: "19px", fontWeight: 800, color: "#0d1117", letterSpacing: "-0.5px", margin: "0 0 4px" }}>
+                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#0f172a", letterSpacing: "-0.6px", margin: "0 0 4px" }}>
                   Your Hiring Pipeline
                 </h2>
-                <p style={{ fontSize: "12px", color: "#0d1117", marginBottom: "14px", fontWeight: 500 }}>
+                <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "18px", fontWeight: 500 }}>
                   Live applicant status across all your job postings
                 </p>
               </div>
-              {/* profile completeness CTA — mirrors the "Refresh" button position */}
+
               {completeness < 100 && (
                 <button
                   onClick={() => navigate("/company/profile")}
-                  style={{ marginTop: "4px", background: "transparent", border: "1px solid #e5e7eb", borderRadius: "9px", padding: "6px 11px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", fontWeight: 700, color: "#0d1117", transition: "all 0.15s" }}
-                  onMouseEnter={e => e.currentTarget.style.background = "#f9fafb"}
-                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+                  style={{ marginTop: "4px", background: "#f8fafc", border: "1px solid #f1f5f9", borderRadius: "10px", padding: "7px 14px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", fontWeight: 700, color: "#475569", transition: "all 0.2s" }}
                 >
                   {completeness}% complete → Fill profile
                 </button>
               )}
             </div>
 
-            {/* Inner grid — same gridTemplateColumns as CareerPulse (1fr sidebar) */}
+            {/* Inner grid */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 190px" }}>
 
               {/* Left: pipeline funnel + active job chips */}
-              <div style={{ padding: "18px 22px" }}>
-                <p style={{ fontSize: "11px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "14px" }}>
+              <div style={{ padding: "18px 28px" }}>
+                <p style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "16px" }}>
                   Application Funnel
                 </p>
                 {PIPELINE.map(({ key, label, color }) => {
@@ -193,13 +214,13 @@ export default function CompanyDashboard() {
                   const pct = totalApps > 0 ? Math.round(count / totalApps * 100) : 0;
                   return (
                     <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                      <span style={{ fontSize: "12.5px", color: "#0d1117", width: "90px", flexShrink: 0, fontWeight: 600 }}>
+                      <span style={{ fontSize: "13px", color: "#475569", width: "95px", flexShrink: 0, fontWeight: 600 }}>
                         {label}
                       </span>
-                      <div style={{ flex: 1, background: "#f1f5f9", borderRadius: "3px", height: "7px", overflow: "hidden" }}>
-                        <div style={{ width: `${loading ? 0 : pct}%`, height: "100%", borderRadius: "3px", background: color, transition: "width 0.8s ease" }} />
+                      <div style={{ flex: 1, background: "#f8fafc", borderRadius: "4px", height: "8px", overflow: "hidden" }}>
+                        <div style={{ width: `${loading ? 0 : pct}%`, height: "100%", borderRadius: "4px", background: color, transition: "width 0.8s ease" }} />
                       </div>
-                      <span style={{ fontSize: "12px", fontWeight: 800, color: "#0d1117", minWidth: "28px", textAlign: "right" }}>
+                      <span style={{ fontSize: "13px", fontWeight: 800, color: "#0f172a", minWidth: "32px", textAlign: "right" }}>
                         {loading ? "—" : count}
                       </span>
                     </div>
@@ -209,7 +230,7 @@ export default function CompanyDashboard() {
                 {/* active job chips — click to view applicants */}
                 {jobs.length > 0 && (
                   <div style={{ marginTop: "14px" }}>
-                    <p style={{ fontSize: "11px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "10px" }}>
+                    <p style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "10px" }}>
                       Active Postings
                     </p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
@@ -217,19 +238,17 @@ export default function CompanyDashboard() {
                         <button
                           key={job._id}
                           onClick={() => navigate(`/company/jobs/${job._id}/applicants`)}
-                          style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px solid #b3eefb", background: "#e6f9fd", color: "#0d1117", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", transition: "all 0.12s" }}
-                          onMouseEnter={e => e.currentTarget.style.background = "#c7f3fd"}
-                          onMouseLeave={e => e.currentTarget.style.background = "#e6f9fd"}
+                          style={{ fontSize: "11px", fontWeight: 600, padding: "5px 12px", borderRadius: "20px", border: "1px solid var(--color-primary-100)", background: "var(--color-primary-50)", color: "var(--color-primary-700)", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px", transition: "all 0.15s" }}
                         >
                           {job.title.length > 22 ? job.title.slice(0, 22) + "…" : job.title}
-                          <span style={{ background: "rgba(1,121,160,0.12)", borderRadius: "10px", padding: "1px 5px", fontSize: "10px", fontWeight: 700 }}>
+                          <span style={{ opacity: 0.5, fontWeight: 800 }}>
                             {job.applicationsCount || 0}
                           </span>
                         </button>
                       ))}
                       <button
                         onClick={() => navigate("/company/jobs/create")}
-                        style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", border: "1px dashed #b3eefb", background: "transparent", color: "#0d1117", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
+                        style={{ fontSize: "11px", fontWeight: 600, padding: "5px 12px", borderRadius: "20px", border: "1px dashed #cbd5e1", background: "transparent", color: "#64748b", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
                       >
                         <Plus size={10} /> Post Job
                       </button>
@@ -238,35 +257,35 @@ export default function CompanyDashboard() {
                 )}
               </div>
 
-              {/* Right sidebar — mirrors CareerPulse's "Readiness Radar" side panel */}
-              <div style={{ borderLeft: "1px solid #f3f4f6", padding: "18px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fafafa" }}>
-                <span style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              {/* Right sidebar */}
+              <div style={{ borderLeft: "1px solid #f8fafc", padding: "24px 18px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fcfcfc" }}>
+                <span style={{ fontSize: "10px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   Hiring Score
                 </span>
 
-                {/* big hired count — mirrors market match % display */}
-                <div style={{ textAlign: "center", margin: "8px 0" }}>
-                  <div style={{ fontSize: "48px", fontWeight: 800, letterSpacing: "-2px", lineHeight: 1, color: pipelineStats.hired > 0 ? "#22c55e" : "#02bcf0" }}>
+                {/* big hired count */}
+                <div style={{ textAlign: "center", margin: "12px 0" }}>
+                  <div style={{ fontSize: "56px", fontWeight: 800, letterSpacing: "-3px", lineHeight: 1, color: pipelineStats.hired > 0 ? "#ef4444" : "var(--color-primary-500)" }}>
                     {loading ? "—" : pipelineStats.hired}
                   </div>
-                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "2px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginTop: "4px" }}>
                     hired this cycle
                   </div>
                 </div>
 
                 {/* profile strength bar */}
-                <div style={{ width: "100%", borderTop: "1px solid #f3f4f6", paddingTop: "10px" }}>
-                  <div style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "7px" }}>
+                <div style={{ width: "100%", borderTop: "1px solid #f1f5f9", paddingTop: "14px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>
                     Profile Strength
                   </div>
-                  <div style={{ height: "5px", background: "#e5e7eb", borderRadius: "3px", marginBottom: "5px" }}>
-                    <div style={{ width: `${completeness}%`, height: "100%", background: completeness === 100 ? "#22c55e" : "#02bcf0", borderRadius: "3px", transition: "width 0.8s" }} />
+                  <div style={{ height: "6px", background: "#f1f5f9", borderRadius: "10px", marginBottom: "6px" }}>
+                    <div style={{ width: `${completeness}%`, height: "100%", background: completeness === 100 ? "#ef4444" : "var(--color-primary-400)", borderRadius: "10px", transition: "width 0.8s" }} />
                   </div>
-                  <div style={{ fontSize: "11px", color: "#0d1117", fontWeight: 700 }}>{completeness}% complete</div>
+                  <div style={{ fontSize: "12px", color: "#0f172a", fontWeight: 700 }}>{completeness}% complete</div>
                   {completeness < 100 && (
                     <button
                       onClick={() => navigate("/company/profile")}
-                      style={{ marginTop: "4px", background: "none", border: "none", cursor: "pointer", fontSize: "11px", color: "#0d1117", fontWeight: 700, padding: 0 }}
+                      style={{ marginTop: "6px", background: "none", border: "none", cursor: "pointer", fontSize: "11px", color: "#ef4444", fontWeight: 700, padding: 0 }}
                     >
                       Complete →
                     </button>
