@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  Briefcase, PenLine, FileText, User, Bell,
-  HelpCircle, Settings, LogOut, Menu, X,
-  Home, Bookmark, ClipboardList, Edit2, ChevronDown, Plus,
+  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,
+  Home, Bookmark, Edit2, ChevronDown, Plus, FileText
 } from "lucide-react";
 
-// Removed static NAV_LINKS using dynamic one inside component
 
-//Navbar 
+// Removed static NAV_LINKS using dynamic one inside component
+//Navbar section
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,20 +29,20 @@ export default function Navbar() {
     {
       label: "My Jobs",
       id: "jobs",
-      // submenu items shown in the dropdown card when hovering "My Jobs"
       submenu: [
         { label: "My Jobs", path: "/company/jobs", icon: <Briefcase size={14} /> },
         { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} /> },
       ],
     },
     { label: "My Profile", path: "/company/profile" },
+    { label: "About", path: "/about" },
   ] : [
     { label: "Dashboard", path: "/student/dashboard" },
     { label: "Discover Jobs", path: "/student/jobs" },
     { label: "Resume Tools", path: "/student/resume" },
     { label: "My Profile", path: "/student/profile" },
+    { label: "About", path: "/about" },
   ];
-
   /* This is the automated function for the Navbar to 
   open in the mobile screen */
   useEffect(() => {
@@ -69,11 +68,25 @@ export default function Navbar() {
 
     setDropdownOpen(false);
     setMobileOpen(false);
-
     navigate("/");
   };
 
   const isActive = (path) => location.pathname === path;
+
+  /* Dropdown Items Generation...
+this function is built for mobile hamburger type navbar*/
+  const dropdownItems = isCompany ? [
+    { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+    { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
+    { to: "/company/jobs", icon: <Bookmark size={16} />, label: "Manage Jobs" },
+    { to: "/company/settings", icon: <Settings size={16} />, label: "Settings" },
+  ] : [
+    { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+    { to: "/student/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
+    { to: "/student/jobs", icon: <Bookmark size={16} />, label: "Saved Jobs" },
+    { to: "/student/resume", icon: <FileText size={16} />, label: "My Resume" },
+    { to: "/student/settings", icon: <Settings size={16} />, label: "Settings" },
+  ];
 
   return (
     <>
@@ -82,21 +95,21 @@ export default function Navbar() {
         background: scrolled ? "rgba(255,255,255,0.75)" : "#fff",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: "1px solid #f3f4f6",
+        borderBottom: "2px solid #e2e8f0",
         transition: "all 0.3s",
         boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
       }}>
         <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-
           {/* Here we updated the header CareerSync with logo */}
           <Link to={isCompany ? "/company/dashboard" : "/student/dashboard"} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
             <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: -1 }}>
-              <span style={{ color: "#0d1117"}}>Career</span><span style={{ color: "#ef4444" }}>Sync</span>
+              <span style={{ color: "#0d1117" }}>Career</span><span style={{ color: "#ef4444" }}>Sync</span>
             </span>
           </Link>
-
           {/* Right-Side Desktop Actions */}
+          <div style={{ width: 2, height: 24, background: "#e2e8f0", margin: "0 12px" }} className="desktop-nav" />
+
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
             {/* This is a map functionality run in the NAVLINK Array and
             displaying each route along with its properties.
@@ -118,7 +131,6 @@ export default function Navbar() {
                       display: "flex", alignItems: "center", gap: 4,
                       color: (hoveredNav === item.id || item.submenu.some(s => isActive(s.path)))
                         ? "#02bcf0" : undefined,
-                      borderColor: item.submenu.some(s => isActive(s.path)) ? "#02bcf0" : undefined,
                     }}
                   >
                     {item.label}
@@ -132,7 +144,6 @@ export default function Navbar() {
                       }}
                     />
                   </button>
-
                   {/* dropdown card — exact same design as the avatar dropdown:
                       border: 1px solid #b3eefb, borderRadius: 16,
                       boxShadow: 0 10px 40px rgba(0,0,0,0.08),
@@ -198,6 +209,8 @@ export default function Navbar() {
             )}
           </div>
 
+          <div style={{ width: 1, height: 20, background: "#f1f5f9", margin: "0 8px" }} className="desktop-nav" />
+
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {/*Hers is the notification logo  */}
             {token && (
@@ -205,23 +218,21 @@ export default function Navbar() {
                 background: "transparent", border: "none", color: "#0d1117",
                 position: "relative", width: 36, height: 36, borderRadius: 10,
                 display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
-              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
+              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#0d1117"; e.currentTarget.style.background = "transparent"; }}>
                 <Bell size={18} />
                 <span style={{ position: "absolute", top: 6, right: 6, width: 8, height: 8, borderRadius: "50%", background: "#ef4444", border: "2px solid #fff" }} />
               </button>
             )}
 
-            {/* Support/Help Logo */}
             <button style={{
               background: "transparent", border: "none", color: "#0d1117",
               width: 36, height: 36, borderRadius: 10,
               display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
-            }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#9ca3af"; e.currentTarget.style.background = "transparent"; }}>
+            }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#0d1117"; e.currentTarget.style.background = "transparent"; }}>
               <HelpCircle size={18} />
             </button>
 
-            <div style={{ width: 1, height: 24, background: "#e5e7eb", margin: "0 6px" }} />
-
+            <div style={{ width: 2, height: 24, background: "#e2e8f0", margin: "0 12px" }} />
             {/* User Profile & Account Dropdown */}
             {token ? (
               <div className="relative" ref={dropdownRef} onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
@@ -250,12 +261,7 @@ export default function Navbar() {
                     </div>
 
                     <div style={{ padding: "8px 0" }}>
-                      {[
-                        { to: isCompany ? "/company/dashboard" : "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
-                        { to: isCompany ? "/company/profile" : "/student/profile", icon: <Edit2 size={16} />, label: isCompany ? "Company Profile" : "Edit Profile" },
-                        { to: isCompany ? "/company/jobs" : "/student/jobs", icon: <Bookmark size={16} />, label: isCompany ? "Manage Jobs" : "Saved Jobs" },
-                        { to: isCompany ? "/company/settings" : "/student/resume", icon: <Settings size={16} />, label: isCompany ? "Settings" : "My Resume" },
-                      ].map((item, i) => (
+                      {dropdownItems.map((item, i) => (
                         <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
                           display: "flex", alignItems: "center", gap: 10, padding: "8px 16px",
                           fontSize: 13, fontWeight: 600, color: "#0d1117", textDecoration: "none"
@@ -265,11 +271,10 @@ export default function Navbar() {
                       ))}
                     </div>
 
-                    {/* Account Footnote & Logout */}
                     <div style={{ borderTop: "1px solid #f3f4f6", padding: "8px 0 0" }}>
                       <button onClick={handleLogout} style={{
                         display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", width: "100%",
-                        fontSize: 13, fontWeight: 700, color: "#0d1117", background: "transparent", border: "none", cursor: "pointer", textAlign: "left"
+                        fontSize: 13, fontWeight: 700, color: "#ef4444", background: "transparent", border: "none", cursor: "pointer", textAlign: "left"
                       }} onMouseEnter={e => e.currentTarget.style.background = "#fef2f2"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                         <LogOut size={16} /> Logout
                       </button>
@@ -279,13 +284,11 @@ export default function Navbar() {
               </div>
             ) : (
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                {/* buttons for authentication pages */}
                 <button className="btn-outline" onClick={() => navigate("/login")}>Login</button>
                 <button className="btn-primary" onClick={() => navigate("/signup")}>Sign Up Free</button>
               </div>
             )}
           </div>
-
           {/* Hamburger (Mobile Toggle) */}
           <button
             className="mobile-menu-btn"
@@ -295,7 +298,6 @@ export default function Navbar() {
             {mobileOpen ? <X size={24} color="#111827" /> : <Menu size={24} color="#111827" />}
           </button>
         </div>
-
         {/* The functyiionality refers to the navbar opening in the mobile screen */}
         {mobileOpen && (
           <div style={{
@@ -313,7 +315,6 @@ export default function Navbar() {
                 </div>
               </div>
             )}
-
             {/* Sidebar Links */}
             {NAV_LINKS.map(({ label, path }) => (
               <Link key={path} to={path} onClick={() => setMobileOpen(false)} style={{
@@ -343,5 +344,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
