@@ -4,7 +4,7 @@
 **A modern career sync platform to search jobs, manage profiles, and analyse resumes.**  
 Built with React · Vite · TailwindCSS · Axios
 
-**[🌐 Live Demo →](https://careersyncplatform.netlify.app)**
+**[🌐 Live Demo →](https://careersyncc.netlify.app/)**
 
 </div>
 
