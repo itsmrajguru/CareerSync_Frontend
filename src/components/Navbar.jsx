@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,
-  Home, Bookmark, Edit2, ChevronDown, Plus, FileText, Search
+  Home, Bookmark, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck
 } from "lucide-react";
 
 
@@ -22,10 +22,16 @@ export default function Navbar() {
   const token = localStorage.getItem("token");
   const initial = (user.username || "U")[0].toUpperCase();
   const isCompany = user?.role === 'company';
+  const isAdminRole = user?.role === 'admin';
 
   /*Dynamic routes array... 
   these are the dynamic routes that we are see in the navbar*/
-  const NAV_LINKS = isCompany ? [
+  const NAV_LINKS = isAdminRole ? [
+    { label: "Dashboard", path: "/admin/dashboard" },
+    { label: "Manage Companies", path: "/admin/companies" },
+    { label: "Manage Jobs", path: "/admin/jobs" },
+    { label: "About", path: "/about" },
+  ] : isCompany ? [
     { label: "Dashboard", path: "/company/dashboard" },
     {
       label: "My Jobs",
@@ -41,7 +47,7 @@ export default function Navbar() {
     { label: "Dashboard", path: "/student/dashboard" },
     { label: "Jobs", path: "/student/jobs" },
     { label: "Discover Jobs", path: "/student/discover-jobs" },
-    { label: "Resume Tools", path: "/student/resume" },
+    { label: "My Applications", path: "/student/applications" },
     { label: "About", path: "/about" },
   ];
   /* open hamburger navbar functionality...
@@ -80,7 +86,11 @@ added scroll effect for the sticky transparent navbar */
   /* Dropdown Items Generation...
 this function is built to show the routes under the logo button
 so that user can check the personlaized things here...*/
-  const dropdownItems = isCompany ? [
+  const dropdownItems = isAdminRole ? [
+    { to: "/admin/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+    { to: "/admin/companies", icon: <ShieldCheck size={16} />, label: "Verify Companies" },
+    { to: "/settings", icon: <Settings size={16} />, label: "Account Settings" },
+  ] : isCompany ? [
     { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
     { to: "/company/jobs", icon: <Bookmark size={16} />, label: "Manage Jobs" },
@@ -88,7 +98,8 @@ so that user can check the personlaized things here...*/
   ] : [
     { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/student/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
-    { to: "/student/jobs", icon: <Bookmark size={16} />, label: "My Jobs" },
+    { to: "/student/resume", icon: <FileText size={16} />, label: "My Resume" },
+    { to: "/student/applications", icon: <Bookmark size={16} />, label: "My Applications" },
     { to: "/student/settings", icon: <Settings size={16} />, label: "Settings" },
   ];
 
