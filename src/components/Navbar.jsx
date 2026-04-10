@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,
-  Home, Bookmark, Edit2, ChevronDown, Plus, FileText
+  Home, Bookmark, Edit2, ChevronDown, Plus, FileText, Search
 } from "lucide-react";
 
 
@@ -23,7 +23,8 @@ export default function Navbar() {
   const initial = (user.username || "U")[0].toUpperCase();
   const isCompany = user?.role === 'company';
 
-  // company nav includes "Jobs" with a submenu that opens on hover
+  /*Dynamic routes array... 
+  these are the dynamic routes that we are see in the navbar*/
   const NAV_LINKS = isCompany ? [
     { label: "Dashboard", path: "/company/dashboard" },
     {
@@ -38,25 +39,28 @@ export default function Navbar() {
     { label: "About", path: "/about" },
   ] : [
     { label: "Dashboard", path: "/student/dashboard" },
-    { label: "Discover Jobs", path: "/student/jobs" },
+    { label: "Jobs", path: "/student/jobs" },
+    { label: "Discover Jobs", path: "/student/discover-jobs" },
     { label: "Resume Tools", path: "/student/resume" },
-    { label: "My Profile", path: "/student/profile" },
     { label: "About", path: "/about" },
   ];
-  /* This is the automated function for the Navbar to 
+  /* open hamburger navbar functionality...
+  This is the automated function for the Navbar to 
   open in the mobile screen */
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // added scroll effect for the sticky transparent navbar
+  /* stick the navbar even when scrolling functionality...
+added scroll effect for the sticky transparent navbar */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Here we just  remove the token from the localstorage
+  /* logout functionality...
+  Here we just  remove the token from the localstorage
   and due to this  within miliseconds, user will be thrown out of the
   website and redirected to the login page... because the system checks
   for the token , for even a single click or redirection to any page 
@@ -74,7 +78,8 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   /* Dropdown Items Generation...
-this function is built for mobile hamburger type navbar*/
+this function is built to show the routes under the logo button
+so that user can check the personlaized things here...*/
   const dropdownItems = isCompany ? [
     { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
@@ -83,8 +88,7 @@ this function is built for mobile hamburger type navbar*/
   ] : [
     { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/student/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
-    { to: "/student/jobs", icon: <Bookmark size={16} />, label: "Saved Jobs" },
-    { to: "/student/resume", icon: <FileText size={16} />, label: "My Resume" },
+    { to: "/student/jobs", icon: <Bookmark size={16} />, label: "My Jobs" },
     { to: "/student/settings", icon: <Settings size={16} />, label: "Settings" },
   ];
 
@@ -100,7 +104,8 @@ this function is built for mobile hamburger type navbar*/
         boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
       }}>
         <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Here we updated the header CareerSync with logo */}
+          {/* herosection...
+Here we updated the header CareerSync with logo */}
           <Link to={isCompany ? "/company/dashboard" : "/student/dashboard"} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <img src="/logo.svg" alt="Logo" style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover" }} />
             <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: -1 }}>
@@ -111,9 +116,10 @@ this function is built for mobile hamburger type navbar*/
           <div style={{ width: 2, height: 24, background: "#e2e8f0", margin: "0 12px" }} className="desktop-nav" />
 
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            {/* This is a map functionality run in the NAVLINK Array and
-            displaying each route along with its properties.
-            Items with a submenu get a hover dropdown card instead of a plain link */}
+            {/*showing the dynamic routes array...
+This is a map functionality run in the NAVLINK Array and
+displaying each route along with its properties.
+Items with a submenu get a hover dropdown card instead of a plain link */}
             {NAV_LINKS.map((item) =>
               item.submenu ? (
                 // nav item with hover dropdown — wraps in relative div to anchor the card
@@ -223,7 +229,7 @@ this function is built for mobile hamburger type navbar*/
                 <span style={{ position: "absolute", top: 6, right: 6, width: 8, height: 8, borderRadius: "50%", background: "#ef4444", border: "2px solid #fff" }} />
               </button>
             )}
-
+            {/*Hers is the helpcircle  logo  */}
             <button style={{
               background: "transparent", border: "none", color: "#0d1117",
               width: 36, height: 36, borderRadius: 10,
@@ -259,7 +265,8 @@ this function is built for mobile hamburger type navbar*/
                       <p style={{ fontSize: 14, fontWeight: 800, color: "#0d1117", margin: 0 }}>{user.username || "User"}</p>
                       <p style={{ fontSize: 12, color: "#0d1117", margin: "2px 0 0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user.email || ""}</p>
                     </div>
-
+                    {/* userdropdown displaying array of items...
+so we are Dis Items directly for the mobile hamburger Feature */}
                     <div style={{ padding: "8px 0" }}>
                       {dropdownItems.map((item, i) => (
                         <Link key={i} to={item.to} onClick={() => setDropdownOpen(false)} style={{
@@ -271,6 +278,7 @@ this function is built for mobile hamburger type navbar*/
                       ))}
                     </div>
 
+                    {/* this is the logoout function */}
                     <div style={{ borderTop: "1px solid #f3f4f6", padding: "8px 0 0" }}>
                       <button onClick={handleLogout} style={{
                         display: "flex", alignItems: "center", gap: 10, padding: "8px 16px", width: "100%",

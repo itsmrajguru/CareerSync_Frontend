@@ -16,6 +16,8 @@ import ResumePage from "./pages/student/ResumePage";
 import StudentProfilePage from "./pages/student/StudentProfilePage";
 import ExternalJobDetailsPage from "./pages/student/ExternalJobDetailsPage";
 import StudentSettingsPage from "./pages/student/StudentSettingsPage";
+import JobsPage from "./pages/student/JobsPage";
+import JobDetailsPage from "./pages/student/JobDetailsPage";
 
 // Company pages
 import CompanyDashboard from "./pages/company/CompanyDashboard";
@@ -43,8 +45,15 @@ function App() {
 
         {/* Protected routes — require login as 'student' */}
         <Route path="/student/dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
-        <Route path="/student/jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />
-        <Route path="/student/jobs/:id" element={<ProtectedRoute role="student"><ExternalJobDetailsPage /></ProtectedRoute>} />
+        
+        {/* Internal Jobs */}
+        <Route path="/student/jobs" element={<ProtectedRoute role="student"><JobsPage /></ProtectedRoute>} />
+        <Route path="/student/jobs/:id" element={<ProtectedRoute role="student"><JobDetailsPage /></ProtectedRoute>} />
+        
+        {/* External Jobs (Adzuna) */}
+        <Route path="/student/discover-jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />
+        <Route path="/student/discover-jobs/:id" element={<ProtectedRoute role="student"><ExternalJobDetailsPage /></ProtectedRoute>} />
+        
         <Route path="/student/profile" element={<ProtectedRoute role="student"><StudentProfilePage /></ProtectedRoute>} />
         <Route path="/student/resume" element={<ProtectedRoute role="student"><ResumePage /></ProtectedRoute>} />
         <Route path="/student/settings" element={<ProtectedRoute role="student"><StudentSettingsPage /></ProtectedRoute>} />

@@ -1,7 +1,7 @@
 import api from "../api";
 
-export async function getJobs() {
-  return api.get('/jobs');
+export async function getJobs(params) {
+  return api.get('/jobs', { params });
 }
 export async function getJobById(id) {
   return api.get(`/jobs/${id}`);
