@@ -61,7 +61,7 @@ export default function ResumePage() {
         <PageLayout>
                 {/*Hero section*/}
                 <section className="d-hero mb-8">
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "60px" }}>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
  
                         {/* Left Column: Text & Actions */}
                         <div style={{ flex: 1 }}>
@@ -86,13 +86,13 @@ export default function ResumePage() {
                             </div>
                         </div>
  
-                        {/* Right Column: High-Fidelity Image */}
-                        <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "320px" }}>
+                        {/* Right Column: Fixed-Position Image — Platform Standard */}
+                        <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
                             <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
                                 <img
-                                    src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?w=800&q=80&auto=format&fit=crop"
+                                    src="https://images.unsplash.com/photo-1586282023692-6bfbd629e85d?w=800&q=80&auto=format&fit=crop"
                                     alt="Resume Analysis"
-                                    style={{ width: "100%", height: "220px", objectFit: "cover", display: "block opacity-90" }}
+                                    style={{ width: "100%", height: "200px", objectFit: "cover", display: "block" }}
                                 />
                             </div>
                         </div>

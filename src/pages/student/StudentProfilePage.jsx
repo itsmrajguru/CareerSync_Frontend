@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Save, X, Edit2, Trash2 } from "lucide-react";
+import { Save, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -44,8 +44,8 @@ and cancle functions */
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [formData, setFormData] = useState(emptyProfile);
-  const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -58,11 +58,9 @@ export default function ProfilePage() {
         if (data?.length) {
           setProfile(data[0]);
           setFormData(data[0]);
-        } else {
-          setEditing(true);
         }
-      } catch {
-        setEditing(true);
+      } catch (err) {
+        console.error("Fetch error:", err);
       }
     })();
   }, []);
@@ -78,10 +76,8 @@ export default function ProfilePage() {
 
   // SAVE
   const handleSave = async () => {
-    console.log("save clicked 1");
     setLoading(true);
     try {
-      console.log("save clicked 2");
       /* This is the data That we are passing to the database
       As user profile d */
       const { user, _id, id, createdAt, updatedAt, __v, ...restData } = formData;
@@ -94,24 +90,20 @@ export default function ProfilePage() {
         linkedin: processUrl(formData.linkedin),
       };
 
-      console.log("payload:", payload);
-
       /* As we Saving the data They come
        from the user There could be two conditions Either we are updating the data Otherwise we are creating a new user So if the profile id exists that There is user whose id exists so we will update that id with this form Otherwise we will create a new Profile*/
       const result = profile?.id
         ? await updateProfile(profile.id, payload)
         : await createProfile(payload);
 
-      console.log("result:", result);
-
       setProfile(result);
       setFormData(result);
-      setEditing(false);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
       console.error("Save error:", err);
       alert(err.response?.data?.message || err.message);
     } finally {
-      console.log("finally block");
       setLoading(false);
     }
   };
@@ -119,26 +111,26 @@ export default function ProfilePage() {
   //DeleteProfile Fuctionality
   const handleDelete = async () => {
     if (!window.confirm("Delete your profile?")) return;
-
-
-    await deleteProfile(profile.id);
-    setProfile(null);
-    setFormData(emptyProfile);
-    setEditing(true);
+    try {
+      await deleteProfile(profile.id);
+      setProfile(null);
+      setFormData(emptyProfile);
+    } catch (err) {
+      alert("Failed to delete profile");
+    }
   };
 
   //cancle Save the data
   const handleCancel = () => {
     setLoading(false);
     setFormData(profile || emptyProfile);
-    setEditing(!profile);
   };
 
   /*the skills are saved as comman seperated in a array  */
   const skills = formData.skills?.split(",").map(s => s.trim()).filter(Boolean) || [];
 
   /*The percentage of formData added */
-  const completion = calcCompletion(editing ? formData : profile);
+  const completion = calcCompletion(formData);
 
   /* Creating 2 character logo */
   const initials = getInitials(formData.full_name);
@@ -149,73 +141,64 @@ export default function ProfilePage() {
 
       <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
  
-         {/*profile header - Compact standardized style*/}
-         <div className="mb-8 flex items-end justify-between">
-           <div>
-             <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
-               One Source of Truth
-             </p>
-             <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-               About <span style={{ color: "#ef4444" }}>me.</span>
-             </h1>
-             <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
-               Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
-             </p>
+         {/*added the new hero section with the updated styles and layout*/}
+         <section className="d-hero mb-8">
+           <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px"}}>
+ 
+             {/* Left Column: Text & Actions */}
+             <div style={{ flex: 1 }}>
+               <div className="mb-7">
+                 <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                   One Source of Truth
+                 </p>
+                 <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                   About <span style={{ color: "#ef4444" }}>me.</span>
+                 </h1>
+                 <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                   Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
+                 </p>
+               </div>
+ 
+               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                 <span className="flex items-center gap-1">✔ Career Pulse</span>
+                 <span style={{ opacity: 0.3 }}>·</span>
+                 <span className="flex items-center gap-1">✔ Skill Validation</span>
+                 <span style={{ opacity: 0.3 }}>·</span>
+                 <span className="flex items-center gap-1">✔ Identity Verification</span>
+               </div>
+             </div>
+ 
+             {/* Right Column: Career Ecosystem Grid */}
+             <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
+               <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }} className="grid grid-cols-2">
+                 <img
+                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop"
+                   alt="Offices"
+                   style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff", borderBottom: "1px solid #fff" }}
+                 />
+                  <img
+                    src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80&auto=format&fit=crop"
+                    alt="Jobs"
+                    style={{ width: "100%", height: "100px", objectFit: "cover", borderBottom: "1px solid #fff" }}
+                  />
+                  <img
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80&auto=format&fit=crop"
+                    alt="Internships"
+                    style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff" }}
+                  />
+                  <img
+                    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80&auto=format&fit=crop"
+                    alt="Companies"
+                    style={{ width: "100%", height: "100px", objectFit: "cover" }}
+                  />
+               </div>
+             </div>
            </div>
-
-
-          <div className="flex gap-2">
-            {/* This is the conditional toggle btween cancel+save and
-            delete +edit */}
-
-            {editing ? (
-              <>
-                <button
-                  onClick={handleCancel}
-                  /* Now applying the new HomePage UI classes for matching aesthetics */
-                  className="btn-outline"
-                  style={{ padding: "8px 16px" }}
-                >
-                  <X size={14} /> Cancel
-                </button>
-
-                <button
-                  onClick={handleSave}
-                  disabled={loading}
-                  /* Now applying the new HomePage UI classes */
-                  className="btn-primary"
-                  style={{ padding: "8px 16px" }}
-                >
-                  <Save size={14} /> {loading ? "Saving..." : "Save"}
-                </button>
-              </>
-            ) : (
-              <>
-                {profile && (
-                  <button
-                    onClick={handleDelete}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-red-100 bg-red-50 text-red-500 text-sm font-bold hover:bg-red-100 transition-colors"
-                  >
-                    <Trash2 size={14} /> Delete
-                  </button>
-                )}
-
-                <button
-                  onClick={() => setEditing(true)}
-                  /* Now applying the new HomePage UI classes */
-                  className="btn-primary"
-                  style={{ padding: "8px 16px" }}
-                >
-                  <Edit2 size={14} /> Edit
-                </button>
-              </>
-            )}
-          </div>
-        </div>
+         </section>
 
         <ProfileForm
           formData={formData}
-          editing={editing}
+          editing={true}
           loading={loading}
           profile={profile}
           completion={completion}
@@ -223,11 +206,10 @@ export default function ProfilePage() {
           initials={initials}
           onChange={handleChange}
           onSave={handleSave}
+          onDiscard={() => navigate("/student/dashboard")}
           onCancel={handleCancel}
           onDelete={handleDelete}
-          onEdit={() => setEditing(true)}
-
-          /* This is the personalized job search  */
+          success={success}
           onNavigate={() =>
             navigate(`/student/jobs?q=${encodeURIComponent(formData.domain || formData.skills || "")}`)
           }
@@ -238,5 +220,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-
-

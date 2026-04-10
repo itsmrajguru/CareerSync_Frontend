@@ -2,7 +2,7 @@ import api from "../api";
 
 // These functions calls the student profile Routes
 export async function getProfileList() {
-  return api.get('/students').then(data => data ? [data] : []); 
+  return api.get('/students'); 
 }
 export async function getProfile(id) {
   return api.get(`/students/me`); 

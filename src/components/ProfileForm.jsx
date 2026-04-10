@@ -1,7 +1,7 @@
 import {
   Github, Linkedin, Globe, MapPin, Calendar,
   User as UserIcon, Briefcase, GraduationCap,
-  Search, Save, X, Edit2, Trash2, Plus
+  Search, Save, X, Plus, CheckCircle2
 } from "lucide-react";
 
 /* we are calling this field function on every input form,
@@ -73,7 +73,7 @@ function CellLabel({ children }) {
 3)celltitle */
 export default function ProfileForm({
   formData, editing, loading, profile, completion, skills,
-  initials, onChange, onSave, onCancel, onDelete, onEdit,
+  initials, onChange, onSave, onDiscard, success,
   onNavigate,
 }) {
   return (
@@ -134,20 +134,14 @@ export default function ProfileForm({
       {/* (2nd cell) : About me Section*/}
       <Cell style={{ gridColumn: "2 / 4", gridRow: "1" }}>
         <CellLabel>About me</CellLabel>
-        {editing ? (
-          <Field
-            name="summary"
-            value={formData.summary}
-            onChange={onChange}
-            editing={editing}
-            placeholder="Brief professional summary..."
-            textarea
-          />
-        ) : (
-          <p className="text-[13px] text-black leading-relaxed">
-            {profile?.summary || "No summary added yet."}
-          </p>
-        )}
+        <Field
+          name="summary"
+          value={formData.summary}
+          onChange={onChange}
+          editing={true}
+          placeholder="Brief professional summary..."
+          textarea
+        />
       </Cell>
 
       {/* (3rd cell): basic Info section */}
@@ -168,29 +162,14 @@ export default function ProfileForm({
       {/*(4th cell) : Skills section*/}
       <Cell style={{ gridColumn: "1 / 3", gridRow: "3" }}>
         <CellLabel>Skills</CellLabel>
-        {editing ? (
-          <Field
-            name="skills"
-            value={formData.skills}
-            onChange={onChange}
-            editing={editing}
-            placeholder="React, Python, Node.js, SQL..."
-            icon={Plus}
-          />
-        ) : (
-          <div className="flex flex-wrap gap-1.5 mt-1">
-            {skills.length > 0 ? skills.map((s, i) => (
-              <span
-                key={i}
-                className="cs-badge !rounded-full !px-3 !py-1 !text-[11px]"
-              >
-                {s}
-              </span>
-            )) : (
-              <p className="text-[12px] text-black">No skills added yet.</p>
-            )}
-          </div>
-        )}
+        <Field
+          name="skills"
+          value={formData.skills}
+          onChange={onChange}
+          editing={true}
+          placeholder="React, Python, Node.js, SQL..."
+          icon={Plus}
+        />
       </Cell>
 
       {/* (5th cell): Gender section */}
@@ -203,35 +182,23 @@ export default function ProfileForm({
       {/* (6th section) :Experience section */}
       <Cell style={{ gridColumn: "1", gridRow: "4" }}>
         <div className="flex items-center gap-2 mb-3">
-          <Briefcase size={13} className="text-black" />
+          <Briefcase size={13} className="text-[#0f172a]" />
           <CellLabel>Experience</CellLabel>
         </div>
-        {editing ? (
-          <Field name="work" value={formData.work}
-            onChange={onChange} editing={editing}
-            placeholder="Work history..." textarea />
-        ) : (
-          <p className="text-[12px] text-black leading-relaxed whitespace-pre-line">
-            {profile?.work || "No experience added yet."}
-          </p>
-        )}
+        <Field name="work" value={formData.work}
+          onChange={onChange} editing={true}
+          placeholder="Work history..." textarea />
       </Cell>
 
       {/* (7th section) :Education Section*/}
       <Cell style={{ gridColumn: "2", gridRow: "4" }}>
         <div className="flex items-center gap-2 mb-3">
-          <GraduationCap size={13} className="text-black" />
+          <GraduationCap size={13} className="text-[#0f172a]" />
           <CellLabel>Education</CellLabel>
         </div>
-        {editing ? (
-          <Field name="education" value={formData.education}
-            onChange={onChange} editing={editing}
-            placeholder="Degrees, courses..." textarea />
-        ) : (
-          <p className="text-[12px] text-black leading-relaxed">
-            {profile?.education || "No education added yet."}
-          </p>
-        )}
+        <Field name="education" value={formData.education}
+          onChange={onChange} editing={true}
+          placeholder="Degrees, courses..." textarea />
       </Cell>
 
       {/* (8th section) : Social Links section*/}
@@ -257,36 +224,27 @@ export default function ProfileForm({
       >
         <button
           onClick={onNavigate}
-          className="btn-dark px-5 py-2.5 text-sm"
+          className="btn-dark px-6 py-3 text-sm"
         >
           <Search size={14} /> Find matching jobs
         </button>
-
+ 
         <div className="flex gap-2">
-          {editing ? (
-            <>
-              <button
-                onClick={onCancel}
-                className="btn-outline px-4 py-2.5 text-sm"
-              >
-                <X size={14} /> Cancel
-              </button>
-              <button
-                onClick={onSave}
-                disabled={loading}
-                className="btn-primary px-4 py-2.5 text-sm"
-              >
-                <Save size={14} /> {loading ? "Saving..." : "Save changes"}
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={onEdit}
-              className="btn-primary px-4 py-2.5 text-sm"
-            >
-              <Edit2 size={14} /> Edit profile
-            </button>
-          )}
+          <button
+            onClick={onSave}
+            disabled={loading}
+            className="btn-primary px-6 py-3 text-sm"
+          >
+            {success ? <CheckCircle2 size={16} /> : <Save size={14} />} 
+            {loading ? "Saving..." : success ? "Changes Saved" : "Update Profile"}
+          </button>
+ 
+          <button
+            onClick={onDiscard}
+            className="btn-outline px-6 py-3 text-sm"
+          >
+            Discard
+          </button>
         </div>
       </Cell>
 
