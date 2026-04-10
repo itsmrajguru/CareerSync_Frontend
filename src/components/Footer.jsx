@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer style={{ background: "#0c1a2e", padding: "48px 24px 32px", marginTop: "auto" }}>
@@ -22,10 +24,17 @@ export default function Footer() {
               <div style={{ fontSize: 12, fontWeight: 800, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 14 }}>{col.title}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {col.links.map(l => (
-                  <span key={l} style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s" }}
-                    onMouseEnter={e => e.target.style.color = "#02bcf0"}
-                    onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.55)"}
-                  >{l}</span>
+                  l === "About Us" ? (
+                    <Link key={l} to="/about" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s", textDecoration: "none" }}
+                      onMouseEnter={e => e.target.style.color = "#ef4444"}
+                      onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.45)"}
+                    >{l}</Link>
+                  ) : (
+                    <span key={l} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s" }}
+                      onMouseEnter={e => e.target.style.color = "#ef4444"}
+                      onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.45)"}
+                    >{l}</span>
+                  )
                 ))}
               </div>
             </div>
