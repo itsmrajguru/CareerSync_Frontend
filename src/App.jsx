@@ -18,6 +18,13 @@ import ExternalJobDetailsPage from "./pages/student/ExternalJobDetailsPage";
 import StudentSettingsPage from "./pages/student/StudentSettingsPage";
 import JobsPage from "./pages/student/JobsPage";
 import JobDetailsPage from "./pages/student/JobDetailsPage";
+import ApplyPage from "./pages/student/ApplyPage";
+import ApplicationsPage from "./pages/student/ApplicationsPage";
+
+// Admin pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageCompaniesPage from "./pages/admin/ManageCompaniesPage";
+import ManageJobsPage from "./pages/admin/ManageJobsPage";
 
 // Company pages
 import CompanyDashboard from "./pages/company/CompanyDashboard";
@@ -49,11 +56,19 @@ function App() {
         {/* Internal Jobs */}
         <Route path="/student/jobs" element={<ProtectedRoute role="student"><JobsPage /></ProtectedRoute>} />
         <Route path="/student/jobs/:id" element={<ProtectedRoute role="student"><JobDetailsPage /></ProtectedRoute>} />
-        
+        <Route path="/student/apply/:id" element={<ProtectedRoute role="student"><ApplyPage /></ProtectedRoute>} />
+        <Route path="/student/applications" element={<ProtectedRoute role="student"><ApplicationsPage /></ProtectedRoute>} />
+
         {/* External Jobs (Adzuna) */}
         <Route path="/student/discover-jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />
         <Route path="/student/discover-jobs/:id" element={<ProtectedRoute role="student"><ExternalJobDetailsPage /></ProtectedRoute>} />
-        
+
+        {/* Admin Section */}
+        <Route path="/admin/dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/companies" element={<ProtectedRoute role="admin"><ManageCompaniesPage /></ProtectedRoute>} />
+        <Route path="/admin/jobs" element={<ProtectedRoute role="admin"><ManageJobsPage /></ProtectedRoute>} />
+
+        {/* Student Profile & Settings */}
         <Route path="/student/profile" element={<ProtectedRoute role="student"><StudentProfilePage /></ProtectedRoute>} />
         <Route path="/student/resume" element={<ProtectedRoute role="student"><ResumePage /></ProtectedRoute>} />
         <Route path="/student/settings" element={<ProtectedRoute role="student"><StudentSettingsPage /></ProtectedRoute>} />
