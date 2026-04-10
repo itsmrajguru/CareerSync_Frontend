@@ -390,7 +390,7 @@ export default function DashboardPage() {
         <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
  
            <section className="d-hero mb-8 animate-fade-in-down">
-             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "60px" }}>
+             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
  
                <div style={{ flex: 1 }}>
                  <div className="mb-7">
@@ -423,7 +423,7 @@ export default function DashboardPage() {
                    <button onClick={() => navigate("/student/jobs")} className="btn-primary !px-10 !py-3.5 shadow-xl shadow-primary-400/20">
                      <Search size={16} /> Browse Jobs
                    </button>
-                   <button onClick={() => navigate("/student/resume")} className="btn-outline !px-10 !py-3.5">
+                   <button onClick={() => navigate("/about")} className="btn-outline !px-10 !py-3.5">
                      <Briefcase size={16} /> Learn More
                    </button>
                  </div>
@@ -437,19 +437,13 @@ export default function DashboardPage() {
                  </div>
                </div>
 
-              {/* Right Column: High-Fidelity Image */}
-              <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "380px" }}>
-                <div style={{ borderRadius: "28px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.12)", border: "1px solid #f1f5f9" }}>
+              {/* Right Column: Fixed-Position Image — Platform Standard */}
+              <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
+                <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
                   <img
-                    src="/hero.jpg"
-                    alt="CareerSync Support"
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&auto=format&fit=crop"
+                    alt="CareerSync Success"
                     style={{ width: "100%", height: "300px", objectFit: "cover", display: "block" }}
-                    onError={e => {
-                      if (!e.currentTarget.dataset.fallback) {
-                        e.currentTarget.dataset.fallback = "1";
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&auto=format&fit=crop";
-                      }
-                    }}
                   />
                 </div>
               </div>
