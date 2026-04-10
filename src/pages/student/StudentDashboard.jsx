@@ -149,6 +149,7 @@ import {
   TrendingUp, Briefcase, ArrowRight
 } from "lucide-react";
 import { getJobs } from "../../services/externalJobsService";
+import { getProfileList } from "../../services/studentProfileService";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import JobCard from "../../components/JobCard";
@@ -388,54 +389,54 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
         <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
- 
-           <section className="d-hero mb-8 animate-fade-in-down">
-             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
- 
-               <div style={{ flex: 1 }}>
-                 <div className="mb-7">
-                   <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
-                     Hello {user.username || "User"}
-                   </p>
-                   <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-                     Find work that<br />
-                     <span style={{ color: "#ef4444" }}>actually fits you.</span>
-                   </h1>
-                   <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
-                     Connect with top employers and discover opportunities that match your skills. Whether you're a job seeker or recruiter, we've got you covered with powerful tools.
-                   </p>
-                 </div>
- 
-                 <div className="flex gap-10 mb-6">
-                   {[
-                     { val: "10k+", lbl: "Active Jobs" },
-                     { val: "5k+",  lbl: "Companies"  },
-                     { val: "50k+", lbl: "Job Seekers" },
-                   ].map(({ val, lbl }) => (
-                     <div key={lbl} className="flex flex-col">
-                       <span className="text-[1.7rem] font-black leading-none" style={{letterSpacing: "-1px" }}>{val}</span>
-                       <span className="text-[10px] font-bold text-[#94a3b8] mt-1 uppercase tracking-wider">{lbl}</span>
-                     </div>
-                   ))}
-                 </div>
-      
-                 <div className="flex flex-wrap gap-4 mb-4">
-                   <button onClick={() => navigate("/student/jobs")} className="btn-primary !px-10 !py-3.5 shadow-xl shadow-primary-400/20">
-                     <Search size={16} /> Browse Jobs
-                   </button>
-                   <button onClick={() => navigate("/about")} className="btn-outline !px-10 !py-3.5">
-                     <Briefcase size={16} /> Learn More
-                   </button>
-                 </div>
- 
-                 <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
-                   <span className="flex items-center gap-1">✔ Free to use</span>
-                   <span style={{ opacity: 0.3 }}>·</span>
-                   <span className="flex items-center gap-1">✔ Verified Employers</span>
-                   <span style={{ opacity: 0.3 }}>·</span>
-                   <span className="flex items-center gap-1">✔ Secure Platform</span>
-                 </div>
-               </div>
+
+          <section className="d-hero mb-8 animate-fade-in-down">
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+
+              <div style={{ flex: 1 }}>
+                <div className="mb-7">
+                  <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                    Hello {user.username || "User"}
+                  </p>
+                  <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                    Find work that<br />
+                    <span style={{ color: "#ef4444" }}>actually fits you.</span>
+                  </h1>
+                  <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                    Connect with top employers and discover opportunities that match your skills. Whether you're a job seeker or recruiter, we've got you covered with powerful tools.
+                  </p>
+                </div>
+
+                <div className="flex gap-10 mb-6">
+                  {[
+                    { val: "10k+", lbl: "Active Jobs" },
+                    { val: "5k+", lbl: "Companies" },
+                    { val: "50k+", lbl: "Job Seekers" },
+                  ].map(({ val, lbl }) => (
+                    <div key={lbl} className="flex flex-col">
+                      <span className="text-[1.7rem] font-black leading-none" style={{ letterSpacing: "-1px" }}>{val}</span>
+                      <span className="text-[10px] font-bold text-[#94a3b8] mt-1 uppercase tracking-wider">{lbl}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-4 mb-4">
+                  <button onClick={() => navigate("/student/jobs")} className="btn-primary !px-10 !py-3.5 shadow-xl shadow-primary-400/20">
+                    <Search size={16} /> Browse Jobs
+                  </button>
+                  <button onClick={() => navigate("/about")} className="btn-outline !px-10 !py-3.5">
+                    <Briefcase size={16} /> Learn More
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                  <span className="flex items-center gap-1">✔ Free to use</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Verified Employers</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Secure Platform</span>
+                </div>
+              </div>
 
               {/* Right Column: Fixed-Position Image — Platform Standard */}
               <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>

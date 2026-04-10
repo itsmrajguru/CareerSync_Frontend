@@ -130,7 +130,7 @@ this function is built for mobile hamburger type navbar*/
                       background: "none", border: "none", cursor: "pointer",
                       display: "flex", alignItems: "center", gap: 4,
                       color: (hoveredNav === item.id || item.submenu.some(s => isActive(s.path)))
-                        ? "#02bcf0" : undefined,
+                        ? (isCompany ? "#ef4444" : "#02bcf0") : undefined,
                     }}
                   >
                     {item.label}
