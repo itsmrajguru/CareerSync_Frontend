@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  Search, Filter, X, MapPin, Briefcase, DollarSign,
-  Users, ChevronLeft, ChevronRight, CheckCircle, Building2
+  Search, Filter, X, MapPin, Briefcase,
+  Users, CheckCircle, Building2,
+  Bookmark, BookmarkCheck
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
-import { getJobs } from "../../services/jobsService";
-
+import { getJobs, toggleSaveJob, getSavedJobs } from "../../services/jobsService";
 
 /* This page has 3 componets
 a) jobItem 
@@ -14,8 +14,21 @@ b)Filter panel
 c) the main job page that combines both jobItem and filterpanel */
 
 /*Here we added the filter functionality along with 2 grid structure */
-function JobItem({ job, hasApplied }) {
+function JobItem({ job, hasApplied, isSavedInitially, onToggleSave }) {
   const navigate = useNavigate();
+  const [isSaved, setIsSaved] = useState(isSavedInitially);
+
+  const handleSave = async (e) => {
+    e.stopPropagation(); // prevent card click
+    try {
+      const response = await toggleSaveJob(job._id);
+      setIsSaved(response.isSaved);
+      if (onToggleSave) onToggleSave(job._id, response.isSaved);
+    } catch (err) {
+      console.error("Failed to toggle save:", err);
+    }
+  };
+
 
   /* removes _ and make the title uppercase */
   const contractLabel = job.jobType
@@ -23,64 +36,72 @@ function JobItem({ job, hasApplied }) {
     : "FULL TIME";
 
   const locationLabel = job.location || "Remote";
-  const salary = job.salary
-    ? `$${Number(job.salary).toLocaleString()}`
-    : "Competitive";
 
   return (
     <div
     /* redirect user to jobdetails page */
       onClick={() => navigate(`/student/jobs/${job._id}`, { state: { job } })}
-      className="cs-card flex flex-col group transition-all !p-6 border-neutral-200 hover:border-black cursor-pointer shadow-sm relative h-full"
+      className="cs-card-modern flex flex-col group transition-all cursor-pointer relative h-full p-5"
     >
       {/* Platform Standard: Applied Badge */}
-      {hasApplied && (
-        <div className="absolute top-4 right-4 flex items-center gap-1 bg-[#ef4444]/5 text-[#ef4444] px-3 py-1 rounded-full text-[10px] font-bold border border-[#ef4444]/10 z-10 uppercase tracking-widest">
-          <CheckCircle size={10} /> Applied
-        </div>
-      )}
+      <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+        {hasApplied && (
+          <div className="flex items-center gap-1 bg-[#ef4444]/5 text-[#ef4444] px-3 py-1 rounded-full text-[10px] font-bold border border-[#ef4444]/10 uppercase tracking-widest">
+            <CheckCircle size={10} /> Applied
+          </div>
+        )}
+        <button 
+          onClick={handleSave}
+          className={`p-2 rounded-xl border transition-all ${
+            isSaved 
+              ? "bg-[#ef4444] border-[#ef4444] text-white" 
+              : "bg-white border-neutral-100 text-[#94a3b8] hover:text-[#ef4444] shadow-sm"
+          }`}
+        >
+          {isSaved ? <BookmarkCheck size={16} fill="currentColor" /> : <Bookmark size={16} />}
+        </button>
+      </div>
+
 
       {/* job section to match with the website fixed layouts and styles...
       this function returns the job decsriotion to show on the card*/}
       {/* other job info */}
       <div className="flex items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-[#0f172a] flex items-center justify-center flex-shrink-0 border border-[#0f172a] shadow-lg shadow-primary-900/10 transition-transform group-hover:scale-105">
+          <div className="w-11 h-11 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors shadow-sm">
             {job.company?.logo ? (
               <img src={job.company.logo} alt={job.company.name} className="w-full h-full rounded-2xl object-cover" />
             ) : (
-              <Building2 size={24} className="text-white" />
+              <Building2 size={18} className="text-neutral-400" />
             )}
           </div>
           <div className="min-w-0">
-            <span className="text-[10px] font-black tracking-[1.5px] text-[#ef4444] uppercase mb-1 block">
+            <span className="cs-section-label !mb-0.5">
               {job.company?.name || "Confidential"}
             </span>
-            <h3 className="text-[16px] font-extrabold text-[#0f172a] leading-tight truncate group-hover:text-black transition-colors">
+            <h3 className="text-[16px] font-bold text-black leading-tight truncate group-hover:text-[#ef4444] transition-colors">
               {job.title}
             </h3>
           </div>
         </div>
-        <div className="text-black font-black text-[14px] bg-neutral-50 px-3 py-1 rounded-xl border border-neutral-100 flex-shrink-0">
-          {salary}
-        </div>
+
       </div>
 
       {/* Description over the main Header added in the card*/}
-      <p className="text-[13px] text-[#64748b] leading-relaxed mb-6 font-medium line-clamp-2">
+      <p className="cs-subtext mb-6 line-clamp-2 text-[13px] font-medium">
         {job.description?.replace(/<[^>]*>/g, "") || "Detailed career requirements for this position are available upon forge entry."}
       </p>
 
       {/*Other icons and data to display in the jobcard */}
-      <div className="grid grid-cols-2 gap-3 mb-6 flex-1">
+      <div className="grid grid-cols-2 gap-y-3 mb-6">
         {[
           { icon: <MapPin size={12} />, text: locationLabel },
           { icon: <Users size={12} />, text: "Direct Apply" },
           { icon: <Briefcase size={12} />, text: contractLabel },
           { icon: <CheckCircle size={12} />, text: "Internal" },
         ].map(({ icon, text }, i) => (
-          <div key={i} className="flex items-center gap-2 text-[11px] text-[#64748b] font-bold truncate">
-            <span className="text-[#94a3b8]">{icon}</span>
+          <div key={i} className="flex items-center gap-2 text-[11px] text-neutral-500 font-bold truncate">
+            <span className="text-neutral-400">{icon}</span>
             <span className="truncate uppercase tracking-wider">{text}</span>
           </div>
         ))}
@@ -88,11 +109,11 @@ function JobItem({ job, hasApplied }) {
 
       {/* this is the view details button which
       redirects the user to the jobdetails page */}
-      <div className="cs-card-divider mt-auto pt-5 flex items-center justify-between !m-0 !p-0">
-        <span className="text-[12px] font-black text-black uppercase tracking-[1px] group-hover:text-[#ef4444] transition-colors">
+      <div className="mt-auto pt-4 flex items-center justify-between border-t border-neutral-100">
+        <span className="text-[11px] font-bold text-black uppercase tracking-wider group-hover:text-[#ef4444] transition-colors">
           View Details
         </span>
-        <span className="text-black font-black text-lg group-hover:translate-x-1 transition-transform">&rarr;</span>
+        <span className="text-black font-bold text-lg group-hover:translate-x-1 transition-transform">&rarr;</span>
       </div>
     </div>
   );
@@ -100,14 +121,13 @@ function JobItem({ job, hasApplied }) {
 
 // this is the full function for the filter section
 function FilterPanel({ filters, onChange, onClear, activeCount }) {
-  const workLocations = ["Onsite", "Remote", "Hybrid"];
 
   return (
-    <div className="bg-white border border-neutral-200 rounded-[22px] overflow-hidden sticky top-8 shadow-sm">
+    <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden sticky top-8 shadow-sm">
       <div className="px-6 py-5 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/50">
         <div className="flex items-center gap-2.5">
           <Filter size={15} className="text-black" />
-          <span className="font-extrabold text-[14px] text-black">Forge Filters</span>
+          <span className="cs-section-label !mb-0 font-black">Forge Filters</span>
           {activeCount > 0 && (
             <span className="w-5 h-5 flex items-center justify-center bg-[#ef4444] text-white rounded-full text-[10px] font-black">
               {activeCount}
@@ -131,7 +151,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
             value={filters.search}
             onChange={e => onChange("search", e.target.value)}
             placeholder="Title, Skills..."
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !border-neutral-100"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !border-neutral-100 font-bold"
           />
         </div>
 
@@ -143,7 +163,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
           <select
             value={filters.industry}
             onChange={e => onChange("industry", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !appearance-none cursor-pointer font-bold"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-bold"
           >
             <option value="">All Sectors</option>
             <option value="Engineering">Engineering</option>
@@ -164,7 +184,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
             value={filters.location}
             onChange={e => onChange("location", e.target.value)}
             placeholder="City, State..."
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !border-neutral-100"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !border-neutral-100 font-bold"
           />
         </div>
 
@@ -174,7 +194,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
           <select
             value={filters.jobType}
             onChange={e => onChange("jobType", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !appearance-none cursor-pointer font-bold"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-bold"
           >
             <option value="">All Schedules</option>
             <option value="full-time">Full Time</option>
@@ -193,9 +213,11 @@ export default function JobsPage() {
   const [searchParams] = useSearchParams();
 
   const [jobs, setJobs] = useState([]);
+  const [savedJobIds, setSavedJobIds] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [quickSearch, setQuickSearch] = useState(searchParams.get("q") || "");
+
 
   /* fiters array, that is passed to the filterpanel as a  prop */
   const [filters, setFilters] = useState({
@@ -208,21 +230,40 @@ export default function JobsPage() {
   useEffect(() => {
     const q = searchParams.get("q") || "";
     setQuickSearch(q);
-    fetchJobs({ search: q });
+    fetchInitialData(q);
   }, [searchParams]);
 
+  async function fetchInitialData(q) {
+    setLoading(true);
+    await Promise.all([
+      fetchJobs({ search: q }),
+      fetchSavedJobIds()
+    ]);
+    setLoading(false);
+  }
+
+  async function fetchSavedJobIds() {
+    try {
+      const response = await getSavedJobs();
+      const ids = new Set(response.savedJobs.map(j => j._id));
+      setSavedJobIds(ids);
+    } catch (err) {
+      console.error("Failed to fetch saved jobs:", err);
+    }
+  }
+
+
   async function fetchJobs(f = filters) {
-    setLoading(true); setError("");
+    setError("");
     try {
       const response = await getJobs(f);
       /* logic: accessing response.jobs directly due to api interceptor */
       setJobs(response.jobs || []);
     } catch {
       setError("Unable to process the job forge. Try again later.");
-    } finally {
-      setLoading(false);
     }
   }
+
 
   // Effect to re-fetch when relevant filters change
   useEffect(() => {
@@ -233,20 +274,20 @@ export default function JobsPage() {
 
   return (
     <PageLayout>
-      <div className="pb-10 animate-fade-in">
+      <div className="pb-20 animate-fade-in">
 
         {/* This is the herosection that matches the exact styles with the actual
         existing pages of the website */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-14">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-14 pt-4">
           <div>
-            <p className="text-[13px] font-bold tracking-[1.5px]  text-[#475569] uppercase mb-4">
+            <p className="cs-section-label">
               Internal Forge
             </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-              Build your career<br />
+            <h1 className="cs-page-title">
+              Build your career <br />
               <span className="text-[#ef4444]">directly with partners.</span>
             </h1>
-            <p className="text-[16px] leading-[1.6] text-[#64748b] font-medium max-w-[500px]">
+            <p className="cs-subtext max-w-[500px]">
               Direct forge entry into verified internal opportunities from our registered companies.
             </p>
           </div>
@@ -255,16 +296,16 @@ export default function JobsPage() {
           from the user */}
           <form
             onSubmit={(e) => { e.preventDefault(); setFilters(p => ({ ...p, search: quickSearch })); }}
-            className="relative w-full md:w-[420px]"
+            className="relative w-full lg:w-[420px]"
           >
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#94a3b8]" size={16} />
             <input
               value={quickSearch}
               onChange={e => setQuickSearch(e.target.value)}
               placeholder="Design, Tech, Engineering..."
-              className="cs-input !pl-14 !pr-32 !py-4.5 !rounded-[24px] !border-neutral-100 !text-[14px]"
+              className="cs-input !pl-14 !pr-32 !py-4 !rounded-xl !text-[13px] font-bold"
             />
-            <button type="submit" className="btn-primary absolute right-2 top-2 bottom-2 px-10 !py-0 !rounded-[18px] !text-[11px] font-black uppercase tracking-widest active:scale-95 transition-all">
+            <button type="submit" className="absolute right-2 top-2 bottom-2 px-8 bg-black text-white rounded-lg text-[11px] font-black uppercase tracking-widest active:scale-95 transition-all">
               Refine
             </button>
           </form>
@@ -289,7 +330,7 @@ export default function JobsPage() {
 
             {!loading && jobs.length > 0 && (
               <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
-                <p className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[2.5px]">
+                <p className="cs-section-label !mb-0">
                   Analysis: Showing {jobs.length} verified roles
                 </p>
                 <div className="flex items-center gap-2">
@@ -300,7 +341,7 @@ export default function JobsPage() {
             )}
 
             {error && (
-              <div className="p-6 bg-red-50 rounded-[22px] text-[#ef4444] font-bold text-sm flex items-center gap-3">
+              <div className="p-6 bg-red-50 rounded-xl text-[#ef4444] font-bold text-sm flex items-center gap-3">
                 <X size={18} /> {error}
               </div>
             )}
@@ -312,8 +353,15 @@ export default function JobsPage() {
                   <div key={i} className="bg-neutral-50/50 border border-neutral-100 rounded-[28px] h-[260px] animate-pulse" />
                 ))
               ) : jobs.length > 0 ? (
-                jobs.map((job) => <JobItem key={job._id} job={job} />)
+                jobs.map((job) => (
+                  <JobItem 
+                    key={job._id} 
+                    job={job} 
+                    isSavedInitially={savedJobIds.has(job._id)}
+                  />
+                ))
               ) : (
+
                 <div className="md:col-span-2 py-20 text-center">
                    <p className="text-[#64748b] font-bold">No internal jobs found matching your criteria.</p>
                 </div>

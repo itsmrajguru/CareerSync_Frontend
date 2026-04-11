@@ -9,7 +9,7 @@ export default function AboutPage() {
         {/*hero section of the about page...
         we matched the herosection with the existing page styles and layouts
         where the header contains a mix style of midnight + red */}
-        <section aria-label="Page header" className="mb-8 p-0">
+        <section aria-label="Page header" className="mb-8 pt-4 p-0">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
             <div className="flex-1">
               <div className="mb-7 text-left">
@@ -47,7 +47,7 @@ export default function AboutPage() {
         </section>
 
         {/* main content grid following the StudentProfilePage 3-column cell structure exactly */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* This is the how it works section... 
           created a grid structure with the dummy data as features of the website */}

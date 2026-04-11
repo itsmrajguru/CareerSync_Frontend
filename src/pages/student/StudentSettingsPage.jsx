@@ -71,7 +71,7 @@ export default function StudentSettingsPage() {
     <PageLayout>
       <div className="pb-20 animate-fade-in">
 
-           <section aria-label="Page header" className="mb-8 p-0">
+           <section aria-label="Page header" className="mb-8 pt-4 p-0">
              <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
                <div style={{ flex: 1 }}>
                  <div className="mb-7">
@@ -106,8 +106,8 @@ export default function StudentSettingsPage() {
              </div>
            </section>
 
-          <div className="d-content flex flex-col gap-6">
-            <div className="bg-white border border-neutral-200 rounded-xl p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="cs-card-modern p-6 lg:col-span-2">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 rounded-lg bg-primary-50 text-[#0f172a] flex items-center justify-center">
                   <Key size={16} />
@@ -149,7 +149,7 @@ export default function StudentSettingsPage() {
               </form>
             </div>
 
-            <div className="bg-white border border-neutral-200 rounded-xl p-6">
+            <div className="cs-card-modern p-6">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
                   <Bell size={16} />
@@ -181,7 +181,7 @@ export default function StudentSettingsPage() {
               </div>
             </div>
 
-            <div className="bg-red-50/50 border border-red-100 rounded-xl p-6 mt-4">
+            <div className="cs-card-modern p-6 lg:col-span-3 border-red-200 bg-red-50/20">
               <div className="flex items-center gap-2 mb-2">
                 <Shield size={16} className="text-red-600" />
                 <h2 className="text-[13px] font-bold text-red-600 uppercase tracking-wider">Danger Zone</h2>

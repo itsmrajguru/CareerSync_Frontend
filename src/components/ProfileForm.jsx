@@ -50,7 +50,7 @@ function Field({ label, name, value, onChange, editing, placeholder, icon: Icon,
 function Cell({ children, className = "", style = {} }) {
   return (
     <div
-      className={`cs-card p-5 ${className}`}
+      className={`cs-card-modern p-6 ${className}`}
       style={style}
     >
       {children}
@@ -78,7 +78,7 @@ export default function ProfileForm({
 }) {
   return (
     <div
-      className="grid grid-cols-1 lg:grid-cols-3 gap-3"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
 
       {/*(1st cell) : which displays profle completeness

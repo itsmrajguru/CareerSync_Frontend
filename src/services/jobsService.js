@@ -21,3 +21,10 @@ export async function deleteJob(id) {
 export async function getJobApplicants(jobId) {
   return api.get(`jobs/${jobId}/applicants`);
 }
+export async function toggleSaveJob(jobId) {
+  return api.post(`jobs/${jobId}/save`);
+}
+export async function getSavedJobs() {
+  return api.get('jobs/saved/all');
+}
+
