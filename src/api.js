@@ -1,6 +1,14 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+const envUrl = import.meta.env.VITE_API_BASE_URL || "";
+const API_URL = envUrl 
+  ? (envUrl.endsWith('/') ? envUrl.slice(0,-1) : envUrl)
+  : "http://localhost:8000/api/v1";
+
+// Ensure /api/v1 is appended if missing from production URL
+const finalApiUrl = (API_URL.includes('onrender.com') && !API_URL.includes('/api/v1'))
+  ? `${API_URL}/api/v1`
+  : API_URL;
 
 /*
   This file only creates and configures the shared axios instance.
@@ -15,7 +23,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/
 */
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: finalApiUrl,
   withCredentials: true
 })
 
