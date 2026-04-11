@@ -190,7 +190,7 @@ to show and hide it for the user */}
               disabled={loading}
               className="btn-primary w-full py-2.5 text-[13px] mt-0.5 font-bold shadow-md shadow-primary-200/50"
             >
-              {loading ? "Deploying account..." : "Start Building Future"}
+              {loading ? "Creating account..." : "Sign Up"}
             </button>
           </form>
 
