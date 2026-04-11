@@ -2,19 +2,19 @@ import api from "../api";
 
 // These functions calls the student profile Routes
 export async function getProfileList() {
-  return api.get('/students'); 
+  return api.get('students'); 
 }
 export async function getProfile(id) {
-  return api.get(`/students/me`); 
+  return api.get(`students/me`); 
 }
 export async function createProfile(data) {
-  return api.post('/students', data);
+  return api.post('students', data);
 }
 export async function updateProfile(id, data) {
-  return api.put(`/students/me`, data);
+  return api.put(`students/me`, data);
 }
 export async function deleteProfile(id) {
-  return api.delete(`/students/me`);
+  return api.delete(`students/me`);
 }
 
 
@@ -30,7 +30,7 @@ export async function uploadResume(file) {
       formData.append('resume',file)
 
       //call resumeController
-      return api.post('/students/me/resume',formData,{
+      return api.post('students/me/resume',formData,{
         headers:{'Content-Type': 'multipart/form-data'}
       })
 
@@ -38,5 +38,5 @@ export async function uploadResume(file) {
 
 /* function for the students to get their applied jobs info */
 export async function getMyApplications() {
-  return api.get('/applications/mine');
+  return api.get('applications/mine');
 }

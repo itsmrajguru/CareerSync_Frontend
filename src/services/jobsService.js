@@ -1,23 +1,23 @@
 import api from "../api";
 
 export async function getJobs(params) {
-  return api.get('/jobs', { params });
+  return api.get('jobs', { params });
 }
 export async function getJobById(id) {
-  return api.get(`/jobs/${id}`);
+  return api.get(`jobs/${id}`);
 }
 export async function createJob(data) {
-  return api.post('/jobs', data);
+  return api.post('jobs', data);
 }
 export async function getMyJobs() {
-  return api.get('/jobs/mine');
+  return api.get('jobs/mine');
 }
 export async function updateJob(id, data) {
-  return api.put(`/jobs/${id}`, data);
+  return api.put(`jobs/${id}`, data);
 }
 export async function deleteJob(id) {
-  return api.delete(`/jobs/${id}`);
+  return api.delete(`jobs/${id}`);
 }
 export async function getJobApplicants(jobId) {
-  return api.get(`/jobs/${jobId}/applicants`);
+  return api.get(`jobs/${jobId}/applicants`);
 }
