@@ -74,7 +74,7 @@ export default function StudentSettingsPage() {
         <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
  
            <section className="d-hero mb-8">
-             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+             <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
                <div style={{ flex: 1 }}>
                  <div className="mb-7">
                    <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">

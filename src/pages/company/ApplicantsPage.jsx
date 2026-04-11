@@ -107,7 +107,7 @@ export default function ApplicantsPage() {
            {/*added the herosection with matches the
             existing styles effectively*/}
            <section className="d-hero mb-8">
-             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+               <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
  
                {/* Left Column: Text & Actions */}
                <div style={{ flex: 1 }}>
@@ -153,7 +153,7 @@ export default function ApplicantsPage() {
  
           {/*stat cards*/}
           {!loading && applicants.length > 0 && (
-            <div className="d-stats grid grid-cols-3 gap-4 mb-8">
+            <div className="d-stats grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               {statCards.map(({ label, value, accent }) => (
                 <div key={label} style={{ borderTop: `3px solid ${accent}` }}
                   className="cs-card cursor-pointer group hover:scale-[1.01] transition-all"

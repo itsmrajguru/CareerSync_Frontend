@@ -284,7 +284,7 @@ function CareerPulse({ userSkills, onSearchSkill }) {
         </button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 190px" }}>
+      <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 190px" }}>
         <div style={{ padding: "18px 22px" }}>
           <div style={{ display: "flex", gap: "5px", marginBottom: "14px", flexWrap: "wrap" }}>
             {categories.map(cat => (
@@ -294,7 +294,7 @@ function CareerPulse({ userSkills, onSearchSkill }) {
               </button>
             ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "7px" }}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[7px]">
             {skills.map((skill, i) => (
               <HeatCell key={skill + seed} skill={skill} marketScore={getMarketScore(skill, seed)} userHas={hasSkill(skill)} onClick={onSearchSkill} animDelay={i * 35} />
             ))}
@@ -309,7 +309,8 @@ function CareerPulse({ userSkills, onSearchSkill }) {
           </div>
         </div>
 
-        <div style={{ borderLeft: "1px solid #f3f4f6", padding: "18px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fafafa" }}>
+
+        <div className="border-t lg:border-t-0 lg:border-left border-[#f3f4f6]" style={{ padding: "18px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fafafa" }}>
           <span style={{ fontSize: "9px", fontWeight: 700, color: "#0d1117", textTransform: "uppercase", letterSpacing: "0.06em" }}>Readiness Radar</span>
           <RadarChart categories={categories.map(c => c.slice(0, 4))} userScores={radarUser} marketScores={radarMarket} size={162} />
           <div style={{ textAlign: "center" }}>
@@ -391,7 +392,7 @@ export default function DashboardPage() {
         <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
 
           <section className="d-hero mb-8 animate-fade-in-down">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+            <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
               <div style={{ flex: 1 }}>
                 <div className="mb-7">

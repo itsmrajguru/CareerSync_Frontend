@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="h-screen w-screen flex bg-white font-sans overflow-hidden">
+        <div className="min-h-screen w-full flex bg-white font-sans overflow-y-auto">
             {/*added new 40-60 view
 and this is the left side 60 panel*/}
             <div className="hidden lg:flex lg:flex-[0.6] bg-[#0c1a2e] relative flex-col items-center pt-[12vh] p-8 overflow-hidden shadow-[inset_-20px_0_40px_rgba(0,0,0,0.1)]">
@@ -60,9 +60,16 @@ we have also added the return to home page here*/}
             </div>
 
             {/* added new 40-60 view
-and this is the right side 40 panel*/}
-            <div className="flex-1 lg:flex-[0.4] flex flex-col items-center justify-center px-8 lg:px-12 relative z-10 bg-white">
-                <div className="w-full max-w-[320px] py-4 flex flex-col gap-6">
+            and this is the right side 40 panel*/}
+            <div className="flex-1 lg:flex-[0.4] flex flex-col items-center justify-center px-6 lg:px-12 py-12 relative z-10 bg-white">
+                <div className="w-full max-w-[320px] flex flex-col gap-6">
+
+                    {/* mobile logo - only visible on small screens */}
+                    <div className="lg:hidden flex justify-center mb-2">
+                        <Link to="/">
+                            <img src="/logo.svg" alt="Logo" className="w-14 h-14 rounded-2xl shadow-lg border border-slate-100" />
+                        </Link>
+                    </div>
 
                     {/* Hero section */}
                     <div className="text-left">

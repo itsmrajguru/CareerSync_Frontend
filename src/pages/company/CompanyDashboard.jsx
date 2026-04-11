@@ -101,7 +101,7 @@ export default function CompanyDashboard() {
           {/*added the herosection with matches the
             existing styles effectively*/}
           <section className="d-hero mb-8">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+            <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
               {/* Left Column: Text & Actions */}
               <div style={{ flex: 1 }}>
@@ -150,7 +150,7 @@ export default function CompanyDashboard() {
           </section>
 
           {/* stats cards */}
-          <div className="d-stats grid grid-cols-3 gap-4 mb-8">
+          <div className="d-stats grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {statCards.map(({ label, value, sub, accent, link }) => (
               <div
                 key={label}
@@ -202,7 +202,7 @@ export default function CompanyDashboard() {
             </div>
 
             {/* Inner grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 190px" }}>
+            <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 190px" }}>
 
               {/* Left: pipeline funnel + active job chips */}
               <div style={{ padding: "18px 28px" }}>
@@ -258,7 +258,7 @@ export default function CompanyDashboard() {
               </div>
 
               {/* Right sidebar */}
-              <div style={{ borderLeft: "1px solid #f8fafc", padding: "24px 18px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fcfcfc" }}>
+              <div className="border-t lg:border-t-0 lg:border-l border-[#f8fafc]" style={{ padding: "24px 18px", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", background: "#fcfcfc" }}>
                 <span style={{ fontSize: "10px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   Hiring Score
                 </span>

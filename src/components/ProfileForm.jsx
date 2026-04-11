@@ -78,17 +78,14 @@ export default function ProfileForm({
 }) {
   return (
     <div
-      className="grid gap-3"
-      style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
+      className="grid grid-cols-1 lg:grid-cols-3 gap-3"
     >
 
       {/*(1st cell) : which displays profle completeness
       as well as intils, username, domain,title */}
       <Cell
-        className="flex flex-col items-center justify-center text-center"
+        className="flex flex-col items-center justify-center text-center lg:row-span-2"
         style={{
-          gridColumn: "1",
-          gridRow: "1 / 3",
           background: "#e6f9fe",
           bordercolor: "#0d1117",
           minHeight: 260,
@@ -132,7 +129,7 @@ export default function ProfileForm({
       </Cell>
 
       {/* (2nd cell) : About me Section*/}
-      <Cell style={{ gridColumn: "2 / 4", gridRow: "1" }}>
+      <Cell className="lg:col-span-2">
         <CellLabel>About me</CellLabel>
         <Field
           name="summary"
@@ -145,7 +142,7 @@ export default function ProfileForm({
       </Cell>
 
       {/* (3rd cell): basic Info section */}
-      <Cell style={{ gridColumn: "2 / 4", gridRow: "2" }}>
+      <Cell className="lg:col-span-2">
         <CellLabel>Basic info</CellLabel>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Full name" name="full_name" value={formData.full_name}
@@ -160,7 +157,7 @@ export default function ProfileForm({
       </Cell>
 
       {/*(4th cell) : Skills section*/}
-      <Cell style={{ gridColumn: "1 / 3", gridRow: "3" }}>
+      <Cell className="lg:col-span-2">
         <CellLabel>Skills</CellLabel>
         <Field
           name="skills"
@@ -173,14 +170,14 @@ export default function ProfileForm({
       </Cell>
 
       {/* (5th cell): Gender section */}
-      <Cell style={{ gridColumn: "3", gridRow: "3" }}>
+      <Cell>
         <CellLabel>Gender</CellLabel>
         <Field name="gender" value={formData.gender}
           onChange={onChange} editing={editing} placeholder="Male / Female / Other" />
       </Cell>
 
       {/* (6th section) :Experience section */}
-      <Cell style={{ gridColumn: "1", gridRow: "4" }}>
+      <Cell>
         <div className="flex items-center gap-2 mb-3">
           <Briefcase size={13} className="text-[#0f172a]" />
           <CellLabel>Experience</CellLabel>
@@ -191,7 +188,7 @@ export default function ProfileForm({
       </Cell>
 
       {/* (7th section) :Education Section*/}
-      <Cell style={{ gridColumn: "2", gridRow: "4" }}>
+      <Cell>
         <div className="flex items-center gap-2 mb-3">
           <GraduationCap size={13} className="text-[#0f172a]" />
           <CellLabel>Education</CellLabel>
@@ -202,7 +199,7 @@ export default function ProfileForm({
       </Cell>
 
       {/* (8th section) : Social Links section*/}
-      <Cell style={{ gridColumn: "3", gridRow: "4" }}>
+      <Cell>
         <CellLabel>Social links</CellLabel>
         <div className="flex flex-col gap-2">
           <Field label="GitHub" name="github" value={formData.github}
@@ -219,8 +216,7 @@ export default function ProfileForm({
 
       {/* (9th section) : Footer section*/}
       <Cell
-        style={{ gridColumn: "1 / 4", gridRow: "5" }}
-        className="flex items-center justify-between"
+        className="lg:col-span-3 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <button
           onClick={onNavigate}

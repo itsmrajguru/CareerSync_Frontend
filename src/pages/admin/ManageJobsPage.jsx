@@ -123,7 +123,7 @@ export default function ManageJobsPage() {
                 </div>
 
                 {/* Admin Actions */}
-                <div className="flex items-center gap-4 border-l border-neutral-100 pl-8 h-full">
+                <div className="flex items-center gap-4 border-t border-neutral-100 md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8 h-full w-full md:w-auto justify-center">
                   <button className="w-12 h-12 flex items-center justify-center rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
                     <Trash2 size={20} />
                   </button>

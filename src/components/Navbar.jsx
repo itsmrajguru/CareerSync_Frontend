@@ -311,7 +311,7 @@ so we are Dis Items directly for the mobile hamburger Feature */}
           {/* Hamburger (Mobile Toggle) */}
           <button
             className="mobile-menu-btn"
-            style={{ display: "none", background: "none", border: "none", cursor: "pointer", alignItems: "center" }}
+            style={{ background: "none", border: "none", cursor: "pointer", alignItems: "center" }}
             onClick={() => setMobileOpen(o => !o)}
           >
             {mobileOpen ? <X size={24} color="#111827" /> : <Menu size={24} color="#111827" />}

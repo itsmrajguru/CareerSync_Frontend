@@ -242,6 +242,52 @@
     transform: translateY(-2px);
     border-color: #9495e8;
   }
+
+  /* mobile and desktop visibility utils */
+  .desktop-nav {
+    display: flex;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    .desktop-nav {
+      display: none !important;
+    }
+
+    .mobile-menu-btn {
+      display: flex !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .search-bar-inner {
+      flex-direction: column !important;
+    }
+
+    .search-divider {
+      display: none !important;
+    }
+  }
+
+  /* class to handle the cta section overlap */
+  .cta-container {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: -170px;
+  }
+
+  @media (max-width: 768px) {
+    .cta-container {
+      margin-top: 0px !important;
+    }
+
+    .search-btn {
+      width: 100% !important;
+    }
+  }
 }
 
 @keyframes fadeUp {

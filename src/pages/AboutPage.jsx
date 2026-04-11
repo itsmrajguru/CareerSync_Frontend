@@ -14,7 +14,7 @@ we matched the herosection with the existing page styles and layouts
 where the header contains a mix style of midnight +r ed*/}
         <section style={{ background: "#ffffff", position: "relative", overflow: "hidden", padding: "32px 0 40px",marginTop:'-15px' }}> 
           <div className="max-w-[960px] mx-auto px-7 relative z-10 ">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+            <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
               <div className="flex-1">
                 <p className="text-[13px] font-bold tracking-[0.5px]  text-[#475569] uppercase mb-2">
                   The Talent Infrastructure
@@ -121,14 +121,16 @@ by defining only once*/}
                        <p style={{ fontSize: "13px", fontWeight: "600", color: "#64748b", marginTop: "2px" }}>Lead Architect & Founder</p>
                     </div>
                     
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <div style={{ flex: 1, background: "#0f172a", padding: "20px", borderRadius: "20px", textAlign: "center" }}>
-                        <p style={{ fontSize: "22px", fontWeight: "900", color: "#fff", lineHeight: 1 }}>2026</p>
-                        <p style={{ fontSize: "9px", fontWeight: "700", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "1px", marginTop: "4px" }}>Established</p>
-                      </div>
-                      <div style={{ flex: 1.2, background: "#ef4444", padding: "20px", borderRadius: "20px", textAlign: "center" }}>
-                        <p style={{ fontSize: "22px", fontWeight: "900", color: "#fff", lineHeight: 1 }}>Global</p>
-                        <p style={{ fontSize: "9px", fontWeight: "700", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "1px", marginTop: "4px" }}>Reach Capacity</p>
+                    <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
+                      <div className="flex flex-col sm:flex-row gap-2.5 w-full mt-4">
+                        <div style={{ flex: 1, background: "#0f172a", padding: "20px", borderRadius: "20px", textAlign: "center" }}>
+                          <p style={{ fontSize: "22px", fontWeight: "900", color: "#fff", lineHeight: 1 }}>2026</p>
+                          <p style={{ fontSize: "9px", fontWeight: "700", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "1px", marginTop: "4px" }}>Established</p>
+                        </div>
+                        <div style={{ flex: 1.2, background: "#ef4444", padding: "20px", borderRadius: "20px", textAlign: "center" }}>
+                          <p style={{ fontSize: "22px", fontWeight: "900", color: "#fff", lineHeight: 1 }}>Global</p>
+                          <p style={{ fontSize: "9px", fontWeight: "700", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "1px", marginTop: "4px" }}>Reach Capacity</p>
+                        </div>
                       </div>
                     </div>
                  </div>

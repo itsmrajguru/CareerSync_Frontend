@@ -99,7 +99,7 @@ export default function CompanyProfilePage() {
         {/*added the herosection with matches the
             existing styles effectively*/} 
         <section className="d-hero mb-8">
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+          <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
             {/* Left Column: Text & Actions */}
             <div style={{ flex: 1 }}>
@@ -173,11 +173,11 @@ export default function CompanyProfilePage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="d-content">
-            <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
               {/* 1st Cell: Profile Lead */}
-              <Cell className="flex flex-col items-center justify-center text-center"
-                style={{ gridColumn: "1", gridRow: "1 / 3", background: "#f8fafc", border: "1px solid #f1f5f9", minHeight: 280 }}>
+              <Cell className="flex flex-col items-center justify-center text-center lg:row-span-2"
+                style={{ background: "#f8fafc", border: "1px solid #f1f5f9", minHeight: 280 }}>
                 <div className="w-[84px] h-[84px] rounded-[30px] flex items-center justify-center text-4xl font-black text-white mb-6 shadow-xl border border-white/20"
                   style={{ background: "linear-gradient(135deg, #ef4444, #991b1b)" }}>
                   {profile.name ? profile.name[0].toUpperCase() : <Building2 size={36} />}
@@ -197,7 +197,7 @@ export default function CompanyProfilePage() {
               </Cell>
 
               {/* 2nd Cell: Identity */}
-              <Cell style={{ gridColumn: "2 / 4" }}>
+              <Cell className="lg:col-span-2">
                 <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Company Identity</p>
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="Organization Name" name="name" value={profile.name} onChange={handleChange} placeholder="e.g. Acme Inc" />
@@ -208,7 +208,7 @@ export default function CompanyProfilePage() {
               </Cell>
 
               {/* 3rd Cell: About - The Mission */}
-              <Cell style={{ gridColumn: "2 / 4" }}>
+              <Cell className="lg:col-span-2">
                 <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Mission & Culture</p>
                 <Field textarea label="The About Organization" name="about" value={profile.about} onChange={handleChange}
                   placeholder="Describe your mission, vision, and organizational culture..." />
@@ -223,7 +223,7 @@ export default function CompanyProfilePage() {
                 </div>
               </Cell>
 
-              <Cell style={{ gridColumn: "2 / 4" }}>
+              <Cell className="lg:col-span-2">
                 <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Social Footprint</p>
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="LinkedIn Profile" name="linkedin" value={profile.linkedin} onChange={handleChange} placeholder="linkedin.com/company/..." icon={Building2} />

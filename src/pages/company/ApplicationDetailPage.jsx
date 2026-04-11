@@ -95,7 +95,7 @@ export default function ApplicationDetailPage() {
         <main className="max-w-[1000px] mx-auto px-7 pt-10 pb-10 flex-1 w-full">
 
           {/*Hero section*/}
-          <div className="d-hero mb-10 flex flex-col md:flex-row md:items-start justify-between gap-6">
+          <div className="d-hero mb-10 flex flex-col lg:flex-row items-start justify-between gap-6">
             <div>
               <button onClick={() => navigate(-1)}
                 className="flex items-center gap-2 text-[12px] font-bold text-black hover:text-black transition-colors mb-6">

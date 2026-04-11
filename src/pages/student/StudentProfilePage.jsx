@@ -142,8 +142,8 @@ export default function ProfilePage() {
       <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
  
          {/*added the new hero section with the updated styles and layout*/}
-         <section className="d-hero mb-8">
-           <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px"}}>
+          <section className="d-hero mb-8">
+            <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
  
              {/* Left Column: Text & Actions */}
              <div style={{ flex: 1 }}>

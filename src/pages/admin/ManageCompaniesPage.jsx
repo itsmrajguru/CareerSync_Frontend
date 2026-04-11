@@ -133,7 +133,7 @@ export default function ManageCompaniesPage() {
                 </div>
 
                 {/* Verification Toggle */}
-                <div className="flex items-center gap-4 border-l border-neutral-100 pl-8 h-full">
+                <div className="flex items-center gap-4 border-t border-neutral-100 md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8 h-full w-full md:w-auto justify-center">
                   {!company.isVerified ? (
                     <button
                       onClick={() => handleVerify(company._id, false)}

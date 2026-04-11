@@ -96,7 +96,7 @@ export default function EditJobPage() {
         {/*added the herosection with matches the
             existing styles effectively*/}
         <section className="d-hero mb-8">
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "60px" }}>
+          <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
             {/* Left Column: Text & Actions */}
             <div style={{ flex: 1 }}>

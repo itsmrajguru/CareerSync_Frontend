@@ -43,6 +43,8 @@ const FEATURES = [
 
 
 // The main function that displays the whole SPA
+/* I have added some classes and medi queries in the css file
+ to make the page look good on mobile phones as well */
 export default function HomePage() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -125,7 +127,7 @@ tried to make it dynamic  but no need  */}
           {/* here lets add the changes in the navabr to open it for mobile */}
           <button
             className="mobile-menu-btn"
-            style={{ display: "none", background: "none", border: "none", cursor: "pointer", alignItems: "center" }}
+            style={{ background: "none", border: "none", cursor: "pointer", alignItems: "center" }}
             onClick={() => setMobileOpen(o => !o)}
           >
             {mobileOpen ? <X size={24} color="#111827" /> : <Menu size={24} color="#111827" />}
@@ -203,7 +205,7 @@ but shows the options for diffrent query seraches for the whole job serach platf
           <form className="fade-up" onSubmit={handleSearch} style={{
             maxWidth: 720, margin: "0 auto 24px", animationDelay: '0.3s',
           }}>
-            <div className="cs-card !p-2 flex items-stretch" style={{ boxShadow: "0 20px 50px rgba(0,0,0,0.06)" }}>
+            <div className="cs-card !p-2 flex flex-col md:flex-row items-stretch gap-2 md:gap-0" style={{ boxShadow: "0 20px 50px rgba(0,0,0,0.06)" }}>
               <div className="search-bar-inner" style={{ display: "flex", flex: 1, alignItems: "stretch" }}>
                 <div style={{ flex: 2.5, padding: "8px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <div style={{ fontSize: 9, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 4 }}>Skills / Role</div>
@@ -248,7 +250,7 @@ but shows the options for diffrent query seraches for the whole job serach platf
                   />
                 </div>
               </div>
-              <button type="submit" className="btn-primary" style={{ borderRadius: 10, padding: "10px 24px", fontSize: 14, display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+              <button type="submit" className="btn-primary search-btn" style={{ borderRadius: 10, padding: "14px 24px", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, flexShrink: 0 }}>
                 <Search size={14} /> Search
               </button>
             </div>
@@ -296,9 +298,9 @@ but shows the options for diffrent query seraches for the whole job serach platf
       {/* Section 4: Recruitment - For Companies */}
       <section id="companies" style={{ padding: "100px 0", background: "#ffffff", borderBottom: "2px solid #f1f5f9" }}>
         <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 80, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 40, flexWrap: "wrap", justifyContent: "center" }}>
 
-            <div className="flex-1 fade-up" style={{ minWidth: 320 }}>
+            <div className="flex-1 fade-up" style={{ minWidth: "100%", maxWidth: 1140, marginBottom: 40 }}>
               <div style={{ display: "inline-flex", background: "rgba(12,26,46,0.05)", borderRadius: 20, padding: "5px 14px", marginBottom: 20 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, color: "#0c1a2e", textTransform: "uppercase", letterSpacing: 1 }}>Recruitment Suite</span>
               </div>
@@ -342,55 +344,6 @@ but shows the options for diffrent query seraches for the whole job serach platf
               </div>
             </div>
 
-            {/* Right Side Visual Block */}
-            <div className="flex-1 fade-up" style={{ minWidth: 320, animationDelay: "0.2s" }}>
-              <div style={{ position: "relative" }}>
-                <div style={{
-                  background: "#f8fafc",
-                  borderRadius: "40px",
-                  padding: "40px",
-                  border: "1px solid #f1f5f9",
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.03)",
-                  position: "relative",
-                  overflow: "hidden"
-                }}>
-                  {/* Background Image Accent...
-added an imahge to match the website existing styles*/}
-                  <img
-                    src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&auto=format&fit=crop"
-                    alt="Hiring"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.1, pointerEvents: "none" }}
-                  />
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: 20, position: "relative" }}>
-                    <div className="bg-white p-6 rounded-3xl border border-[#f1f5f9] shadow-sm">
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                        <span style={{ fontSize: 10, fontWeight: 900, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1 }}>Candidate Match</span>
-                        <span style={{ fontSize: 11, fontWeight: 900, color: "#ef4444" }}>High Potential</span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <div style={{ width: 44, height: 44, borderRadius: 12, background: "#0c1a2e", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>JD</div>
-                        <div>
-                          <p style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", margin: 0 }}>Senior Product Designer</p>
-                          <p style={{ fontSize: 12, color: "#64748b", margin: 0 }}>98% Skill Alignment</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                      <div className="bg-[#0c1a2e] text-white p-5 rounded-3xl">
-                        <p style={{ fontSize: 24, fontWeight: 900, margin: 0 }}>4x</p>
-                        <p style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 1, marginTop: 4 }}>Faster Hiring</p>
-                      </div>
-                      <div className="bg-white border border-[#f1f5f9] p-5 rounded-3xl">
-                        <p style={{ fontSize: 24, fontWeight: 900, color: "#ef4444", margin: 0 }}>82%</p>
-                        <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1, marginTop: 4 }}>Cost Reduction</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>
@@ -400,7 +353,7 @@ added an imahge to match the website existing styles*/}
 this adds the info about the developer (thats me...) */}
       <section id="about" style={{ padding: "100px 24px", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
         <div style={{ maxWidth: 1140, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 64, alignItems: "center" }}>
 
             {/* Left: Features */}
             <div className="fade-up">
@@ -460,7 +413,7 @@ this adds the info about the developer (thats me...) */}
 
       {/* Sectiion  6: CTA (Moved down) */}
       <section style={{ background: "linear-gradient(135deg, #e6f9fe 0%, var(--color-app-bg) 100%)", padding: "100px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", marginTop: "-170px" }}>
+        <div className="cta-container">
           <div>
             <h2 className="fade-up" style={{ fontSize: "clamp(28px,4vw,40px)", fontWeight: 900, color: "#0d1117", letterSpacing: -1, marginBottom: 16 }}>
               Ready to find your next role?🚀
