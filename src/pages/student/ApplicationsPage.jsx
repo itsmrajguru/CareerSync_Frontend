@@ -139,7 +139,7 @@ single filte,the result is showm exactly */}
                 {/* the horizontal job details card...
 shows the job title, status badge, company name and application date */}
                 <div className="flex-1 min-w-0 text-center md:text-left">
-                <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
                     <h3 className="text-[18px] font-black text-[#0f172a] truncate">
                       {app.job?.title}
                     </h3>
