@@ -46,7 +46,6 @@ export default function Navbar() {
   ] : [
     { label: "Dashboard", path: "/student/dashboard" },
     { label: "Jobs", path: "/student/jobs" },
-    { label: "Discover Jobs", path: "/student/discover-jobs" },
     { label: "My Applications", path: "/student/applications" },
     { label: "About", path: "/about" },
   ];
@@ -97,9 +96,9 @@ so that user can check the personlaized things here...*/
     { to: "/company/settings", icon: <Settings size={16} />, label: "Settings" },
   ] : [
     { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },
+    { to: "/student/discover-jobs", icon: <Search  size={16} />, label: "Discover Jobs" },
     { to: "/student/profile", icon: <Edit2 size={16} />, label: "Edit Profile" },
     { to: "/student/resume", icon: <FileText size={16} />, label: "My Resume" },
-    { to: "/student/applications", icon: <Bookmark size={16} />, label: "My Applications" },
     { to: "/student/settings", icon: <Settings size={16} />, label: "Settings" },
   ];
 

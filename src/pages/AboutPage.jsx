@@ -51,7 +51,7 @@ export default function AboutPage() {
           
           {/* This is the how it works section... 
           created a grid structure with the dummy data as features of the website */}
-          <div className="cs-card-modern p-6 lg:col-span-2 flex flex-col uppercase">
+          <div className="cs-card-modern p-6 lg:col-span-2 flex flex-col">
             <p className="cs-section-label">Operational Logic</p>
             <h2 className="cs-page-title mb-8">How it <span className="text-[#ef4444]">works.</span></h2>
             
