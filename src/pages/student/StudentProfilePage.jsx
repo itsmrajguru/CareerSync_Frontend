@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Save, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import PageLayout from "../../components/PageLayout";
 import ProfileForm from "../../components/ProfileForm";
 import { getProfileList, createProfile, updateProfile, deleteProfile } from "../../services/studentProfileService";
 
@@ -136,65 +135,63 @@ export default function ProfilePage() {
   const initials = getInitials(formData.full_name);
 
   return (
-    <div className="min-h-screen bg-app-bg font-sans flex flex-col">
-      <Navbar />
+    <PageLayout>
+      <div className="pb-20 animate-fade-in">
 
-      <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
- 
          {/*added the new hero section with the updated styles and layout*/}
-          <section className="d-hero mb-8">
+          <section aria-label="Page header" className="mb-8">
             <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
  
-             {/* Left Column: Text & Actions */}
-             <div style={{ flex: 1 }}>
-               <div className="mb-7">
-                 <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
-                   One Source of Truth
-                 </p>
-                 <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-                   About <span style={{ color: "#ef4444" }}>me.</span>
-                 </h1>
-                 <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
-                   Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
-                 </p>
-               </div>
+              {/* Left Column: Text & Actions */}
+              <div style={{ flex: 1 }}>
+                <div className="mb-7">
+                  <p className="cs-section-label">
+                    One Source of Truth
+                  </p>
+                  <h1 className="cs-page-title">
+                    About <span className="text-[#ef4444]">me.</span>
+                  </h1>
+                  <p className="cs-subtext max-w-[460px]">
+                    Build your professional identity — showcase your experience, skills, and goals to stand out to top recruiters.
+                  </p>
+                </div>
  
-               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
-                 <span className="flex items-center gap-1">✔ Career Pulse</span>
-                 <span style={{ opacity: 0.3 }}>·</span>
-                 <span className="flex items-center gap-1">✔ Skill Validation</span>
-                 <span style={{ opacity: 0.3 }}>·</span>
-                 <span className="flex items-center gap-1">✔ Identity Verification</span>
-               </div>
-             </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
+                  <span className="flex items-center gap-1">✔ Career Pulse</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Skill Validation</span>
+                  <span style={{ opacity: 0.3 }}>·</span>
+                  <span className="flex items-center gap-1">✔ Identity Verification</span>
+                </div>
+              </div>
  
-             {/* Right Column: Career Ecosystem Grid */}
-             <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
-               <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }} className="grid grid-cols-2">
-                 <img
-                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop"
-                   alt="Offices"
-                   style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff", borderBottom: "1px solid #fff" }}
-                 />
+              {/* Right Column: Career Ecosystem Grid */}
+              <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
+                <div className="rounded-xl overflow-hidden border border-neutral-200 grid grid-cols-2">
                   <img
-                    src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80&auto=format&fit=crop"
-                    alt="Jobs"
-                    style={{ width: "100%", height: "100px", objectFit: "cover", borderBottom: "1px solid #fff" }}
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop"
+                    alt="Offices"
+                    style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff", borderBottom: "1px solid #fff" }}
                   />
-                  <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80&auto=format&fit=crop"
-                    alt="Internships"
-                    style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff" }}
-                  />
-                  <img
-                    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80&auto=format&fit=crop"
-                    alt="Companies"
-                    style={{ width: "100%", height: "100px", objectFit: "cover" }}
-                  />
-               </div>
-             </div>
-           </div>
-         </section>
+                   <img
+                     src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80&auto=format&fit=crop"
+                     alt="Jobs"
+                     style={{ width: "100%", height: "100px", objectFit: "cover", borderBottom: "1px solid #fff" }}
+                   />
+                   <img
+                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80&auto=format&fit=crop"
+                     alt="Internships"
+                     style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff" }}
+                   />
+                   <img
+                     src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80&auto=format&fit=crop"
+                     alt="Companies"
+                     style={{ width: "100%", height: "100px", objectFit: "cover" }}
+                   />
+                </div>
+              </div>
+            </div>
+          </section>
 
         <ProfileForm
           formData={formData}
@@ -215,8 +212,7 @@ export default function ProfilePage() {
           }
         />
 
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </PageLayout>
   );
 }

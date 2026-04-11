@@ -59,20 +59,21 @@ export default function ResumePage() {
 
     return (
         <PageLayout>
+            <div className="pb-20 animate-fade-in">
                 {/*Hero section*/}
-                <section className="d-hero mb-8">
+                <section aria-label="Page header" className="mb-8 p-0 pt-4">
                     <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
  
                         {/* Left Column: Text & Actions */}
                         <div style={{ flex: 1 }}>
-                            <div className="mb-17">
-                                <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                            <div className="mb-8">
+                                <p className="cs-section-label">
                                     ATS Friendly
                                 </p>
-                                <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-                                    Resume <span style={{ color: "#ef4444" }}>Checker.</span>
+                                <h1 className="cs-page-title">
+                                    Resume <span className="text-[#ef4444]">Checker.</span>
                                 </h1>
-                                <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                                <p className="cs-subtext max-w-[460px]">
                                     Upload your PDF resume and get instant ATS feedback — keyword match, skill gaps, and readability score.
                                 </p>
                             </div>
@@ -87,8 +88,8 @@ export default function ResumePage() {
                         </div>
  
                         {/* Right Column: Fixed-Position Image — Platform Standard */}
-                        <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
-                            <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+                        <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
+                            <div className="rounded-xl overflow-hidden border border-neutral-200 shadow-sm">
                                 <img
                                     src="https://images.unsplash.com/photo-1586282023692-6bfbd629e85d?w=800&q=80&auto=format&fit=crop"
                                     alt="Resume Analysis"
@@ -119,8 +120,7 @@ export default function ResumePage() {
                         onReset={reset}
                     />
                 )}
+            </div>
         </PageLayout>
     );
 }
-
-

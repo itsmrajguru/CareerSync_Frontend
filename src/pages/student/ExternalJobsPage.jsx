@@ -25,7 +25,7 @@ function JobItem({ job, hasApplied }) {
   return (
     <div
       onClick={() => navigate(`/student/discover-jobs/${job.id}`, { state: { job } })}
-      className="cs-card flex flex-col group transition-all !p-6 border-neutral-200 hover:border-black cursor-pointer shadow-sm relative h-full"
+      className="cs-card-modern flex flex-col group transition-all cursor-pointer relative h-full mb-0 p-5"
     >
       {/* Platform Standard: Applied Badge */}
       {hasApplied && (
@@ -38,27 +38,27 @@ function JobItem({ job, hasApplied }) {
 this function returns the job decsriotion to show on the card*/}
       <div className="flex items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-[#0f172a] flex items-center justify-center flex-shrink-0 border border-[#0f172a] shadow-lg shadow-primary-900/10 transition-transform group-hover:scale-105">
-            <Building2 size={24} className="text-white" />
+          <div className="w-11 h-11 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors shadow-sm">
+            <Building2 size={24} className="text-neutral-500" />
           </div>
           <div className="min-w-0">
-            <span className="text-[10px] font-black tracking-[1.5px] text-[#ef4444] uppercase mb-1 block">
+            <span className="cs-section-label !mb-0.5">
               {job.company?.display_name || "Confidential"}
             </span>
-            <h3 className="text-[16px] font-extrabold text-[#0f172a] leading-tight truncate group-hover:text-black transition-colors">
+            <h3 className="text-[16px] font-bold text-black leading-tight truncate group-hover:text-[#ef4444] transition-colors">
               {job.title}
             </h3>
           </div>
         </div>
         {salary && (
-          <div className="text-black font-black text-[14px] bg-neutral-50 px-3 py-1 rounded-xl border border-neutral-100 flex-shrink-0">
+          <div className="text-black font-bold text-[12px] bg-neutral-100 px-3 py-1 rounded-lg border border-neutral-200 flex-shrink-0">
             {salary}
           </div>
         )}
       </div>
 
       {/* Description over the main Header added in the card*/}
-      <p className="text-[13px] text-[#64748b] leading-relaxed mb-6 font-medium line-clamp-2">
+      <p className="text-[13px] text-[#64748b] leading-relaxed mb-6 font-bold line-clamp-2">
         {job.description?.replace(/<[^>]*>/g, "") || "Detailed career requirements for this position are available upon forge entry."}
       </p>
 
@@ -79,7 +79,7 @@ this function returns the job decsriotion to show on the card*/}
 
       {/* this is the view details button which
 redirects the user to the jobdetails page */}
-      <div className="cs-card-divider mt-auto pt-5 flex items-center justify-between !m-0 !p-0">
+      <div className="mt-auto pt-4 flex items-center justify-between border-t border-neutral-100">
         <span className="text-[12px] font-black text-black uppercase tracking-[1px] group-hover:text-[#ef4444] transition-colors">
           View Details
         </span>
@@ -94,11 +94,11 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
   const workLocations = ["Onsite", "Remote", "Hybrid"];
 
   return (
-    <div className="bg-white border border-neutral-200 rounded-[22px] overflow-hidden sticky top-8 shadow-sm">
+    <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden sticky top-8 shadow-sm">
       <div className="px-6 py-5 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/50">
         <div className="flex items-center gap-2.5">
           <Filter size={15} className="text-black" />
-          <span className="font-extrabold text-[14px] text-black">Discovery Filters</span>
+          <span className="cs-section-label !mb-0 font-bold">Discovery Filters</span>
           {activeCount > 0 && (
             <span className="w-5 h-5 flex items-center justify-center bg-[#ef4444] text-white rounded-full text-[10px] font-black">
               {activeCount}
@@ -115,26 +115,26 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
       <div className="p-6 flex flex-col gap-6 max-h-[75vh] overflow-y-auto custom-scrollbar">
         {/* Search Field */}
         <div>
-          <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2.5 block flex items-center gap-2">
+          <label className="cs-section-label !mb-0 text-black flex items-center gap-2">
             <Search size={12} /> Search Forge
           </label>
           <input
             value={filters.search}
             onChange={e => onChange("search", e.target.value)}
             placeholder="Title, Company..."
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !border-neutral-100"
+            className="cs-input !py-3 !text-[13px] !rounded-xl font-bold"
           />
         </div>
 
         {/* Role Select */}
         <div>
-          <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2.5 block flex items-center gap-2">
+          <label className="cs-section-label !mb-0 text-black flex items-center gap-2">
             <Briefcase size={12} /> Industry
           </label>
           <select
             value={filters.role}
             onChange={e => onChange("role", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !appearance-none cursor-pointer font-bold"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-extrabold"
           >
             <option value="">All Sectors</option>
             <option value="Engineering">Engineering</option>
@@ -148,7 +148,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
 
         {/* Salary Min/Max */}
         <div>
-          <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2.5 block flex items-center gap-2">
+          <label className="cs-section-label !mb-0 text-black flex items-center gap-2">
             <DollarSign size={12} /> Salary (USD)
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -156,13 +156,13 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
               type="number" placeholder="Min"
               value={filters.min_salary}
               onChange={e => onChange("min_salary", e.target.value)}
-              className="cs-input !py-3 !text-[12px] !rounded-2xl !border-neutral-100"
+              className="cs-input !py-3 !text-[13px] !rounded-xl font-bold"
             />
             <input
               type="number" placeholder="Max"
               value={filters.max_salary}
               onChange={e => onChange("max_salary", e.target.value)}
-              className="cs-input !py-3 !text-[12px] !rounded-2xl !border-neutral-100"
+              className="cs-input !py-3 !text-[13px] !rounded-xl font-bold"
             />
           </div>
         </div>
@@ -173,7 +173,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
           <select
             value={filters.job_type}
             onChange={e => onChange("job_type", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-2xl !appearance-none cursor-pointer font-bold"
+            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-extrabold"
           >
             <option value="">All Schedules</option>
             <option value="full_time">Full Time</option>
@@ -273,42 +273,38 @@ export default function ExternalJobsPage() {
 
   return (
     <PageLayout>
-      <div className="pb-10 animate-fade-in">
+      <div className="pb-20 animate-fade-in">
 
-        {/* This is the herosection that matches the exact styles with the actual
-existing pages of the website */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-14">
-          <div>
-            <p className="text-[13px] font-bold tracking-[1.5px]  text-[#475569] uppercase mb-4">
-              Discovery Index
-            </p>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-              Find work that<br />
-              <span className="text-[#ef4444]">actually fits you.</span>
-            </h1>
-            <p className="text-[16px] leading-[1.6] text-[#64748b] font-medium max-w-[500px]">
-              Direct forge entry into {totalJobs.toLocaleString()} verified external opportunities.
-            </p>
-          </div>
+        <section aria-label="Page header" className="mb-0 pt-4 p-0">
+          <p className="cs-section-label">
+            Global Discovery
+          </p>
+          <h1 className="cs-page-title">
+            Find work that<br />
+            <span className="text-[#ef4444]">actually fits you.</span>
+          </h1>
+          <p className="cs-subtext max-w-[500px]">
+            Direct forge entry into {totalJobs.toLocaleString()} verified external opportunities.
+          </p>
+        </section>
 
-          {/* thorug thif form , we are taking the quick search input 
-from the user */}
           <form
             onSubmit={(e) => { e.preventDefault(); fetchJobs(quickSearch, 1); navigate(`/student/discover-jobs?q=${encodeURIComponent(quickSearch)}`); }}
-            className="relative w-full md:w-[420px]"
+            className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 h-[52px]"
           >
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#94a3b8]" size={16} />
-            <input
-              value={quickSearch}
-              onChange={e => setQuickSearch(e.target.value)}
-              placeholder="Design, Tech, Google..."
-              className="cs-input !pl-14 !pr-32 !py-4.5 !rounded-[24px] !border-neutral-100 !text-[14px]"
-            />
-            <button type="submit" className="btn-primary absolute right-2 top-2 bottom-2 px-10 !py-0 !rounded-[18px] !text-[11px] font-black uppercase tracking-widest active:scale-95 transition-all">
-              Refine
+            <div className="relative group flex-1 h-full">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-[#ef4444] transition-colors" size={16} />
+              <input
+                value={quickSearch}
+                onChange={e => setQuickSearch(e.target.value)}
+                placeholder="Design, Tech, Google..."
+                className="cs-input !pl-14 !h-full !rounded-xl font-bold"
+              />
+            </div>
+            <button type="submit" className="h-full px-10 bg-black text-white rounded-xl text-[11px] font-black uppercase tracking-widest active:scale-95 transition-all shadow-sm">
+              Refine Forge
             </button>
           </form>
-        </div>
 
         {/* This is the main layout where we are displaying the jobs 
 and the filter panel */}
@@ -329,18 +325,18 @@ and the filter panel */}
 
             {!loading && totalJobs > 0 && (
               <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
-                <p className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[2.5px]">
+                <p className="cs-section-label !mb-0">
                   Analysis: Showing {showingFrom}-{showingTo} of {totalJobs.toLocaleString()} roles
                 </p>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.4)]" />
-                  <span className="text-[11px] font-black text-black uppercase tracking-widest">Live Forge</span>
+                  <span className="text-[11px] font-black text-black uppercase tracking-widest">Live Discovery</span>
                 </div>
               </div>
             )}
 
             {error && (
-              <div className="p-6 bg-red-50 rounded-[22px] text-[#ef4444] font-bold text-sm flex items-center gap-3">
+              <div className="p-6 bg-red-50 rounded-xl text-[#ef4444] font-bold text-sm flex items-center gap-3">
                 <X size={18} /> {error}
               </div>
             )}
@@ -365,16 +361,16 @@ the user can shift to diffrent pages based on this pagination section */}
                   <button
                     onClick={() => { setCurrentPage(p => Math.max(p - 1, 1)); fetchJobs(quickSearch, currentPage - 1); }}
                     disabled={currentPage === 1}
-                    className="w-12 h-12 flex items-center justify-center rounded-2xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
                   >
-                    <ChevronLeft size={20} />
+                    <ChevronLeft size={18} />
                   </button>
                   <button
                     onClick={() => { setCurrentPage(p => Math.min(p + 1, totalPages)); fetchJobs(quickSearch, currentPage + 1); }}
                     disabled={currentPage === totalPages}
-                    className="w-12 h-12 flex items-center justify-center rounded-2xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
                   >
-                    <ChevronRight size={20} />
+                    <ChevronRight size={18} />
                   </button>
                 </div>
               </div>

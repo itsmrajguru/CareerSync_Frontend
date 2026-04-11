@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { 
-  ArrowLeft, FileText, Send, Building2, MapPin, 
+  ArrowLeft, Send, Building2, MapPin, 
   Briefcase, CheckCircle, AlertCircle 
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -75,24 +75,40 @@ export default function ApplyPage() {
     }
   };
 
+  /* loading state display... */
   if (loading) {
     return (
       <PageLayout>
-        <div className="py-20 text-center animate-pulse">
-          <div className="h-8 bg-neutral-100 w-64 mx-auto rounded-lg mb-4" />
-          <div className="h-4 bg-neutral-100 w-96 mx-auto rounded-lg" />
+        <div className="pb-10 animate-pulse space-y-4">
+          <div className="h-4 bg-neutral-100 w-24 rounded-lg" />
+          <div className="bg-neutral-50 border border-neutral-100 rounded-xl p-6 flex gap-4">
+            <div className="w-14 h-14 bg-neutral-200 rounded-xl flex-shrink-0" />
+            <div className="flex-1 space-y-3">
+              <div className="h-5 bg-neutral-200 w-48 rounded-lg" />
+              <div className="h-4 bg-neutral-100 w-72 rounded-lg" />
+            </div>
+          </div>
         </div>
       </PageLayout>
     );
   }
 
+  /* error state display... */
   if (!job) {
     return (
       <PageLayout>
-        <div className="py-20 text-center">
-          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
-          <h2 className="text-2xl font-bold mb-4">Job not found</h2>
-          <button onClick={() => navigate("/student/dashboard")} className="btn-primary px-8 py-3">
+        <div className="max-w-xl mx-auto py-20 text-center">
+          <div className="w-12 h-12 bg-red-50 border border-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <AlertCircle size={20} className="text-red-500" />
+          </div>
+          <h2 className="text-[16px] font-bold text-black mb-1">Job not found</h2>
+          <p className="text-[13px] text-neutral-500 mb-6 mx-auto">
+            The job opportunity you are looking for might have been closed or removed.
+          </p>
+          <button 
+            onClick={() => navigate("/student/dashboard")} 
+            className="text-[12px] border border-neutral-200 px-6 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
+          >
             Back to Dashboard
           </button>
         </div>
@@ -102,94 +118,105 @@ export default function ApplyPage() {
 
   return (
     <PageLayout>
-      <div className="max-w-4xl mx-auto pb-20 animate-fade-in">
+      <div className="pb-20 animate-fade-in">
         
         {/* back navigation button...
         redirects the user to the previous page in history */}
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-[#64748b] hover:text-[#0f172a] mb-10 transition-all font-bold text-[13px] uppercase tracking-[1px] group"
+          className="inline-flex items-center gap-1.5 text-[12px] font-bold text-neutral-500 hover:text-black mb-6 transition-colors cursor-pointer bg-transparent border-none p-0 group"
         >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back
+          <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+          Return to Details
         </button>
 
         {/* success state display...
         this section is shown only after the application is successfully sent */}
         {success ? (
-          <div className="cs-card p-12 text-center border-green-100 bg-green-50/30">
-            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-green-200">
-              <CheckCircle size={40} />
+          <div className="bg-white border border-neutral-200 rounded-xl p-10 text-center max-w-lg mx-auto my-12 shadow-sm">
+            <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle size={28} className="text-green-600" />
             </div>
-            <h2 className="text-3xl font-black text-[#0f172a] mb-4">Application Submitted!</h2>
-            <p className="text-[#64748b] font-medium max-w-md mx-auto mb-8">
-              Your application for <span className="text-black font-bold">{job.title}</span> at <span className="text-black font-bold">{job.company?.name}</span> has been successfully sent.
+            <h2 className="text-[18px] font-bold text-black mb-2">Application Submitted!</h2>
+            <p className="text-[14px] text-neutral-500 mb-8 leading-relaxed">
+              Your application for <span className="text-black font-bold">{job.title}</span> at <span className="text-black font-bold">{job.company?.name}</span> has been sent successfully.
             </p>
-            <p className="text-[11px] font-black text-[#94a3b8] uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 text-neutral-400 text-[12px] font-bold">
+              <div className="w-3 h-3 border-2 border-neutral-200 border-t-blue-500 rounded-full animate-spin" />
               Redirecting to dashboard...
-            </p>
+            </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
             
             {/* application form section...
             here the student enters their resume link and writes a optional message */}
-            <div className="lg:col-span-2 space-y-8">
-              <div>
-                <h1 className="text-3xl font-black tracking-tight text-[#0f172a] mb-2 uppercase">
-                  Apply for Position
-                </h1>
-                <p className="text-[#64748b] font-medium">
-                  Complete your application by providing the details below.
+            <div className="space-y-6">
+              
+              {/* page header area... */}
+              <section aria-label="Page header" className="mb-2 p-0">
+                <p className="cs-section-label">
+                  Forge Entry
                 </p>
-              </div>
+                <h1 className="cs-page-title">
+                  Apply for <span className="text-[#ef4444]">Position</span>
+                </h1>
+                <p className="cs-subtext max-w-[480px]">
+                  Provide your portfolio and resume details to apply for this verified opportunity.
+                </p>
+              </section>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              {/* form container section... */}
+              <form onSubmit={handleSubmit} className="bg-white border border-neutral-200 rounded-xl p-6 space-y-6">
                 {error && (
-                  <div className="p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold flex items-center gap-3">
-                    <AlertCircle size={18} /> {error}
+                  <div className="p-4 bg-red-50 border border-red-100 rounded-lg text-red-600 text-[12px] font-bold flex items-center gap-2">
+                    <AlertCircle size={14} /> {error}
                   </div>
                 )}
 
+                {/* resume link input... */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 flex items-center gap-2">
-                    <FileText size={12} /> Resume Link (PDF/Drive)
-                  </label>
+                <label className="cs-section-label ml-0.5">
+                  Resume Link (Public Drive/PDF)
+                </label>
                   <input
                     type="url"
-                    placeholder="https://drive.google.com/..."
+                    placeholder="https://drive.google.com/your-resume-link"
                     required
                     value={formData.resumeUrl}
                     onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
-                    className="cs-input !py-4"
+                    className="w-full text-[13px] border border-neutral-200 px-4 py-3 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all bg-neutral-50/50 font-bold"
                   />
-                  <p className="text-[11px] text-[#94a3b8] ml-1">
-                    Provide a public link to your resume. Make sure anyone with the link can view it.
+                  <p className="text-[11px] text-neutral-400 ml-0.5 font-bold">
+                    Note: Ensure your link is publicly viewable by recruiters.
                   </p>
                 </div>
 
+                {/* cover note text area... */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 flex items-center gap-2">
-                    <Briefcase size={12} /> Cover Note (Optional)
+                  <label className="cs-section-label ml-0.5">
+                    Experience Note (Optional)
                   </label>
                   <textarea
                     rows={6}
-                    placeholder="Tell the company why you're a good fit for this role..."
+                    placeholder="Explain why you're a good fit for this role..."
                     value={formData.coverNote}
                     onChange={(e) => setFormData({ ...formData, coverNote: e.target.value })}
-                    className="cs-input !py-4 resize-none"
+                    className="w-full text-[13px] border border-neutral-200 px-4 py-3 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all bg-neutral-50/50 resize-none font-bold"
                   />
                 </div>
 
+                {/* submit button... */}
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-primary w-full !py-5 shadow-xl shadow-primary-500/20 flex items-center justify-center gap-3 text-sm"
+                  className="w-full bg-black text-white text-[12px] font-bold py-3.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider"
                 >
                   {submitting ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      Submit Application <Send size={18} />
+                      Submit Application <Send size={14} />
                     </>
                   )}
                 </button>
@@ -198,45 +225,49 @@ export default function ApplyPage() {
 
             {/* job summary side card...
             this shows a quick summary of the job the user is applying for */}
-            <div className="lg:col-span-1">
-              <div className="cs-card !p-8 border-neutral-100 sticky top-8">
-                <div className="w-16 h-16 bg-[#0f172a] rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-primary-900/10 overflow-hidden">
-                  {job.company?.logo ? (
-                    <img src={job.company.logo} alt={job.company.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <Building2 className="text-white" size={32} />
-                  )}
+            <aside className="space-y-6">
+              
+              <p className="cs-section-label">
+                Role Summary
+              </p>
+
+              <div className="bg-white border border-neutral-200 rounded-xl p-5 sticky top-8 shadow-sm">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-neutral-50 border border-neutral-200 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    {job.company?.logo ? (
+                      <img src={job.company.logo} alt={job.company.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <Building2 className="text-neutral-400" size={20} />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-[15px] font-bold text-black truncate">
+                      {job.title}
+                    </h2>
+                    <p className="text-[12px] font-bold text-neutral-400 truncate">
+                      {job.company?.name}
+                    </p>
+                  </div>
                 </div>
 
-                <h3 className="text-[11px] font-black text-[#ef4444] uppercase tracking-[2px] mb-1">
-                  Applying for
-                </h3>
-                <h2 className="text-xl font-black text-[#0f172a] leading-tight mb-6">
-                  {job.title}
-                </h2>
-
-                <div className="space-y-4 pt-6 border-t border-neutral-100">
-                  <div className="flex items-center gap-3 text-[13px] font-bold text-[#64748b]">
-                    <Building2 size={16} className="text-[#94a3b8]" />
-                    <span>{job.company?.name}</span>
+                <div className="space-y-3.5 border-t border-neutral-100 pt-5">
+                  <div className="flex items-center gap-3 text-[12px] font-bold text-neutral-600">
+                    <MapPin size={14} className="text-neutral-400" />
+                    <span>{job.location || "Remote"}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-[13px] font-bold text-[#64748b]">
-                    <MapPin size={16} className="text-[#94a3b8]" />
-                    <span>{job.location}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[13px] font-bold text-[#64748b]">
-                    <Briefcase size={16} className="text-[#94a3b8]" />
+                  <div className="flex items-center gap-3 text-[12px] font-bold text-neutral-600">
+                    <Briefcase size={14} className="text-neutral-400" />
                     <span className="capitalize">{job.jobType?.replace('-', ' ')}</span>
                   </div>
                 </div>
 
-                <div className="mt-8 p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
-                  <p className="text-[11px] font-medium text-[#64748b] leading-relaxed">
-                    By submitting, your profile details and resume will be shared with the company for review.
+                <div className="mt-8 p-4 bg-neutral-50 rounded-xl border border-neutral-100">
+                  <p className="text-[11px] font-bold text-neutral-400 leading-relaxed text-center italic">
+                    "Analysis: Profile and credentials will be shared with the partner for review."
                   </p>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         )}
       </div>

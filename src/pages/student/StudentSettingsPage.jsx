@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { changePassword, deleteAccount } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import PageLayout from "../../components/PageLayout";
 import { Shield, Key, Bell, Trash2, CheckCircle2 } from "lucide-react";
 
 
@@ -69,22 +68,21 @@ export default function StudentSettingsPage() {
   };
 
   return (
-      <div className="min-h-screen bg-app-bg font-sans flex flex-col">
-        <Navbar />
-        <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
- 
-           <section className="d-hero mb-8">
+    <PageLayout>
+      <div className="pb-20 animate-fade-in">
+
+           <section aria-label="Page header" className="mb-8 p-0">
              <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
                <div style={{ flex: 1 }}>
                  <div className="mb-7">
-                   <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                   <p className="cs-section-label">
                      Account Security & Control
                    </p>
-                   <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                   <h1 className="cs-page-title">
                      Your<br />
-                     <span style={{ color: "#ef4444" }}>Settings.</span>
+                     <span className="text-[#ef4444]">Settings.</span>
                    </h1>
-                   <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                   <p className="cs-subtext max-w-[460px]">
                      Update your security credentials and customize how CareerSync communicates with you.
                    </p>
                  </div>
@@ -96,8 +94,8 @@ export default function StudentSettingsPage() {
                    <span className="flex items-center gap-1">✔ Data Privacy</span>
                  </div>
                </div>
-               <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
-                 <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }}>
+               <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
+                 <div className="rounded-xl overflow-hidden border border-neutral-200">
                    <img
                      src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80&auto=format&fit=crop"
                      alt="Student Settings"
@@ -109,7 +107,7 @@ export default function StudentSettingsPage() {
            </section>
 
           <div className="d-content flex flex-col gap-6">
-            <div className="bg-white border border-neutral-200 rounded-[14px] p-6">
+            <div className="bg-white border border-neutral-200 rounded-xl p-6">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 rounded-lg bg-primary-50 text-[#0f172a] flex items-center justify-center">
                   <Key size={16} />
@@ -128,30 +126,30 @@ export default function StudentSettingsPage() {
               )}
               <form onSubmit={handlePassSubmit} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Current Password</label>
+                  <label className="cs-section-label ml-0.5">Current Password</label>
                   <input required type="password" value={passData.current} onChange={e => setPassData({ ...passData, current: e.target.value })}
-                    className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
+                    className="cs-input w-full sm:w-80 !py-2.5" />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">New Password</label>
+                  <label className="cs-section-label ml-0.5">New Password</label>
                   <input required type="password" value={passData.newPass} onChange={e => setPassData({ ...passData, newPass: e.target.value })}
-                    className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
+                    className="cs-input w-full sm:w-80 !py-2.5" />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Confirm New</label>
+                  <label className="cs-section-label ml-0.5">Confirm New</label>
                   <input required type="password" value={passData.confirm} onChange={e => setPassData({ ...passData, confirm: e.target.value })}
-                    className="w-full sm:w-80 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-sm font-bold focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all outline-none" />
+                    className="cs-input w-full sm:w-80 !py-2.5" />
                 </div>
                 <div className="mt-2">
                   <button type="submit" disabled={passLoading}
-                    className="btn-primary !px-8 !py-3.5 active:scale-95 transition-all">
+                    className="bg-black text-white text-[13px] font-bold px-8 py-3 rounded-lg hover:bg-neutral-800 transition-all active:scale-95">
                     {passLoading ? "Updating..." : "Update Password"}
                   </button>
                 </div>
               </form>
             </div>
 
-            <div className="bg-white border border-neutral-200 rounded-[14px] p-6">
+            <div className="bg-white border border-neutral-200 rounded-xl p-6">
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
                   <Bell size={16} />
@@ -164,10 +162,10 @@ export default function StudentSettingsPage() {
                   { id: "applications", label: "Application Tracking", desc: "Status updates for your submitted applications." },
                   { id: "marketing", label: "Platform Updates", desc: "Product enhancements and career tips." },
                 ].map(item => (
-                  <div key={item.id} className="flex items-center justify-between py-2 border-b border-neutral-100 last:border-0">
+                  <div key={item.id} className="flex items-center justify-between py-2.5 border-b border-neutral-100 last:border-0">
                     <div>
-                      <p className="text-sm font-bold text-black">{item.label}</p>
-                      <p className="text-[12px] text-black font-medium">{item.desc}</p>
+                      <p className="text-[14px] font-bold text-black mb-0.5">{item.label}</p>
+                      <p className="cs-subtext !mb-0">{item.desc}</p>
                     </div>
                     <div className="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
                       <input type="checkbox" id={item.id} checked={notifs[item.id]} 
@@ -183,23 +181,22 @@ export default function StudentSettingsPage() {
               </div>
             </div>
 
-            <div className="bg-red-50/50 border border-red-100 rounded-[14px] p-6 mt-4">
+            <div className="bg-red-50/50 border border-red-100 rounded-xl p-6 mt-4">
               <div className="flex items-center gap-2 mb-2">
-                <Shield size={16} className="text-red-500" />
-                <h2 className="text-[15px] font-bold text-red-600">Danger Zone</h2>
+                <Shield size={16} className="text-red-600" />
+                <h2 className="text-[13px] font-bold text-red-600 uppercase tracking-wider">Danger Zone</h2>
               </div>
-              <p className="text-[13px] text-black font-medium mb-4">
+              <p className="cs-subtext !text-black mb-6">
                 Deleting your account is permanent. All your profile data, resumes, and application history will be eradicated.
               </p>
               <button 
                 onClick={handleDeleteAccount}
-                className="flex items-center gap-1.5 px-5 py-2.5 bg-white border border-red-200 text-red-600 font-bold text-[13px] rounded-xl hover:bg-red-50 transition-colors">
+                className="flex items-center gap-2 px-5 py-2.5 bg-white border border-red-200 text-red-600 font-bold text-[12px] rounded-lg hover:bg-red-50 transition-all uppercase tracking-wider shadow-sm">
                 <Trash2 size={14} /> Delete My Account
               </button>
             </div>
           </div>
-        </main>
-        <Footer />
       </div>
-    );
+    </PageLayout>
+  );
 }

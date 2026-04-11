@@ -39,10 +39,10 @@ inside the job card */}
                     {/* Back Navigation */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="inline-flex items-center gap-2 text-[#64748b] hover:text-[#0f172a] mb-10 transition-all font-bold text-[13px] uppercase tracking-[0.5px] group"
+                        className="inline-flex items-center gap-1.5 text-[12px] text-neutral-500 hover:text-black mb-6 transition-colors cursor-pointer bg-transparent border-none p-0 group"
                         style={{ background: "none", border: "none", cursor: "pointer" }}
                     >
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Jobs
+                        <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" /> Back to Jobs
                     </button>
 
                     <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
@@ -61,13 +61,12 @@ inside the job card */}
 
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
-                                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444" }} className="pulse-dot" />
-                                <span className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase">
+                                <span className="cs-section-label !mb-0 text-[#ef4444]">
                                     {job.company.display_name}
                                 </span>
                             </div>
 
-                            <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                            <h1 className="cs-page-title">
                                 {job.title}
                             </h1>
 
@@ -115,8 +114,8 @@ inside the job card */}
 
                     {/* Rightside: Sidebar Summary */}
                     <div className="space-y-12 md:sticky md:top-32">
-                        <div style={{ background: "#fafafa", padding: "32px", borderRadius: "24px", border: "1px solid #f1f5f9" }}>
-                            <h3 className="text-[10px] font-bold text-[#94a3b8] mb-8 uppercase tracking-wider">
+                        <div className="bg-white border border-neutral-200 rounded-xl p-8 sticky top-32">
+                            <h3 className="cs-section-label">
                                 ROLE OVERVIEW
                             </h3>
 

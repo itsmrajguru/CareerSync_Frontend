@@ -1,245 +1,314 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowLeft, MapPin, Building, Clock, Briefcase, Share2, CheckCircle } from "lucide-react";
+import {
+  ArrowLeft, MapPin, Building2,
+  Briefcase, Share2, CheckCircle, IndianRupee, Building
+} from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { getJobById } from "../../services/jobsService";
 
+/* salary formatter tool...
+logic: handles min/max ranges and fixes the [object Object] problem 
+to show 2L - 5L type format */
+const formatSalary = (salary) => {
+  if (!salary) return "Competitive";
+  if (!salary.isVisible) return "Not disclosed";
+  const { min, max, currency = "INR" } = salary;
+  if (!min && !max) return "Competitive";
+  const sym = currency === "INR" ? "₹" : "$";
+  if (min && max) return `${sym}${(min / 100000).toFixed(0)}L – ${sym}${(max / 100000).toFixed(0)}L / yr`;
+  if (min) return `${sym}${(min / 100000).toFixed(0)}L+ / yr`;
+  return `Up to ${sym}${(max / 100000).toFixed(0)}L / yr`;
+};
+
+/* job type helper...
+logic: capitalizes words like 'full-time' to 'Full-time' */
+const formatJobType = (type) => {
+  if (!type) return "Full-time";
+  return type
+    .split("-")
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join("-");
+};
+
 export default function JobDetailsPage() {
-    const { id } = useParams();
-    const { state } = useLocation();
-    const navigate = useNavigate();
-    const [job, setJob] = useState(state?.job || null);
-    const [loading, setLoading] = useState(!state?.job);
+  const { id } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!job && id) {
-            fetchJob();
-        }
-    }, [id]);
+  const [job, setJob] = useState(state?.job || null);
+  const [loading, setLoading] = useState(!state?.job);
+  const [copied, setCopied] = useState(false);
 
-    const fetchJob = async () => {
-        try {
-            const response = await getJobById(id);
-            setJob(response.data.job);
-        } catch (error) {
-            console.error("Error fetching job:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  /* initializing job data... */
+  useEffect(() => {
+    if (!job && id) fetchJob();
+  }, [id]);
 
-    /* This page opens a window sized popup to show the job
-    description of an indivisual job  */
-    if (loading) {
-        return (
-            <PageLayout>
-                <div className="py-20 text-center animate-pulse">
-                    <div className="w-20 h-20 bg-neutral-100 rounded-2xl mx-auto mb-6" />
-                    <div className="h-8 bg-neutral-100 w-64 mx-auto rounded-lg mb-4" />
-                    <div className="h-4 bg-neutral-100 w-96 mx-auto rounded-lg" />
-                </div>
-            </PageLayout>
-        );
+  /* job fetch functionality...
+  logic: pulls specific entry details using the id from the url if not 
+  passed through navigation state */
+  const fetchJob = async () => {
+    try {
+      const response = await getJobById(id);
+      setJob(response.data?.job || response.job || response);
+    } catch (error) {
+      console.error("Error fetching job:", error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (!job) {
-        return (
-            <PageLayout>
-                <div className="py-20 text-center">
-                    <h2 className="text-2xl font-bold mb-4">Job details not found</h2>
-                    <button
-                        onClick={() => navigate("/student/jobs")}
-                        className="btn-primary px-8 py-4"
-                    >
-                        Back to Jobs
-                    </button>
-                </div>
-            </PageLayout>
-        );
+  /* redirecting user to apply page...
+  logic: we are passing the job details in the state so we dont have to 
+  fetch it again on the apply page */
+  const handleApply = () => {
+    // Redirect to application page or open modal
+    navigate(`/student/apply/${job._id}`, { state: { job } });
+  };
+
+  /* sharing the forge entry... */
+  const handleShare = () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: job.title,
+        text: `Check out this ${job.title} role at ${job.company?.name}`,
+        url,
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
+  };
 
-    const handleApply = () => {
-        // Redirect to application page or open modal
-        navigate(`/student/apply/${job._id}`, { state: { job } });
-    };
-
+  /* This page opens a window sized popup to show the job
+  description of an indivisual job  */
+  if (loading) {
     return (
-        <PageLayout>
-
-            {/* This page includes the data that we are showing 
-            inside the job card */}
-            <div className="relative pt-8 pb-12">
-                <div className="relative z-10 fade-up">
-                    {/* Back Navigation */}
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="inline-flex items-center gap-2 text-[#64748b] hover:text-[#0f172a] mb-10 transition-all font-bold text-[13px] uppercase tracking-[0.5px] group"
-                        style={{ background: "none", border: "none", cursor: "pointer" }}
-                    >
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Jobs
-                    </button>
-
-                    <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-                        {/* Company Visual Branding */}
-                        <div style={{
-                            width: 90, height: 90, borderRadius: "24px",
-                            background: "#0f172a",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            flexShrink: 0, boxShadow: "0 20px 50px rgba(0,0,0,0.1)",
-                            border: "1px solid #f1f5f9",
-                            overflow: "hidden"
-                        }}>
-                            {job.company?.logo ? (
-                                <img src={job.company.logo} alt={job.company.name} className="w-full h-full object-cover" />
-                            ) : (
-                                <span style={{ fontSize: 36, fontStyle: "normal", fontWeight: "800", color: "#fff", letterSpacing: -2 }}>
-                                    {job.company?.name?.charAt(0) || "J"}
-                                </span>
-                            )}
-                        </div>
-
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444" }} className="pulse-dot" />
-                                <span className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase">
-                                    {job.company?.name || "Confidential"}
-                                </span>
-                            </div>
-
-                            <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
-                                {job.title}
-                            </h1>
-
-                            <div className="flex flex-wrap gap-x-8 gap-y-3">
-                                {[
-                                    { icon: <Building size={16} />, label: job.company?.name || "Confidential" },
-                                    { icon: <MapPin size={16} />, label: job.location },
-                                    { icon: <Clock size={16} />, label: new Date(job.createdAt).toLocaleDateString() },
-                                    { icon: <Briefcase size={16} />, label: job.jobType ? job.jobType.replace('-', ' ') : 'Full Time' }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-[14px] leading-[1.6] text-[#64748b] font-medium">
-                                        <div style={{ color: "#94a3b8" }}>{item.icon}</div>
-                                        <span className="capitalize">{item.label}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <PageLayout>
+        <div className="pb-20 animate-pulse space-y-4">
+          <div className="h-4 bg-neutral-100 w-24 rounded-lg" />
+          <div className="bg-neutral-50 border border-neutral-100 rounded-xl p-6 flex gap-4">
+            <div className="w-14 h-14 bg-neutral-200 rounded-xl flex-shrink-0" />
+            <div className="flex-1 space-y-3">
+              <div className="h-5 bg-neutral-200 w-48 rounded-lg" />
+              <div className="h-4 bg-neutral-100 w-72 rounded-lg" />
             </div>
-
-            <div className="relative z-10 fade-up" style={{ animationDelay: '150ms' }}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-16 pt-12" style={{ borderTop: "2px solid #f1f5f9" }}>
-
-                    {/* LeftSide: Job Description */}
-                    <div className="md:col-span-2">
-                        <div className="mb-8">
-                            <h2 className="text-xl font-bold text-[#0f172a] tracking-tight mb-2">
-                                About the Role
-                            </h2>
-                            <div style={{ width: 32, height: 3, background: "#ef4444", borderRadius: 2 }} />
-                        </div>
-
-                        <div
-                            className="prose prose-lg prose-neutral max-w-none"
-                            style={{
-                                fontSize: "14px",
-                                lineHeight: "1.6",
-                                color: "#64748b",
-                                fontWeight: "500"
-                            }}
-                            dangerouslySetInnerHTML={{ __html: job.description }}
-                        />
-
-                        {job.requirements && (
-                            <div className="mt-12">
-                                <div className="mb-6">
-                                    <h2 className="text-xl font-bold text-[#0f172a] tracking-tight mb-2">
-                                        Requirements
-                                    </h2>
-                                    <div style={{ width: 32, height: 3, background: "#ef4444", borderRadius: 2 }} />
-                                </div>
-                                <div
-                                    className="prose prose-lg prose-neutral max-w-none"
-                                    style={{
-                                        fontSize: "14px",
-                                        lineHeight: "1.6",
-                                        color: "#64748b",
-                                        fontWeight: "500"
-                                    }}
-                                    dangerouslySetInnerHTML={{ __html: job.requirements }}
-                                />
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Rightside: Sidebar Summary */}
-                    <div className="space-y-12 md:sticky md:top-32">
-                        <div style={{ background: "#fafafa", padding: "32px", borderRadius: "24px", border: "1px solid #f1f5f9" }}>
-                            <h3 className="text-[10px] font-bold text-[#94a3b8] mb-8 uppercase tracking-wider">
-                                ROLE OVERVIEW
-                            </h3>
-
-                            <div className="space-y-6">
-                                <div className="flex flex-col gap-1 pb-5" style={{ borderBottom: "1px solid #f1f5f9" }}>
-                                    <p className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider">Salary Range</p>
-                                    <p className="text-xl font-bold text-[#0f172a]">
-                                        {job.salary ? `$${job.salary.toLocaleString()}` : "Competitive"}
-                                    </p>
-                                </div>
-
-                                <div className="flex flex-col gap-1 pb-5" style={{ borderBottom: "1px solid #f1f5f9" }}>
-                                    <p className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider">Job Type</p>
-                                    <p className="text-xl font-bold text-[#0f172a] capitalize">
-                                        {job.jobType ? job.jobType.replace('-', ' ') : "Full Time"}
-                                    </p>
-                                </div>
-
-                                {job.skills && job.skills.length > 0 && (
-                                    <div className="flex flex-col gap-3">
-                                        <p className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider">Skills Wanted</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {job.skills.map((skill, index) => (
-                                                <span key={index} className="px-3 py-1 bg-neutral-100 text-[#0f172a] text-[11px] font-bold rounded-full uppercase tracking-wider">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 12 }}>
-                                <button
-                                    onClick={() => {
-                                        const url = window.location.href;
-                                        if (navigator.share) {
-                                            navigator.share({
-                                                title: job.title,
-                                                text: `Check out this ${job.title} role at ${job.company?.name}`,
-                                                url
-                                            }).catch(console.error);
-                                        } else {
-                                            navigator.clipboard.writeText(url);
-                                            alert("Link copied to clipboard!");
-                                        }
-                                    }}
-                                    className="btn-outline !px-10 !py-3.5 !text-xs !font-bold"
-                                >
-                                    <Share2 size={15} /> Share Opportunity
-                                </button>
-
-                                <button
-                                    onClick={handleApply}
-                                    className="btn-primary !px-10 !py-3.5 !text-xs !shadow-xl !shadow-primary-400/20"
-                                >
-                                    Apply Directly <CheckCircle size={15} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </PageLayout>
+          </div>
+        </div>
+      </PageLayout>
     );
+  }
+
+  /* job not found display... */
+  if (!job) {
+    return (
+      <PageLayout>
+        <div className="py-20 text-center max-w-xl mx-auto">
+          <div className="w-12 h-12 bg-neutral-50 border border-neutral-200 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Building2 size={24} className="text-neutral-400" />
+          </div>
+          <h2 className="text-[16px] font-bold text-black mb-2">Job details not found</h2>
+          <p className="text-[14px] text-neutral-500 mb-8 mx-auto leading-relaxed font-medium">
+            The job opportunity you are looking for has been removed or is no longer available.
+          </p>
+          <button
+            onClick={() => navigate("/student/jobs")}
+            className="text-[12px] font-bold border border-neutral-200 px-6 py-4 rounded-xl hover:bg-neutral-50 transition-colors uppercase tracking-wider"
+          >
+            Back to Jobs
+          </button>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  const isOpen = job.status === "open";
+
+  return (
+    <PageLayout>
+      {/* This page includes the data that we are showing 
+      inside the job card */}
+      <div className="pb-20 animate-fade-in text-left">
+
+        {/* back navigation...
+        redirects the user to the previous page in history */}
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-1.5 text-[12px] font-bold text-neutral-500 hover:text-black mb-6 transition-colors cursor-pointer bg-transparent border-none p-0 group"
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+          Back to Jobs
+        </button>
+
+        {/* page header section... */}
+        <section aria-label="Page header" className="mb-8 p-0">
+          <p className="cs-section-label">
+            {job.company?.name || "Verified Organization"}
+          </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h1 className="cs-page-title text-left">
+                {job.title} <span className="text-[#ef4444]">Details</span>
+              </h1>
+              <div className="flex flex-wrap gap-2.5">
+                <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${
+                  isOpen ? "bg-green-50/50 border-green-100 text-green-700" : "bg-neutral-50 border-neutral-200 text-neutral-500"
+                }`}>
+                  <div className={`w-1 h-1 rounded-full ${isOpen ? 'bg-green-500' : 'bg-neutral-400'}`} />
+                  {isOpen ? "Active" : "Closed"}
+                </span>
+                {job.location && (
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-neutral-500 bg-white border border-neutral-200 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    <MapPin size={11} className="text-neutral-400" />
+                    {job.location}
+                  </span>
+                )}
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-neutral-500 bg-white border border-neutral-200 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  <Briefcase size={11} className="text-neutral-400" />
+                  {formatJobType(job.jobType)}
+                </span>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={handleShare}
+                className="h-10 flex items-center justify-center gap-2 text-[11px] font-bold text-black border border-neutral-200 px-6 rounded-xl hover:bg-neutral-50 transition-all bg-white uppercase tracking-wider shadow-sm"
+              >
+                <Share2 size={13} />
+                {copied ? "Copied" : "Share"}
+              </button>
+              <button
+                onClick={handleApply}
+                disabled={!isOpen}
+                className="h-10 bg-black text-white px-7 rounded-xl text-[11px] font-bold hover:bg-neutral-800 transition-all disabled:opacity-40 flex items-center gap-2 uppercase tracking-wider shadow-sm"
+              >
+                <CheckCircle size={14} />
+                Apply Directly
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* main grid container...
+        here we display the left side description and right side role overview */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
+
+          {/* LeftSide: Job Description Area... */}
+          <div className="space-y-6">
+
+            {/* role analysis section... */}
+            <section
+              aria-label="About the role"
+              className="bg-white border border-neutral-200 rounded-xl p-6"
+            >
+              <div className="flex items-center gap-4 mb-8 pb-6 border-b border-neutral-100">
+                <div className="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0 overflow-hidden border border-neutral-200 shadow-sm">
+                  {job.company?.logo ? (
+                    <img src={job.company.logo} alt={job.company.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <Building size={20} className="text-neutral-500" />
+                  )}
+                </div>
+                <div>
+                  <p className="cs-section-label !mb-0.5">
+                    Directives
+                  </p>
+                  <h2 className="text-[14px] font-bold text-black uppercase tracking-tight">
+                    Job Description
+                  </h2>
+                </div>
+              </div>
+              
+              <div
+                className="text-[13px] leading-relaxed text-neutral-600 prose-sm max-w-none text-left font-medium"
+                dangerouslySetInnerHTML={{ __html: job.description }}
+              />
+            </section>
+
+            {/* job requirements section... */}
+            {job.requirements && (
+              <section
+                aria-label="Requirements"
+                className="bg-white border border-neutral-200 rounded-xl p-6"
+              >
+                <p className="cs-section-label text-left">
+                  Entry Criteria
+                </p>
+                <h2 className="text-[14px] font-bold text-black mb-4 uppercase tracking-tight text-left">
+                  Requirements
+                </h2>
+                <div
+                  className="text-[13px] leading-relaxed text-neutral-600 prose-sm max-w-none text-left font-medium"
+                  dangerouslySetInnerHTML={{ __html: job.requirements }}
+                />
+              </section>
+            )}
+          </div>
+
+          {/* Rightside: Sidebar Summary Overview... */}
+          <aside className="space-y-6 text-left">
+
+            {/* overview sidebar card... */}
+            <section
+              aria-label="Role overview"
+              className="bg-white border border-neutral-200 rounded-xl p-5 sticky top-8 overflow-hidden shadow-sm"
+            >
+              <h3 className="cs-section-label !mb-6 border-b border-neutral-100 pb-4">
+                ROLE OVERVIEW
+              </h3>
+
+              <div className="space-y-0 px-0.5">
+                
+                {/* salary range details... */}
+                <div className="flex flex-col gap-1 pb-5 mb-5 border-b border-neutral-100">
+                  <p className="cs-section-label !mb-1">Salary Range</p>
+                  <p className="text-[17px] font-bold text-black leading-none flex items-center gap-1.5">
+                    <IndianRupee size={15} className="text-[#ef4444]" />
+                    {formatSalary(job.salary).replace("₹", "")}
+                  </p>
+                </div>
+
+                {/* job schedule type... */}
+                <div className="flex flex-col gap-1 pb-5 mb-5 border-b border-neutral-100">
+                  <p className="cs-section-label !mb-1">Job Type</p>
+                  <p className="text-[14px] font-bold text-black capitalize">
+                    {job.jobType ? job.jobType.replace('-', ' ') : "Full Time"}
+                  </p>
+                </div>
+
+                {/* required skills list... */}
+                {job.skills && job.skills.length > 0 && (
+                  <div className="flex flex-col gap-3">
+                    <p className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider">Skills Wanted</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {job.skills.map((skill, index) => (
+                        <span key={index} className="px-3 py-1 bg-neutral-50 border border-neutral-200 text-neutral-600 text-[10px] font-bold rounded-full uppercase tracking-wider">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* bottom apply shortcut button... */}
+              <button
+                onClick={handleApply}
+                disabled={!isOpen}
+                className="w-full h-11 bg-black text-white mt-8 flex items-center justify-center gap-2 text-[11px] font-bold rounded-xl hover:bg-neutral-800 transition-all disabled:opacity-40 uppercase tracking-wider shadow-sm"
+              >
+                Apply Directly <CheckCircle size={14} />
+              </button>
+            </section>
+
+          </aside>
+        </div>
+      </div>
+    </PageLayout>
+  );
 }

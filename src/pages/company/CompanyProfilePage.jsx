@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCompanyProfile, updateCompanyProfile } from "../../services/companyProfileService";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import PageLayout from "../../components/PageLayout";
 import { Building2, Globe, MapPin, Save, CheckCircle2 } from "lucide-react";
 
 //profile fields and how complete they are (20% per field)
@@ -72,7 +71,7 @@ export default function CompanyProfilePage() {
 
   // Internal Helper Components for the Student-Style Grid
   const Cell = ({ children, className = "", style = {} }) => (
-    <div className={`cs-card p-6 ${className}`} style={style}>{children}</div>
+    <div className={`cs-card-modern p-6 ${className}`} style={style}>{children}</div>
   );
 
   const Field = ({ label, name, value, onChange, placeholder, icon: Icon, textarea }) => (
@@ -92,26 +91,25 @@ export default function CompanyProfilePage() {
   );
 
   return (
-    <div className="min-h-screen bg-app-bg font-sans flex flex-col">
-      <Navbar />
-      <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
+    <PageLayout>
+      <div className="pb-10 animate-fade-in">
 
         {/*added the herosection with matches the
             existing styles effectively*/} 
-        <section className="d-hero mb-8">
+        <section className="d-hero mb-8 p-0 pt-4">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
             {/* Left Column: Text & Actions */}
             <div style={{ flex: 1 }}>
               <div className="mb-7">
-                <p className="text-[13px] font-bold tracking-[0.5px] text-[#475569] uppercase mb-2">
+                <p className="cs-section-label">
                   Organization Settings
                 </p>
-                <h1 className="text-[2.5rem] font-extrabold leading-[1.1] tracking-[-2px] text-[#0f172a] mb-5">
+                <h1 className="cs-page-title">
                   Build your<br />
-                  <span style={{ color: "#ef4444" }}>employer brand.</span>
+                  <span className="text-[#ef4444]">employer brand.</span>
                 </h1>
-                <p className="text-[14px] leading-[1.6] text-[#64748b] font-medium max-w-[460px]">
+                <p className="cs-subtext max-w-[460px]">
                   This profile is shown to candidates on your job postings. A complete profile gets significantly more qualified applicants.
                 </p>
               </div>
@@ -126,41 +124,41 @@ export default function CompanyProfilePage() {
             </div>
 
             {/* Right Column: Career Ecosystem Grid */}
-            <div className="hidden lg:block slide-in" style={{ flexShrink: 0, width: "360px" }}>
-              <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.1)", border: "1px solid #f1f5f9" }} className="grid grid-cols-2">
+            <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
+              <div className="rounded-xl overflow-hidden border border-neutral-200 grid grid-cols-2 shadow-sm">
                 <img
                   src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80&auto=format&fit=crop"
                   alt="Offices"
-                  style={{ width: "100%", height: "120px", objectFit: "cover", borderRight: "1px solid #fff", borderBottom: "1px solid #fff" }}
+                  style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff", borderBottom: "1px solid #fff" }}
                 />
                 <img
                   src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80&auto=format&fit=crop"
                   alt="Jobs"
-                  style={{ width: "100%", height: "120px", objectFit: "cover", borderBottom: "1px solid #fff" }}
+                  style={{ width: "100%", height: "100px", objectFit: "cover", borderBottom: "1px solid #fff" }}
                 />
                 <img
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&q=80&auto=format&fit=crop"
                   alt="Team"
-                  style={{ width: "100%", height: "120px", objectFit: "cover", borderRight: "1px solid #fff" }}
+                  style={{ width: "100%", height: "100px", objectFit: "cover", borderRight: "1px solid #fff" }}
                 />
                 <img
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80&auto=format&fit=crop"
                   alt="Companies"
-                  style={{ width: "100%", height: "120px", objectFit: "cover" }}
+                  style={{ width: "100%", height: "100px", objectFit: "cover" }}
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* profile success popup */}
+        {/* profile success popup section */}
         {success && (
-          <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-[14px] p-4 mb-6 text-green-700 font-bold text-sm">
+          <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-green-700 font-bold text-sm">
             <CheckCircle2 size={18} /> Profile saved successfully!
           </div>
         )}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-[14px] p-4 mb-6 text-red-600 font-bold text-sm text-center">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-red-600 font-bold text-sm text-center">
             {error}
           </div>
         )}
@@ -168,17 +166,17 @@ export default function CompanyProfilePage() {
         {loading ? (
           <div className="flex flex-col gap-4">
             {[120, 80, 200, 80].map((h, i) => (
-              <div key={i} style={{ height: h }} className="bg-neutral-50/80 rounded-[14px] border border-neutral-100 animate-pulse" />
+              <div key={i} style={{ height: h }} className="bg-neutral-50/80 rounded-xl border border-neutral-100 animate-pulse" />
             ))}
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="d-content">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-              {/* 1st Cell: Profile Lead */}
+              {/* 1st Cell: Profile Lead logic and display */}
               <Cell className="flex flex-col items-center justify-center text-center lg:row-span-2"
                 style={{ background: "#f8fafc", border: "1px solid #f1f5f9", minHeight: 280 }}>
-                <div className="w-[84px] h-[84px] rounded-[30px] flex items-center justify-center text-4xl font-black text-white mb-6 shadow-xl border border-white/20"
+                <div className="w-[84px] h-[84px] rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 shadow-xl border border-white/20"
                   style={{ background: "linear-gradient(135deg, #ef4444, #991b1b)" }}>
                   {profile.name ? profile.name[0].toUpperCase() : <Building2 size={36} />}
                 </div>
@@ -198,7 +196,7 @@ export default function CompanyProfilePage() {
 
               {/* 2nd Cell: Identity */}
               <Cell className="lg:col-span-2">
-                <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Company Identity</p>
+                <p className="cs-section-label">Company Identity</p>
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="Organization Name" name="name" value={profile.name} onChange={handleChange} placeholder="e.g. Acme Inc" />
                   <Field label="Industry Sector" name="industry" value={profile.industry} onChange={handleChange} placeholder="e.g. Fintech" />
@@ -209,14 +207,14 @@ export default function CompanyProfilePage() {
 
               {/* 3rd Cell: About - The Mission */}
               <Cell className="lg:col-span-2">
-                <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Mission & Culture</p>
+                <p className="cs-section-label">Mission & Culture</p>
                 <Field textarea label="The About Organization" name="about" value={profile.about} onChange={handleChange}
                   placeholder="Describe your mission, vision, and organizational culture..." />
               </Cell>
 
-              {/* Bottom Row */}
+              {/* Bottom Row stats */}
               <Cell>
-                <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Quick Stats</p>
+                <p className="cs-section-label">Quick Stats</p>
                 <div className="flex flex-col gap-4">
                   <Field label="Founded In" name="founded" value={profile.founded} onChange={handleChange} placeholder="e.g. 2018" />
                   <Field label="Team Size" name="size" value={profile.size} onChange={handleChange} placeholder="e.g. 50-100" />
@@ -224,7 +222,7 @@ export default function CompanyProfilePage() {
               </Cell>
 
               <Cell className="lg:col-span-2">
-                <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-4">Social Footprint</p>
+                <p className="cs-section-label">Social Footprint</p>
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="LinkedIn Profile" name="linkedin" value={profile.linkedin} onChange={handleChange} placeholder="linkedin.com/company/..." icon={Building2} />
                   <Field label="Twitter / X" name="twitter" value={profile.twitter} onChange={handleChange} placeholder="twitter.com/..." icon={Globe} />
@@ -233,7 +231,7 @@ export default function CompanyProfilePage() {
 
             </div>
 
-            {/* Actions */}
+            {/* Actions button section */}
             <div className="flex items-center gap-3 mt-8">
               <button type="submit" disabled={saving}
                 className="btn-primary" style={{ padding: "10px 24px" }}>
@@ -247,9 +245,7 @@ export default function CompanyProfilePage() {
             </div>
           </form>
         )}
-
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </PageLayout>
   );
 }
