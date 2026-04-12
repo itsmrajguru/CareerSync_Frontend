@@ -22,7 +22,7 @@ const STATUS_CFG = {
 };
 
 /* the main page  */
-export default function ApplicantsPage() {
+export default function GetSingleJobApplicationsPage() {
   const { jobId } = useParams();
   const navigate = useNavigate();
 
