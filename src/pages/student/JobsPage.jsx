@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Search, Filter, X, MapPin, Briefcase,
-  Users, CheckCircle, Building2,
+  Users, CheckCircle, BriefcasePlus,
   Bookmark, BookmarkCheck
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -18,6 +18,9 @@ function JobItem({ job, hasApplied, isSavedInitially, onToggleSave }) {
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(isSavedInitially);
 
+  /* this function calls the toggleSaveJob,
+and using the state setIsSaved , we store the job in the isSaved 
+state otherwise , we keep it as it is...  */
   const handleSave = async (e) => {
     e.stopPropagation(); // prevent card click
     try {
@@ -72,7 +75,7 @@ function JobItem({ job, hasApplied, isSavedInitially, onToggleSave }) {
             {job.company?.logo ? (
               <img src={job.company.logo} alt={job.company.name} className="w-full h-full rounded-2xl object-cover" />
             ) : (
-              <Building2 size={18} className="text-neutral-400" />
+              <BriefcasePlus size={18} className="text-neutral-400" />
             )}
           </div>
           <div className="min-w-0">
@@ -233,6 +236,7 @@ export default function JobsPage() {
     fetchInitialData(q);
   }, [searchParams]);
 
+  /* this calls both the getJobs and getSavedJobs functionalities*/
   async function fetchInitialData(q) {
     setLoading(true);
     await Promise.all([
@@ -242,6 +246,9 @@ export default function JobsPage() {
     setLoading(false);
   }
 
+  /* change 3 :We initially fetch the saved Jobs,and store
+all the savedjobs Id's into the state setSavedJobIds so that 
+we could display them as saved on the page... */
   async function fetchSavedJobIds() {
     try {
       const response = await getSavedJobs();
@@ -252,7 +259,7 @@ export default function JobsPage() {
     }
   }
 
-
+  /*fetchJobs Functionality fetches all jobs  */
   async function fetchJobs(f = filters) {
     setError("");
     try {
@@ -346,7 +353,8 @@ export default function JobsPage() {
               </div>
             )}
 
-            {/* Two cards per row */}
+            {/* Two cards per row 
+this calle the jobItem and passes props accordingly*/}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {loading ? (
                 [...Array(6)].map((_, i) => (
@@ -357,6 +365,8 @@ export default function JobsPage() {
                   <JobItem 
                     key={job._id} 
                     job={job} 
+                    /* /this checks that wherther this current job
+                    is saved or not ? */
                     isSavedInitially={savedJobIds.has(job._id)}
                   />
                 ))

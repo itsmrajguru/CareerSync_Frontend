@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { 
-  Briefcase, MapPin, Clock, Building2, 
+  Briefcase, MapPin, Clock, BriefcasePlus, 
   Search, ArrowLeft, Trash2, ShieldAlert, CheckCircle 
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -107,7 +107,7 @@ export default function ManageJobsPage() {
                   
                   <div className="flex flex-wrap justify-center md:justify-start gap-4">
                     <div className="flex items-center gap-1.5 text-[13px] font-bold text-[#64748b]">
-                      <Building2 size={14} className="text-[#94a3b8]" />
+                      <BriefcasePlus size={14} className="text-[#94a3b8]" />
                       <span>{job.company?.name}</span>
                       {job.company?.isVerified && <CheckCircle size={14} className="text-blue-500" fill="currentColor" fillOpacity={0.1} />}
                     </div>

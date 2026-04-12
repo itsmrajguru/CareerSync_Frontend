@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  ArrowLeft, MapPin, Building2,
+  ArrowLeft, MapPin, BriefcasePlus,
   Briefcase, Share2, CheckCircle, IndianRupee, Building
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -108,7 +108,7 @@ export default function JobDetailsPage() {
       <PageLayout>
         <div className="py-20 text-center max-w-xl mx-auto">
           <div className="w-12 h-12 bg-neutral-50 border border-neutral-200 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Building2 size={24} className="text-neutral-400" />
+            <BriefcasePlus size={24} className="text-neutral-400" />
           </div>
           <h2 className="text-[16px] font-bold text-black mb-2">Job details not found</h2>
           <p className="text-[14px] text-neutral-500 mb-8 mx-auto leading-relaxed font-medium">

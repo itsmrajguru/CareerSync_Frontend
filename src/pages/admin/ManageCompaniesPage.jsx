@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { 
-  Building2, CheckCircle, XCircle, Search, 
+  BriefcasePlus, CheckCircle, XCircle, Search, 
   ArrowLeft, ExternalLink, Mail, Calendar, MapPin
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -106,7 +106,7 @@ export default function ManageCompaniesPage() {
               >
                 {/* Visual Identity */}
                 <div className="w-16 h-16 bg-[#0f172a] rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary-900/10">
-                  <Building2 className="text-white" size={28} />
+                  <BriefcasePlus className="text-white" size={28} />
                 </div>
 
                 {/* Primary Info */}

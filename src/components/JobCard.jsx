@@ -1,4 +1,4 @@
-import { Building2, MapPin, Briefcase } from "lucide-react";
+import { BriefcasePlus, MapPin, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function JobCard({ job }) {
