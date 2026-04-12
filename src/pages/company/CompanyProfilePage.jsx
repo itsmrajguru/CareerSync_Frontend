@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { getCompanyProfile, updateCompanyProfile } from "../../services/companyProfileService";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
-import { Building2, Globe, MapPin, Save, CheckCircle2 } from "lucide-react";
+import { BriefcaseBusiness, Globe, MapPin, Save, CheckCircle2 } from "lucide-react";
 
-//profile fields and how complete they are (20% per field)
+//this functions calculates that how much resume has been completed (20% per field)
 function calcCompleteness(p) {
   return [p.name, p.about, p.website, p.industry, p.location].filter(Boolean).length * 20;
 }
 
+/*main CompanyProfilePage function */
 export default function CompanyProfilePage() {
   const [profile, setProfile] = useState({
     name: "", website: "", location: "", about: "", industry: "",
@@ -20,13 +21,17 @@ export default function CompanyProfilePage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  /* Fetch profile on mount */
+  /* this useState calls the getCompanyProfile
+  so that the companyProfileDetails are shown on the page,
+  if any profileFields are saved</thead> */
   useEffect(() => {
     async function fetchProfile() {
       try {
         const res = await getCompanyProfile();
         if (res.success && res.company) {
           const c = res.company;
+          /* this stores the fetched company details in the state setProfile
+          otherwise sets empty to every field */
           setProfile({
             name: c.name || "",
             website: c.website || "",
@@ -45,12 +50,16 @@ export default function CompanyProfilePage() {
     fetchProfile();
   }, []);
 
+
+  /* on changing any field, the profile is automatically updated */
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
     if (success) setSuccess(false);
     if (error) setError("");
   };
 
+  /* This functipm just updated the company details and 
+  thus again the companydetails are fetched and cycle continues*/
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true); setSuccess(false); setError("");
@@ -95,8 +104,8 @@ export default function CompanyProfilePage() {
       <div className="pb-10 animate-fade-in">
 
         {/*added the herosection with matches the
-            existing styles effectively*/} 
-        <section className="d-hero mb-8 p-0 pt-4">
+            existing styles effectively*/}
+        <section className="mb-8 pt-4 p-0">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
             {/* Left Column: Text & Actions */}
@@ -114,6 +123,7 @@ export default function CompanyProfilePage() {
                 </p>
               </div>
 
+              {/* the dummy cards matching the existing css of the project */}
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
                 <span className="flex items-center gap-1">✔ Brand Reputation</span>
                 <span style={{ opacity: 0.3 }}>·</span>
@@ -123,7 +133,7 @@ export default function CompanyProfilePage() {
               </div>
             </div>
 
-            {/* Right Column: Career Ecosystem Grid */}
+            {/* we have taken images and show here*/}
             <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
               <div className="rounded-xl overflow-hidden border border-neutral-200 grid grid-cols-2 shadow-sm">
                 <img
@@ -157,6 +167,7 @@ export default function CompanyProfilePage() {
             <CheckCircle2 size={18} /> Profile saved successfully!
           </div>
         )}
+        {/* this state displayes the errors... */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-red-600 font-bold text-sm text-center">
             {error}
@@ -170,15 +181,15 @@ export default function CompanyProfilePage() {
             ))}
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="d-content">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
               {/* 1st Cell: Profile Lead logic and display */}
               <Cell className="flex flex-col items-center justify-center text-center lg:row-span-2"
                 style={{ background: "#f8fafc", border: "1px solid #f1f5f9", minHeight: 280 }}>
                 <div className="w-[84px] h-[84px] rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 shadow-xl border border-white/20"
                   style={{ background: "linear-gradient(135deg, #ef4444, #991b1b)" }}>
-                  {profile.name ? profile.name[0].toUpperCase() : <Building2 size={36} />}
+                  {profile.name ? profile.name[0].toUpperCase() : <BriefcaseBusiness size={36} />}
                 </div>
                 <h3 className="text-[19px] font-black text-[#0f172a] tracking-tight mb-2 uppercase">{profile.name || "Company Name"}</h3>
                 <p className="text-[12px] font-extrabold text-[#ef4444] uppercase tracking-widest mb-6">{profile.industry || "Industry Not Set"}</p>
@@ -224,7 +235,7 @@ export default function CompanyProfilePage() {
               <Cell className="lg:col-span-2">
                 <p className="cs-section-label">Social Footprint</p>
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="LinkedIn Profile" name="linkedin" value={profile.linkedin} onChange={handleChange} placeholder="linkedin.com/company/..." icon={Building2} />
+                  <Field label="LinkedIn Profile" name="linkedin" value={profile.linkedin} onChange={handleChange} placeholder="linkedin.com/company/..." icon={BriefcaseBusiness} />
                   <Field label="Twitter / X" name="twitter" value={profile.twitter} onChange={handleChange} placeholder="twitter.com/..." icon={Globe} />
                 </div>
               </Cell>
