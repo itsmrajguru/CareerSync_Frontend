@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  Clock, ChevronRight, Search,
+  Clock, ChevronRight, Search, BriefcaseBusiness,
   ExternalLink, Bookmark
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -203,7 +203,7 @@ export default function ApplicationsPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <BriefcasePlus size={18} className="text-neutral-400" />
+                        <BriefcaseBusiness size={18} className="text-neutral-400" />
                       )}
                     </div>
 
@@ -221,7 +221,7 @@ export default function ApplicationsPage() {
                         </span>
                         {app.company?.name && (
                           <span className="text-[12px] font-bold text-neutral-400 flex items-center gap-1.5">
-                            <BriefcasePlus size={11} className="text-neutral-300" />
+                            <BriefcaseBusiness size={11} className="text-neutral-300" />
                             {app.company.name}
                           </span>
                         )}
@@ -291,7 +291,7 @@ export default function ApplicationsPage() {
                           {job.company?.logo ? (
                             <img src={job.company.logo} alt="" className="w-full h-full object-cover"/>
                           ) : (
-                            <BriefcasePlus size={16} className="text-neutral-400" />
+                            <BriefcaseBusiness size={16} className="text-neutral-400" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { 
-  ArrowLeft, Send, BriefcasePlus, MapPin, 
+  ArrowLeft, Send, BriefcaseBusiness, MapPin, 
   Briefcase, CheckCircle, AlertCircle 
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -237,7 +237,7 @@ export default function ApplyPage() {
                     {job.company?.logo ? (
                       <img src={job.company.logo} alt={job.company.name} className="w-full h-full object-cover" />
                     ) : (
-                      <BriefcasePlus className="text-neutral-400" size={20} />
+                      <BriefcaseBusiness className="text-neutral-400" size={20} />
                     )}
                   </div>
                   <div className="min-w-0">

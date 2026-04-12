@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { 
-  Users, BriefcasePlus, Briefcase, FileText, 
+  Users, BriefcaseBusiness, Briefcase, FileText, 
   TrendingUp, ShieldCheck, AlertCircle, ChevronRight 
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
 
   const statCards = [
     { label: "Total Students", value: stats.students, icon: <Users size={24} />, color: "bg-blue-50 text-blue-600" },
-    { label: "Total Companies", value: stats.companies, icon: <BriefcasePlus size={24} />, color: "bg-purple-50 text-purple-600" },
+    { label: "Total Companies", value: stats.companies, icon: <BriefcaseBusiness size={24} />, color: "bg-purple-50 text-purple-600" },
     { label: "Direct Jobs", value: stats.jobs, icon: <Briefcase size={24} />, color: "bg-orange-50 text-orange-600" },
     { label: "Applications", value: stats.applications, icon: <FileText size={24} />, color: "bg-green-50 text-green-600" },
   ];
@@ -87,7 +87,7 @@ export default function AdminDashboard() {
           
           <div className="cs-card !p-10 border-neutral-100 flex flex-col justify-between overflow-hidden relative group">
             <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
-              <BriefcasePlus size={120} />
+              <BriefcaseBusiness size={120} />
             </div>
             <div>
               <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6">

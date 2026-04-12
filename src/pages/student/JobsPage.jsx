@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Search, Filter, X, MapPin, Briefcase,
-  Users, CheckCircle, BriefcasePlus,
+  Users, CheckCircle, BriefcaseBusiness,
   Bookmark, BookmarkCheck
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
@@ -75,7 +75,7 @@ state otherwise , we keep it as it is...  */
             {job.company?.logo ? (
               <img src={job.company.logo} alt={job.company.name} className="w-full h-full rounded-2xl object-cover" />
             ) : (
-              <BriefcasePlus size={18} className="text-neutral-400" />
+              <BriefcaseBusiness size={18} className="text-neutral-400" />
             )}
           </div>
           <div className="min-w-0">

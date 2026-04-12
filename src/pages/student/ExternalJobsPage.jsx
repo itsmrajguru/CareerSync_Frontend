@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Search, Filter, X, MapPin, Briefcase, DollarSign,
-  Users, ChevronLeft, ChevronRight, CheckCircle, BriefcasePlus
+  Users, ChevronLeft, ChevronRight, CheckCircle, BriefcaseBusiness
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { getJobs } from "../../services/externalJobsService";
@@ -39,7 +39,7 @@ this function returns the job decsriotion to show on the card*/}
       <div className="flex items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
           <div className="w-11 h-11 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors shadow-sm">
-            <BriefcasePlus size={24} className="text-neutral-500" />
+            <BriefcaseBusiness size={24} className="text-neutral-500" />
           </div>
           <div className="min-w-0">
             <span className="cs-section-label !mb-0.5">
