@@ -36,6 +36,9 @@ import CompanyProfilePage from "./pages/company/CompanyProfilePage";
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import SettingsPage from "./pages/company/SettingsPage";
 
+//Page Not Found Page
+import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -83,8 +86,8 @@ function App() {
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
 
-        {/* Catch-all route to prevent 404s for logged-in users trying to reach old paths */}
-        <Route path="*" element={<Navigate to="/student/dashboard" replace />} />
+        {/* Catch-all route to display the premium 404 page... */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
