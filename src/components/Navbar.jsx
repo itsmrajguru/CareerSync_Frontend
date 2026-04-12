@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,
-  Home, Bookmark, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck
+  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,UserCheck,CheckCircle,CalendarClock,
+  Home, BookmarkCheck , Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck
 } from "lucide-react";
 
 
@@ -41,7 +41,6 @@ export default function Navbar() {
         { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} /> },
       ],
     },
-    { label: "My Profile", path: "/company/profile" },
     { label: "About", path: "/about" },
   ] : [
     { label: "Dashboard", path: "/student/dashboard" },
@@ -92,7 +91,10 @@ so that user can check the personlaized things here...*/
   ] : isCompany ? [
     { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
-    { to: "/company/jobs", icon: <Bookmark size={16} />, label: "Manage Jobs" },
+    { to: "/company/applicants/saved", icon: <BookmarkCheck  size={16} />, label: "Saved Applicants" },
+    { to: "/company/applicants/shortlisted", icon: <UserCheck  size={16} />, label: "Shortlisted" },
+    { to: "/company/applicants/Selected", icon: <CheckCircle  size={16} />, label: "Selected" },
+    { to: "/company/applicants/interviews", icon: <CalendarClock size={16} />, label: "interviews" },
     { to: "/company/settings", icon: <Settings size={16} />, label: "Settings" },
   ] : [
     { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },

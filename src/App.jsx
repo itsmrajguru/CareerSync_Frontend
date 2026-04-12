@@ -16,10 +16,10 @@ import ResumePage from "./pages/student/ResumePage";
 import StudentProfilePage from "./pages/student/StudentProfilePage";
 import ExternalJobDetailsPage from "./pages/student/ExternalJobDetailsPage";
 import StudentSettingsPage from "./pages/student/StudentSettingsPage";
-import JobsPage from "./pages/student/JobsPage";
+import ShowJobsPage from "./pages/student/ShowJobsPage";
 import JobDetailsPage from "./pages/student/JobDetailsPage";
-import ApplyPage from "./pages/student/ApplyPage";
-import ApplicationsPage from "./pages/student/ApplicationsPage";
+import ApplyToJobPage from "./pages/student/ApplyToJobPage";
+import MyApplicationsPage from "./pages/student/MyApplicationsPage";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -30,8 +30,8 @@ import ManageJobsPage from "./pages/admin/ManageJobsPage";
 import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CreateJobPage from "./pages/company/CreateJobPage";
 import EditJobPage from "./pages/company/EditJobPage";
-import CompanyJobsPage from "./pages/company/CompanyJobsPage";
-import ApplicantsPage from "./pages/company/ApplicantsPage";
+import ShowPostedJobsPage from "./pages/company/showPostedJobsPage";
+import GetSingleJobApplicationsPage from "./pages/company/getSingleJobApplicationsPage";
 import CompanyProfilePage from "./pages/company/CompanyProfilePage";
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import SettingsPage from "./pages/company/SettingsPage";
@@ -57,10 +57,10 @@ function App() {
         <Route path="/student/dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
         
         {/* Internal Jobs */}
-        <Route path="/student/jobs" element={<ProtectedRoute role="student"><JobsPage /></ProtectedRoute>} />
+        <Route path="/student/jobs" element={<ProtectedRoute role="student"><ShowJobsPage /></ProtectedRoute>} />
         <Route path="/student/jobs/:id" element={<ProtectedRoute role="student"><JobDetailsPage /></ProtectedRoute>} />
-        <Route path="/student/apply/:id" element={<ProtectedRoute role="student"><ApplyPage /></ProtectedRoute>} />
-        <Route path="/student/applications" element={<ProtectedRoute role="student"><ApplicationsPage /></ProtectedRoute>} />
+        <Route path="/student/apply/:id" element={<ProtectedRoute role="student"><ApplyToJobPage /></ProtectedRoute>} />
+        <Route path="/student/applications" element={<ProtectedRoute role="student"><MyApplicationsPage /></ProtectedRoute>} />
 
         {/* External Jobs (Adzuna) */}
         <Route path="/student/discover-jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />
@@ -78,10 +78,10 @@ function App() {
 
         {/* Company routes — require login as 'company' */}
         <Route path="/company/dashboard" element={<ProtectedRoute role="company"><CompanyDashboard /></ProtectedRoute>} />
-        <Route path="/company/jobs" element={<ProtectedRoute role="company"><CompanyJobsPage /></ProtectedRoute>} />
+        <Route path="/company/jobs" element={<ProtectedRoute role="company"><ShowPostedJobsPage /></ProtectedRoute>} />
         <Route path="/company/jobs/create" element={<ProtectedRoute role="company"><CreateJobPage /></ProtectedRoute>} />
         <Route path="/company/jobs/:jobId/edit" element={<ProtectedRoute role="company"><EditJobPage /></ProtectedRoute>} />
-        <Route path="/company/jobs/:jobId/applicants" element={<ProtectedRoute role="company"><ApplicantsPage /></ProtectedRoute>} />
+        <Route path="/company/jobs/:jobId/applicants" element={<ProtectedRoute role="company"><GetSingleJobApplicationsPage /></ProtectedRoute>} />
         <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
