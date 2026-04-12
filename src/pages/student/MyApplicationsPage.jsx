@@ -8,6 +8,10 @@ import PageLayout from "../../components/PageLayout";
 import { getApplications } from "../../services/applicationService";
 import { getSavedJobs } from "../../services/jobsService";
 
+/* getApplications api*/
+/* this page show the applications stats as well as the saved Jobs */
+
+/* this array cotains the stats that are mapped with the actual values... */
 const STATUS_CONFIG = {
   applied:     { label: "Applied",     pill: "bg-blue-50 text-blue-700 border border-blue-100" },
   shortlisted: { label: "Shortlisted", pill: "bg-amber-50 text-amber-700 border border-amber-100" },
@@ -15,9 +19,11 @@ const STATUS_CONFIG = {
   rejected:    { label: "Rejected",    pill: "bg-red-50 text-red-700 border border-red-100" },
 };
 
+/* we created this array of filters to show the exact applications Data */
 const FILTERS = ["all", "applied", "shortlisted", "hired", "rejected"];
 
-export default function ApplicationsPage() {
+/* main function... */
+export default function MyApplicationsPage() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading]           = useState(true);
   const [error, setError]               = useState("");
@@ -25,8 +31,9 @@ export default function ApplicationsPage() {
   const [savedJobs, setSavedJobs]       = useState([]);
 
   /* fetch applications functionality...
-  logic: 1) call the getApplications service to fetch all apps for the logged-in student
-         2) store the data in our local state to display it on the page */
+  so here we call thee getAppications and getSavedJOBS API
+  and save thier data in the applications and savedJobs states
+  then call these states to display the data coming from those api's */
   useEffect(() => { fetchApplications(); }, []);
 
   const fetchApplications = async () => {
@@ -35,7 +42,6 @@ export default function ApplicationsPage() {
         getApplications(),
         getSavedJobs()
       ]);
-      /* logic: accessing response applications directly */
       setApplications(appRes.applications || []);
       setSavedJobs(savedRes.savedJobs || []);
     } catch {
@@ -46,8 +52,8 @@ export default function ApplicationsPage() {
   };
 
   /* calculating entry counts...
-  logic: we are filtering the main applications array to get numbers for 
-  each status like applied, hired etc to show in the overview cards */
+we will get these entry counts from the application state that stores the whole data
+and the apply filters on that state to get the current number*/
   const counts = {
     total:       applications.length,
     applied:     applications.filter(a => a.status === "applied").length,
@@ -58,7 +64,9 @@ export default function ApplicationsPage() {
 
   /* filtering applications...
   if a specific status filter is selected, we only show those applications
-  and this filter is added through the array of tabs  */
+  and this filter is added through the array of tabs 
+  so we go through each stat and show the respective pages for the
+  respective stats*/
   const filteredApplications = applications.filter(app =>
     filter === "all" ? true : app.status === filter
   );
@@ -67,7 +75,7 @@ export default function ApplicationsPage() {
     <PageLayout>
       <div className="pb-20 animate-fade-in">
 
-        {/* herosection...*/}
+        {/* SECTION 1: herosection...*/}
         <section aria-label="Page header" className="mb-8 pt-4 p-0">
           <p className="cs-section-label mb-1">
             Career Pipeline
@@ -80,7 +88,7 @@ export default function ApplicationsPage() {
           </p>
         </section>
 
-        {/* SECTION 1 : application stats overview...
+        {/* SECTION 2 : application stats overview...
         this section shows the quick numbers for all your career entries */}
         <section aria-label="Application stats" className="mb-8">
           <p className="cs-section-label">
@@ -118,8 +126,7 @@ export default function ApplicationsPage() {
               Applications
             </p>
 
-            {/* users current status about applied job tabs...
-            this section shows the diffrent tabs to show the user result accordingly */}
+            {/*Diffrent tabs to filter the results according to the section */}
             <div className="flex flex-wrap gap-2 mb-5">
               {FILTERS.map(s => (
                 <button
@@ -247,7 +254,7 @@ export default function ApplicationsPage() {
             )}
           </section>
 
-          {/* SECCTION 3 : saved jobs sidebar...
+          {/* SECTION 3 : saved jobs sidebar...
           this section displays the role entries you have bookmarked for later */}
           <aside aria-label="Saved jobs">
 

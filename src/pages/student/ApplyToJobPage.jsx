@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { 
-  ArrowLeft, Send, BriefcaseBusiness, MapPin, 
-  Briefcase, CheckCircle, AlertCircle 
+import {
+  ArrowLeft, Send, BriefcaseBusiness, MapPin,
+  Briefcase, CheckCircle, AlertCircle
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { applyToJob } from "../../services/applicationService";
 import { getJobById } from "../../services/jobsService";
 
-export default function ApplyPage() {
+export default function ApplyToJobPage() {
   const { id } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -105,8 +105,8 @@ export default function ApplyPage() {
           <p className="text-[13px] text-neutral-500 mb-6 mx-auto">
             The job opportunity you are looking for might have been closed or removed.
           </p>
-          <button 
-            onClick={() => navigate("/student/dashboard")} 
+          <button
+            onClick={() => navigate("/student/dashboard")}
             className="text-[12px] border border-neutral-200 px-6 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
           >
             Back to Dashboard
@@ -119,7 +119,7 @@ export default function ApplyPage() {
   return (
     <PageLayout>
       <div className="pb-20 animate-fade-in">
-        
+
         {/* back navigation button...
         redirects the user to the previous page in history */}
         <button
@@ -130,7 +130,7 @@ export default function ApplyPage() {
           Return to Details
         </button>
 
-        {/* success state display...
+        {/* section 5 :success state display...
         this section is shown only after the application is successfully sent */}
         {success ? (
           <div className="bg-white border border-neutral-200 rounded-xl p-10 text-center max-w-lg mx-auto my-12 shadow-sm">
@@ -148,11 +148,11 @@ export default function ApplyPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
-            
-            {/* application form section...
+
+            {/* section 1 : navbar section... 
             here the student enters their resume link and writes a optional message */}
             <div className="space-y-6">
-              
+
               {/* page header area... */}
               <section aria-label="Page header" className="mb-2 p-0">
                 <p className="cs-section-label">
@@ -166,7 +166,12 @@ export default function ApplyPage() {
                 </p>
               </section>
 
+              {/* section 2 :Form to submit the application */}
+
               {/* form container section... */}
+              {/* we collect the resume link and the Experienc note from
+              the user and sentd it to the handlesubmit functionality
+              which calls the applyToJob api */}
               <form onSubmit={handleSubmit} className="bg-white border border-neutral-200 rounded-xl p-6 space-y-6">
                 {error && (
                   <div className="p-4 bg-red-50 border border-red-100 rounded-lg text-red-600 text-[12px] font-bold flex items-center gap-2">
@@ -176,9 +181,9 @@ export default function ApplyPage() {
 
                 {/* resume link input... */}
                 <div className="space-y-2">
-                <label className="cs-section-label ml-0.5">
-                  Resume Link (Public Drive/PDF)
-                </label>
+                  <label className="cs-section-label ml-0.5">
+                    Resume Link (Public Drive/PDF)
+                  </label>
                   <input
                     type="url"
                     placeholder="https://drive.google.com/your-resume-link"
@@ -223,10 +228,10 @@ export default function ApplyPage() {
               </form>
             </div>
 
-            {/* job summary side card...
+            {/* section 3  :job summary side card...
             this shows a quick summary of the job the user is applying for */}
             <aside className="space-y-6">
-              
+
               <p className="cs-section-label">
                 Role Summary
               </p>

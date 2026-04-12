@@ -7,8 +7,14 @@ import {
 import PageLayout from "../../components/PageLayout";
 import { getJobs } from "../../services/externalJobsService";
 
-// updated the jobspage with complete new version
-/*Here  we added the filter funcyionality along with 2 grid structure */
+/* This page has 3 componets
+a) jobItem 
+b) Filter panel
+c) the main job page that combines both jobItem and filterpanel
+
+and this page is dedicated to show the Jobs coming from the external adzuna api*/
+
+/*Here we added the filter functionality along with 2 grid structure */
 function JobItem({ job, hasApplied }) {
   const navigate = useNavigate();
   const contractLabel = job.contract_time
@@ -35,7 +41,7 @@ function JobItem({ job, hasApplied }) {
       )}
 
       {/* job section to match with the website fixed layouts and styles...
-this function returns the job decsriotion to show on the card*/}
+      this function returns the job decsriotion to show on the card*/}
       <div className="flex items-start justify-between mb-4 gap-3">
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
           <div className="w-11 h-11 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors shadow-sm">
@@ -78,7 +84,7 @@ this function returns the job decsriotion to show on the card*/}
       </div>
 
       {/* this is the view details button which
-redirects the user to the jobdetails page */}
+      redirects the user to the jobdetails page */}
       <div className="mt-auto pt-4 flex items-center justify-between border-t border-neutral-100">
         <span className="text-[12px] font-black text-black uppercase tracking-[1px] group-hover:text-[#ef4444] transition-colors">
           View Details
@@ -252,7 +258,7 @@ export default function ExternalJobsPage() {
       if (filters.job_type) finalQuery += ` ${filters.job_type}`;
 
       const data = await getJobs(finalQuery, page, jobsPerPage);
-      setJobs(data.jobs || []);
+      setJobs(data.results || []);
       setTotalJobs(data.count || 0);
     } catch {
       setError("Unable to process the discovery link. Try again later.");
@@ -275,6 +281,7 @@ export default function ExternalJobsPage() {
     <PageLayout>
       <div className="pb-20 animate-fade-in">
 
+        {/* Section 1 :Hero Section */}
         <section aria-label="Page header" className="mb-0 pt-4 p-0">
           <p className="cs-section-label">
             Global Discovery
@@ -288,6 +295,7 @@ export default function ExternalJobsPage() {
           </p>
         </section>
 
+          {/* section 2 :Search Jobs Section */}
           <form
             onSubmit={(e) => { e.preventDefault(); fetchJobs(quickSearch, 1); navigate(`/student/discover-jobs?q=${encodeURIComponent(quickSearch)}`); }}
             className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 h-[52px]"
@@ -306,8 +314,8 @@ export default function ExternalJobsPage() {
             </button>
           </form>
 
-        {/* This is the main layout where we are displaying the jobs 
-and the filter panel */}
+        {/* section 3 : Filter Panel + Job Display section */}
+        {/* section 3 : SubSection a ->Filter Panel  */}
         <div className="flex flex-col lg:flex-row gap-10 items-start">
 
           {/* Re-integrated Filter Panel (All original fields restored) */}
@@ -320,6 +328,7 @@ and the filter panel */}
             />
           </aside>
 
+          {/* section 3 : SubSection b -> Displaying the Job section */}
           {/* Jobs Main - 2 Cards per row */}
           <div className="flex-1 min-w-0 flex flex-col gap-8 w-full">
 
@@ -335,13 +344,15 @@ and the filter panel */}
               </div>
             )}
 
+            {/* display error returned by the backend */}
             {error && (
               <div className="p-6 bg-red-50 rounded-xl text-[#ef4444] font-bold text-sm flex items-center gap-3">
                 <X size={18} /> {error}
               </div>
             )}
 
-            {/* Two cards per row */}
+            {/* Two cards per row 
+            this calls the jobItem and passes props accordingly*/}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {loading ? (
                 [...Array(6)].map((_, i) => (
@@ -353,7 +364,9 @@ and the filter panel */}
             </div>
 
             {/* Pagination....
-the user can shift to diffrent pages based on this pagination section */}
+            the user can shift to diffrent pages based on this pagination section */}
+            {/* this means that show the pages only when loading is stopeed
+            and pages > 1 */}
             {!loading && totalPages > 1 && (
               <div className="flex items-center justify-between pt-10 border-t border-neutral-100">
                 <span className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[2px]">Page {currentPage} of {totalPages}</span>

@@ -7,9 +7,13 @@ import {
 import PageLayout from "../../components/PageLayout";
 import { getJobById } from "../../services/jobsService";
 
+
+/* this page dedicately shows the deatails of the job
+and provides the applly to the job button 
+which takes the user to applyTojObPage */
+
 /* salary formatter tool...
-logic: handles min/max ranges and fixes the [object Object] problem 
-to show 2L - 5L type format */
+this shows the fixed format 7L – ₹14L / yr */
 const formatSalary = (salary) => {
   if (!salary) return "Competitive";
   if (!salary.isVisible) return "Not disclosed";
@@ -21,8 +25,7 @@ const formatSalary = (salary) => {
   return `Up to ${sym}${(max / 100000).toFixed(0)}L / yr`;
 };
 
-/* job type helper...
-logic: capitalizes words like 'full-time' to 'Full-time' */
+/* This function capitalizes words like 'full-time' to 'Full-time' */
 const formatJobType = (type) => {
   if (!type) return "Full-time";
   return type
@@ -31,6 +34,8 @@ const formatJobType = (type) => {
     .join("-");
 };
 
+
+/* the main JobDetailsPage...*/
 export default function JobDetailsPage() {
   const { id } = useParams();
   const { state } = useLocation();
@@ -144,7 +149,7 @@ export default function JobDetailsPage() {
           Back to Jobs
         </button>
 
-        {/* page header section... */}
+        {/* section 1 : Hero section*/}
         <section aria-label="Page header" className="mb-8 p-0">
           <p className="cs-section-label">
             {job.company?.name || "Verified Organization"}
@@ -174,6 +179,7 @@ export default function JobDetailsPage() {
               </div>
             </div>
             
+            {/* section 2 : Share and Apply Directly buttons*/}
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={handleShare}
@@ -198,10 +204,10 @@ export default function JobDetailsPage() {
         here we display the left side description and right side role overview */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
 
-          {/* LeftSide: Job Description Area... */}
+          {/* section 3 : Job description section */}
           <div className="space-y-6">
 
-            {/* role analysis section... */}
+            {/* role Anlysis section... */}
             <section
               aria-label="About the role"
               className="bg-white border border-neutral-200 rounded-xl p-6"
@@ -214,6 +220,8 @@ export default function JobDetailsPage() {
                     <Building size={20} className="text-neutral-500" />
                   )}
                 </div>
+
+              {/* job description section... */}
                 <div>
                   <p className="cs-section-label !mb-0.5">
                     Directives
@@ -250,7 +258,7 @@ export default function JobDetailsPage() {
             )}
           </div>
 
-          {/* Rightside: Sidebar Summary Overview... */}
+          {/* section 4: Job role Overview */}
           <aside className="space-y-6 text-left">
 
             {/* overview sidebar card... */}

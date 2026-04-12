@@ -10,8 +10,10 @@ import { getJobs, toggleSaveJob, getSavedJobs } from "../../services/jobsService
 
 /* This page has 3 componets
 a) jobItem 
-b)Filter panel
-c) the main job page that combines both jobItem and filterpanel */
+b) Filter panel
+c) the main job page that combines both jobItem and filterpanel
+
+and this page is dedicated to show the Jobs coming from the db*/
 
 /*Here we added the filter functionality along with 2 grid structure */
 function JobItem({ job, hasApplied, isSavedInitially, onToggleSave }) {
@@ -42,7 +44,7 @@ state otherwise , we keep it as it is...  */
 
   return (
     <div
-    /* redirect user to jobdetails page */
+      /* redirect user to jobdetails page */
       onClick={() => navigate(`/student/jobs/${job._id}`, { state: { job } })}
       className="cs-card-modern flex flex-col group transition-all cursor-pointer relative h-full p-5"
     >
@@ -53,13 +55,12 @@ state otherwise , we keep it as it is...  */
             <CheckCircle size={10} /> Applied
           </div>
         )}
-        <button 
+        <button
           onClick={handleSave}
-          className={`p-2 rounded-xl border transition-all ${
-            isSaved 
-              ? "bg-[#ef4444] border-[#ef4444] text-white" 
-              : "bg-white border-neutral-100 text-[#94a3b8] hover:text-[#ef4444] shadow-sm"
-          }`}
+          className={`p-2 rounded-xl border transition-all ${isSaved
+            ? "bg-[#ef4444] border-[#ef4444] text-white"
+            : "bg-white border-neutral-100 text-[#94a3b8] hover:text-[#ef4444] shadow-sm"
+            }`}
         >
           {isSaved ? <BookmarkCheck size={16} fill="currentColor" /> : <Bookmark size={16} />}
         </button>
@@ -211,7 +212,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
 }
 
 // Main function of the page that combines the filter section and jobs section
-export default function JobsPage() {
+export default function ShowJobsPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -219,7 +220,11 @@ export default function JobsPage() {
   const [savedJobIds, setSavedJobIds] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalJobs, setTotalJobs] = useState(0);
   const [quickSearch, setQuickSearch] = useState(searchParams.get("q") || "");
+  const jobsPerPage = 12;
 
 
   /* fiters array, that is passed to the filterpanel as a  prop */
@@ -240,7 +245,7 @@ export default function JobsPage() {
   async function fetchInitialData(q) {
     setLoading(true);
     await Promise.all([
-      fetchJobs({ search: q }),
+      fetchJobs({ search: q }, 1),
       fetchSavedJobIds()
     ]);
     setLoading(false);
@@ -259,13 +264,16 @@ we could display them as saved on the page... */
     }
   }
 
-  /*fetchJobs Functionality fetches all jobs  */
-  async function fetchJobs(f = filters) {
+  /*fetchJobs Functionality fetches all jobs with pagination support */
+  async function fetchJobs(f = filters, page = currentPage) {
     setError("");
     try {
-      const response = await getJobs(f);
+      const response = await getJobs({ ...f, page, limit: jobsPerPage });
       /* logic: accessing response.jobs directly due to api interceptor */
       setJobs(response.jobs || []);
+      setTotalPages(response.totalPages || 1);
+      setTotalJobs(response.totalJobs || 0);
+      setCurrentPage(response.currentPage || 1);
     } catch {
       setError("Unable to process the job forge. Try again later.");
     }
@@ -274,7 +282,7 @@ we could display them as saved on the page... */
 
   // Effect to re-fetch when relevant filters change
   useEffect(() => {
-    fetchJobs(filters);
+    fetchJobs(filters, 1);
   }, [filters.industry, filters.jobType, filters.location, filters.search]);
 
   const activeFilterCount = [filters.search, filters.industry, filters.location, filters.jobType].filter(Boolean).length;
@@ -283,6 +291,7 @@ we could display them as saved on the page... */
     <PageLayout>
       <div className="pb-20 animate-fade-in">
 
+        {/* Section 1 :Hero Section */}
         {/* This is the herosection that matches the exact styles with the actual
         existing pages of the website */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-14 pt-4">
@@ -299,8 +308,12 @@ we could display them as saved on the page... */
             </p>
           </div>
 
-          {/* through this form , we are taking the quick search input 
-          from the user */}
+
+          {/* section 2 :Search Jobs Section */}
+
+          {/* through this form , we ttook the query through Onchange ,
+          and saved it in quickserach using setquicksearch
+          then passed the quicksearch to the setFilters called in the filter panel*/}
           <form
             onSubmit={(e) => { e.preventDefault(); setFilters(p => ({ ...p, search: quickSearch })); }}
             className="relative w-full lg:w-[420px]"
@@ -313,17 +326,18 @@ we could display them as saved on the page... */
               className="cs-input !pl-14 !pr-32 !py-4 !rounded-xl !text-[13px] font-bold"
             />
             <button type="submit" className="absolute right-2 top-2 bottom-2 px-8 bg-black text-white rounded-lg text-[11px] font-black uppercase tracking-widest active:scale-95 transition-all">
-              Refine
+              search
             </button>
           </form>
         </div>
 
-        {/* This is the main layout where we are displaying the jobs 
-        and the filter panel */}
+        {/* section 3 : Filter Panel + Job Display section */}
+        {/* section 3 : SubSection a ->Filter Panel  */}
         <div className="flex flex-col lg:flex-row gap-10 items-start">
-
           {/* Re-integrated Filter Panel (All original fields restored) */}
           <aside className="w-full lg:w-[280px] flex-shrink-0">
+
+            {/* passed the props to the filterpanel function  */}
             <FilterPanel
               filters={filters}
               onChange={(k, v) => setFilters(p => ({ ...p, [k]: v }))}
@@ -332,21 +346,24 @@ we could display them as saved on the page... */
             />
           </aside>
 
+          {/* section 3 : SubSection b -> Displaying the Job section */}
+
           {/* Jobs Main - 2 Cards per row */}
           <div className="flex-1 min-w-0 flex flex-col gap-8 w-full">
 
-            {!loading && jobs.length > 0 && (
+            {!loading && totalJobs > 0 && (
               <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
                 <p className="cs-section-label !mb-0">
-                  Analysis: Showing {jobs.length} verified roles
+                  Analysis: Showing {Math.min((currentPage - 1) * jobsPerPage + 1, totalJobs)}-{Math.min(currentPage * jobsPerPage, totalJobs)} of {totalJobs} roles
                 </p>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.4)]" />
-                  <span className="text-[11px] font-black text-black uppercase tracking-widest">Active Forge</span>
+                  <span className="text-[11px] font-black text-black uppercase tracking-widest">Active Jobs</span>
                 </div>
               </div>
             )}
 
+            {/* display error returned by the backend */}
             {error && (
               <div className="p-6 bg-red-50 rounded-xl text-[#ef4444] font-bold text-sm flex items-center gap-3">
                 <X size={18} /> {error}
@@ -354,7 +371,7 @@ we could display them as saved on the page... */
             )}
 
             {/* Two cards per row 
-this calle the jobItem and passes props accordingly*/}
+this calls the jobItem and passes props accordingly*/}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {loading ? (
                 [...Array(6)].map((_, i) => (
@@ -362,9 +379,9 @@ this calle the jobItem and passes props accordingly*/}
                 ))
               ) : jobs.length > 0 ? (
                 jobs.map((job) => (
-                  <JobItem 
-                    key={job._id} 
-                    job={job} 
+                  <JobItem
+                    key={job._id}
+                    job={job}
                     /* /this checks that wherther this current job
                     is saved or not ? */
                     isSavedInitially={savedJobIds.has(job._id)}
@@ -373,10 +390,37 @@ this calle the jobItem and passes props accordingly*/}
               ) : (
 
                 <div className="md:col-span-2 py-20 text-center">
-                   <p className="text-[#64748b] font-bold">No internal jobs found matching your criteria.</p>
+                  <p className="text-[#64748b] font-bold">No internal jobs found matching your criteria.</p>
                 </div>
               )}
             </div>
+
+            {/* Pagination....
+the user can shift to diffrent pages based on this pagination section */}
+            
+            {/* this means that show the pages only when loading is stopeed
+            and pages > 1 */}
+            {!loading && totalPages > 1 && (
+              <div className="flex items-center justify-between pt-10 border-t border-neutral-100">
+                <span className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[2px]">Page {currentPage} of {totalPages}</span>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => { const p = Math.max(currentPage - 1, 1); setCurrentPage(p); fetchJobs(filters, p); }}
+                    disabled={currentPage === 1}
+                    className="w-12 h-12 flex items-center justify-center rounded-xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
+                  >
+                    <span className="w-4 h-4">&larr;</span>
+                  </button>
+                  <button
+                    onClick={() => { const p = Math.min(currentPage + 1, totalPages); setCurrentPage(p); fetchJobs(filters, p); }}
+                    disabled={currentPage === totalPages}
+                    className="w-12 h-12 flex items-center justify-center rounded-xl border border-neutral-200 bg-white text-black hover:bg-neutral-50 disabled:opacity-30 transition-all shadow-sm"
+                  >
+                    <span className="w-4 h-4">&rarr;</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
