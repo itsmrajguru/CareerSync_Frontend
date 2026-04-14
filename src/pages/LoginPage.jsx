@@ -131,6 +131,7 @@ Option for the user to change the password*/}
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  autoComplete="current-password"
                   className="w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-lg pl-3.5 pr-10 py-2 text-[14px] text-[#0f172a] font-bold focus:ring-4 focus:ring-primary-50 transition-all outline-none placeholder:text-[#94a3b8]"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

@@ -131,6 +131,7 @@ from the user and log them in directly  */}
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  autoComplete="current-password"
                   className="w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-lg pl-3.5 pr-10 py-2 text-[14px] text-[#0f172a] font-bold focus:outline-none placeholder:text-[#94a3b8] placeholder:font-normal transition-all"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
