@@ -5,6 +5,7 @@ import PageLayout from "../../components/PageLayout";
 import { 
   ArrowLeft, Mail, FileText, Briefcase, User, GraduationCap, Code, AlertCircle, Link as LinkIcon
 } from "lucide-react";
+import { logEmailCommunication } from "../../services/notificationService";
 
 
 /* this array contains the 4 stats for the application status */
@@ -53,6 +54,22 @@ export default function ApplicationDetailPage() {
     } catch (e) {
       alert("Failed to update status.");
     }
+  };
+
+  const handleEmailClick = async (e) => {
+    e.preventDefault();
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    try {
+      await logEmailCommunication({
+        recipientId: student._id,
+        recipientType: 'UserModel',
+        subject: `Contact initiated for ${job.title}`,
+        message: `${userData.username} has initiated contact with you regarding the "${job.title}" application.`
+      });
+    } catch (err) {
+      console.error("Log comm error:", err);
+    }
+    window.location.href = `mailto:${student.email}`;
   };
 
   if (loading) {
@@ -127,10 +144,14 @@ export default function ApplicationDetailPage() {
             </select>
             {/* this functionality send the email to the user, on the basis of the updated 
             status of the job */}
-            <a href={`mailto:${student.email}`}
-              className="h-11 flex items-center justify-center gap-2 px-6 bg-black text-white font-black text-[11px] rounded-xl hover:bg-neutral-800 transition-all shadow-xl shadow-black/5 uppercase tracking-widest">
+            {/* this functionality send the email to the user, on the basis of the updated 
+            status of the job */}
+            <button 
+              onClick={handleEmailClick}
+              className="h-11 flex items-center justify-center gap-2 px-6 bg-black text-white font-black text-[11px] rounded-xl hover:bg-neutral-800 transition-all shadow-xl shadow-black/5 uppercase tracking-widest border-none cursor-pointer"
+            >
               <Mail size={16} /> Email Candidate
-            </a>
+            </button>
           </div>
         </div>
 

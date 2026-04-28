@@ -7,6 +7,7 @@ import {
   Mail, ArrowLeft, Calendar,
   Search, Users, Download,
 } from "lucide-react";
+import { logEmailCommunication } from "../../services/notificationService";
 
 
 /* This page is dedicated to show the applicant candidiates of an 
@@ -101,6 +102,21 @@ export default function GetSingleJobApplicationsPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleEmailClick = async (app) => {
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    try {
+      await logEmailCommunication({
+        recipientId: app.student._id,
+        recipientType: 'UserModel',
+        subject: `Contact initiated for ${jobTitle}`,
+        message: `${userData.username} has initiated contact with you regarding the "${jobTitle}" application.`
+      });
+    } catch (e) {
+      console.error("Log comm error:", e);
+    }
+    window.location.href = `mailto:${app.student.email}`;
   };
 
 
