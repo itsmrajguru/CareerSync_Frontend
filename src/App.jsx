@@ -35,6 +35,7 @@ import GetSingleJobApplicationsPage from "./pages/company/getSingleJobApplicatio
 import CompanyProfilePage from "./pages/company/CompanyProfilePage";
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import SettingsPage from "./pages/company/SettingsPage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 //Page Not Found Page
 import NotFoundPage from "./pages/NotFoundPage";
@@ -75,6 +76,7 @@ function App() {
         <Route path="/student/profile" element={<ProtectedRoute role="student"><StudentProfilePage /></ProtectedRoute>} />
         <Route path="/student/resume" element={<ProtectedRoute role="student"><ResumePage /></ProtectedRoute>} />
         <Route path="/student/settings" element={<ProtectedRoute role="student"><StudentSettingsPage /></ProtectedRoute>} />
+        <Route path="/student/notifications" element={<ProtectedRoute role="student"><NotificationsPage /></ProtectedRoute>} />
 
         {/* Company routes — require login as 'company' */}
         <Route path="/company/dashboard" element={<ProtectedRoute role="company"><CompanyDashboard /></ProtectedRoute>} />
@@ -85,6 +87,7 @@ function App() {
         <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
+        <Route path="/company/notifications" element={<ProtectedRoute role="company"><NotificationsPage /></ProtectedRoute>} />
 
         {/* Catch-all route to display the premium 404 page... */}
         <Route path="*" element={<NotFoundPage />} />
