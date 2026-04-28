@@ -1,9 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X,UserCheck,CheckCircle,CalendarClock,
-  Home, BookmarkCheck , Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck
+  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X, UserCheck, CheckCircle, CalendarClock,
+  Home, BookmarkCheck, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck, Clock, Check, ChevronRight, Info, Users, Mail
 } from "lucide-react";
+import { getNotifications, markNotificationRead, markAllNotificationsRead } from "../services/notificationService";
+
+const TYPE_CONFIG = {
+  application_update: { icon: <Briefcase size={16} />, color: "#ef4444", bg: "#fef2f2" },
+  new_application: { icon: <Users size={16} />, color: "#10b981", bg: "#f0fdf4" },
+  message: { icon: <Mail size={16} />, color: "#3b82f6", bg: "#eff6ff" },
+  system: { icon: <Info size={16} />, color: "#64748b", bg: "#f8fafc" },
+};
 
 
 // Removed static NAV_LINKS using dynamic one inside component
@@ -14,8 +22,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // this state tracks which nav item is currently showing its hover submenu
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [notifications, setNotifications] = useState([]);
+  const [notifOpen, setNotifOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -62,6 +72,52 @@ added scroll effect for the sticky transparent navbar */
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  /* Fetch unread notifications count ... */
+  useEffect(() => {
+    if (token) {
+      fetchUnreadCount();
+      // Poll every 60 seconds
+      const interval = setInterval(fetchUnreadCount, 60000);
+      return () => clearInterval(interval);
+    }
+  }, [token, location.pathname]);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const res = await getNotifications();
+      if (res.success) {
+        setUnreadCount(res.unreadCount || 0);
+        setNotifications((res.notifications || []).slice(0, 5)); // show top 5 in dropdown
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const handleMarkRead = async (id) => {
+    try {
+      const res = await markNotificationRead(id);
+      if (res.success) {
+        setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n));
+        setUnreadCount(prev => Math.max(0, prev - 1));
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const handleMarkAllRead = async () => {
+    try {
+      const res = await markAllNotificationsRead();
+      if (res.success) {
+        setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+        setUnreadCount(0);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const handleNotificationClick = (n) => {
+    if (!n.isRead) handleMarkRead(n._id);
+    if (n.link) navigate(n.link);
+    setNotifOpen(false);
+  };
 
   /* logout functionality...
   Here we just  remove the token from the localstorage
@@ -232,14 +288,111 @@ Items with a submenu get a hover dropdown card instead of a plain link */}
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {/*Hers is the notification logo  */}
             {token && (
-              <button style={{
-                background: "transparent", border: "none", color: "#0d1117",
-                position: "relative", width: 36, height: 36, borderRadius: 10,
-                display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
-              }} onMouseEnter={e => { e.currentTarget.style.color = "#111827"; e.currentTarget.style.background = "#f9fafb"; }} onMouseLeave={e => { e.currentTarget.style.color = "#0d1117"; e.currentTarget.style.background = "transparent"; }}>
-                <Bell size={18} />
-                <span style={{ position: "absolute", top: 6, right: 6, width: 8, height: 8, borderRadius: "50%", background: "#ef4444", border: "2px solid #fff" }} />
-              </button>
+              <div 
+                className="relative" 
+                onMouseEnter={() => setNotifOpen(true)} 
+                onMouseLeave={() => setNotifOpen(false)}
+              >
+                <button 
+                  onClick={() => navigate(isCompany ? "/company/notifications" : "/student/notifications")}
+                  style={{
+                    background: notifOpen ? "#f9fafb" : "transparent", border: "none", color: notifOpen ? "#111827" : "#0d1117",
+                    position: "relative", width: 36, height: 36, borderRadius: 10,
+                    display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s"
+                  }} 
+                >
+                  <Bell size={18} />
+                  {unreadCount > 0 && (
+                    <span style={{ 
+                      position: "absolute", top: 4, right: 4, 
+                      minWidth: 16, height: 16, borderRadius: 8, 
+                      background: "#ef4444", border: "2px solid #fff",
+                      color: "white", fontSize: "9px", fontWeight: 900,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      padding: "0 4px"
+                    }}>
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
+                </button>
+
+                {/* Notifications Dropdown */}
+                {notifOpen && (
+                  <div style={{
+                    position: "absolute", right: 0, top: "100%", width: 340,
+                    background: "#fff", border: "1px solid #b3eefb", borderRadius: 16,
+                    boxShadow: "0 10px 40px rgba(0,0,0,0.08)", zIndex: 50, overflow: "hidden",
+                    paddingBottom: 6, display: "flex", flexDirection: "column"
+                  }}>
+                    <div style={{ padding: "12px 16px 8px", borderBottom: "1px solid #f3f4f6", background: "#f8fbfe", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <p style={{ fontSize: 11, fontWeight: 700, color: "#0d1117", margin: 0, textTransform: "uppercase", letterSpacing: "0.6px" }}>
+                        Notifications
+                      </p>
+                      {unreadCount > 0 && (
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleMarkAllRead(); }}
+                          style={{ background: "none", border: "none", color: "#3b82f6", fontSize: 10, fontWeight: 800, cursor: "pointer" }}
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                    </div>
+
+                    <div style={{ maxHeight: 300, overflowY: "auto", padding: "8px 0" }}>
+                      {notifications.length === 0 ? (
+                        <div style={{ padding: "30px 20px", textAlign: "center", color: "#64748b", fontSize: 12, fontWeight: 600 }}>
+                          No notifications right now.
+                        </div>
+                      ) : (
+                        notifications.map(n => {
+                          const cfg = TYPE_CONFIG[n.type] || TYPE_CONFIG.system;
+                          return (
+                            <div 
+                              key={n._id}
+                              onClick={() => handleNotificationClick(n)}
+                              style={{
+                                display: "flex", gap: 12, padding: "10px 16px", cursor: "pointer",
+                                background: !n.isRead ? "#f8fafc" : "transparent",
+                                transition: "all 0.2s"
+                              }}
+                              onMouseEnter={e => e.currentTarget.style.background = "#f1f5f9"}
+                              onMouseLeave={e => e.currentTarget.style.background = !n.isRead ? "#f8fafc" : "transparent"}
+                            >
+                              <div style={{ width: 36, height: 36, borderRadius: 10, background: cfg.bg, color: cfg.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                {cfg.icon}
+                              </div>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 2 }}>
+                                  <h4 style={{ fontSize: 13, fontWeight: 800, color: !n.isRead ? "#0d1117" : "#64748b", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                    {n.title}
+                                  </h4>
+                                </div>
+                                <p style={{ fontSize: 11, color: !n.isRead ? "#475569" : "#94a3b8", margin: 0, lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                                  {n.message}
+                                </p>
+                                <span style={{ fontSize: 9, color: "#94a3b8", fontWeight: 700, marginTop: 4, display: "block" }}>
+                                  {new Date(n.createdAt).toLocaleDateString()}
+                                </span>
+                              </div>
+                              {!n.isRead && <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444", marginTop: 4 }} />}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                    
+                    <div style={{ borderTop: "1px solid #f3f4f6", padding: "8px 0 0", textAlign: "center" }}>
+                      <Link 
+                        to={isCompany ? "/company/notifications" : "/student/notifications"}
+                        onClick={() => setNotifOpen(false)}
+                        style={{ fontSize: 11, fontWeight: 800, color: "#3b82f6", textDecoration: "none" }}
+                      >
+                        View all Activity →
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
             {/*Hers is the helpcircle  logo  */}
             <button style={{
