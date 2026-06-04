@@ -41,12 +41,22 @@ state otherwise , we keep it as it is...  */
     : "FULL TIME";
 
   const locationLabel = job.location || "Remote";
+  
+  // check if deadline has passed
+  const isExpired = job.deadline && new Date() > new Date(job.deadline);
+  
+  // format deadline date
+  const deadlineText = job.deadline 
+    ? new Date(job.deadline).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) 
+    : "No deadline";
 
   return (
     <div
-      /* redirect user to jobdetails page */
-      onClick={() => navigate(`/student/jobs/${job._id}`, { state: { job } })}
-      className="cs-card-modern flex flex-col group transition-all cursor-pointer relative h-full p-5"
+      /* redirect user to jobdetails page unless expired */
+      onClick={() => { if (!isExpired) navigate(`/student/jobs/${job._id}`, { state: { job } }) }}
+      className={`cs-card-modern flex flex-col group transition-all relative h-full p-5 ${
+        isExpired ? 'opacity-40 pointer-events-none select-none' : 'cursor-pointer hover:shadow-md'
+      }`}
     >
       {/* Platform Standard: Applied Badge */}
       <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
@@ -102,7 +112,7 @@ state otherwise , we keep it as it is...  */
           { icon: <MapPin size={12} />, text: locationLabel },
           { icon: <Users size={12} />, text: "Direct Apply" },
           { icon: <Briefcase size={12} />, text: contractLabel },
-          { icon: <CheckCircle size={12} />, text: "Internal" },
+          { icon: <CheckCircle size={12} />, text: isExpired ? "Expired" : `Due: ${deadlineText}` },
         ].map(({ icon, text }, i) => (
           <div key={i} className="flex items-center gap-2 text-[11px] text-neutral-500 font-bold truncate">
             <span className="text-neutral-400">{icon}</span>

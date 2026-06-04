@@ -20,6 +20,7 @@ import ShowJobsPage from "./pages/student/ShowJobsPage";
 import JobDetailsPage from "./pages/student/JobDetailsPage";
 import ApplyToJobPage from "./pages/student/ApplyToJobPage";
 import MyApplicationsPage from "./pages/student/MyApplicationsPage";
+import RecommendedJobsPage from "./pages/student/RecommendedJobsPage";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -64,6 +65,7 @@ function App() {
         <Route path="/student/jobs/:id" element={<ProtectedRoute role="student"><JobDetailsPage /></ProtectedRoute>} />
         <Route path="/student/apply/:id" element={<ProtectedRoute role="student"><ApplyToJobPage /></ProtectedRoute>} />
         <Route path="/student/applications" element={<ProtectedRoute role="student"><MyApplicationsPage /></ProtectedRoute>} />
+        <Route path="/student/recommended-jobs" element={<ProtectedRoute role="student"><RecommendedJobsPage /></ProtectedRoute>} />
 
         {/* External Jobs (Adzuna) */}
         <Route path="/student/discover-jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />

@@ -55,6 +55,7 @@ export default function Navbar() {
   ] : [
     { label: "Dashboard", path: "/student/dashboard" },
     { label: "Jobs", path: "/student/jobs" },
+    { label: "Recommended", path: "/student/recommended-jobs" },
     { label: "My Applications", path: "/student/applications" },
     { label: "About", path: "/about" },
   ];

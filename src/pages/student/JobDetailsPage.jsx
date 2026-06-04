@@ -130,7 +130,8 @@ export default function JobDetailsPage() {
     );
   }
 
-  const isOpen = job.status === "open";
+  const isExpired = job.deadline && new Date() > new Date(job.deadline);
+  const isOpen = job.status === "open" && !isExpired;
 
   return (
     <PageLayout>
@@ -161,10 +162,11 @@ export default function JobDetailsPage() {
               </h1>
               <div className="flex flex-wrap gap-2.5">
                 <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${
-                  isOpen ? "bg-green-50/50 border-green-100 text-green-700" : "bg-neutral-50 border-neutral-200 text-neutral-500"
+                  isOpen ? "bg-green-50/50 border-green-100 text-green-700" : 
+                  isExpired ? "bg-red-50/50 border-red-100 text-red-700" : "bg-neutral-50 border-neutral-200 text-neutral-500"
                 }`}>
-                  <div className={`w-1 h-1 rounded-full ${isOpen ? 'bg-green-500' : 'bg-neutral-400'}`} />
-                  {isOpen ? "Active" : "Closed"}
+                  <div className={`w-1 h-1 rounded-full ${isOpen ? 'bg-green-500' : isExpired ? 'bg-red-500' : 'bg-neutral-400'}`} />
+                  {isOpen ? "Active" : isExpired ? "Expired" : "Closed"}
                 </span>
                 {job.location && (
                   <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-neutral-500 bg-white border border-neutral-200 px-2.5 py-1 rounded-full uppercase tracking-wider">
@@ -194,7 +196,7 @@ export default function JobDetailsPage() {
                 className="h-10 bg-black text-white px-7 rounded-xl text-[11px] font-bold hover:bg-neutral-800 transition-all disabled:opacity-40 flex items-center gap-2 uppercase tracking-wider shadow-sm"
               >
                 <CheckCircle size={14} />
-                Apply Directly
+                {isExpired ? "Applications Closed" : "Apply Directly"}
               </button>
             </div>
           </div>
@@ -310,7 +312,7 @@ export default function JobDetailsPage() {
                 disabled={!isOpen}
                 className="w-full h-11 bg-black text-white mt-8 flex items-center justify-center gap-2 text-[11px] font-bold rounded-xl hover:bg-neutral-800 transition-all disabled:opacity-40 uppercase tracking-wider shadow-sm"
               >
-                Apply Directly <CheckCircle size={14} />
+                {isExpired ? "Applications Closed" : "Apply Directly"} <CheckCircle size={14} />
               </button>
             </section>
 

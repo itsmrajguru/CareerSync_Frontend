@@ -27,4 +27,6 @@ export async function toggleSaveJob(jobId) {
 export async function getSavedJobs() {
   return api.get('jobs/saved/all');
 }
-
+export async function getRecommendedJobs() {
+  return api.get('jobs/recommended');
+}

@@ -404,28 +404,35 @@ and the apply filters on that state to get the current number*/
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {savedJobs.map(job => (
-                    <Link to={`/student/jobs/${job._id}`} key={job._id} className="block group">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:bg-white transition-colors">
-                          {job.company?.logo ? (
-                            <img src={job.company.logo} alt="" className="w-full h-full object-cover"/>
-                          ) : (
-                            <BriefcaseBusiness size={16} className="text-neutral-400" />
-                          )}
+                  {savedJobs.map(job => {
+                    const isExpired = job.deadline && new Date() > new Date(job.deadline);
+                    return (
+                      <Link 
+                        to={isExpired ? "#" : `/student/jobs/${job._id}`} 
+                        key={job._id} 
+                        className={`block group ${isExpired ? 'opacity-40 pointer-events-none select-none' : ''}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:bg-white transition-colors">
+                            {job.company?.logo ? (
+                              <img src={job.company.logo} alt="" className="w-full h-full object-cover"/>
+                            ) : (
+                              <BriefcaseBusiness size={16} className="text-neutral-400" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[13px] font-bold text-black truncate group-hover:text-[#ef4444] transition-colors">
+                              {job.title} {isExpired && <span className="text-[10px] font-black text-red-500 uppercase ml-1">(Expired)</span>}
+                            </p>
+                            <p className="text-[11px] font-bold text-neutral-400 truncate mt-0.5">
+                              {job.company?.name || "Confidential"}
+                            </p>
+                          </div>
+                          {!isExpired && <ChevronRight size={14} className="text-neutral-300 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-transform" />}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-bold text-black truncate group-hover:text-[#ef4444] transition-colors">
-                            {job.title}
-                          </p>
-                          <p className="text-[11px] font-bold text-neutral-400 truncate mt-0.5">
-                            {job.company?.name || "Confidential"}
-                          </p>
-                        </div>
-                        <ChevronRight size={14} className="text-neutral-300 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-transform" />
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>

@@ -234,9 +234,14 @@ Meta Details*/}
                         <span className="text-black font-bold">{job.applicationsCount || 0}</span> applicants
                       </div>
                       {job.deadline && (
-                        <div className="flex items-center gap-2 text-[12px] text-neutral-400 font-medium">
-                          <Calendar size={14} className="text-neutral-300" />
-                          Closes {new Date(job.deadline).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                        <div className={`flex items-center gap-2 text-[12px] font-semibold ${
+                          new Date() > new Date(job.deadline) ? "text-red-500" : "text-neutral-400"
+                        }`}>
+                          <Calendar size={14} className={new Date() > new Date(job.deadline) ? "text-red-400" : "text-neutral-300"} />
+                          {new Date() > new Date(job.deadline)
+                            ? `Expired: ${new Date(job.deadline).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })} (Please Delete)`
+                            : `Deadline: ${new Date(job.deadline).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`
+                          }
                         </div>
                       )}
                     </div>
