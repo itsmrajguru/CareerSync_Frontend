@@ -13,7 +13,7 @@ export default function CompaniesDiscoveryPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("explore"); // explore or feed
 
-  // Explore Companies States
+  /* all the explore companies states */
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +24,7 @@ export default function CompaniesDiscoveryPage() {
   const [industries, setIndustries] = useState([]);
   const [locations, setLocations] = useState([]);
 
-  // Feed States
+  /* these are the states for the social feed */
   const [feedPosts, setFeedPosts] = useState([]);
   const [feedLoading, setFeedLoading] = useState(false);
   const [feedSort, setFeedSort] = useState("trending"); // trending, latest, likes, comments
@@ -42,7 +42,7 @@ export default function CompaniesDiscoveryPage() {
     }
   }, [activeTab, industryFilter, locationFilter, sizeFilter, hiringFilter, feedSort]);
 
-  // fetch companies list
+  /* fetching the list of companies */
   async function fetchCompaniesList() {
     setLoading(true);
     try {
@@ -72,7 +72,7 @@ export default function CompaniesDiscoveryPage() {
     }
   }
 
-  // fetch student home feed posts
+  /* fetching student home feed posts */
   async function fetchFeedPosts() {
     setFeedLoading(true);
     try {
@@ -100,7 +100,7 @@ export default function CompaniesDiscoveryPage() {
     setHiringFilter("");
   };
 
-  // follow/unfollow toggle
+  /* function to toggle follow unfollow */
   const handleFollowToggle = async (e, companyId, isFollowingNow) => {
     e.stopPropagation();
     try {
@@ -138,7 +138,7 @@ export default function CompaniesDiscoveryPage() {
     }
   };
 
-  // like post
+  /* handling post like */
   const handleLikePost = async (post) => {
     const isLiked = post.likes.includes(currentUser.id);
     try {
@@ -159,7 +159,7 @@ export default function CompaniesDiscoveryPage() {
     }
   };
 
-  // save post
+  /* handling saving a post */
   const handleSavePost = async (post) => {
     const isSaved = post.saves?.includes(currentUser.id);
     try {
@@ -181,7 +181,7 @@ export default function CompaniesDiscoveryPage() {
     }
   };
 
-  // share post link copy
+  /* sharing post link via clipboard */
   const handleSharePost = (post) => {
     const url = `${window.location.origin}/student/companies/${post.company?._id}?tab=feed&post=${post._id}`;
     navigator.clipboard.writeText(url);
@@ -189,7 +189,7 @@ export default function CompaniesDiscoveryPage() {
     setTimeout(() => setShareMessage(""), 2000);
   };
 
-  // add comment on post
+  /* function to add a new comment */
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!commentText.trim() || !selectedPost) return;
@@ -211,7 +211,7 @@ export default function CompaniesDiscoveryPage() {
     }
   };
 
-  // delete comment
+  /* deleting an existing comment */
   const handleDeleteComment = async (commentId) => {
     if (!selectedPost) return;
     try {

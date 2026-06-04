@@ -18,12 +18,12 @@ export default function StudentCompanyProfilePage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("about");
   
-  // Feed & Jobs lists
+  /* the state for feed and jobs lists */
   const [posts, setPosts] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [savedJobIds, setSavedJobIds] = useState(new Set());
   
-  // Comments modal state
+  /* modal states for handling comments */
   const [selectedPost, setSelectedPost] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [shareMessage, setShareMessage] = useState("");
@@ -42,7 +42,7 @@ export default function StudentCompanyProfilePage() {
     }
   }, [activeTab]);
 
-  // fetch main company profile
+  /* function to fetch the main profile */
   async function fetchProfileData() {
     setLoading(true);
     try {
@@ -57,7 +57,7 @@ export default function StudentCompanyProfilePage() {
     }
   }
 
-  // fetch feed posts
+  /* fetching the feed posts of the company */
   async function fetchCompanyFeed() {
     try {
       const res = await getPostsByCompany(id);
@@ -69,7 +69,7 @@ export default function StudentCompanyProfilePage() {
     }
   }
 
-  // fetch jobs & saved job ids
+  /* fetching all the jobs and saved jobs */
   async function fetchJobsList() {
     try {
       const [jobsRes, savedRes] = await Promise.all([
@@ -86,7 +86,7 @@ export default function StudentCompanyProfilePage() {
     }
   }
 
-  // follow toggle
+  /* toggling the follow status */
   const handleFollow = async () => {
     if (!company) return;
     const isFollowing = company.isFollowing;
@@ -105,7 +105,7 @@ export default function StudentCompanyProfilePage() {
     }
   };
 
-  // like post toggle
+  /* toggling the like status for a post */
   const handleLikePost = async (post) => {
     const isLiked = post.likes.includes(currentUser.id);
     try {
@@ -126,7 +126,7 @@ export default function StudentCompanyProfilePage() {
     }
   };
 
-  // save post toggle
+  /* toggling the save post feature */
   const handleSavePost = async (post) => {
     const isSaved = post.saves?.includes(currentUser.id);
     try {
@@ -148,7 +148,7 @@ export default function StudentCompanyProfilePage() {
     }
   };
 
-  // share post link copy
+  /* copying the share post link to clipboard */
   const handleSharePost = (post) => {
     const url = `${window.location.origin}/student/companies/${id}?tab=feed&post=${post._id}`;
     navigator.clipboard.writeText(url);
@@ -156,7 +156,7 @@ export default function StudentCompanyProfilePage() {
     setTimeout(() => setShareMessage(""), 2000);
   };
 
-  // add comment on post
+  /* adding a new comment */
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!commentText.trim() || !selectedPost) return;
@@ -178,7 +178,7 @@ export default function StudentCompanyProfilePage() {
     }
   };
 
-  // delete comment
+  /* deleting an existing comment */
   const handleDeleteComment = async (commentId) => {
     if (!selectedPost) return;
     try {
@@ -197,7 +197,7 @@ export default function StudentCompanyProfilePage() {
     }
   };
 
-  // save job toggle
+  /* toggle save job functionality */
   const handleSaveJob = async (jobId) => {
     try {
       const res = await toggleSaveJob(jobId);

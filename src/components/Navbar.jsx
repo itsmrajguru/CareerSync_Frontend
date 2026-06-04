@@ -62,10 +62,8 @@ export default function Navbar() {
   ] : [
     { label: "Dashboard", path: "/student/dashboard", icon: <Home size={14} /> },
     { label: "Jobs", path: "/student/jobs", icon: <Briefcase size={14} /> },
-    { label: "Startups", path: "/student/discover-jobs", icon: <Sparkles size={14} /> },
     { label: "Companies", path: "/student/companies", icon: <Building2 size={14} /> },
     { label: "Applications", path: "/student/applications", icon: <BookmarkCheck size={14} /> },
-    { label: "Profile", path: "/student/profile", icon: <Edit2 size={14} /> },
   ];
   /* open hamburger navbar functionality...
   This is the automated function for the Navbar to 

@@ -14,7 +14,7 @@ export default function CompanyPostManagement() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Form states
+  /* all the form state goes here */
   const [showModal, setShowModal] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [title, setTitle] = useState("");
@@ -24,7 +24,7 @@ export default function CompanyPostManagement() {
   const [video, setVideo] = useState("");
   const [externalLink, setExternalLink] = useState("");
   
-  // Analytics state
+  /* this stores the analytics count for dashboard */
   const [analytics, setAnalytics] = useState({
     profileViews: 0,
     followers: 0,
@@ -39,7 +39,7 @@ export default function CompanyPostManagement() {
     fetchData();
   }, []);
 
-  // fetch company profile, posts, and jobs
+  /* so this fetches the complete profile, jobs and all social updates of company */
   async function fetchData() {
     setLoading(true);
     try {
@@ -58,7 +58,7 @@ export default function CompanyPostManagement() {
         setProfile(companyProfile);
       }
 
-      // if backend needs exact company ID for posts, we fetch using that ID
+      /* fetching posts using company id exactly */
       if (companyProfile) {
         const exactPostsRes = await getPostsByCompany(companyProfile._id);
         if (exactPostsRes.success) {
@@ -72,7 +72,7 @@ export default function CompanyPostManagement() {
         setJobs(companyJobs);
       }
 
-      // calculate analytics
+      /* calculating the sum of likes and comments for the analytics */
       const totalLikes = companyPosts.reduce((sum, p) => sum + (p.likes ? p.likes.length : 0), 0);
       const totalComments = companyPosts.reduce((sum, p) => sum + (p.comments ? p.comments.length : 0), 0);
       const totalReach = companyPosts.reduce((sum, p) => sum + (p.reach || 0), 0);
@@ -95,7 +95,7 @@ export default function CompanyPostManagement() {
     }
   }
 
-  // open modal for create
+  /* function to show the modal for creating new post */
   const handleOpenCreate = () => {
     setEditingPost(null);
     setTitle("");
@@ -107,7 +107,7 @@ export default function CompanyPostManagement() {
     setShowModal(true);
   };
 
-  // open modal for edit
+  /* function to show the modal when editing the post */
   const handleOpenEdit = (post) => {
     setEditingPost(post);
     setTitle(post.title);
@@ -119,7 +119,7 @@ export default function CompanyPostManagement() {
     setShowModal(true);
   };
 
-  // submit post (create or edit)
+  /* this function submits the post either for creating or editing */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) return;
@@ -138,14 +138,14 @@ export default function CompanyPostManagement() {
         }
       }
       setShowModal(false);
-      // update analytics counts
+      /* reload the data to get the updated counts */
       setTimeout(fetchData, 500);
     } catch (err) {
       console.error("Submit post error:", err);
     }
   };
 
-  // delete post
+  /* function to delete the particular post update */
   const handleDeletePost = async (postId) => {
     if (!window.confirm("Are you sure you want to delete this update?")) return;
     try {
@@ -163,7 +163,7 @@ export default function CompanyPostManagement() {
     <PageLayout>
       <div className="pb-20 animate-fade-in">
         
-        {/* page hero header */}
+        {/* page hero section for header */}
         <section aria-label="Page header" className="mb-8 pt-4">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px] justify-between">
             <div>
@@ -191,7 +191,7 @@ export default function CompanyPostManagement() {
           </div>
         ) : (
           <>
-            {/* ANALYTICS SECTION */}
+            {/* this is the analytics section */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
               {[
                 { label: "Profile Views", value: analytics.profileViews, icon: <Eye size={16} />, color: "#3b82f6" },
@@ -212,7 +212,7 @@ export default function CompanyPostManagement() {
               ))}
             </div>
 
-            {/* FEED POSTS GRID */}
+            {/* grid section showing all posts */}
             <div className="mb-6">
               <h2 className="text-lg font-bold text-black mb-1">Your Published Updates</h2>
               <p className="text-xs text-neutral-400 font-semibold">{posts.length} update{posts.length !== 1 ? 's' : ''} published</p>
@@ -232,7 +232,7 @@ export default function CompanyPostManagement() {
                 {posts.map(post => (
                   <div key={post._id} className="bg-white border border-neutral-200 rounded-[24px] p-6 shadow-sm flex flex-col relative group">
                     
-                    {/* Header */}
+                    {/* post card header */}
                     <div className="flex justify-between items-start mb-4">
                       <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[9px] font-black text-slate-500 uppercase tracking-widest">
                         {post.postType}
@@ -255,18 +255,18 @@ export default function CompanyPostManagement() {
                       </div>
                     </div>
 
-                    {/* Content */}
+                    {/* content block */}
                     <h3 className="font-bold text-base text-black mb-1.5 leading-snug line-clamp-1">{post.title}</h3>
                     <p className="text-xs text-neutral-500 font-semibold leading-relaxed mb-4 line-clamp-3">{post.description}</p>
                     
-                    {/* optional media preview icons */}
+                    {/* media preview logic */}
                     <div className="flex gap-4 mb-5 text-[10px] text-neutral-400 font-bold mt-auto pt-4 border-t border-neutral-50">
                       {post.image && <span className="flex items-center gap-1">🖼 Image Included</span>}
                       {post.video && <span className="flex items-center gap-1">🎥 Video Included</span>}
                       {post.externalLink && <span className="flex items-center gap-1"><Link2 size={12} /> External Link</span>}
                     </div>
 
-                    {/* analytics engagement */}
+                    {/* engagement bottom bar */}
                     <div className="flex gap-6 text-[11px] font-extrabold text-[#475569] uppercase tracking-wider">
                       <span className="flex items-center gap-1"><ThumbsUp size={13} /> {post.likes?.length || 0} Likes</span>
                       <span className="flex items-center gap-1"><MessageSquare size={13} /> {post.comments?.length || 0} Comments</span>
@@ -279,12 +279,12 @@ export default function CompanyPostManagement() {
           </>
         )}
 
-        {/* CREATE / EDIT MODAL */}
+        {/* create edit modal for publishing updates */}
         {showModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
-            <div className="bg-white border border-neutral-200 rounded-[28px] w-full max-w-[550px] flex flex-col max-h-[90vh] shadow-2xl relative animate-scale-up">
+          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex p-4 z-50 overflow-y-auto animate-fade-in">
+            <div className="bg-white border border-neutral-200 rounded-[24px] w-full max-w-[550px] flex flex-col max-h-[90vh] shadow-2xl relative animate-scale-up m-auto">
               
-              {/* modal header */}
+              {/* modal header ui */}
               <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
                 <h3 className="font-extrabold text-black text-base">{editingPost ? "Edit Feed Update" : "Publish Feed Update"}</h3>
                 <button onClick={() => setShowModal(false)} className="p-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
@@ -292,7 +292,7 @@ export default function CompanyPostManagement() {
                 </button>
               </div>
 
-              {/* modal body */}
+              {/* main form body in modal */}
               <form onSubmit={handleSubmit} className="flex flex-col min-h-0 overflow-hidden">
                 <div className="p-6 overflow-y-auto space-y-4 no-scrollbar flex-1">
                   
@@ -362,7 +362,7 @@ export default function CompanyPostManagement() {
                   </div>
                 </div>
 
-                {/* footer actions */}
+                {/* cancel and submit actions */}
                 <div className="px-6 py-4 border-t border-slate-100 flex justify-end gap-3 flex-shrink-0 bg-white rounded-b-[28px]">
                   <button
                     type="button"
