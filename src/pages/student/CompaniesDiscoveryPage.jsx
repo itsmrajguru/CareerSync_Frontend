@@ -435,7 +435,7 @@ export default function CompaniesDiscoveryPage() {
                         )}
                       </div>
                       <p className="text-xs text-neutral-400 font-semibold line-clamp-1 italic mt-0.5">
-                        {c.tagline || "Innovating the digital horizon."}
+                        {c.tagline || ""}
                       </p>
                     </div>
 
@@ -450,11 +450,11 @@ export default function CompaniesDiscoveryPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Users size={13} className="text-neutral-400" />
-                        {c.employeesCount || 0} Employees
+                        {c.employeesCount ? `${c.employeesCount} Employees` : "Employees N/A"}
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar size={13} className="text-neutral-400" />
-                        Founded {c.foundedYear || 2020}
+                        {c.foundedYear ? `Founded ${c.foundedYear}` : "Founded N/A"}
                       </div>
                     </div>
 

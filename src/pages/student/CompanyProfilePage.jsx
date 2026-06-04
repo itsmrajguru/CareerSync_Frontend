@@ -273,11 +273,13 @@ export default function StudentCompanyProfilePage() {
                 )}
               </div>
               
-              <p className="text-sm text-[#475569] font-bold mb-3 italic">{company.tagline || "Innovating the future, today."}</p>
+              {company.tagline && (
+                <p className="text-sm text-[#475569] font-bold mb-3 italic">{company.tagline}</p>
+              )}
               
               <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-neutral-400 font-bold">
-                <span className="flex items-center gap-1"><MapPin size={13} /> {company.location || "Remote"}</span>
-                <span className="flex items-center gap-1"><Briefcase size={13} /> {company.industry || "Software"}</span>
+                {company.location && <span className="flex items-center gap-1"><MapPin size={13} /> {company.location}</span>}
+                {company.industry && <span className="flex items-center gap-1"><Briefcase size={13} /> {company.industry}</span>}
                 <span className="flex items-center gap-1"><Users size={13} /> {company.followersCount || 0} Followers</span>
               </div>
             </div>
@@ -350,16 +352,22 @@ export default function StudentCompanyProfilePage() {
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
-                    <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Our Mission</h4>
-                    <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.mission || "Striving to build innovative, efficient workflows."}</p>
+                {(company.mission || company.vision) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {company.mission && (
+                      <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
+                        <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Our Mission</h4>
+                        <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.mission}</p>
+                      </div>
+                    )}
+                    {company.vision && (
+                      <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
+                        <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Our Vision</h4>
+                        <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.vision}</p>
+                      </div>
+                    )}
                   </div>
-                  <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
-                    <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Our Vision</h4>
-                    <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.vision || "Empowering people with the technology of tomorrow."}</p>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* stats sidebar */}
@@ -369,11 +377,13 @@ export default function StudentCompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Founded</span>
-                      <span className="text-sm font-bold text-black">{company.foundedYear || 2020}</span>
+                      <span className="text-sm font-bold text-black">{company.foundedYear || "N/A"}</span>
                     </div>
                     <div>
                       <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Company Size</span>
-                      <span className="text-sm font-bold text-black">{company.employeesCount || 0} Employees</span>
+                      <span className="text-sm font-bold text-black">
+                        {company.employeesCount ? `${company.employeesCount} Employees` : "N/A"}
+                      </span>
                     </div>
                     <div>
                       <span className="block text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Profile Views</span>
@@ -404,19 +414,27 @@ export default function StudentCompanyProfilePage() {
               <div className="lg:col-span-2 space-y-6">
                 <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
                   <h3 className="text-lg font-bold text-black mb-3">Work Culture</h3>
-                  <p className="text-sm text-neutral-500 font-medium leading-relaxed">{company.workCulture || "Our work environment is built around collaboration, transparency, and high performance. We value ideas and encourage teams to take ownership of tasks."}</p>
+                  <p className="text-sm text-neutral-500 font-medium leading-relaxed">
+                    {company.workCulture || "No work culture description added yet."}
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
-                    <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Learning & Growth</h4>
-                    <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.learningOpportunities || "Dedicated budgets for certifications, weekly learning syncs, and mentorship programs."}</p>
+                {(company.learningOpportunities || company.growthOpportunities) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {company.learningOpportunities && (
+                      <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
+                        <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Learning & Growth</h4>
+                        <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.learningOpportunities}</p>
+                      </div>
+                    )}
+                    {company.growthOpportunities && (
+                      <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
+                        <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Growth Paths</h4>
+                        <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.growthOpportunities}</p>
+                      </div>
+                    )}
                   </div>
-                  <div className="bg-white border border-neutral-200 p-6 rounded-2xl">
-                    <h4 className="text-sm font-extrabold uppercase tracking-wider text-black mb-2">Growth Paths</h4>
-                    <p className="text-xs text-neutral-500 font-medium leading-relaxed">{company.growthOpportunities || "Structured career paths, bi-annual reviews, and direct leadership opportunities."}</p>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="space-y-6">
