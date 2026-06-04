@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Clock, ChevronRight, Search, BriefcaseBusiness,
-  ExternalLink, Bookmark
+  ExternalLink, Bookmark, CalendarCheck, Video, Phone, Building2, MapPin
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { getApplications } from "../../services/applicationService";
 import { getSavedJobs } from "../../services/jobsService";
+import { getMyInterviews } from "../../services/interviewService";
 
 /* getApplications api*/
 /* this page show the applications stats as well as the saved Jobs */
@@ -22,6 +23,13 @@ const STATUS_CONFIG = {
 /* we created this array of filters to show the exact applications Data */
 const FILTERS = ["all", "applied", "shortlisted", "hired", "rejected"];
 
+/* interview mode icon map */
+const MODE_ICON = {
+  online:      <Video size={12} className="text-blue-400" />,
+  phone:       <Phone size={12} className="text-green-400" />,
+  "in-person": <Building2 size={12} className="text-orange-400" />,
+};
+
 /* main function... */
 export default function MyApplicationsPage() {
   const [applications, setApplications] = useState([]);
@@ -29,6 +37,7 @@ export default function MyApplicationsPage() {
   const [error, setError]               = useState("");
   const [filter, setFilter]             = useState("all");
   const [savedJobs, setSavedJobs]       = useState([]);
+  const [interviews, setInterviews]     = useState([]);
 
   /* fetch applications functionality...
   so here we call thee getAppications and getSavedJOBS API
@@ -38,12 +47,14 @@ export default function MyApplicationsPage() {
 
   const fetchApplications = async () => {
     try {
-      const [appRes, savedRes] = await Promise.all([
+      const [appRes, savedRes, ivRes] = await Promise.all([
         getApplications(),
-        getSavedJobs()
+        getSavedJobs(),
+        getMyInterviews()
       ]);
       setApplications(appRes.applications || []);
       setSavedJobs(savedRes.savedJobs || []);
+      setInterviews(ivRes.interviews || []);
     } catch {
       setError("Failed to load your applications. Please try again.");
     } finally {
@@ -69,6 +80,11 @@ and the apply filters on that state to get the current number*/
   respective stats*/
   const filteredApplications = applications.filter(app =>
     filter === "all" ? true : app.status === filter
+  );
+
+  /* sort interviews by date ascending so the soonest shows at the top */
+  const sortedInterviews = [...interviews].sort(
+    (a, b) => new Date(a.scheduledAt) - new Date(b.scheduledAt)
   );
 
   return (
@@ -115,8 +131,8 @@ and the apply filters on that state to get the current number*/
         </section>
 
         {/* main grid section...
-        here we have the application list on the left and saved jobs on the right */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6">
+        now we have three columns: applications list | my interviews | saved jobs */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px_280px] gap-6">
 
           {/* application list column...*/}
           <section aria-label="Application list">
@@ -254,7 +270,104 @@ and the apply filters on that state to get the current number*/
             )}
           </section>
 
-          {/* SECTION 3 : saved jobs sidebar...
+          {/* SECTION 3 : My Interviews column...
+          shows all the interviews scheduled for this student */}
+          <aside aria-label="My interviews">
+
+            {/* Section label */}
+            <p className="cs-section-label">My Interviews</p>
+
+            <div className="bg-white border border-neutral-200 rounded-xl p-5 shadow-sm sticky top-8">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[14px] font-bold text-black uppercase tracking-tight flex items-center gap-2">
+                  <CalendarCheck size={15} className="text-amber-400" /> Upcoming
+                </span>
+                <span className="text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-600 rounded-full px-2.5 py-0.5">
+                  {interviews.length} total
+                </span>
+              </div>
+
+              {/* loading skeleton for interviews */}
+              {loading && (
+                <div className="space-y-3">
+                  {[1, 2].map(n => (
+                    <div key={n} className="h-16 bg-neutral-50 rounded-xl animate-pulse" />
+                  ))}
+                </div>
+              )}
+
+              {/* no interviews yet */}
+              {!loading && sortedInterviews.length === 0 && (
+                <div className="flex flex-col items-center text-center py-8">
+                  <div className="w-11 h-11 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mb-4">
+                    <CalendarCheck size={18} className="text-amber-300" />
+                  </div>
+                  <h4 className="text-[13px] font-bold text-black mb-1">No interviews yet</h4>
+                  <p className="text-[12px] font-bold text-neutral-400 leading-relaxed max-w-[170px] italic">
+                    Interviews scheduled by companies will appear here.
+                  </p>
+                </div>
+              )}
+
+              {/* interview cards list */}
+              {!loading && sortedInterviews.length > 0 && (
+                <div className="space-y-3">
+                  {sortedInterviews.map(iv => {
+                    const isPast = new Date(iv.scheduledAt) < new Date();
+                    return (
+                      <div
+                        key={iv._id}
+                        className={`border rounded-xl p-3.5 transition-all ${isPast ? "border-neutral-100 bg-neutral-50 opacity-60" : "border-amber-100 bg-amber-50"}`}
+                      >
+                        {/* job title */}
+                        <p className="text-[13px] font-bold text-black mb-1 truncate">
+                          {iv.job?.title || "Interview"}
+                        </p>
+
+                        {/* company name */}
+                        <p className="text-[11px] font-bold text-neutral-400 mb-2.5 truncate">
+                          {iv.company?.name || "Company"}
+                        </p>
+
+                        {/* mode badge */}
+                        <div className="flex items-center gap-1.5 mb-2">
+                          {MODE_ICON[iv.mode]}
+                          <span className="text-[10px] font-black text-neutral-500 uppercase tracking-wider capitalize">
+                            {iv.mode?.replace("-", " ")}
+                          </span>
+                        </div>
+
+                        {/* date & time */}
+                        <div className="flex items-center gap-1.5 text-[11px] font-bold text-neutral-500">
+                          <Clock size={11} className="text-neutral-300 flex-shrink-0" />
+                          {new Date(iv.scheduledAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                          {" · "}
+                          {new Date(iv.scheduledAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}
+                        </div>
+
+                        {/* location/link if present */}
+                        {iv.location && (
+                          <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-bold text-neutral-400">
+                            <MapPin size={10} className="text-neutral-300 flex-shrink-0" />
+                            <span className="truncate">{iv.location}</span>
+                          </div>
+                        )}
+
+                        {/* past label */}
+                        {isPast && (
+                          <span className="mt-2 inline-block text-[9px] font-black uppercase tracking-widest bg-neutral-100 text-neutral-400 px-2 py-0.5 rounded-full">
+                            Completed
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </aside>
+
+          {/* SECTION 4 : saved jobs sidebar...
           this section displays the role entries you have bookmarked for later */}
           <aside aria-label="Saved jobs">
 
@@ -321,5 +434,5 @@ and the apply filters on that state to get the current number*/
         </div>
       </div>
     </PageLayout>
-  );
+  );;
 }

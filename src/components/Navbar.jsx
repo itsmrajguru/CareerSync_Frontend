@@ -150,7 +150,7 @@ so that user can check the personlaized things here...*/
     { to: "/company/applicants/saved", icon: <BookmarkCheck  size={16} />, label: "Saved Applicants" },
     { to: "/company/applicants/shortlisted", icon: <UserCheck  size={16} />, label: "Shortlisted" },
     { to: "/company/applicants/Selected", icon: <CheckCircle  size={16} />, label: "Selected" },
-    { to: "/company/applicants/interviews", icon: <CalendarClock size={16} />, label: "interviews" },
+    { to: "/company/interviews", icon: <CalendarClock size={16} />, label: "Interviews" },
     { to: "/company/settings", icon: <Settings size={16} />, label: "Settings" },
   ] : [
     { to: "/student/dashboard", icon: <Home size={16} />, label: "Dashboard" },

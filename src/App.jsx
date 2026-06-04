@@ -35,6 +35,7 @@ import GetSingleJobApplicationsPage from "./pages/company/getSingleJobApplicatio
 import CompanyProfilePage from "./pages/company/CompanyProfilePage";
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import SettingsPage from "./pages/company/SettingsPage";
+import CompanyInterviewsPage from "./pages/company/CompanyInterviewsPage";
 import NotificationsPage from "./pages/NotificationsPage";
 
 //Page Not Found Page
@@ -87,6 +88,7 @@ function App() {
         <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
+        <Route path="/company/interviews" element={<ProtectedRoute role="company"><CompanyInterviewsPage /></ProtectedRoute>} />
         <Route path="/company/notifications" element={<ProtectedRoute role="company"><NotificationsPage /></ProtectedRoute>} />
 
         {/* Catch-all route to display the premium 404 page... */}
