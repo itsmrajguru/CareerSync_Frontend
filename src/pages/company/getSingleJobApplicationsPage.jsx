@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { getJobApplicants, getMyJobs } from "../../services/jobsService";
-import { updateApplicationStatus } from "../../services/applicationService";
+import { updateApplicationStatus, toggleSaveApplicant } from "../../services/applicationService";
 import { useParams, useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
 import {
   Mail, ArrowLeft, Calendar,
-  Search, Users, Download,
+  Search, Users, Download, Bookmark
 } from "lucide-react";
 import { logEmailCommunication } from "../../services/notificationService";
 
@@ -67,6 +67,14 @@ export default function GetSingleJobApplicationsPage() {
       const res = await updateApplicationStatus(id, status);
       if (res.success) fetchData();
     } catch (e) { console.error("Status Update Error:", e); }
+  };
+
+  /* Function to toggle the save status of an applicant */
+  const handleSaveToggle = async (id) => {
+    try {
+      const res = await toggleSaveApplicant(id);
+      if (res.success) fetchData();
+    } catch (e) { console.error("Toggle Save Error:", e); }
   };
 
   // the search filter though both serch by name and status filter
@@ -280,6 +288,13 @@ we pass the real time query to the setSearch and */}
   
                        {/* This status is provided to the update the application status*/}
                        <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
+                          <button 
+                            onClick={() => handleSaveToggle(app._id)}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors border-none cursor-pointer ${app.isSaved ? 'bg-amber-50 text-amber-500' : 'bg-[#f8fafc] text-[#94a3b8] hover:text-[#64748b] hover:bg-[#f1f5f9]'}`}
+                            title={app.isSaved ? "Unsave Applicant" : "Save Applicant"}
+                          >
+                            <Bookmark size={16} fill={app.isSaved ? "currentColor" : "none"} />
+                          </button>
                           <select
                             value={app.status}
                             onChange={e => handleStatusChange(app._id, e.target.value)}

@@ -17,3 +17,9 @@ export async function getCompanyStats() {
 export async function getApplicationDetails(id) {
   return api.get(`applications/${id}/detail`);
 }
+export async function getApplicationsByStatus(status) {
+  return api.get(`applications/company/status/${status}`);
+}
+export async function toggleSaveApplicant(id) {
+  return api.patch(`applications/${id}/save`);
+}

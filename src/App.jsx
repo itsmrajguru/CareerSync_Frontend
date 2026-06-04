@@ -36,6 +36,7 @@ import CompanyProfilePage from "./pages/company/CompanyProfilePage";
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import SettingsPage from "./pages/company/SettingsPage";
 import CompanyInterviewsPage from "./pages/company/CompanyInterviewsPage";
+import ApplicantsByStatusPage from "./pages/company/ApplicantsByStatusPage";
 import NotificationsPage from "./pages/NotificationsPage";
 
 //Page Not Found Page
@@ -86,6 +87,7 @@ function App() {
         <Route path="/company/jobs/:jobId/edit" element={<ProtectedRoute role="company"><EditJobPage /></ProtectedRoute>} />
         <Route path="/company/jobs/:jobId/applicants" element={<ProtectedRoute role="company"><GetSingleJobApplicationsPage /></ProtectedRoute>} />
         <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
+        <Route path="/company/applicants/:status" element={<ProtectedRoute role="company"><ApplicantsByStatusPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
         <Route path="/company/interviews" element={<ProtectedRoute role="company"><CompanyInterviewsPage /></ProtectedRoute>} />
