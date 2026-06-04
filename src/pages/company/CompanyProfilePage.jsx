@@ -4,16 +4,65 @@ import { useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
 import { BriefcaseBusiness, Globe, MapPin, Save, CheckCircle2 } from "lucide-react";
 
-//this functions calculates that how much resume has been completed (20% per field)
+/* this functions calculates that how much profile has been completed (20% per field) */
 function calcCompleteness(p) {
   return [p.name, p.about, p.website, p.industry, p.location].filter(Boolean).length * 20;
 }
 
-/*main CompanyProfilePage function */
+/* prevent Enter key from accidentally submitting the form in input fields
+   defined outside the component so it is a stable reference and never causes remounts */
+function preventEnterSubmit(e) {
+  if (e.key === "Enter") e.preventDefault();
+}
+
+/* Cell helper — defined outside so React never treats it as a new component on re-render */
+function Cell({ children, className = "", style = {} }) {
+  return (
+    <div className={`cs-card-modern p-6 ${className}`} style={style}>
+      {children}
+    </div>
+  );
+}
+
+/* Field helper — defined outside so inputs keep focus across re-renders */
+function Field({ label, name, value, onChange, placeholder, icon: Icon, textarea }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider">
+        {label}
+      </label>
+      <div className="relative">
+        {Icon && <Icon size={12} className="absolute left-3 top-[13px] text-[#94a3b8]" />}
+        {textarea ? (
+          <textarea
+            name={name}
+            value={value}
+            onChange={onChange}
+            rows={5}
+            placeholder={placeholder}
+            className={`w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-[13px] text-[#0f172a] focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all font-bold resize-none ${Icon ? "pl-9" : ""}`}
+          />
+        ) : (
+          <input
+            type="text"
+            name={name}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            onKeyDown={preventEnterSubmit}
+            className={`w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-[13px] text-[#0f172a] focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all font-bold ${Icon ? "pl-9" : ""}`}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* main CompanyProfilePage function */
 export default function CompanyProfilePage() {
   const [profile, setProfile] = useState({
     name: "", website: "", location: "", about: "", industry: "",
-    founded: "", size: "", linkedin: "", twitter: ""
+    foundedYear: "", employeesCount: "", linkedIn: "", twitter: ""
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -21,9 +70,9 @@ export default function CompanyProfilePage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  /* this useState calls the getCompanyProfile
+  /* this useEffect calls the getCompanyProfile
   so that the companyProfileDetails are shown on the page,
-  if any profileFields are saved</thead> */
+  if any profileFields are already saved */
   useEffect(() => {
     async function fetchProfile() {
       try {
@@ -32,15 +81,16 @@ export default function CompanyProfilePage() {
           const c = res.company;
           /* this stores the fetched company details in the state setProfile
           otherwise sets empty to every field */
+          /* map the fetched company fields to the correct model field names */
           setProfile({
             name: c.name || "",
             website: c.website || "",
             location: c.location || "",
             about: c.about || "",
             industry: c.industry || "",
-            founded: c.founded || "",
-            size: c.size || "",
-            linkedin: c.linkedin || "",
+            foundedYear: c.foundedYear || "",
+            employeesCount: c.employeesCount || "",
+            linkedIn: c.linkedIn || "",
             twitter: c.twitter || "",
           });
         }
@@ -50,16 +100,14 @@ export default function CompanyProfilePage() {
     fetchProfile();
   }, []);
 
-
-  /* on changing any field, the profile is automatically updated */
+  /* on changing any field, updates local state only — does NOT save to server */
   const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+    setProfile(prev => ({ ...prev, [e.target.name]: e.target.value }));
     if (success) setSuccess(false);
     if (error) setError("");
   };
 
-  /* This functipm just updated the company details and 
-  thus again the companydetails are fetched and cycle continues*/
+  /* this function saves the company details to the server on explicit button click */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true); setSuccess(false); setError("");
@@ -78,33 +126,11 @@ export default function CompanyProfilePage() {
 
   const completeness = calcCompleteness(profile);
 
-  // Internal Helper Components for the Student-Style Grid
-  const Cell = ({ children, className = "", style = {} }) => (
-    <div className={`cs-card-modern p-6 ${className}`} style={style}>{children}</div>
-  );
-
-  const Field = ({ label, name, value, onChange, placeholder, icon: Icon, textarea }) => (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] font-extrabold text-[#475569] uppercase tracking-wider">{label}</label>
-      <div className="relative">
-        {Icon && <Icon size={12} className="absolute left-3 top-[13px] text-[#94a3b8]" />}
-        {textarea ? (
-          <textarea name={name} value={value} onChange={onChange} rows={5} placeholder={placeholder}
-            className={`w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-[13px] text-[#0f172a] focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all font-bold resize-none ${Icon ? "pl-9" : ""}`} />
-        ) : (
-          <input type="text" name={name} value={value} onChange={onChange} placeholder={placeholder}
-            className={`w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-[13px] text-[#0f172a] focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all font-bold ${Icon ? "pl-9" : ""}`} />
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <PageLayout>
       <div className="pb-10 animate-fade-in">
 
-        {/*added the herosection with matches the
-            existing styles effectively*/}
+        {/* added the herosection that matches the existing styles effectively */}
         <section className="mb-8 pt-4 p-0">
           <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">
 
@@ -123,7 +149,7 @@ export default function CompanyProfilePage() {
                 </p>
               </div>
 
-              {/* the dummy cards matching the existing css of the project */}
+              {/* the feature badges matching the existing css of the project */}
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", fontSize: "11px", fontWeight: 600, color: "#94a3b8" }}>
                 <span className="flex items-center gap-1">✔ Brand Reputation</span>
                 <span style={{ opacity: 0.3 }}>·</span>
@@ -133,7 +159,7 @@ export default function CompanyProfilePage() {
               </div>
             </div>
 
-            {/* we have taken images and show here*/}
+            {/* we have taken images and shown here */}
             <div className="hidden lg:block animate-fade-in" style={{ flexShrink: 0, width: "360px" }}>
               <div className="rounded-xl overflow-hidden border border-neutral-200 grid grid-cols-2 shadow-sm">
                 <img
@@ -167,7 +193,7 @@ export default function CompanyProfilePage() {
             <CheckCircle2 size={18} /> Profile saved successfully!
           </div>
         )}
-        {/* this state displayes the errors... */}
+        {/* this state displays the errors */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-red-600 font-bold text-sm text-center">
             {error}
@@ -181,6 +207,7 @@ export default function CompanyProfilePage() {
             ))}
           </div>
         ) : (
+          /* Enter key is blocked in all inputs via onKeyDown — form only saves on button click */
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -227,15 +254,15 @@ export default function CompanyProfilePage() {
               <Cell>
                 <p className="cs-section-label">Quick Stats</p>
                 <div className="flex flex-col gap-4">
-                  <Field label="Founded In" name="founded" value={profile.founded} onChange={handleChange} placeholder="e.g. 2018" />
-                  <Field label="Team Size" name="size" value={profile.size} onChange={handleChange} placeholder="e.g. 50-100" />
+                  <Field label="Founded Year" name="foundedYear" value={profile.foundedYear} onChange={handleChange} placeholder="e.g. 2018" />
+                  <Field label="Employees Count" name="employeesCount" value={profile.employeesCount} onChange={handleChange} placeholder="e.g. 50" />
                 </div>
               </Cell>
 
               <Cell className="lg:col-span-2">
                 <p className="cs-section-label">Social Footprint</p>
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="LinkedIn Profile" name="linkedin" value={profile.linkedin} onChange={handleChange} placeholder="linkedin.com/company/..." icon={BriefcaseBusiness} />
+                  <Field label="LinkedIn Profile" name="linkedIn" value={profile.linkedIn} onChange={handleChange} placeholder="linkedin.com/company/..." icon={BriefcaseBusiness} />
                   <Field label="Twitter / X" name="twitter" value={profile.twitter} onChange={handleChange} placeholder="twitter.com/..." icon={Globe} />
                 </div>
               </Cell>
