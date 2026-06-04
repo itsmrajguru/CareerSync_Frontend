@@ -122,7 +122,7 @@ export default function CompanyDashboard() {
                   <button onClick={() => navigate("/company/jobs/create")} className="btn-primary !px-10 !py-3.5 shadow-xl shadow-primary-400/20">
                     <Plus size={16} /> Post New Job
                   </button>
-                  <button onClick={() => navigate("/company/jobs")} className="btn-outline !px-10 !py-3.5">
+                  <button onClick={() => navigate("/company/applicants/all")} className="btn-outline !px-10 !py-3.5">
                     <Users size={16} /> View Applicants
                   </button>
                 </div>
