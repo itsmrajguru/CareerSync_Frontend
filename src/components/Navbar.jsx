@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X, UserCheck, CheckCircle, CalendarClock,
-  Home, BookmarkCheck, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck, Clock, Check, ChevronRight, Info, Users, Mail
+  Briefcase, Bell, HelpCircle, Settings, LogOut, Menu, X, UserCheck, CheckCircle, CalendarClock, Building2,
+  Home, BookmarkCheck, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck, Clock, Check, ChevronRight, Info, Users, Mail, Sparkles
 } from "lucide-react";
 import { getNotifications, markNotificationRead, markAllNotificationsRead } from "../services/notificationService";
 
@@ -51,13 +51,21 @@ export default function Navbar() {
         { label: "Post a Job", path: "/company/jobs/create", icon: <Plus size={14} /> },
       ],
     },
+    {
+      label: "Social Feed",
+      id: "feed",
+      submenu: [
+        { label: "Manage Posts", path: "/company/posts", icon: <Sparkles size={14} /> },
+      ],
+    },
     { label: "About", path: "/about" },
   ] : [
-    { label: "Dashboard", path: "/student/dashboard" },
-    { label: "Jobs", path: "/student/jobs" },
-    { label: "Recommended", path: "/student/recommended-jobs" },
-    { label: "My Applications", path: "/student/applications" },
-    { label: "About", path: "/about" },
+    { label: "Dashboard", path: "/student/dashboard", icon: <Home size={14} /> },
+    { label: "Jobs", path: "/student/jobs", icon: <Briefcase size={14} /> },
+    { label: "Startups", path: "/student/discover-jobs", icon: <Sparkles size={14} /> },
+    { label: "Companies", path: "/student/companies", icon: <Building2 size={14} /> },
+    { label: "Applications", path: "/student/applications", icon: <BookmarkCheck size={14} /> },
+    { label: "Profile", path: "/student/profile", icon: <Edit2 size={14} /> },
   ];
   /* open hamburger navbar functionality...
   This is the automated function for the Navbar to 
@@ -148,6 +156,7 @@ so that user can check the personlaized things here...*/
   ] : isCompany ? [
     { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
+    { to: "/company/posts", icon: <Sparkles size={16} />, label: "Manage Posts" },
     { to: "/company/applicants/saved", icon: <BookmarkCheck  size={16} />, label: "Saved Applicants" },
     { to: "/company/applicants/shortlisted", icon: <UserCheck  size={16} />, label: "Shortlisted" },
     { to: "/company/applicants/Selected", icon: <CheckCircle  size={16} />, label: "Selected" },
@@ -489,13 +498,29 @@ so we are Dis Items directly for the mobile hamburger Feature */}
                 </div>
               </div>
             )}
-            {/* Sidebar Links */}
-            {NAV_LINKS.map(({ label, path }) => (
-              <Link key={path} to={path} onClick={() => setMobileOpen(false)} style={{
-                padding: "14px 12px", fontSize: 16, fontWeight: 600, color: isActive(path) ? "#02bcf0" : "#374151",
-                background: isActive(path) ? "#e6f9fe" : "transparent", borderRadius: 10, textDecoration: "none"
-              }}>{label}</Link>
-            ))}
+            {/* Sidebar Links — flat links for regular items, expanded for submenu */}
+            {NAV_LINKS.map((item) =>
+              item.submenu ? (
+                item.submenu.map(sub => (
+                  <Link key={sub.path} to={sub.path} onClick={() => setMobileOpen(false)} style={{
+                    display: "flex", alignItems: "center", gap: 10,
+                    padding: "14px 12px", fontSize: 15, fontWeight: 600,
+                    color: isActive(sub.path) ? "#02bcf0" : "#374151",
+                    background: isActive(sub.path) ? "#e6f9fe" : "transparent",
+                    borderRadius: 10, textDecoration: "none"
+                  }}>
+                    {sub.icon} {sub.label}
+                  </Link>
+                ))
+              ) : (
+                <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)} style={{
+                  padding: "14px 12px", fontSize: 16, fontWeight: 600,
+                  color: isActive(item.path) ? "#02bcf0" : "#374151",
+                  background: isActive(item.path) ? "#e6f9fe" : "transparent",
+                  borderRadius: 10, textDecoration: "none"
+                }}>{item.label}</Link>
+              )
+            )}
 
             <div style={{ marginTop: "auto", paddingTop: 24 }}>
               {token ? (

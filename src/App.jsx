@@ -21,6 +21,9 @@ import JobDetailsPage from "./pages/student/JobDetailsPage";
 import ApplyToJobPage from "./pages/student/ApplyToJobPage";
 import MyApplicationsPage from "./pages/student/MyApplicationsPage";
 import RecommendedJobsPage from "./pages/student/RecommendedJobsPage";
+import CompaniesDiscoveryPage from "./pages/student/CompaniesDiscoveryPage";
+import StudentCompanyProfilePage from "./pages/student/CompanyProfilePage";
+import CompanyPostManagement from "./pages/company/CompanyPostManagement";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -66,6 +69,10 @@ function App() {
         <Route path="/student/apply/:id" element={<ProtectedRoute role="student"><ApplyToJobPage /></ProtectedRoute>} />
         <Route path="/student/applications" element={<ProtectedRoute role="student"><MyApplicationsPage /></ProtectedRoute>} />
         <Route path="/student/recommended-jobs" element={<ProtectedRoute role="student"><RecommendedJobsPage /></ProtectedRoute>} />
+        
+        {/* Company Discovery & Engagement */}
+        <Route path="/student/companies" element={<ProtectedRoute role="student"><CompaniesDiscoveryPage /></ProtectedRoute>} />
+        <Route path="/student/companies/:id" element={<ProtectedRoute role="student"><StudentCompanyProfilePage /></ProtectedRoute>} />
 
         {/* External Jobs (Adzuna) */}
         <Route path="/student/discover-jobs" element={<ProtectedRoute role="student"><ExternalJobsPage /></ProtectedRoute>} />
@@ -91,6 +98,7 @@ function App() {
         <Route path="/company/applications/:appId" element={<ProtectedRoute role="company"><ApplicationDetailPage /></ProtectedRoute>} />
         <Route path="/company/applicants/:status" element={<ProtectedRoute role="company"><ApplicantsByStatusPage /></ProtectedRoute>} />
         <Route path="/company/profile" element={<ProtectedRoute role="company"><CompanyProfilePage /></ProtectedRoute>} />
+        <Route path="/company/posts" element={<ProtectedRoute role="company"><CompanyPostManagement /></ProtectedRoute>} />
         <Route path="/company/settings" element={<ProtectedRoute role="company"><SettingsPage /></ProtectedRoute>} />
         <Route path="/company/interviews" element={<ProtectedRoute role="company"><CompanyInterviewsPage /></ProtectedRoute>} />
         <Route path="/company/notifications" element={<ProtectedRoute role="company"><NotificationsPage /></ProtectedRoute>} />
