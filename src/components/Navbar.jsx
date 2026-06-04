@@ -37,10 +37,10 @@ export default function Navbar() {
   /*Dynamic routes array... 
   these are the dynamic routes that we are see in the navbar*/
   const NAV_LINKS = isAdminRole ? [
-    { label: "Dashboard", path: "/admin/dashboard" },
-    { label: "Manage Companies", path: "/admin/companies" },
-    { label: "Manage Jobs", path: "/admin/jobs" },
-    { label: "About", path: "/about" },
+    { label: "Dashboard", path: "/admin/dashboard",icon: <Home size={14} /> },
+    { label: "Manage Companies", path: "/admin/companies", icon: <Building2 size={14} /> },
+    { label: "Manage Jobs", path: "/admin/jobs", icon: <Briefcase size={14} /> },
+    { label: "About", path: "/about",icon: <Info size={14} /> },
   ] : isCompany ? [
     { label: "Dashboard", path: "/company/dashboard" },
     {
@@ -64,6 +64,7 @@ export default function Navbar() {
     { label: "Jobs", path: "/student/jobs", icon: <Briefcase size={14} /> },
     { label: "Companies", path: "/student/companies", icon: <Building2 size={14} /> },
     { label: "Applications", path: "/student/applications", icon: <BookmarkCheck size={14} /> },
+    { label: "About", path: "/about", icon: <Info size={14} />},
   ];
   /* open hamburger navbar functionality...
   This is the automated function for the Navbar to 
@@ -152,7 +153,6 @@ so that user can check the personlaized things here...*/
     { to: "/admin/companies", icon: <ShieldCheck size={16} />, label: "Verify Companies" },
     { to: "/settings", icon: <Settings size={16} />, label: "Account Settings" },
   ] : isCompany ? [
-    { to: "/company/dashboard", icon: <Home size={16} />, label: "Dashboard" },
     { to: "/company/profile", icon: <Edit2 size={16} />, label: "Company Profile" },
     { to: "/company/posts", icon: <Sparkles size={16} />, label: "Manage Posts" },
     { to: "/company/applicants/saved", icon: <BookmarkCheck  size={16} />, label: "Saved Applicants" },
