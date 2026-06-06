@@ -118,7 +118,7 @@ export default function ResumeCard({
                 </button>
 
                 {/* Displaying the feature cards */}
-                <div className="grid grid-cols-3 gap-2 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
                     {["Keyword Match", "Skill Gaps", "ATS Score"].map((f) => (
                         <div key={f} className="flex items-center gap-1.5 bg-white border border-[#b3eefb] rounded-xl px-3 py-2">
                             <CheckCircle size={11} className="text-black shrink-0" />

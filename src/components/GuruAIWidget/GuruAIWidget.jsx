@@ -122,7 +122,7 @@ const GuruAIWidget = () => {
   return (
     <div style={styles.container}>
       {isOpen && (
-        <div style={styles.chatPanel} role="dialog" aria-label="GuruAI Career Assistant">
+        <div style={styles.chatPanel} className="guru-chat-panel" role="dialog" aria-label="GuruAI Career Assistant">
           <div style={styles.header}>
             <div style={styles.headerTitle}>
               <div style={styles.avatar}>
@@ -230,17 +230,19 @@ const GuruAIWidget = () => {
       )}
 
       {/* The floating button and tooltip wrapper */}
-      <div style={styles.floatingWrapper}>
+      <div style={styles.floatingWrapper} className="guru-fab-wrapper">
         {!isOpen && (
           <div 
             style={styles.tooltipPulse}
+            className="guru-tooltip"
             onClick={() => setIsOpen(true)}
           >
             Ask GuruAI ✦
           </div>
         )}
         <button 
-          style={isOpen ? { ...styles.floatingButton, transform: 'scale(0.5)', opacity: 0, pointerEvents: 'none' } : styles.floatingButton} 
+          style={isOpen ? { ...styles.floatingButton, transform: 'scale(0.5)', opacity: 0, pointerEvents: 'none' } : styles.floatingButton}
+          className="guru-fab-btn"
           onClick={() => setIsOpen(true)}
           aria-label="Open GuruAI Career Assistant"
         >
@@ -262,6 +264,34 @@ const GuruAIWidget = () => {
           0% { opacity: .2; }
           20% { opacity: 1; }
           100% { opacity: .2; }
+        }
+        /* Mobile: make chat panel full-screen */
+        @media (max-width: 640px) {
+          .guru-chat-panel {
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            max-height: 100vh !important;
+            max-height: 100dvh !important;
+            bottom: 0 !important;
+            right: 0 !important;
+            left: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+          }
+          .guru-fab-wrapper {
+            bottom: 12px;
+            right: 12px;
+          }
+          .guru-fab-btn {
+            width: 56px !important;
+            height: 56px !important;
+          }
+          .guru-tooltip {
+            font-size: 11px !important;
+            padding: 6px 10px !important;
+          }
         }
       `}} />
     </div>

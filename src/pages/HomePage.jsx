@@ -314,7 +314,7 @@ but shows the options for diffrent query seraches for the whole job serach platf
               </p>
               {/* this holds the dummy data to show for the
  reqruitment features section */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32, marginBottom: 48 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: 32, marginBottom: 48 }} className="md:!grid-cols-2">
                 {[
                   { title: "Unlimited Postings", desc: "Post as many roles as you need." },
                   { title: "Talent Analytics", desc: "Track your recruitment funnel." },

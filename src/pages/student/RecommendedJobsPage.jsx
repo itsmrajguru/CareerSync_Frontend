@@ -214,7 +214,7 @@ export default function RecommendedJobsPage() {
       <div className="pb-24 bg-slate-50/50 min-h-screen">
         
         {/* Informative & Compact Hero Section */}
-        <div className="bg-[#0f172a] -mx-7 px-7 py-10 mb-10 shadow-lg relative overflow-hidden">
+        <div className="bg-[#0f172a] -mx-4 md:-mx-7 px-4 md:px-7 py-10 mb-10 shadow-lg relative overflow-hidden">
           {/* Subtle Background decoration */}
           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#02bcf0] rounded-full blur-[100px] opacity-10 pointer-events-none" />
           
@@ -266,7 +266,7 @@ export default function RecommendedJobsPage() {
           </div>
         </div>
 
-        <div className="max-w-[1080px] mx-auto px-7 lg:px-0">
+        <div className="max-w-[1080px] mx-auto px-4 md:px-7 lg:px-0">
           {error ? (
             <div className="p-10 bg-white border border-red-100 rounded-[32px] text-center max-w-2xl mx-auto shadow-xl shadow-red-500/5 relative overflow-hidden" style={{ animation: 'fadeUp 0.5s ease-out both' }}>
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-400 to-red-600" />

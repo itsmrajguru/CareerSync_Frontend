@@ -45,7 +45,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-app-bg font-sans">
       <Navbar />
       
-      <main className="max-w-[1140px] mx-auto px-7 py-12">
+      <main className="max-w-[1140px] mx-auto px-4 md:px-7 py-12">
         
         {/* header section...
         explains the purpose of the admin panel to the user */}
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
 
         {/* productivity tip section...
         a subtle footer-like card for admin experience */}
-        <div className="mt-12 p-8 bg-neutral-900 rounded-[28px] text-white flex items-center justify-between overflow-hidden relative">
+        <div className="mt-12 p-8 bg-neutral-900 rounded-[28px] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 overflow-hidden relative">
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp size={16} className="text-[#ef4444]" />

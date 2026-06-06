@@ -389,7 +389,7 @@ export default function DashboardPage() {
 
       <div className="min-h-screen bg-app-bg font-sans flex flex-col">
         <Navbar />
-        <main className="max-w-[960px] mx-auto px-7 pt-4 pb-10 flex-1 w-full">
+        <main className="max-w-[960px] mx-auto px-4 md:px-7 pt-4 pb-10 flex-1 w-full">
 
           <section className="d-hero mb-8 animate-fade-in-down">
             <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-[60px]">

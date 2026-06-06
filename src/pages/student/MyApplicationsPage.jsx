@@ -112,7 +112,7 @@ and the apply filters on that state to get the current number*/
           <p className="cs-section-label">
             Overview
           </p>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { key: "total",       label: "Total",       color: "text-black" },
               { key: "applied",     label: "Applied",     color: "text-blue-600" },

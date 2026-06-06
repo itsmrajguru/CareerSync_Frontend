@@ -85,7 +85,7 @@ export default function NotificationsPage() {
         </section>
 
         {/* Hero section*/}
-        <div className="flex items-center justify-between mb-8 px-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 px-2">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-neutral-50 px-4 py-2 rounded-xl border border-neutral-100">
               <Inbox size={14} className="text-slate-400" />

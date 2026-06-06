@@ -83,7 +83,7 @@ export default function CompanyInterviewsPage() {
         {/* stat overview — total and per-mode counts */}
         <section aria-label="Interview stats" className="mb-8">
           <p className="cs-section-label">Overview</p>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { key: "total",     label: "Total",     color: "text-black" },
               { key: "online",    label: "Online",    color: "text-blue-600" },
