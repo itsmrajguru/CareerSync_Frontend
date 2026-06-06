@@ -7,10 +7,9 @@ export const uploadAvatar = async (file) => {
     // create a form data object and append the avatar image file
     const formData = new FormData();
     formData.append('avatar', file);
-    const { data } = await api.put('/students/me/avatar', formData, {
+    return api.put('students/me/avatar', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
-    return data;
 };
 
 /* function to upload the student resume pdf
@@ -19,10 +18,9 @@ export const uploadResumePDF = async (file) => {
     // create a form data object and append the pdf file
     const formData = new FormData();
     formData.append('resume', file);
-    const { data } = await api.put('/students/me/resume-upload', formData, {
+    return api.put('students/me/resume-upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
-    return data;
 };
 
 /* function to upload the company logo image
@@ -31,8 +29,7 @@ export const uploadCompanyLogo = async (file) => {
     // create a form data object and append the logo image file
     const formData = new FormData();
     formData.append('logo', file);
-    const { data } = await api.put('/company/profile/me/logo', formData, {
+    return api.put('companies/me/logo', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
-    return data;
 };

@@ -245,6 +245,7 @@ export default function ProfilePage() {
           completion={completion}
           skills={skills}
           initials={initials}
+          avatarUrl={avatarUrl}
           onChange={handleChange}
           onSave={handleSave}
           onDiscard={() => navigate("/student/dashboard")}

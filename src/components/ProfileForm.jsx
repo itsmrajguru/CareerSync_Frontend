@@ -73,7 +73,7 @@ function CellLabel({ children }) {
 3)celltitle */
 export default function ProfileForm({
   formData, editing, loading, profile, completion, skills,
-  initials, onChange, onSave, onDiscard, success,
+  initials, avatarUrl, onChange, onSave, onDiscard, success,
   onNavigate,
 }) {
   return (
@@ -90,11 +90,15 @@ export default function ProfileForm({
           bordercolor: "#0d1117",
           minHeight: 260,
         }}>
-        {/* Added intials */}
+        {/* Added intials / Avatar */}
         <div
-          className="w-16 h-16 rounded-full flex items-center justify-center text-xl font-extrabold text-white mb-4"
-          style={{ background: "#02bcf0" }}>
-          {initials}
+          className="w-16 h-16 rounded-full flex items-center justify-center text-xl font-extrabold text-white mb-4 overflow-hidden"
+          style={{ background: avatarUrl ? "transparent" : "#02bcf0" }}>
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="Profile avatar" className="w-full h-full object-cover" />
+          ) : (
+            initials
+          )}
         </div>
         <p className="text-base font-extrabold text-black leading-tight">
           {formData.full_name || "Your Name"}

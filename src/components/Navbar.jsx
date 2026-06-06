@@ -5,6 +5,8 @@ import {
   Home, BookmarkCheck, Edit2, ChevronDown, Plus, FileText, Search, ShieldCheck, Clock, Check, ChevronRight, Info, Users, Mail, Sparkles
 } from "lucide-react";
 import { getNotifications, markNotificationRead, markAllNotificationsRead } from "../services/notificationService";
+import { getProfileList } from "../services/studentProfileService";
+import { getCompanyProfile } from "../services/companyProfileService";
 
 const TYPE_CONFIG = {
   application_update: { icon: <Briefcase size={16} />, color: "#ef4444", bg: "#fef2f2" },
@@ -33,6 +35,23 @@ export default function Navbar() {
   const initial = (user.username || "U")[0].toUpperCase();
   const isCompany = user?.role === 'company';
   const isAdminRole = user?.role === 'admin';
+  const [navAvatar, setNavAvatar] = useState("");
+
+  /* fetch the student avatar or company logo to show in the navbar circle */
+  useEffect(() => {
+    if (!token) return;
+    (async () => {
+      try {
+        if (isCompany) {
+          const res = await getCompanyProfile();
+          if (res?.company?.logo) setNavAvatar(res.company.logo);
+        } else if (!isAdminRole) {
+          const data = await getProfileList();
+          if (data?.[0]?.avatar) setNavAvatar(data[0].avatar);
+        }
+      } catch (_) { /* profile not found, just show initial */ }
+    })();
+  }, [token]);
 
   /*Dynamic routes array... 
   these are the dynamic routes that we are see in the navbar*/
@@ -417,13 +436,16 @@ Items with a submenu get a hover dropdown card instead of a plain link */}
               <div className="relative" ref={dropdownRef} onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
                 <button style={{
                   width: 38, height: 38, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #02bcf0, #014d65)",
+                  background: navAvatar ? "transparent" : "linear-gradient(135deg, #02bcf0, #014d65)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontWeight: 800, color: "#0d1117", fontSize: 15, cursor: "pointer", border: "none",
                   boxShadow: dropdownOpen ? "0 0 0 3px rgba(2,188,240,0.2)" : "none",
-                  transition: "all 0.2s"
+                  transition: "all 0.2s", overflow: "hidden", padding: 0
                 }}>
-                  {initial}
+                  {navAvatar
+                    ? <img src={navAvatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+                    : initial
+                  }
                 </button>
 
                 {dropdownOpen && (
@@ -489,7 +511,12 @@ so we are Dis Items directly for the mobile hamburger Feature */}
             {/* User Preview */}
             {token && (
               <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 16, borderBottom: "1px solid #f3f4f6", marginBottom: 16 }}>
-                <div style={{ width: 42, height: 42, borderRadius: "50%", background: "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#0d1117", fontSize: 16 }}>{initial}</div>
+                <div style={{ width: 42, height: 42, borderRadius: "50%", background: navAvatar ? "transparent" : "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#0d1117", fontSize: 16, overflow: "hidden", flexShrink: 0 }}>
+                  {navAvatar
+                    ? <img src={navAvatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    : initial
+                  }
+                </div>
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 800, color: "#0d1117" }}>{user.username || "User"}</div>
                   <div style={{ fontSize: 13, color: "#0d1117" }}>{user.email || ""}</div>
