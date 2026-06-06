@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getApplicationDetails, updateApplicationStatus, toggleSaveApplicant } from "../../services/applicationService";
 import { scheduleInterview, cancelInterview } from "../../services/interviewService";
+import { triggerAIInterview } from "../../services/integrationService";
 import PageLayout from "../../components/PageLayout";
 import { 
   ArrowLeft, Mail, FileText, Briefcase, User, GraduationCap, Code, AlertCircle, Link as LinkIcon,
@@ -10,12 +11,14 @@ import {
 import { logEmailCommunication } from "../../services/notificationService";
 
 
-/* this array contains the 4 stats for the application status */
+/* this array contains the stats for each application status including ai interview stages */
 const STATUS_CFG = {
-  applied:     { label: "Applied",     bg: "#e6f9fd", color: "#0d1117", border: "#b3eefb" },
-  shortlisted: { label: "Shortlisted", bg: "#fffbeb", color: "#0d1117", border: "#fde68a" },
-  rejected:    { label: "Rejected",    bg: "#fef2f2", color: "#0d1117", border: "#fca5a5" },
-  hired:       { label: "Hired",       bg: "#f0fdf4", color: "#0d1117", border: "#86efac" },
+  applied:              { label: "Applied",          bg: "#e6f9fd", color: "#0d1117", border: "#b3eefb" },
+  shortlisted:          { label: "Shortlisted",      bg: "#fffbeb", color: "#0d1117", border: "#fde68a" },
+  rejected:             { label: "Rejected",         bg: "#fef2f2", color: "#0d1117", border: "#fca5a5" },
+  hired:                { label: "Hired",            bg: "#f0fdf4", color: "#0d1117", border: "#86efac" },
+  interview_sent:       { label: "Interview Sent",   bg: "#eef0ff", color: "#0d1117", border: "#c8c4fe" },
+  interview_completed:  { label: "Interview Done",   bg: "#f5f3ff", color: "#0d1117", border: "#a89cf9" },
 };
 
 /* interview mode icons for display */
@@ -45,6 +48,9 @@ export default function ApplicationDetailPage() {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
+
+  /* state for ai interview trigger */
+  const [triggeringInterview, setTriggeringInterview] = useState(false);
 
   /* so we fetch the applicationsDetails from this function which utimately takes 
   it from the application Model and 
@@ -134,6 +140,25 @@ export default function ApplicationDetailPage() {
     }
   };
 
+  /* triggers the ai interview flow via InterviewPilot — only for shortlisted candidates */
+  const handleTriggerInterview = async () => {
+    if (!window.confirm(`Send AI interview invitation to ${student?.username}? They will receive an email with the interview link.`)) return;
+
+    setTriggeringInterview(true);
+    try {
+      const res = await triggerAIInterview(appId, { difficulty: 'medium', resumeText: '' });
+      if (res.success) {
+        fetchData();
+      } else {
+        alert(res.message || 'Failed to trigger interview.');
+      }
+    } catch (e) {
+      alert('Failed to trigger AI interview. Please try again.');
+    } finally {
+      setTriggeringInterview(false);
+    }
+  };
+
   if (loading) {
     return (
       <PageLayout>
@@ -163,6 +188,9 @@ export default function ApplicationDetailPage() {
   const student = application.student;
   const job = application.job;
   const sc = STATUS_CFG[application.status] || STATUS_CFG.applied;
+
+  /* check if ai interview has already been triggered for this application */
+  const ipAlreadySent = ['interview_sent', 'interview_completed'].includes(application.ipStatus);
 
   return (
     <PageLayout>
@@ -310,6 +338,43 @@ export default function ApplicationDetailPage() {
               >
                 <CalendarCheck size={16} /> Schedule Interview
               </button>
+            )}
+
+            {/* start ai interview button — only visible for shortlisted candidates */}
+            {application.status === "shortlisted" && (
+              <button
+                onClick={handleTriggerInterview}
+                disabled={triggeringInterview || ipAlreadySent}
+                className="h-11 flex items-center justify-center gap-2 px-6 font-black text-[11px] rounded-xl transition-all uppercase tracking-widest border-none cursor-pointer"
+                style={{
+                  background: ipAlreadySent ? '#f0fdf4' : '#5b48e8',
+                  color:      ipAlreadySent ? '#166534' : '#ffffff',
+                  border:     ipAlreadySent ? '1px solid #86efac' : 'none',
+                  opacity:    triggeringInterview ? 0.6 : 1,
+                  cursor:     (triggeringInterview || ipAlreadySent) ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {triggeringInterview ? (
+                  <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>
+                ) : ipAlreadySent ? (
+                  <>&#10003; Interview Sent</>
+                ) : (
+                  <>&#129302; Start AI Interview</>
+                )}
+              </button>
+            )}
+
+            {/* show interview score badge once the ai interview is completed */}
+            {application.ipStatus === 'interview_completed' && application.ipScore !== null && (
+              <a
+                href={application.ipReportUrl || '#'}
+                target="_blank"
+                rel="noreferrer"
+                className="h-11 flex items-center justify-center gap-2 px-6 font-black text-[11px] rounded-xl uppercase tracking-widest"
+                style={{ background: '#eef0ff', color: '#3d2ec4', border: '1px solid #c8c4fe', textDecoration: 'none' }}
+              >
+                &#128202; Score: {application.ipScore}/100
+              </a>
             )}
 
             {/* this functionality send the email to the user, on the basis of the updated 
