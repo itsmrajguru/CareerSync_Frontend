@@ -340,29 +340,7 @@ export default function ApplicationDetailPage() {
               </button>
             )}
 
-            {/* start ai interview button — only visible for shortlisted candidates */}
-            {application.status === "shortlisted" && (
-              <button
-                onClick={handleTriggerInterview}
-                disabled={triggeringInterview || ipAlreadySent}
-                className="h-11 flex items-center justify-center gap-2 px-6 font-black text-[11px] rounded-xl transition-all uppercase tracking-widest border-none cursor-pointer"
-                style={{
-                  background: ipAlreadySent ? '#f0fdf4' : '#5b48e8',
-                  color:      ipAlreadySent ? '#166534' : '#ffffff',
-                  border:     ipAlreadySent ? '1px solid #86efac' : 'none',
-                  opacity:    triggeringInterview ? 0.6 : 1,
-                  cursor:     (triggeringInterview || ipAlreadySent) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {triggeringInterview ? (
-                  <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>
-                ) : ipAlreadySent ? (
-                  <>&#10003; Interview Sent</>
-                ) : (
-                  <>&#129302; Start AI Interview</>
-                )}
-              </button>
-            )}
+
 
             {/* show interview score badge once the ai interview is completed */}
             {application.ipStatus === 'interview_completed' && application.ipScore !== null && (
@@ -458,12 +436,37 @@ export default function ApplicationDetailPage() {
                     </p>
                     <p className="text-[12px] font-bold text-neutral-500">This candidate has an upcoming interview</p>
                   </div>
-                  <button
-                    onClick={handleCancelInterview}
-                    className="flex items-center gap-1.5 text-[10px] font-black text-red-500 border border-red-200 bg-white px-3 py-1.5 rounded-lg hover:bg-red-50 transition-all uppercase tracking-wider cursor-pointer"
-                  >
-                    <Trash2 size={11} /> Cancel
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {/* start ai interview button */}
+                    {application.ipStatus !== 'interview_completed' && (
+                      <button
+                        onClick={handleTriggerInterview}
+                        disabled={triggeringInterview}
+                        className="flex items-center gap-1.5 text-[10px] font-black px-4 py-1.5 rounded-lg transition-all uppercase tracking-wider border-none cursor-pointer"
+                        style={{
+                          background: application.ipStatus === 'interview_sent' ? '#eef0ff' : '#5b48e8',
+                          color:      application.ipStatus === 'interview_sent' ? '#5b48e8' : '#ffffff',
+                          border:     application.ipStatus === 'interview_sent' ? '1px solid #c8c4fe' : 'none',
+                          opacity:    triggeringInterview ? 0.6 : 1,
+                          cursor:     triggeringInterview ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        {triggeringInterview ? (
+                          <><div className={`w-3 h-3 border-2 border-t-transparent rounded-full animate-spin ${application.ipStatus === 'interview_sent' ? 'border-[#5b48e8]' : 'border-white/30'}`} /> Sending...</>
+                        ) : application.ipStatus === 'interview_sent' ? (
+                          <>&#128259; Resend AI Invite</>
+                        ) : (
+                          <>&#129302; Start AI Interview</>
+                        )}
+                      </button>
+                    )}
+                    <button
+                      onClick={handleCancelInterview}
+                      className="flex items-center gap-1.5 text-[10px] font-black text-red-500 border border-red-200 bg-white px-3 py-1.5 rounded-lg hover:bg-red-50 transition-all uppercase tracking-wider cursor-pointer"
+                    >
+                      <Trash2 size={11} /> Cancel
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
