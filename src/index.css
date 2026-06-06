@@ -110,22 +110,66 @@
 
   .cs-input {
     width: 100%;
-    border: 1px solid #e5e7eb; /* neutral-200 */
-    border-radius: 8px; /* rounded-lg */
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     padding: 10px 14px;
     font-size: 14px;
     font-family: inherit;
     font-weight: 500;
     outline: none;
-    background: #f9fafb; /* neutral-50 */
-    color: #000000;
-    transition: border-color 0.2s, background 0.2s;
+    background: #f9fafb;
+    color: #0d1117;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   }
 
   .cs-input:focus {
-    border-color: #000000;
+    border-color: #0d1117;
     background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(13,17,23,0.06);
   }
+
+  /* Professional select / dropdown styling — removes browser native blue highlight */
+  select.cs-input,
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  select.cs-input:focus,
+  select:focus {
+    border-color: #0d1117;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(13,17,23,0.06);
+    outline: none;
+  }
+
+  /* Option items inside dropdowns */
+  select option {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d1117;
+    background: #ffffff;
+    padding: 8px 12px;
+  }
+
+  select option:checked {
+    background: #0d1117;
+    color: #ffffff;
+  }
+
+  select option:hover {
+    background: #f1f5f9;
+    color: #0d1117;
+  }
+
 
   /* Global Header Typography */
   .cs-page-title {

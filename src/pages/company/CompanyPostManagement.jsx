@@ -7,6 +7,7 @@ import PageLayout from "../../components/PageLayout";
 import { getCompanyProfile } from "../../services/companyProfileService";
 import { getPostsByCompany, createPost, updatePost, deletePost } from "../../services/companyPostsService";
 import { getMyJobs } from "../../services/jobsService";
+import CustomSelect from "../../components/CustomSelect";
 
 export default function CompanyPostManagement() {
   const [profile, setProfile] = useState(null);
@@ -299,15 +300,14 @@ export default function CompanyPostManagement() {
 
                     <div>
                       <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Post Type</label>
-                      <select
+                      <CustomSelect
                         value={postType}
                         onChange={e => setPostType(e.target.value)}
-                        className="cs-input w-full bg-white border border-neutral-200 rounded-lg text-xs py-2 focus:outline-none"
                       >
                         {['Announcement', 'Hiring Update', 'Product Launch', 'Achievement', 'Event', 'Webinar', 'Internship Drive', 'Funding News'].map(type => (
                           <option key={type} value={type}>{type}</option>
                         ))}
-                      </select>
+                      </CustomSelect>
                     </div>
 
                     <div>

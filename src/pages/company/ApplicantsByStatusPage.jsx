@@ -6,6 +6,7 @@ import {
   Mail, ArrowLeft,
   Search, Users, Briefcase, Bookmark
 } from "lucide-react";
+import CustomSelect from "../../components/CustomSelect";
 
 const STATUS_CFG = {
   applied: { label: "Applied", bg: "#f8fafc", color: "#475569", border: "#f1f5f9" },
@@ -159,17 +160,16 @@ export default function ApplicantsByStatusPage() {
 
                   {/* Footer Actions */}
                   <div className="flex items-center justify-between mt-2 pt-5 border-t border-neutral-100">
-                    <select
+                    <CustomSelect
                       value={app.status}
                       onChange={e => handleStatusChange(app._id, e.target.value)}
-                      style={{ background: sc.bg, color: sc.color, borderColor: sc.border }}
-                      className="h-8 px-3 rounded-lg text-[10px] font-black uppercase tracking-wider border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-50 cursor-pointer appearance-none transition-colors"
+                      style={{ minWidth: 130 }}
                     >
                       <option value="applied">Under Review</option>
                       <option value="shortlisted">Shortlisted</option>
                       <option value="rejected">Rejected</option>
                       <option value="hired">Hired</option>
-                    </select>
+                    </CustomSelect>
 
                     <button
                       onClick={() => navigate(`/company/applications/${app._id}`)}

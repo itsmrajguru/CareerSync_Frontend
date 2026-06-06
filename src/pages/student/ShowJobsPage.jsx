@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { getJobs, toggleSaveJob, getSavedJobs } from "../../services/jobsService";
+import CustomSelect from "../../components/CustomSelect";
 
 /* This page has 3 componets
 a) jobItem 
@@ -174,10 +175,10 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
           <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2.5 block flex items-center gap-2">
             <Briefcase size={12} /> Industry
           </label>
-          <select
+          <CustomSelect
             value={filters.industry}
             onChange={e => onChange("industry", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-bold"
+            className="!py-0"
           >
             <option value="">All Sectors</option>
             <option value="Engineering">Engineering</option>
@@ -186,7 +187,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
             <option value="Sales">Sales</option>
             <option value="Finance">Finance</option>
             <option value="HR">HR</option>
-          </select>
+          </CustomSelect>
         </div>
 
         {/* Location Select */}
@@ -205,16 +206,15 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
         {/* Job Type Select */}
         <div>
           <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2 block">Schedules</label>
-          <select
+          <CustomSelect
             value={filters.jobType}
             onChange={e => onChange("jobType", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-bold"
           >
             <option value="">All Schedules</option>
             <option value="full-time">Full Time</option>
             <option value="part-time">Part Time</option>
             <option value="internship">Internship</option>
-          </select>
+          </CustomSelect>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import {
 import PageLayout from "../../components/PageLayout";
 import { getAllCompanies, followCompany, unfollowCompany } from "../../services/companyProfileService";
 import { getFeed, likePost, unlikePost, commentOnPost, deleteComment, savePost, unsavePost } from "../../services/companyPostsService";
+import CustomSelect from "../../components/CustomSelect";
 
 export default function CompaniesDiscoveryPage() {
   const navigate = useNavigate();
@@ -314,10 +315,9 @@ export default function CompaniesDiscoveryPage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div>
                   <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Industry</label>
-                  <select
+                  <CustomSelect
                     value={industryFilter}
                     onChange={e => setIndustryFilter(e.target.value)}
-                    className="cs-input !py-2 text-xs w-full bg-white border border-neutral-200 rounded-lg focus:outline-none"
                   >
                     <option value="">All Industries</option>
                     {industries.map(ind => <option key={ind} value={ind}>{ind}</option>)}
@@ -327,15 +327,14 @@ export default function CompaniesDiscoveryPage() {
                     <option value="Healthcare">Healthcare</option>
                     <option value="E-Commerce">E-Commerce</option>
                     <option value="Manufacturing">Manufacturing</option>
-                  </select>
+                  </CustomSelect>
                 </div>
 
                 <div>
                   <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Location</label>
-                  <select
+                  <CustomSelect
                     value={locationFilter}
                     onChange={e => setLocationFilter(e.target.value)}
-                    className="cs-input !py-2 text-xs w-full bg-white border border-neutral-200 rounded-lg focus:outline-none"
                   >
                     <option value="">All Locations</option>
                     {locations.map(loc => <option key={loc} value={loc}>{loc}</option>)}
@@ -343,35 +342,33 @@ export default function CompaniesDiscoveryPage() {
                     <option value="Pune">Pune</option>
                     <option value="Bangalore">Bangalore</option>
                     <option value="Remote">Remote</option>
-                  </select>
+                  </CustomSelect>
                 </div>
 
                 <div>
                   <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Size</label>
-                  <select
+                  <CustomSelect
                     value={sizeFilter}
                     onChange={e => setSizeFilter(e.target.value)}
-                    className="cs-input !py-2 text-xs w-full bg-white border border-neutral-200 rounded-lg focus:outline-none"
                   >
                     <option value="">All Sizes</option>
                     <option value="1-50">1-50 Employees</option>
                     <option value="51-200">51-200 Employees</option>
                     <option value="201-1000">201-1000 Employees</option>
                     <option value="1000+">1000+ Employees</option>
-                  </select>
+                  </CustomSelect>
                 </div>
 
                 <div>
                   <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Hiring Status</label>
-                  <select
+                  <CustomSelect
                     value={hiringFilter}
                     onChange={e => setHiringFilter(e.target.value)}
-                    className="cs-input !py-2 text-xs w-full bg-white border border-neutral-200 rounded-lg focus:outline-none"
                   >
                     <option value="">All Statuses</option>
                     <option value="hiring">Hiring (Has open jobs)</option>
                     <option value="not-hiring">Not Hiring</option>
-                  </select>
+                  </CustomSelect>
                 </div>
               </div>
             </div>

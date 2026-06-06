@@ -3,6 +3,7 @@ import { createJob } from "../../services/jobsService";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
 import { Plus, MapPin, Code, DollarSign, Calendar } from "lucide-react";
+import CustomSelect from "../../components/CustomSelect";
 
 //employment type options shown in the select
 const JOB_TYPES = ["full-time", "part-time", "internship", "contract", "freelance"];
@@ -155,10 +156,13 @@ export default function CreateJobPage() {
               {/* Job Type select field */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-[11px] font-bold text-black uppercase tracking-[0.6px]">Employment Type</label>
-                <select name="jobType" value={formData.jobType} onChange={handleChange}
-                  className="w-full p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-black font-medium text-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all cursor-pointer capitalize font-bold">
-                  {JOB_TYPES.map(t => <option key={t} value={t} className="capitalize">{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
-                </select>
+                <CustomSelect
+                  name="jobType"
+                  value={formData.jobType}
+                  onChange={e => handleChange({ target: { name: "jobType", value: e.target.value } })}
+                >
+                  {JOB_TYPES.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
+                </CustomSelect>
               </div>
 
               {/* Skills input list */}

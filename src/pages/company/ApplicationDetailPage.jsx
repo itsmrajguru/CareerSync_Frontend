@@ -9,6 +9,7 @@ import {
   CalendarCheck, X, MapPin, Video, Phone, Building2, Clock3, Trash2, Bookmark
 } from "lucide-react";
 import { logEmailCommunication } from "../../services/notificationService";
+import CustomSelect from "../../components/CustomSelect";
 
 
 /* this array contains the stats for each application status including ai interview stages */
@@ -319,10 +320,10 @@ export default function ApplicationDetailPage() {
 
           {/* These status are sent to the updateApplications page */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
-            <select
+            <CustomSelect
               value={application.status}
               onChange={e => handleStatusChange(e.target.value)}
-              className="h-11 px-6 rounded-xl bg-white border border-neutral-200 text-[11px] font-black text-black shadow-sm focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-neutral-400 cursor-pointer uppercase tracking-widest appearance-none"
+              style={{ minWidth: 180 }}
             >
               <option value="applied">Under Review</option>
               <option value="shortlisted">Shortlisted</option>
@@ -330,7 +331,7 @@ export default function ApplicationDetailPage() {
               <option value="interview_completed" disabled>AI Interview Completed</option>
               <option value="rejected">Not Moving Forward</option>
               <option value="hired">Hired ✓</option>
-            </select>
+            </CustomSelect>
 
             {/* only show the Schedule Interview button if the student is shortlisted and there is no interview yet */}
             {application.status === "shortlisted" && !interview && (

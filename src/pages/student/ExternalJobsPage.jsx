@@ -5,6 +5,7 @@ import {
   Users, ChevronLeft, ChevronRight, CheckCircle, BriefcaseBusiness
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
+import CustomSelect from "../../components/CustomSelect";
 import { getJobs } from "../../services/externalJobsService";
 
 /* This page has 3 componets
@@ -137,10 +138,9 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
           <label className="cs-section-label !mb-0 text-black flex items-center gap-2">
             <Briefcase size={12} /> Industry
           </label>
-          <select
+          <CustomSelect
             value={filters.role}
             onChange={e => onChange("role", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-extrabold"
           >
             <option value="">All Sectors</option>
             <option value="Engineering">Engineering</option>
@@ -149,7 +149,7 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
             <option value="Sales">Sales</option>
             <option value="Finance">Finance</option>
             <option value="HR">HR</option>
-          </select>
+          </CustomSelect>
         </div>
 
         {/* Salary Min/Max */}
@@ -176,17 +176,16 @@ function FilterPanel({ filters, onChange, onClear, activeCount }) {
         {/* Job Type Select */}
         <div>
           <label className="text-[10px] font-black text-black uppercase tracking-widest ml-1 mb-2 block">Schedules</label>
-          <select
+          <CustomSelect
             value={filters.job_type}
             onChange={e => onChange("job_type", e.target.value)}
-            className="cs-input !py-3 !text-[12px] !rounded-xl !appearance-none cursor-pointer font-extrabold"
           >
             <option value="">All Schedules</option>
             <option value="full_time">Full Time</option>
             <option value="part_time">Part Time</option>
             <option value="contract">Freelance</option>
             <option value="internship">Student</option>
-          </select>
+          </CustomSelect>
         </div>
 
         {/* Work Location Checkboxes */}

@@ -8,6 +8,7 @@ import {
   Search, Users, Download, Bookmark
 } from "lucide-react";
 import { logEmailCommunication } from "../../services/notificationService";
+import CustomSelect from "../../components/CustomSelect";
 
 
 /* This page is dedicated to show the applicant candidiates of an 
@@ -295,16 +296,16 @@ we pass the real time query to the setSearch and */}
                           >
                             <Bookmark size={16} fill={app.isSaved ? "currentColor" : "none"} />
                           </button>
-                          <select
-                            value={app.status}
-                            onChange={e => handleStatusChange(app._id, e.target.value)}
-                            className="hidden sm:block text-[11px] font-bold bg-[#f8fafc] border border-[#f1f5f9] rounded-xl px-4 h-10 outline-none focus:ring-4 focus:ring-primary-50 transition-all cursor-pointer uppercase tracking-wider"
-                          >
-                            <option value="applied">Under Review</option>
-                            <option value="shortlisted">Shortlisted</option>
-                            <option value="rejected">Not Moving</option>
-                            <option value="hired">Hired ✓</option>
-                          </select>
+                           <CustomSelect
+                             value={app.status}
+                             onChange={e => handleStatusChange(app._id, e.target.value)}
+                             style={{ width: 160 }}
+                           >
+                             <option value="applied">Under Review</option>
+                             <option value="shortlisted">Shortlisted</option>
+                             <option value="rejected">Not Moving</option>
+                             <option value="hired">Hired ✓</option>
+                           </CustomSelect>
   
                          <button onClick={() => navigate(`/company/applications/${app._id}`)}
                            className="h-10 flex items-center gap-1.5 text-[11px] font-bold text-white bg-[#0f172a] px-6 rounded-xl hover:bg-black transition-all shadow-sm uppercase tracking-wider">
