@@ -46,6 +46,21 @@ const GuruAIWidget = () => {
     }
   }, [history, isTyping]);
 
+  /* Start a fresh conversation and clear history */
+  const handleNewChat = () => {
+    const userStr = localStorage.getItem('user');
+    let greeting = "Namaste! 🙏 I'm GuruAI, your career guide. How can I help you today?";
+    try {
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        const userName = user.name || user.username || '';
+        if (userName) greeting = `Namaste, ${userName}! 🙏 I'm GuruAI, your career guide. How can I help you today?`;
+      }
+    } catch (e) {}
+    setHistory([{ role: 'model', content: greeting }]);
+    setInputValue('');
+  };
+
   if (!isStudent) return null;
 
   const suggestions = [
@@ -113,15 +128,27 @@ const GuruAIWidget = () => {
               <div style={styles.avatar}>
                 <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
               </div>
-              <span style={{ fontWeight: 600 }}>GuruAI</span>
+              <span style={{ fontWeight: 600, letterSpacing: '-0.3px', fontSize: '15px' }}>GuruAI</span>
             </div>
-            <button 
-              onClick={() => setIsOpen(false)} 
-              style={styles.closeButton}
-              aria-label="Close"
-            >
-              ×
-            </button>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <button 
+                onClick={handleNewChat} 
+                style={styles.newChatBtn}
+                aria-label="New Chat"
+                title="Start a new chat"
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#f59e0b'; e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#88889a'; e.currentTarget.style.background = 'transparent'; }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+              </button>
+              <button 
+                onClick={() => setIsOpen(false)} 
+                style={styles.closeButton}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
           </div>
           
           <div style={styles.messagesContainer}>
@@ -130,13 +157,13 @@ const GuruAIWidget = () => {
                 key={index} 
                 style={
                   msg.role === 'user' 
-                    ? { ...styles.messageWrapper, justifyContent: 'flex-end' } 
-                    : { ...styles.messageWrapper, justifyContent: 'flex-start' }
+                    ? { ...styles.messageWrapper, justifyContent: 'flex-end', alignItems: 'flex-start' } 
+                    : { ...styles.messageWrapper, justifyContent: 'flex-start', alignItems: 'flex-start', gap: '12px' }
                 }
               >
                 {msg.role === 'model' && (
                   <div style={styles.messageAvatar}>
-                    <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
+                    <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                 )}
                 <div 
@@ -152,13 +179,15 @@ const GuruAIWidget = () => {
             ))}
             
             {isTyping && (
-              <div style={{ ...styles.messageWrapper, justifyContent: 'flex-start' }}>
+              <div style={{ ...styles.messageWrapper, justifyContent: 'flex-start', alignItems: 'flex-start', gap: '12px' }}>
                 <div style={styles.messageAvatar}>
-                  <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
+                  <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
                 <div style={styles.modelBubble}>
                   <div style={styles.typingIndicator}>
-                    <span>.</span><span>.</span><span>.</span>
+                    <span style={styles.dot}></span>
+                    <span style={{...styles.dot, animationDelay: '0.2s'}}></span>
+                    <span style={{...styles.dot, animationDelay: '0.4s'}}></span>
                   </div>
                 </div>
               </div>
@@ -200,19 +229,34 @@ const GuruAIWidget = () => {
         </div>
       )}
 
-      <button 
-        style={isOpen ? { ...styles.floatingButton, opacity: 0, pointerEvents: 'none' } : styles.floatingButton} 
-        onClick={() => setIsOpen(true)}
-        aria-label="Open GuruAI Career Assistant"
-      >
-        <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '60%', height: '60%', objectFit: 'contain' }} />
-      </button>
+      {/* The floating button and tooltip wrapper */}
+      <div style={styles.floatingWrapper}>
+        {!isOpen && (
+          <div 
+            style={styles.tooltipPulse}
+            onClick={() => setIsOpen(true)}
+          >
+            Ask GuruAI ✦
+          </div>
+        )}
+        <button 
+          style={isOpen ? { ...styles.floatingButton, transform: 'scale(0.5)', opacity: 0, pointerEvents: 'none' } : styles.floatingButton} 
+          onClick={() => setIsOpen(true)}
+          aria-label="Open GuruAI Career Assistant"
+        >
+          <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '75%', height: '75%', objectFit: 'contain' }} />
+        </button>
+      </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes pulse {
-          0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-          70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        @keyframes pulseAlert {
+          0% { box-shadow: 0 0 0 0 rgba(240, 125, 7, 0.5); }
+          70% { box-shadow: 0 0 0 20px rgba(240, 125, 7, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(240, 125, 7, 0); }
+        }
+        @keyframes tooltipBounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
         }
         @keyframes blink {
           0% { opacity: .2; }
@@ -227,34 +271,54 @@ const GuruAIWidget = () => {
 const styles = {
   container: {
     position: 'fixed',
-    bottom: '16px',
-    right: '16px',
+    bottom: '24px',
+    right: '24px',
     zIndex: 9999,
     fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   },
+  floatingWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '10px',
+  },
+  tooltipPulse: {
+    backgroundColor: '#ffffff',
+    color: '#c45e02',
+    padding: '8px 14px',
+    borderRadius: '16px 16px 4px 16px',
+    fontSize: '13px',
+    fontWeight: '700',
+    border: '2px solid #f07d07',
+    boxShadow: '0 8px 24px rgba(240, 125, 7, 0.25)',
+    animation: 'tooltipBounce 2.5s infinite ease-in-out',
+    cursor: 'pointer',
+    letterSpacing: '-0.2px',
+    whiteSpace: 'nowrap',
+    marginRight: '4px',
+  },
   floatingButton: {
-    width: '56px',
-    height: '56px',
+    width: '68px',
+    height: '68px',
     borderRadius: '50%',
-    backgroundColor: '#1E1B4B',
-    color: '#F59E0B',
-    border: 'none',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    backgroundColor: '#ffffff',
+    border: '2px solid #f07d07',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '28px',
-    transition: 'all 0.3s ease',
-    animation: 'pulse 2s infinite',
+    transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+    animation: 'pulseAlert 2s infinite',
   },
   chatPanel: {
     width: '360px',
     height: '520px',
     maxHeight: 'calc(100vh - 100px)',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#0f0f10',
     borderRadius: '16px',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+    border: '1px solid #222225',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.03)',
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden',
@@ -263,23 +327,24 @@ const styles = {
     right: '87px',
   },
   header: {
-    backgroundColor: '#1E1B4B',
-    color: '#FFFFFF',
-    padding: '16px',
+    backgroundColor: '#0f0f10',
+    color: '#e8e8e8',
+    padding: '14px 16px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottom: '1px solid #222225',
   },
   headerTitle: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
+    gap: '10px',
   },
   avatar: {
-    width: '28px',
-    height: '28px',
-    borderRadius: '50%',
-    backgroundColor: '#FFFFFF', /* Changed to white to properly display logo */
+    width: '26px',
+    height: '26px',
+    borderRadius: '6px',
+    backgroundColor: '#fff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -288,55 +353,69 @@ const styles = {
   closeButton: {
     background: 'none',
     border: 'none',
-    color: '#FFFFFF',
+    color: '#88889a',
     fontSize: '24px',
     cursor: 'pointer',
     padding: '0 4px',
+    lineHeight: '1',
+    transition: 'color 0.2s',
+  },
+  newChatBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#88889a',
+    cursor: 'pointer',
+    padding: '6px',
+    borderRadius: '6px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'color 0.2s, background 0.2s',
   },
   messagesContainer: {
     flex: 1,
-    padding: '16px',
+    padding: '20px 16px',
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
-    backgroundColor: '#F9FAFB',
+    gap: '16px',
+    backgroundColor: '#0f0f10',
   },
   messageWrapper: {
     display: 'flex',
     gap: '8px',
-    alignItems: 'flex-end',
     width: '100%',
   },
   messageAvatar: {
     width: '24px',
     height: '24px',
-    borderRadius: '50%',
-    backgroundColor: '#FFFFFF', /* Changed to white to properly display logo */
+    borderRadius: '5px',
+    backgroundColor: '#fff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
+    marginTop: '2px',
     overflow: 'hidden',
   },
   userBubble: {
-    backgroundColor: '#4F46E5',
-    color: '#FFFFFF',
+    backgroundColor: '#1e1e24',
+    color: '#c8c8d8',
     padding: '10px 14px',
     borderRadius: '16px 16px 4px 16px',
-    maxWidth: '80%',
-    fontSize: '14px',
-    lineHeight: '1.4',
+    border: '1px solid #2c2c34',
+    maxWidth: '85%',
+    fontSize: '14.5px',
+    lineHeight: '1.6',
     wordWrap: 'break-word',
   },
   modelBubble: {
-    backgroundColor: '#F3F4F6',
-    color: '#111827',
-    padding: '10px 14px',
-    borderRadius: '16px 16px 16px 4px',
-    maxWidth: '80%',
-    fontSize: '14px',
-    lineHeight: '1.4',
+    backgroundColor: 'transparent',
+    color: '#d8d8e0',
+    padding: '3px 0 0 0',
+    maxWidth: '85%',
+    fontSize: '14.5px',
+    lineHeight: '1.6',
     wordWrap: 'break-word',
   },
   suggestionsContainer: {
@@ -346,40 +425,42 @@ const styles = {
     marginTop: '16px',
   },
   suggestionChip: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #E5E7EB',
-    borderRadius: '16px',
-    padding: '6px 12px',
-    fontSize: '12px',
-    color: '#4B5563',
+    backgroundColor: '#191919',
+    border: '1px solid #272729',
+    borderRadius: '10px',
+    padding: '10px 12px',
+    fontSize: '12.5px',
+    color: '#a8a8b4',
     cursor: 'pointer',
-    transition: 'background-color 0.2s',
   },
   inputArea: {
-    padding: '12px 16px',
-    borderTop: '1px solid #E5E7EB',
-    backgroundColor: '#FFFFFF',
+    padding: '14px 16px',
+    borderTop: '1px solid #222225',
+    backgroundColor: '#0f0f10',
     display: 'flex',
-    gap: '8px',
+    gap: '10px',
     alignItems: 'flex-end',
   },
   textarea: {
     flex: 1,
-    border: '1px solid #E5E7EB',
-    borderRadius: '20px',
-    padding: '10px 16px',
+    border: '1px solid #2a2a2e',
+    backgroundColor: '#1a1a1d',
+    color: '#d8d8e0',
+    borderRadius: '14px',
+    padding: '12px 14px',
     fontSize: '14px',
     resize: 'none',
     maxHeight: '100px',
     outline: 'none',
     fontFamily: 'inherit',
+    boxShadow: '0 0 0 1px rgba(255,255,255,0.025)'
   },
   sendButton: {
     width: '36px',
     height: '36px',
-    borderRadius: '50%',
-    backgroundColor: '#4F46E5',
-    color: '#FFFFFF',
+    borderRadius: '8px',
+    backgroundColor: '#f59e0b',
+    color: '#fff',
     border: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -387,10 +468,22 @@ const styles = {
     cursor: 'pointer',
     flexShrink: 0,
     fontSize: '16px',
+    transition: 'opacity 0.2s',
   },
   typingIndicator: {
     display: 'flex',
-    gap: '2px',
+    gap: '4px',
+    alignItems: 'center',
+    height: '20px',
+    paddingLeft: '2px',
+  },
+  dot: {
+    width: '5px',
+    height: '5px',
+    backgroundColor: '#666',
+    borderRadius: '50%',
+    display: 'inline-block',
+    animation: 'blink 1.2s infinite ease-in-out',
   }
 };
 
