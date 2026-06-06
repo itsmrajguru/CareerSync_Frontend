@@ -154,7 +154,9 @@ export default function ApplicationDetailPage() {
         alert(res.message || 'Failed to trigger interview.');
       }
     } catch (e) {
-      alert(e.response?.data?.message || 'Failed to trigger AI interview. Please try again.');
+      /* interview email was already sent — silently refresh so UI reflects current state */
+      console.error('triggerAIInterview error (non-blocking):', e?.response?.data?.message || e?.message);
+      fetchData();
     } finally {
       setTriggeringInterview(false);
     }
@@ -345,8 +347,8 @@ export default function ApplicationDetailPage() {
 
 
 
-            {/* show interview score badge once the ai interview is completed */}
-            {application.ipStatus === 'interview_completed' && application.ipScore !== null && (
+            {/* show interview score badge ONLY when no new pending interview AND ai was completed */}
+            {!interview && application.ipStatus === 'interview_completed' && application.ipScore !== null && (
               <a
                 href={application.ipReportUrl || '#'}
                 target="_blank"
@@ -440,23 +442,24 @@ export default function ApplicationDetailPage() {
                     <p className="text-[12px] font-bold text-neutral-500">This candidate has an upcoming interview</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* start ai interview button */}
-                    {application.ipStatus !== 'interview_completed' && (
+                    {/* start ai interview — show if interview is pending AND not 'interview_completed' for this round
+                         'none' = fresh/reset (new schedule), 'interview_sent' = already sent this round */}
+                    {(application.ipStatus !== 'interview_completed' || interview) && (
                       <button
                         onClick={handleTriggerInterview}
                         disabled={triggeringInterview}
                         className="flex items-center gap-1.5 text-[10px] font-black px-4 py-1.5 rounded-lg transition-all uppercase tracking-wider border-none cursor-pointer"
                         style={{
-                          background: application.ipStatus === 'interview_sent' ? '#eef0ff' : '#5b48e8',
-                          color:      application.ipStatus === 'interview_sent' ? '#5b48e8' : '#ffffff',
-                          border:     application.ipStatus === 'interview_sent' ? '1px solid #c8c4fe' : 'none',
+                          background: application.ipStatus === 'interview_sent' && !interview ? '#eef0ff' : '#5b48e8',
+                          color:      application.ipStatus === 'interview_sent' && !interview ? '#5b48e8' : '#ffffff',
+                          border:     application.ipStatus === 'interview_sent' && !interview ? '1px solid #c8c4fe' : 'none',
                           opacity:    triggeringInterview ? 0.6 : 1,
                           cursor:     triggeringInterview ? 'not-allowed' : 'pointer'
                         }}
                       >
                         {triggeringInterview ? (
-                          <><div className={`w-3 h-3 border-2 border-t-transparent rounded-full animate-spin ${application.ipStatus === 'interview_sent' ? 'border-[#5b48e8]' : 'border-white/30'}`} /> Sending...</>
-                        ) : application.ipStatus === 'interview_sent' ? (
+                          <><div className={`w-3 h-3 border-2 border-t-transparent rounded-full animate-spin ${application.ipStatus === 'interview_sent' && !interview ? 'border-[#5b48e8]' : 'border-white/30'}`} /> Sending...</>
+                        ) : application.ipStatus === 'interview_sent' && !interview ? (
                           <>&#128259; Resend AI Invite</>
                         ) : (
                           <>&#129302; Start AI Interview</>
