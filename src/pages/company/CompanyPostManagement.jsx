@@ -279,110 +279,92 @@ export default function CompanyPostManagement() {
             )}
           </>
         )}
-              {/* create edit modal for publishing updates */}
         {showModal && (
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 overflow-y-auto animate-fade-in">
-            {/* centering wrapper — gives the modal room to breathe on small screens */}
-            <div className="flex min-h-full items-center justify-center p-4">
-              <div className="bg-white border border-neutral-200 rounded-[24px] w-full max-w-[550px] flex flex-col shadow-2xl relative animate-scale-up">
+          <div className="fixed inset-0 z-50 flex items-start justify-center pt-12 pb-6 px-4 overflow-y-auto bg-black/40 backdrop-blur-sm animate-fade-in">
+            <div className="bg-white border border-neutral-200 rounded-[24px] w-full max-w-[520px] flex flex-col shadow-2xl overflow-hidden" style={{ maxHeight: "calc(100vh - 80px)" }}>
 
-                {/* modal header — always visible, never scrolls away */}
-                <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
-                  <h3 className="font-extrabold text-black text-base">{editingPost ? "Edit Feed Update" : "Publish Feed Update"}</h3>
-                  <button onClick={() => setShowModal(false)} className="p-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
-                    <X size={15} />
+              {/* modal header — always pinned */}
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
+                <h3 className="font-extrabold text-black text-base">{editingPost ? "Edit Feed Update" : "Publish Feed Update"}</h3>
+                <button onClick={() => setShowModal(false)} className="p-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer">
+                  <X size={15} />
+                </button>
+              </div>
+
+              {/* scrollable form body */}
+              <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+                <div className="p-6 overflow-y-auto flex-1 space-y-4">
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Post Type</label>
+                    <CustomSelect
+                      value={postType}
+                      onChange={e => setPostType(e.target.value)}
+                    >
+                      {['Announcement', 'Hiring Update', 'Product Launch', 'Achievement', 'Event', 'Webinar', 'Internship Drive', 'Funding News'].map(type => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </CustomSelect>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Title</label>
+                    <input
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                      placeholder="Enter short update title..."
+                      className="cs-input w-full text-xs"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Description</label>
+                    <textarea
+                      value={description}
+                      onChange={e => setDescription(e.target.value)}
+                      placeholder="Write detailed post description here..."
+                      className="cs-input w-full text-xs h-24 focus:outline-none py-2 resize-none"
+                      required
+                    />
+                  </div>
+
+                  {/* optional fields in a compact 2-col grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Image URL</label>
+                      <input value={image} onChange={e => setImage(e.target.value)} placeholder="https://..." className="cs-input w-full text-xs" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Video URL</label>
+                      <input value={video} onChange={e => setVideo(e.target.value)} placeholder="https://..." className="cs-input w-full text-xs" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">External Link</label>
+                    <input value={externalLink} onChange={e => setExternalLink(e.target.value)} placeholder="Reference link..." className="cs-input w-full text-xs" />
+                  </div>
+
+                </div>
+
+                {/* footer — always pinned */}
+                <div className="px-6 py-4 border-t border-slate-100 flex justify-end gap-3 flex-shrink-0 bg-white">
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="px-5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 uppercase tracking-wider transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-black text-white font-extrabold text-xs rounded-xl hover:bg-neutral-800 uppercase tracking-wider transition-colors"
+                  >
+                    {editingPost ? "Save Changes" : "Publish Post"}
                   </button>
                 </div>
 
-                {/* main form — only the fields area scrolls, header+footer always pinned */}
-                <form onSubmit={handleSubmit} className="flex flex-col min-h-0">
-                  <div className="p-6 overflow-y-auto space-y-4 max-h-[60vh]">
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Post Type</label>
-                      <CustomSelect
-                        value={postType}
-                        onChange={e => setPostType(e.target.value)}
-                      >
-                        {['Announcement', 'Hiring Update', 'Product Launch', 'Achievement', 'Event', 'Webinar', 'Internship Drive', 'Funding News'].map(type => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
-                      </CustomSelect>
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Title</label>
-                      <input
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                        placeholder="Enter short update title..."
-                        className="cs-input w-full text-xs"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Description</label>
-                      <textarea
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                        placeholder="Write detailed post description here..."
-                        className="cs-input w-full text-xs h-32 focus:outline-none py-2 resize-none"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Image URL (Optional)</label>
-                      <input
-                        value={image}
-                        onChange={e => setImage(e.target.value)}
-                        placeholder="Enter image URL..."
-                        className="cs-input w-full text-xs"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">Video URL (Optional)</label>
-                      <input
-                        value={video}
-                        onChange={e => setVideo(e.target.value)}
-                        placeholder="Enter video URL..."
-                        className="cs-input w-full text-xs"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold text-neutral-400 uppercase mb-1 tracking-wider">External Link (Optional)</label>
-                      <input
-                        value={externalLink}
-                        onChange={e => setExternalLink(e.target.value)}
-                        placeholder="Enter external reference link..."
-                        className="cs-input w-full text-xs"
-                      />
-                    </div>
-                  </div>
-
-                  {/* cancel and submit — always pinned at the bottom */}
-                  <div className="px-6 py-4 border-t border-slate-100 flex justify-end gap-3 flex-shrink-0 bg-white rounded-b-[24px]">
-                    <button
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                      className="px-5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 uppercase tracking-wider transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-6 py-2.5 bg-black text-white font-extrabold text-xs rounded-xl hover:bg-neutral-800 uppercase tracking-wider transition-colors"
-                    >
-                      {editingPost ? "Save Changes" : "Publish Post"}
-                    </button>
-                  </div>
-
-                </form>
-
-              </div>
+              </form>
             </div>
           </div>
         )}
