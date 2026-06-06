@@ -14,14 +14,16 @@ import { getMyInterviews } from "../../services/interviewService";
 
 /* this array cotains the stats that are mapped with the actual values... */
 const STATUS_CONFIG = {
-  applied:     { label: "Applied",     pill: "bg-blue-50 text-blue-700 border border-blue-100" },
-  shortlisted: { label: "Shortlisted", pill: "bg-amber-50 text-amber-700 border border-amber-100" },
-  hired:       { label: "Hired",       pill: "bg-green-50 text-green-700 border border-green-100" },
-  rejected:    { label: "Rejected",    pill: "bg-red-50 text-red-700 border border-red-100" },
+  applied:             { label: "Applied",               pill: "bg-blue-50 text-blue-700 border border-blue-100" },
+  shortlisted:         { label: "Shortlisted",           pill: "bg-amber-50 text-amber-700 border border-amber-100" },
+  interview_sent:      { label: "AI Interview Sent",     pill: "bg-indigo-50 text-indigo-700 border border-indigo-100" },
+  interview_completed: { label: "Interview Completed",   pill: "bg-emerald-50 text-emerald-700 border border-emerald-100" },
+  hired:               { label: "Hired",                 pill: "bg-green-50 text-green-700 border border-green-100" },
+  rejected:            { label: "Rejected",              pill: "bg-red-50 text-red-700 border border-red-100" },
 };
 
 /* we created this array of filters to show the exact applications Data */
-const FILTERS = ["all", "applied", "shortlisted", "hired", "rejected"];
+const FILTERS = ["all", "applied", "shortlisted", "interview_sent", "interview_completed", "hired", "rejected"];
 
 /* interview mode icon map */
 const MODE_ICON = {
@@ -238,10 +240,15 @@ and the apply filters on that state to get the current number*/
                       </div>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
                         <span
-                          className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${STATUS_CONFIG[app.status]?.pill || ""}`}
+                          className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${STATUS_CONFIG[app.status]?.pill || "bg-neutral-100 text-neutral-600 border border-neutral-200"}`}
                         >
-                          {STATUS_CONFIG[app.status]?.label || app.status}
+                          {STATUS_CONFIG[app.status]?.label || app.status.replace('_', ' ')}
                         </span>
+                        {app.ipStatus === 'interview_completed' && app.ipScore !== undefined && app.ipScore !== null && (
+                          <span className="text-[11px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                            ★ {app.ipScore}/100
+                          </span>
+                        )}
                         {app.company?.name && (
                           <span className="text-[12px] font-bold text-neutral-400 flex items-center gap-1.5">
                             <BriefcaseBusiness size={11} className="text-neutral-300" />

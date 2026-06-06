@@ -153,7 +153,7 @@ export default function ApplicationDetailPage() {
         alert(res.message || 'Failed to trigger interview.');
       }
     } catch (e) {
-      alert('Failed to trigger AI interview. Please try again.');
+      alert(e.response?.data?.message || 'Failed to trigger AI interview. Please try again.');
     } finally {
       setTriggeringInterview(false);
     }
@@ -326,6 +326,8 @@ export default function ApplicationDetailPage() {
             >
               <option value="applied">Under Review</option>
               <option value="shortlisted">Shortlisted</option>
+              <option value="interview_sent" disabled>AI Interview Sent</option>
+              <option value="interview_completed" disabled>AI Interview Completed</option>
               <option value="rejected">Not Moving Forward</option>
               <option value="hired">Hired ✓</option>
             </select>
