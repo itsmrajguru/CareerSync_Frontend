@@ -110,7 +110,9 @@ const GuruAIWidget = () => {
         <div style={styles.chatPanel} role="dialog" aria-label="GuruAI Career Assistant">
           <div style={styles.header}>
             <div style={styles.headerTitle}>
-              <div style={styles.avatar}>ॐ</div>
+              <div style={styles.avatar}>
+                <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
+              </div>
               <span style={{ fontWeight: 600 }}>GuruAI</span>
             </div>
             <button 
@@ -133,7 +135,9 @@ const GuruAIWidget = () => {
                 }
               >
                 {msg.role === 'model' && (
-                  <div style={styles.messageAvatar}>G</div>
+                  <div style={styles.messageAvatar}>
+                    <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
+                  </div>
                 )}
                 <div 
                   style={
@@ -149,7 +153,9 @@ const GuruAIWidget = () => {
             
             {isTyping && (
               <div style={{ ...styles.messageWrapper, justifyContent: 'flex-start' }}>
-                <div style={styles.messageAvatar}>G</div>
+                <div style={styles.messageAvatar}>
+                  <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }} />
+                </div>
                 <div style={styles.modelBubble}>
                   <div style={styles.typingIndicator}>
                     <span>.</span><span>.</span><span>.</span>
@@ -199,9 +205,7 @@ const GuruAIWidget = () => {
         onClick={() => setIsOpen(true)}
         aria-label="Open GuruAI Career Assistant"
       >
-        ॐ
-
-        
+        <img src="/GuruAI_Logo.svg" alt="GuruAI Logo" style={{ width: '60%', height: '60%', objectFit: 'contain' }} />
       </button>
 
       <style dangerouslySetInnerHTML={{__html: `
@@ -275,12 +279,11 @@ const styles = {
     width: '28px',
     height: '28px',
     borderRadius: '50%',
-    backgroundColor: '#F59E0B',
-    color: '#1E1B4B',
+    backgroundColor: '#FFFFFF', /* Changed to white to properly display logo */
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '18px',
+    overflow: 'hidden',
   },
   closeButton: {
     background: 'none',
@@ -309,14 +312,12 @@ const styles = {
     width: '24px',
     height: '24px',
     borderRadius: '50%',
-    backgroundColor: '#1E1B4B',
-    color: '#F59E0B',
+    backgroundColor: '#FFFFFF', /* Changed to white to properly display logo */
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '12px',
-    fontWeight: 'bold',
     flexShrink: 0,
+    overflow: 'hidden',
   },
   userBubble: {
     backgroundColor: '#4F46E5',
