@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import { Save, CheckCircle2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Save, CheckCircle2, Camera } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
 import ProfileForm from "../../components/ProfileForm";
 import { getProfileList, createProfile, updateProfile, deleteProfile } from "../../services/studentProfileService";
+import { uploadAvatar } from "../../services/uploadService";
 
 const emptyProfile = {
   full_name: "", domain: "", gender: "", location: "",
@@ -45,6 +46,9 @@ export default function ProfilePage() {
   const [formData, setFormData] = useState(emptyProfile);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const avatarInputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -57,6 +61,8 @@ export default function ProfilePage() {
         if (data?.length) {
           setProfile(data[0]);
           setFormData(data[0]);
+          /* restore existing avatar */
+          if (data[0].avatar) setAvatarUrl(data[0].avatar);
         }
       } catch (err) {
         console.error("Fetch error:", err);
@@ -125,6 +131,22 @@ export default function ProfilePage() {
     setFormData(profile || emptyProfile);
   };
 
+  /* handle avatar file pick and upload to Cloudinary */
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarUploading(true);
+    try {
+      const data = await uploadAvatar(file);
+      setAvatarUrl(data.avatarUrl);
+    } catch (err) {
+      alert('Avatar upload failed. Please try again.');
+    } finally {
+      setAvatarUploading(false);
+      if (avatarInputRef.current) avatarInputRef.current.value = '';
+    }
+  };
+
   /*the skills are saved as comman seperated in a array  */
   const skills = formData.skills?.split(",").map(s => s.trim()).filter(Boolean) || [];
 
@@ -137,6 +159,28 @@ export default function ProfilePage() {
   return (
     <PageLayout>
       <div className="pb-20 animate-fade-in">
+
+          {/* avatar upload section */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative group cursor-pointer" onClick={() => avatarInputRef.current?.click()}>
+              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl flex items-center justify-center"
+                style={{ background: avatarUrl ? 'transparent' : 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="Profile avatar" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-3xl font-black text-white">{initials}</span>
+                )}
+              </div>
+              {/* camera overlay on hover */}
+              <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                {avatarUploading
+                  ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  : <Camera size={18} className="text-white" />}
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-bold mt-2">Click to change photo</p>
+            <input ref={avatarInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleAvatarChange} />
+          </div>
 
          {/*added the new hero section with the updated styles and layout*/}
           <section aria-label="Page header" className="mb-8">

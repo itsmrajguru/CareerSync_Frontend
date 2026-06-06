@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   ArrowLeft, Send, BriefcaseBusiness, MapPin,
-  Briefcase, CheckCircle, AlertCircle
+  Briefcase, CheckCircle, AlertCircle, UploadCloud, FileText, Link2
 } from "lucide-react";
 import PageLayout from "../../components/PageLayout";
 import { applyToJob } from "../../services/applicationService";
 import { getJobById } from "../../services/jobsService";
+import { uploadResumePDF } from "../../services/uploadService";
+import { getProfileList } from "../../services/studentProfileService";
 
 export default function ApplyToJobPage() {
   const { id } = useParams();
@@ -18,6 +20,10 @@ export default function ApplyToJobPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [resumeUploading, setResumeUploading] = useState(false);
+  const [resumeFileName, setResumeFileName] = useState("");
+  const [urlMode, setUrlMode] = useState(false);
+  const resumeInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     resumeUrl: "",
@@ -31,6 +37,17 @@ export default function ApplyToJobPage() {
     if (!job && id) {
       fetchJob();
     }
+    /* pre-fill resume URL from student profile if available */
+    (async () => {
+      try {
+        const data = await getProfileList();
+        const savedUrl = data?.[0]?.resumeUrl;
+        if (savedUrl) {
+          setFormData(prev => ({ ...prev, resumeUrl: savedUrl }));
+          setResumeFileName('Saved resume (from profile)');
+        }
+      } catch (_) { /* profile not found — that's fine */ }
+    })();
   }, [id]);
 
   /*job fetch functionlality...
@@ -56,7 +73,7 @@ export default function ApplyToJobPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.resumeUrl) {
-      setError("Please provide a link to your resume.");
+      setError("Please upload your resume or provide a link.");
       return;
     }
 
@@ -72,6 +89,26 @@ export default function ApplyToJobPage() {
       setError(err.response?.data?.message || "Failed to submit application.");
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  /* handle resume PDF file selection and upload to Cloudinary */
+  const handleResumeFile = async (file) => {
+    if (!file || file.type !== 'application/pdf') {
+      setError('Please select a valid PDF file.');
+      return;
+    }
+    setResumeUploading(true);
+    setError('');
+    try {
+      const data = await uploadResumePDF(file);
+      setFormData(prev => ({ ...prev, resumeUrl: data.resumeUrl }));
+      setResumeFileName(file.name);
+    } catch (err) {
+      setError('Resume upload failed. Please try again or use a link.');
+    } finally {
+      setResumeUploading(false);
+      if (resumeInputRef.current) resumeInputRef.current.value = '';
     }
   };
 
@@ -179,21 +216,66 @@ export default function ApplyToJobPage() {
                   </div>
                 )}
 
-                {/* resume link input... */}
+                {/* resume upload section */}
                 <div className="space-y-2">
-                  <label className="cs-section-label ml-0.5">
-                    Resume Link (Public Drive/PDF)
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="cs-section-label ml-0.5">Resume (PDF)</label>
+                    <button
+                      type="button"
+                      onClick={() => { setUrlMode(u => !u); setError(''); }}
+                      className="text-[10px] font-black text-neutral-400 hover:text-black flex items-center gap-1 transition-colors bg-transparent border-none cursor-pointer p-0"
+                    >
+                      {urlMode ? <><UploadCloud size={11} /> Upload PDF</> : <><Link2 size={11} /> Use link instead</>}
+                    </button>
+                  </div>
+
+                  {urlMode ? (
+                    /* manual URL fallback */
+                    <input
+                      type="url"
+                      placeholder="https://drive.google.com/your-resume-link"
+                      value={formData.resumeUrl}
+                      onChange={(e) => { setFormData({ ...formData, resumeUrl: e.target.value }); setResumeFileName(''); }}
+                      className="w-full text-[13px] border border-neutral-200 px-4 py-3 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all bg-neutral-50/50 font-bold"
+                    />
+                  ) : (
+                    /* PDF file upload zone */
+                    <div
+                      onClick={() => resumeInputRef.current?.click()}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => { e.preventDefault(); handleResumeFile(e.dataTransfer.files?.[0]); }}
+                      className="border-2 border-dashed border-neutral-200 rounded-xl p-6 text-center cursor-pointer hover:border-primary-300 hover:bg-primary-50/30 transition-all"
+                    >
+                      {resumeUploading ? (
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-6 h-6 border-2 border-primary-400 border-t-transparent rounded-full animate-spin" />
+                          <p className="text-[12px] font-bold text-neutral-500">Uploading...</p>
+                        </div>
+                      ) : resumeFileName ? (
+                        <div className="flex flex-col items-center gap-2">
+                          <FileText size={20} className="text-green-500" />
+                          <p className="text-[12px] font-bold text-green-700 break-all">{resumeFileName}</p>
+                          <p className="text-[10px] text-neutral-400 font-bold">Click to replace</p>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center gap-2">
+                          <UploadCloud size={24} className="text-neutral-300" />
+                          <p className="text-[13px] font-bold text-neutral-600">Drag & drop or <span className="text-primary-500">browse</span></p>
+                          <p className="text-[11px] text-neutral-400 font-bold">PDF only · Max 10MB</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <input
-                    type="url"
-                    placeholder="https://drive.google.com/your-resume-link"
-                    required
-                    value={formData.resumeUrl}
-                    onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
-                    className="w-full text-[13px] border border-neutral-200 px-4 py-3 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-50 focus:border-primary-300 transition-all bg-neutral-50/50 font-bold"
+                    ref={resumeInputRef}
+                    type="file"
+                    accept="application/pdf"
+                    className="hidden"
+                    onChange={(e) => handleResumeFile(e.target.files?.[0])}
                   />
                   <p className="text-[11px] text-neutral-400 ml-0.5 font-bold">
-                    Note: Ensure your link is publicly viewable by recruiters.
+                    {urlMode ? 'Ensure your link is publicly viewable by recruiters.' : 'Your PDF is stored securely and viewable by the recruiter.'}
                   </p>
                 </div>
 

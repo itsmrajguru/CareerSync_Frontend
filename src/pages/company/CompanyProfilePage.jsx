@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getCompanyProfile, updateCompanyProfile } from "../../services/companyProfileService";
+import { uploadCompanyLogo } from "../../services/uploadService";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../../components/PageLayout";
-import { BriefcaseBusiness, Globe, MapPin, Save, CheckCircle2 } from "lucide-react";
+import { BriefcaseBusiness, Globe, MapPin, Save, CheckCircle2, Camera } from "lucide-react";
 
 /* this functions calculates that how much profile has been completed (20% per field) */
 function calcCompleteness(p) {
@@ -68,6 +69,9 @@ export default function CompanyProfilePage() {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [logoUrl, setLogoUrl] = useState("");
+  const [logoUploading, setLogoUploading] = useState(false);
+  const logoInputRef = useRef(null);
   const navigate = useNavigate();
 
   /* this useEffect calls the getCompanyProfile
@@ -93,6 +97,8 @@ export default function CompanyProfilePage() {
             linkedIn: c.linkedIn || "",
             twitter: c.twitter || "",
           });
+          /* restore existing logo */
+          if (c.logo) setLogoUrl(c.logo);
         }
       } catch (e) { console.error("Profile Fetch Error:", e); }
       finally { setLoading(false); }
@@ -125,6 +131,23 @@ export default function CompanyProfilePage() {
   };
 
   const completeness = calcCompleteness(profile);
+
+  /* handle logo file pick and upload to Cloudinary */
+  const handleLogoChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoUploading(true);
+    try {
+      const data = await uploadCompanyLogo(file);
+      setLogoUrl(data.logoUrl);
+    } catch (err) {
+      setError('Logo upload failed. Please try again.');
+    } finally {
+      setLogoUploading(false);
+      /* reset input so same file can be re-selected */
+      if (logoInputRef.current) logoInputRef.current.value = '';
+    }
+  };
 
   return (
     <PageLayout>
@@ -214,10 +237,28 @@ export default function CompanyProfilePage() {
               {/* 1st Cell: Profile Lead logic and display */}
               <Cell className="flex flex-col items-center justify-center text-center lg:row-span-2"
                 style={{ background: "#f8fafc", border: "1px solid #f1f5f9", minHeight: 280 }}>
-                <div className="w-[84px] h-[84px] rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 shadow-xl border border-white/20"
-                  style={{ background: "linear-gradient(135deg, #ef4444, #991b1b)" }}>
-                  {profile.name ? profile.name[0].toUpperCase() : <BriefcaseBusiness size={36} />}
+
+                {/* logo upload area — click to upload */}
+                <div className="relative mb-6 group cursor-pointer" onClick={() => logoInputRef.current?.click()}>
+                  <div className="w-[84px] h-[84px] rounded-2xl overflow-hidden flex items-center justify-center shadow-xl border border-white/20"
+                    style={{ background: logoUrl ? 'transparent' : 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
+                    {logoUrl ? (
+                      <img src={logoUrl} alt="Company logo" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-4xl font-black text-white">
+                        {profile.name ? profile.name[0].toUpperCase() : <BriefcaseBusiness size={36} />}
+                      </span>
+                    )}
+                  </div>
+                  {/* camera overlay on hover */}
+                  <div className="absolute inset-0 rounded-2xl bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    {logoUploading
+                      ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      : <Camera size={18} className="text-white" />}
+                  </div>
                 </div>
+                {/* hidden file input */}
+                <input ref={logoInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleLogoChange} />
                 <h3 className="text-[19px] font-black text-[#0f172a] tracking-tight mb-2 uppercase">{profile.name || "Company Name"}</h3>
                 <p className="text-[12px] font-extrabold text-[#ef4444] uppercase tracking-widest mb-6">{profile.industry || "Industry Not Set"}</p>
 
