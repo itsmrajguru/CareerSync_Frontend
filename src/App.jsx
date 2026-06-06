@@ -8,6 +8,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import AboutPage from "./pages/AboutPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GuruAIWidget from "./components/GuruAIWidget/GuruAIWidget";
 
 // Student pages
 import StudentDashboard from "./pages/student/StudentDashboard";
@@ -106,6 +107,7 @@ function App() {
         {/* Catch-all route to display the premium 404 page... */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <GuruAIWidget />
     </BrowserRouter>
   );
 }
