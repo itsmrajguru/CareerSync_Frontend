@@ -259,6 +259,9 @@ export default function CompanyProfilePage() {
                 </div>
                 {/* hidden file input */}
                 <input ref={logoInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleLogoChange} />
+                <p className="text-[10px] font-bold text-[#94a3b8] mb-4 text-center px-4 leading-tight">
+                  Max 5MB (PNG, JPG, WEBP)
+                </p>
                 <h3 className="text-[19px] font-black text-[#0f172a] tracking-tight mb-2 uppercase">{profile.name || "Company Name"}</h3>
                 <p className="text-[12px] font-extrabold text-[#ef4444] uppercase tracking-widest mb-6">{profile.industry || "Industry Not Set"}</p>
 
