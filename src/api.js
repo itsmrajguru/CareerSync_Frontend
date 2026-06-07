@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// FORCE HARDCODED URL: Do not rely on any environment variables.
-const finalApiUrl = "https://careersync-backend-xtww.onrender.com/api/v1";
+// Use environment variables for API URL
+const finalApiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
 /*
   This file only creates and configures the shared axios instance.
