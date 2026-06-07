@@ -3,7 +3,7 @@ import axios from 'axios'
 // Use the live Render backend in production, localhost in development
 // import.meta.env.PROD is set to true by Vite automatically during 'npm run build'
 const finalApiUrl = import.meta.env.PROD
-  ? "https://careersync-backend-pwsd.onrender.com/api/v1"
+  ? "https://careersync-backend-xtww.onrender.com/api/v1"
   : (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1");
 
 /*
