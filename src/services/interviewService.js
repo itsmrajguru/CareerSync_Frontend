@@ -1,7 +1,11 @@
 import axios from "axios";
 
 // Interview Service Endpoints
-const API_URL = "http://localhost:8000/api/v1/interviews";
+const envUrl = import.meta.env.VITE_API_BASE_URL || "";
+const BASE_URL = envUrl 
+  ? (envUrl.endsWith('/') ? envUrl.slice(0,-1) : envUrl)
+  : "http://localhost:8000/api/v1";
+const API_URL = `${BASE_URL}/interviews`;
 
 // Get token helper
 const getToken = () => localStorage.getItem("token");
