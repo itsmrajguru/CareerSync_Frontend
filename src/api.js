@@ -1,14 +1,10 @@
 import axios from 'axios'
 
-const envUrl = import.meta.env.VITE_API_BASE_URL || "";
-const API_URL = envUrl 
-  ? (envUrl.endsWith('/') ? envUrl.slice(0,-1) : envUrl)
-  : "http://localhost:8000/api/v1";
-
-// Ensure /api/v1 is appended if missing from production URL
-const finalApiUrl = (API_URL.includes('onrender.com') && !API_URL.includes('/api/v1'))
-  ? `${API_URL}/api/v1`
-  : API_URL;
+// Use the live Render backend in production, localhost in development
+// import.meta.env.PROD is set to true by Vite automatically during 'npm run build'
+const finalApiUrl = import.meta.env.PROD
+  ? "https://careersync-backend-pwsd.onrender.com/api/v1"
+  : (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1");
 
 /*
   This file only creates and configures the shared axios instance.
