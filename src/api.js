@@ -1,10 +1,7 @@
 import axios from 'axios'
 
-// Use the live Render backend in production, localhost in development
-// import.meta.env.PROD is set to true by Vite automatically during 'npm run build'
-const finalApiUrl = import.meta.env.PROD
-  ? "https://careersync-backend-xtww.onrender.com/api/v1"
-  : (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1");
+// FORCE HARDCODED URL: Do not rely on any environment variables.
+const finalApiUrl = "https://careersync-backend-xtww.onrender.com/api/v1";
 
 /*
   This file only creates and configures the shared axios instance.
@@ -53,7 +50,7 @@ api.interceptors.response.use(
       try {
         console.log('Token expired — attempting silent refresh...');
         // use raw axios to skip this interceptor loop
-        const response = await axios.post(API_URL + '/auth/token/refresh', {}, { withCredentials: true });
+        const response = await axios.post(finalApiUrl + '/auth/token/refresh', {}, { withCredentials: true });
         const res = response.data;
         const { newAccessToken } = res;
         localStorage.setItem('token', newAccessToken)
