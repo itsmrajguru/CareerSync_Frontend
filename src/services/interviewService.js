@@ -1,23 +1,9 @@
-import axios from "axios";
-
-// Interview Service Endpoints
-const envUrl = import.meta.env.VITE_API_BASE_URL || "";
-const BASE_URL = envUrl 
-  ? (envUrl.endsWith('/') ? envUrl.slice(0,-1) : envUrl)
-  : "http://localhost:8000/api/v1";
-const API_URL = `${BASE_URL}/interviews`;
-
-// Get token helper
-const getToken = () => localStorage.getItem("token");
+import api from "../api";
 
 export const scheduleInterview = async (applicationId, data) => {
   try {
-    const res = await axios.post(`${API_URL}/${applicationId}/schedule`, data, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    return res.data;
+    const res = await api.post(`/interviews/${applicationId}/schedule`, data);
+    return res;
   } catch (error) {
     const message = error.response?.data?.message || "Failed to schedule interview.";
     return { success: false, message };
@@ -26,12 +12,8 @@ export const scheduleInterview = async (applicationId, data) => {
 
 export const cancelInterview = async (interviewId) => {
   try {
-    const res = await axios.patch(`${API_URL}/${interviewId}/cancel`, {}, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    return res.data;
+    const res = await api.patch(`/interviews/${interviewId}/cancel`, {});
+    return res;
   } catch (error) {
     const message = error.response?.data?.message || "Failed to cancel interview.";
     return { success: false, message };
@@ -40,12 +22,8 @@ export const cancelInterview = async (interviewId) => {
 
 export const getInterviewsForJob = async (jobId) => {
   try {
-    const res = await axios.get(`${API_URL}/job/${jobId}`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    return res.data;
+    const res = await api.get(`/interviews/job/${jobId}`);
+    return res;
   } catch (error) {
     const message = error.response?.data?.message || "Failed to fetch interviews.";
     return { success: false, message };
@@ -54,12 +32,8 @@ export const getInterviewsForJob = async (jobId) => {
 
 export const getCompanyInterviews = async () => {
   try {
-    const res = await axios.get(`${API_URL}/company/all`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    return res.data;
+    const res = await api.get(`/interviews/company/all`);
+    return res;
   } catch (error) {
     const message = error.response?.data?.message || "Failed to fetch company interviews.";
     return { success: false, message };
@@ -68,14 +42,11 @@ export const getCompanyInterviews = async () => {
 
 export const getMyInterviews = async () => {
   try {
-    const res = await axios.get(`${API_URL}/mine`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    return res.data;
+    const res = await api.get(`/interviews/mine`);
+    return res;
   } catch (error) {
     const message = error.response?.data?.message || "Failed to fetch your interviews.";
     return { success: false, message };
   }
 };
+
