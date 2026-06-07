@@ -22,6 +22,11 @@ export async function verifySignupOtp(email, otp) {
   return api.post('auth/verify-otp', { email, otp });
 }
 
+// Resend OTP — generates a fresh OTP and sends it when the previous one expires
+export async function resendOtp(email) {
+  return api.post('auth/resend-otp', { email });
+}
+
 export async function forgotPassword(email) {
   return api.post('auth/forgot-password', { email });
 }

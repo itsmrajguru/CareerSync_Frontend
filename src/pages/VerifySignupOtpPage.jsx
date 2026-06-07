@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { verifySignupOtp } from "../services/authService";
+import { verifySignupOtp, resendOtp } from "../services/authService";
 import Footer from "../components/Footer";
 
+/* the OTP verification page shown after signup
+logic : 1)user arrives here with their email passed via navigation state
+        2)they enter the 6-digit OTP sent to their email
+        3)on success they are redirected to login
+        4)if OTP expires they can click resend — a 60s cooldown prevents spam */
 export default function VerifySignupOtpPage() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+
+  /* step 1 :countdown timer — starts at 60 and counts down to 0 */
+  const [countdown, setCountdown] = useState(60);
   const navigate = useNavigate();
 
   /* extract the email passed from SignupPage via navigation state */
@@ -19,18 +29,26 @@ export default function VerifySignupOtpPage() {
     return null;
   }
 
-  /* This function verifies the OTP sent to the user's email during signup */
+  /* step 2 :start the 60-second countdown as soon as the page loads */
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  /* this function verifies the OTP sent to the user's email during signup */
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
-      //step 1 : call the verifySignupOtp api with email and otp
+      /* step 3 :call the verifySignupOtp api with email and otp */
       const data = await verifySignupOtp(email, otp);
 
       if (data && data.success) {
-        //step 2 : on success, redirect to login page
+        /* step 4 :on success, redirect to login page */
         navigate("/login");
       } else {
         setError(data.message || "Invalid OTP. Please try again.");
@@ -40,6 +58,33 @@ export default function VerifySignupOtpPage() {
       setError(err.response?.data?.message || err.message || "Verification failed. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  /* function to resend a fresh OTP when the user clicks the resend button
+  logic : call the resend-otp api, show success banner, restart 60s countdown */
+  const handleResendOtp = async () => {
+    setError("");
+    setSuccess("");
+    setResendLoading(true);
+
+    try {
+      /* step 1 :call the backend resend-otp endpoint with email */
+      const data = await resendOtp(email);
+
+      if (data && data.success) {
+        /* step 2 :show success message and restart the 60-second cooldown */
+        setSuccess("A new OTP has been sent to your email.");
+        setCountdown(60);
+        setOtp("");
+      } else {
+        setError(data.message || "Failed to resend OTP. Please try again.");
+      }
+    } catch (err) {
+      console.error("Resend OTP Error:", err);
+      setError(err.response?.data?.message || err.message || "Failed to resend OTP. Please try again.");
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -71,7 +116,7 @@ export default function VerifySignupOtpPage() {
         </Link>
       </div>
 
-      {/* and this right side content actuually showws the form here */}
+      {/* and this right side content actually shows the form here */}
       <div className="flex-1 lg:flex-[0.4] flex flex-col items-center justify-center px-6 lg:px-12 py-12 relative z-10 bg-white">
         <div className="w-full max-w-[320px] flex flex-col gap-8">
 
@@ -90,10 +135,7 @@ export default function VerifySignupOtpPage() {
             </p>
           </div>
 
-
-          {/* Displaying state messages 
-i.e. those error message , which shoudl be shown on incorrect email,
-incorrect password, email not verified... etc*/}
+          {/* error message banner */}
           {error && (
             <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-[12px] font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
               <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
@@ -101,8 +143,16 @@ incorrect password, email not verified... etc*/}
             </div>
           )}
 
+          {/* success message banner shown after resend */}
+          {success && (
+            <div className="bg-green-50 border border-green-100 text-green-700 px-4 py-3 rounded-xl text-[12px] font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+              {success}
+            </div>
+          )}
+
           {/* this form takes the input data from the user
- and sends to the backend through axios */}
+          and sends to the backend through axios */}
           <form onSubmit={handleOtpSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
               <label className="text-[9px] font-extrabold text-[#475569] uppercase tracking-[1.5px] ml-0.5 text-center">Verification Code</label>
@@ -129,6 +179,20 @@ incorrect password, email not verified... etc*/}
                 {loading ? "Verifying..." : "Confirm Verification"}
               </button>
 
+              {/* resend OTP button — disabled during the 60s cooldown */}
+              <button
+                type="button"
+                onClick={handleResendOtp}
+                disabled={resendLoading || countdown > 0}
+                className="w-full py-3 rounded-xl border border-[#e2e8f0] text-[12px] font-black text-[#64748b] hover:text-[#0f172a] hover:border-[#cbd5e1] hover:bg-[#f8fafc] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {resendLoading
+                  ? "Sending..."
+                  : countdown > 0
+                  ? `Resend OTP in ${countdown}s`
+                  : "Resend OTP"}
+              </button>
+
               <button
                 type="button"
                 onClick={() => navigate("/signup")}
@@ -143,8 +207,3 @@ incorrect password, email not verified... etc*/}
     </div>
   );
 }
-
-
-
-
-
