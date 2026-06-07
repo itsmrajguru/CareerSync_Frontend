@@ -520,15 +520,24 @@ export default function ApplicationDetailPage() {
                   <FileText size={16} className="text-neutral-300" /> Application Artifacts
                 </p>
                 {application.resumeUrl && (
-                  <a href={application.resumeUrl} target="_blank" rel="noreferrer"
-                     className="flex items-center gap-1.5 text-[10px] font-black text-black bg-neutral-50 border border-neutral-100 px-4 py-2 rounded-lg hover:bg-neutral-100 transition-all uppercase tracking-widest shadow-sm">
+                  <a
+                    href={`https://docs.google.com/viewer?url=${encodeURIComponent(application.resumeUrl)}&embedded=false`}
+                    target="_blank" rel="noreferrer"
+                    className="flex items-center gap-1.5 text-[10px] font-black text-black bg-neutral-50 border border-neutral-100 px-4 py-2 rounded-lg hover:bg-neutral-100 transition-all uppercase tracking-widest shadow-sm"
+                  >
                     <LinkIcon size={12}/> View Original PDF
                   </a>
                 )}
               </div>
 
               {application.resumeUrl ? (
-                <iframe src={`${application.resumeUrl}#view=FitH`} className="pdf-frame flex-1 border border-neutral-100 shadow-inner" title="Resume" />
+                /* google docs viewer is used here because cloudinary pdfs block direct iframe embedding
+                via x-frame-options headers — the google docs viewer proxies the pdf and renders it cleanly */
+                <iframe
+                  src={`https://docs.google.com/viewer?url=${encodeURIComponent(application.resumeUrl)}&embedded=true`}
+                  className="pdf-frame flex-1 border border-neutral-100 shadow-inner"
+                  title="Resume"
+                />
               ) : (
                 <div className="flex-1 min-h-[500px] flex flex-col items-center justify-center border-2 border-dashed border-neutral-100 rounded-xl bg-neutral-50/50 text-neutral-400">
                   <FileText size={48} className="mb-4 opacity-30" />
