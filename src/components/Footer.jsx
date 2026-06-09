@@ -19,22 +19,22 @@ export default function Footer() {
             { title: "Job Seekers", items: [
                 { name: "Browse Jobs", path: "/student/jobs" },
                 { name: "Upload Resume", path: "/student/resume" },
-                { name: "Career Advice", path: "#" },
-                { name: "Salary Guide", path: "#" }
+                { name: "Career Advice", path: "/under-construction" },
+                { name: "Salary Guide", path: "/under-construction" }
               ]
             },
             { title: "Companies", items: [
                 { name: "Post a Job", path: "/company/jobs/create" },
                 { name: "Search Candidates", path: "/company/applicants/all" },
-                { name: "Pricing", path: "#" },
-                { name: "Enterprise", path: "#" }
+                { name: "Pricing", path: "/under-construction" },
+                { name: "Enterprise", path: "/under-construction" }
               ]
             },
             { title: "Company", items: [
                 { name: "About Us", path: "/about" },
-                { name: "Blog", path: "#" },
-                { name: "Careers", path: "#" },
-                { name: "Contact", path: "#" }
+                { name: "Blog", path: "/under-construction" },
+                { name: "Careers", path: "/under-construction" },
+                { name: "Contact", path: "/under-construction" }
               ]
             },
           ].map(col => (
@@ -56,10 +56,10 @@ export default function Footer() {
           <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)" }}>© 2026 CareerSync. All rights reserved.</span>
           <div style={{ display: "flex", gap: 24 }}>
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(l => (
-              <span key={l} style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", cursor: "pointer" }}
+              <Link key={l} to="/under-construction" style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", cursor: "pointer", textDecoration: "none" }}
                 onMouseEnter={e => e.target.style.color = "#02bcf0"}
                 onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.3)"}
-              >{l}</span>
+              >{l}</Link>
             ))}
           </div>
         </div>

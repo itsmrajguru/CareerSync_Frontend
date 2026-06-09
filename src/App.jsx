@@ -7,7 +7,9 @@ import VerifySignupOtpPage from "./pages/VerifySignupOtpPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import AboutPage from "./pages/AboutPage";
+import UnderConstructionPage from "./pages/UnderConstructionPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 import GuruAIWidget from "./components/GuruAIWidget/GuruAIWidget";
 
 // Student pages
@@ -50,9 +52,11 @@ import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/under-construction" element={<UnderConstructionPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/company-login" element={<CompanyLoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
