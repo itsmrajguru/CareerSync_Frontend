@@ -16,25 +16,36 @@ export default function Footer() {
           </div>
 
           {[
-            { title: "Job Seekers", links: ["Browse Jobs", "Upload Resume", "Career Advice", "Salary Guide"] },
-            { title: "Companies", links: ["Post a Job", "Search Candidates", "Pricing", "Enterprise"] },
-            { title: "Company", links: ["About Us", "Blog", "Careers", "Contact"] },
+            { title: "Job Seekers", items: [
+                { name: "Browse Jobs", path: "/student/jobs" },
+                { name: "Upload Resume", path: "/student/resume" },
+                { name: "Career Advice", path: "#" },
+                { name: "Salary Guide", path: "#" }
+              ]
+            },
+            { title: "Companies", items: [
+                { name: "Post a Job", path: "/company/jobs/create" },
+                { name: "Search Candidates", path: "/company/applicants/all" },
+                { name: "Pricing", path: "#" },
+                { name: "Enterprise", path: "#" }
+              ]
+            },
+            { title: "Company", items: [
+                { name: "About Us", path: "/about" },
+                { name: "Blog", path: "#" },
+                { name: "Careers", path: "#" },
+                { name: "Contact", path: "#" }
+              ]
+            },
           ].map(col => (
             <div key={col.title}>
               <div style={{ fontSize: 12, fontWeight: 800, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 14 }}>{col.title}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {col.links.map(l => (
-                  l === "About Us" ? (
-                    <Link key={l} to="/about" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s", textDecoration: "none" }}
-                      onMouseEnter={e => e.target.style.color = "#ef4444"}
-                      onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.45)"}
-                    >{l}</Link>
-                  ) : (
-                    <span key={l} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s" }}
-                      onMouseEnter={e => e.target.style.color = "#ef4444"}
-                      onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.45)"}
-                    >{l}</span>
-                  )
+                {col.items.map(l => (
+                  <Link key={l.name} to={l.path} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontWeight: 500, transition: "color 0.2s", textDecoration: "none" }}
+                    onMouseEnter={e => e.target.style.color = "#ef4444"}
+                    onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.45)"}
+                  >{l.name}</Link>
                 ))}
               </div>
             </div>
