@@ -22,6 +22,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
@@ -508,20 +509,48 @@ so we are Dis Items directly for the mobile hamburger Feature */}
             zIndex: 99, padding: "24px", display: "flex", flexDirection: "column", gap: 4,
             borderTop: "1px solid #f3f4f6", overflowY: "auto"
           }}>
-            {/* User Preview */}
+            {/* User Preview & Account Accordion */}
             {token && (
-              <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 16, borderBottom: "1px solid #f3f4f6", marginBottom: 16 }}>
-                <div style={{ width: 42, height: 42, borderRadius: "50%", background: navAvatar ? "transparent" : "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#0d1117", fontSize: 16, overflow: "hidden", flexShrink: 0 }}>
-                  {navAvatar
-                    ? <img src={navAvatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    : initial
-                  }
+              <>
+                <div 
+                  onClick={() => setMobileAccountOpen(!mobileAccountOpen)}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 16, borderBottom: mobileAccountOpen ? "none" : "1px solid #f3f4f6", marginBottom: mobileAccountOpen ? 8 : 16, cursor: "pointer" }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 42, height: 42, borderRadius: "50%", background: navAvatar ? "transparent" : "linear-gradient(135deg, #02bcf0, #014d65)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#0d1117", fontSize: 16, overflow: "hidden", flexShrink: 0 }}>
+                      {navAvatar
+                        ? <img src={navAvatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        : initial
+                      }
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 15, fontWeight: 800, color: "#0d1117" }}>{user.username || "User"}</div>
+                      <div style={{ fontSize: 13, color: "#0d1117" }}>{user.email || ""}</div>
+                    </div>
+                  </div>
+                  <ChevronDown size={20} color="#64748b" style={{ transform: mobileAccountOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }} />
                 </div>
-                <div>
-                  <div style={{ fontSize: 15, fontWeight: 800, color: "#0d1117" }}>{user.username || "User"}</div>
-                  <div style={{ fontSize: 13, color: "#0d1117" }}>{user.email || ""}</div>
-                </div>
-              </div>
+                
+                {/* Expandable Account Items */}
+                {mobileAccountOpen && (
+                  <div style={{ paddingBottom: 16, borderBottom: "1px solid #f3f4f6", marginBottom: 16, display: "flex", flexDirection: "column", gap: 4 }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1.2, padding: "0 12px 8px" }}>
+                      My Account
+                    </div>
+                    {dropdownItems.map((item, i) => (
+                      <Link key={i} to={item.to} onClick={() => setMobileOpen(false)} style={{
+                        display: "flex", alignItems: "center", gap: 10,
+                        padding: "12px", fontSize: 15, fontWeight: 600,
+                        color: isActive(item.to) ? "#02bcf0" : "#475569",
+                        background: isActive(item.to) ? "#e6f9fe" : "transparent",
+                        borderRadius: 10, textDecoration: "none"
+                      }}>
+                        {item.icon} {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
             {/* Sidebar Links — flat links for regular items, expanded for submenu */}
             {NAV_LINKS.map((item) =>
