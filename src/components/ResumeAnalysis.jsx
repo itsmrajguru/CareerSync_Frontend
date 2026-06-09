@@ -65,7 +65,7 @@ export default function ResumeAnalysis({ analysis, fileName, onReset }) {
             </div>
 
             {/* Score Row*/}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
 
                 {/* Score circle */}
                 <div

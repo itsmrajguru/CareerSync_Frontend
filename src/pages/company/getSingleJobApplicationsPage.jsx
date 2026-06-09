@@ -188,7 +188,7 @@ export default function GetSingleJobApplicationsPage() {
   
           {/*stat cards*/}
           {!loading && applicants.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
               {statCards.map(({ label, value, accent }) => (
                  <div key={label} style={{ borderTop: `3px solid ${accent}` }}
                    className="cs-card-modern cursor-pointer group"

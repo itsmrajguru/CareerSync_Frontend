@@ -235,7 +235,7 @@ export default function ApplicationDetailPage() {
                 {/* interview mode */}
                 <div>
                   <label className="block text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-2">Mode</label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {["online", "phone", "in-person"].map(m => (
                       <button
                         key={m}
@@ -477,7 +477,7 @@ export default function ApplicationDetailPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="flex items-center gap-3 bg-white border border-amber-100 rounded-xl px-4 py-3">
                     <Clock3 size={15} className="text-amber-400 flex-shrink-0" />
                     <div>
