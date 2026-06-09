@@ -442,25 +442,27 @@ export default function ApplicationDetailPage() {
                     <p className="text-[12px] font-bold text-neutral-500">This candidate has an upcoming interview</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* start ai interview — show if interview is pending AND not 'interview_completed' for this round
-                         'none' = fresh/reset (new schedule), 'interview_sent' = already sent this round */}
-                    {(application.ipStatus !== 'interview_completed' || interview) && (
+                    {/* start ai interview button:
+                         - 'none'/missing  → purple "🤖 Start AI Interview"
+                         - 'interview_sent' → blue-outline "🔄 Invite Sent — Resend?"
+                         - 'interview_completed' → hidden (score badge shown instead) */}
+                    {application.ipStatus !== 'interview_completed' && (
                       <button
                         onClick={handleTriggerInterview}
                         disabled={triggeringInterview}
-                        className="flex items-center gap-1.5 text-[10px] font-black px-4 py-1.5 rounded-lg transition-all uppercase tracking-wider border-none cursor-pointer"
+                        className="flex items-center gap-1.5 text-[10px] font-black px-4 py-1.5 rounded-lg transition-all uppercase tracking-wider cursor-pointer"
                         style={{
-                          background: application.ipStatus === 'interview_sent' && !interview ? '#eef0ff' : '#5b48e8',
-                          color:      application.ipStatus === 'interview_sent' && !interview ? '#5b48e8' : '#ffffff',
-                          border:     application.ipStatus === 'interview_sent' && !interview ? '1px solid #c8c4fe' : 'none',
+                          background: application.ipStatus === 'interview_sent' ? '#eef0ff' : '#5b48e8',
+                          color:      application.ipStatus === 'interview_sent' ? '#5b48e8' : '#ffffff',
+                          border:     application.ipStatus === 'interview_sent' ? '1px solid #c8c4fe' : 'none',
                           opacity:    triggeringInterview ? 0.6 : 1,
                           cursor:     triggeringInterview ? 'not-allowed' : 'pointer'
                         }}
                       >
                         {triggeringInterview ? (
-                          <><div className={`w-3 h-3 border-2 border-t-transparent rounded-full animate-spin ${application.ipStatus === 'interview_sent' && !interview ? 'border-[#5b48e8]' : 'border-white/30'}`} /> Sending...</>
-                        ) : application.ipStatus === 'interview_sent' && !interview ? (
-                          <>&#128259; Resend AI Invite</>
+                          <><div className={`w-3 h-3 border-2 border-t-transparent rounded-full animate-spin ${application.ipStatus === 'interview_sent' ? 'border-[#5b48e8]' : 'border-white/30'}`} /> Sending...</>
+                        ) : application.ipStatus === 'interview_sent' ? (
+                          <>&#128259; Invite Sent — Resend?</>
                         ) : (
                           <>&#129302; Start AI Interview</>
                         )}
